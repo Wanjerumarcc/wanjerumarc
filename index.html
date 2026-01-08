@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <style>
+/* GLOBAL */
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
@@ -16,6 +17,7 @@ body{
 }
 a{color:#00bcd4;text-decoration:none}
 
+/* LOGO */
 .logo{
   height:42px;
   background:#fff;
@@ -109,27 +111,63 @@ h2{font-size:36px;margin-bottom:20px;color:#00bcd4}
   border-left:2px solid #00bcd4
 }
 
-/* TECHNOLOGIES */
+/* TECHNOLOGY SLIDER */
+.tech-slider-wrapper{position:relative;margin-top:40px}
 .tech-grid{
   display:flex;
-  gap:50px;
-  overflow:hidden
+  gap:40px;
+  overflow-x:auto;
+  scroll-behavior:smooth;
+  padding:20px 60px
 }
+.tech-grid::-webkit-scrollbar{display:none}
 .tech{
+  min-width:120px;
   text-align:center;
-  animation:float 20s linear infinite
+  flex-shrink:0
 }
-@keyframes float{
-  from{transform:translateX(-200px)}
-  to{transform:translateX(1200px)}
+.tech img{height:48px}
+.tech p{margin-top:10px;font-size:14px}
+
+/* ARROWS */
+.tech-arrow{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(0,188,212,.15);
+  border:1px solid #00bcd4;
+  color:#00bcd4;
+  font-size:28px;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  cursor:pointer;
+  z-index:10
 }
-.tech img{
-  height:48px;
-  filter:none
-}
+.tech-arrow:hover{background:#00bcd4;color:#000}
+.tech-arrow.left{left:10px}
+.tech-arrow.right{right:10px}
 
 /* FOOTER */
 footer{text-align:center;padding:30px;background:#070a0f}
+
+/* WHATSAPP FLOAT */
+.whatsapp-float{
+  position:fixed;
+  bottom:25px;
+  right:25px;
+  background:#25D366;
+  color:#fff;
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  z-index:999
+}
+.whatsapp-float:hover{opacity:.8}
 
 /* RESPONSIVE */
 @media(max-width:900px){
@@ -143,8 +181,9 @@ footer{text-align:center;padding:30px;background:#070a0f}
 
 <body>
 
+<!-- NAV -->
 <nav>
-<img src="logo.png" class="logo">
+<img src="logo.png" class="logo" alt="Logo">
 <ul>
 <li><a href="#home">Home</a></li>
 <li><a href="#about">About</a></li>
@@ -154,6 +193,7 @@ footer{text-align:center;padding:30px;background:#070a0f}
 </ul>
 </nav>
 
+<!-- HERO -->
 <header id="home">
 <div class="hero-text">
 <h1>Marc <span>Wanjeru</span></h1>
@@ -162,49 +202,77 @@ footer{text-align:center;padding:30px;background:#070a0f}
 </div>
 </header>
 
+<!-- ABOUT -->
 <section id="about" class="fade">
 <h2>About Me</h2>
 <div class="about">
-<p>IT Systems Specialist experienced in networking, cybersecurity and enterprise systems.</p>
+<p>
+IT Systems Specialist with experience in networking, cybersecurity,
+enterprise support, and infrastructure operations.
+</p>
 <img src="image" alt="Profile">
 </div>
 </section>
 
+<!-- JOURNEY -->
 <section id="journey" class="fade">
 <h2>Professional Journey</h2>
 <div class="timeline-journey">
-<div class="timeline-item"><h3>IT Foundations</h3><p>Hands-on technical support and troubleshooting.</p></div>
-<div class="timeline-item"><h3>Enterprise Exposure</h3><p>NGO and logistics infrastructure environments.</p></div>
-<div class="timeline-item"><h3>Systems & Security</h3><p>Administration, networking and cybersecurity.</p></div>
+<div class="timeline-item"><h3>IT Foundations</h3><p>Hands-on IT support and troubleshooting.</p></div>
+<div class="timeline-item"><h3>Enterprise Exposure</h3><p>NGO and logistics environments.</p></div>
+<div class="timeline-item"><h3>Systems & Security</h3><p>Infrastructure, networking and cybersecurity.</p></div>
 </div>
 </section>
 
+<!-- TECHNOLOGIES -->
 <section id="technologies" class="fade">
 <h2>Technologies & Platforms</h2>
-<div class="tech-grid">
+
+<div class="tech-slider-wrapper">
+<button class="tech-arrow left" onclick="scrollTech(-1)">‹</button>
+<button class="tech-arrow right" onclick="scrollTech(1)">›</button>
+
+<div class="tech-grid" id="techGrid">
 <a class="tech" href="https://www.cisco.com" target="_blank"><img src="cisco.png"><p>Cisco</p></a>
 <a class="tech" href="https://www.microsoft.com/windows" target="_blank"><img src="windows.png"><p>Windows</p></a>
 <a class="tech" href="https://ubuntu.com" target="_blank"><img src="linux.png"><p>Linux</p></a>
-<a class="tech" href="https://www.microsoft.com/microsoft-365" target="_blank"><img src="microsoft.png"><p>M365</p></a>
+<a class="tech" href="https://www.microsoft.com/microsoft-365" target="_blank"><img src="microsoft.png"><p>Microsoft 365</p></a>
 <a class="tech" href="https://www.kaspersky.com" target="_blank"><img src="kaspersky.png"><p>Kaspersky</p></a>
 <a class="tech" href="https://www.atlassian.com/software/jira" target="_blank"><img src="jira.png"><p>Jira</p></a>
 </div>
+</div>
 </section>
 
+<!-- CONTACT -->
 <section id="contact" class="fade">
 <h2>Contact</h2>
 <p>Email: wanjerumarc@icloud.com</p>
 <p>Phone: +256769593704</p>
 </section>
 
-<footer>© 2026 John Mark Kiritu</footer>
+<!-- FOOTER -->
+<footer>
+<p>© 2026 John Mark Kiritu</p>
+<p>
+<a href="https://www.linkedin.com" target="_blank">🔗 LinkedIn</a>
+</p>
+</footer>
 
+<!-- WHATSAPP FLOAT -->
+<a class="whatsapp-float" href="https://wa.me/256769593704" target="_blank">💬</a>
+
+<!-- SCRIPTS -->
 <script>
 const faders=document.querySelectorAll('.fade');
 const observer=new IntersectionObserver(entries=>{
 entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')});
 },{threshold:.2});
 faders.forEach(f=>observer.observe(f));
+
+function scrollTech(direction){
+  const grid=document.getElementById("techGrid");
+  grid.scrollLeft+=direction*250;
+}
 </script>
 
 </body>
