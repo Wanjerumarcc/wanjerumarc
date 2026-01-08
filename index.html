@@ -15,6 +15,10 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: "Segoe UI", sans-serif;
       background: #0b0f14;
@@ -27,7 +31,7 @@
       text-decoration: none;
     }
 
-    /* NAVBAR */
+    /* NAV */
     nav {
       position: fixed;
       top: 0;
@@ -66,8 +70,9 @@
       display: flex;
       align-items: center;
       padding: 0 60px;
-      background: linear-gradient(rgba(0,0,0,.75), rgba(0,0,0,.75)),
-        url("desktop.jpgg") center/cover no-repeat;
+      background:
+        linear-gradient(rgba(0,0,0,.75), rgba(0,0,0,.75)),
+        url("desktop.jpg") center/cover no-repeat;
     }
 
     .hero-text h1 {
@@ -103,7 +108,13 @@
       margin-bottom: 25px;
     }
 
+    /* FADE (FAILSAFE FIX) */
     .fade {
+      opacity: 1;
+      transform: none;
+    }
+
+    .js .fade {
       opacity: 0;
       transform: translateY(30px);
       transition: .8s;
@@ -114,6 +125,12 @@
       transform: translateY(0);
     }
 
+    /* ABOUT */
+    .about {
+      max-width: 900px;
+      font-size: 18px;
+    }
+
     /* JOURNEY */
     .timeline-journey {
       border-left: 2px solid #00bcd4;
@@ -122,6 +139,13 @@
 
     .timeline-item {
       margin-bottom: 30px;
+    }
+
+    /* EXPERIENCE */
+    .job {
+      margin-bottom: 30px;
+      border-left: 2px solid #00bcd4;
+      padding-left: 20px;
     }
 
     /* TECHNOLOGIES SLIDER */
@@ -155,8 +179,8 @@
       z-index: 10;
     }
 
-    .arrow.left { left: 0; }
-    .arrow.right { right: 0; }
+    .arrow.left { left: 10px; }
+    .arrow.right { right: 10px; }
 
     /* CONTACT */
     .contact-icons a {
@@ -164,7 +188,7 @@
       margin-right: 20px;
     }
 
-    /* WHATSAPP FLOAT */
+    /* WHATSAPP */
     .whatsapp-float {
       position: fixed;
       bottom: 25px;
@@ -186,7 +210,7 @@
   </style>
 </head>
 
-<body>
+<body class="js">
 
 <nav>
   <img src="logo.png" class="logo" alt="Logo">
@@ -210,14 +234,29 @@
   </div>
 </header>
 
+<section id="about" class="fade">
+  <h2>About Me</h2>
+  <div class="about">
+    IT Systems Specialist with experience across NGO and enterprise environments,
+    focusing on infrastructure, cybersecurity, and reliable digital operations.
+  </div>
+</section>
+
 <section id="journey" class="fade">
   <h2>Professional Journey</h2>
   <div class="timeline-journey">
     <div class="timeline-item">IT Support Foundations</div>
-    <div class="timeline-item">Enterprise & NGO IT Environments</div>
+    <div class="timeline-item">Enterprise & NGO Environments</div>
     <div class="timeline-item">Infrastructure & Security Roles</div>
     <div class="timeline-item">Scalable & Secure Systems Focus</div>
   </div>
+</section>
+
+<section id="experience" class="fade">
+  <h2>Experience</h2>
+  <div class="job">System Administrator — Double Q (C4 Logistics)</div>
+  <div class="job">IT Support Officer — Oxfam in Uganda</div>
+  <div class="job">Graduate Trainee — Oxfam</div>
 </section>
 
 <section id="technologies" class="fade">
@@ -230,11 +269,7 @@
       <a class="tech" href="https://www.cisco.com"><img src="cisco.png"><p>Cisco</p></a>
       <a class="tech" href="https://www.microsoft.com/windows"><img src="windows.png"><p>Windows</p></a>
       <a class="tech" href="https://ubuntu.com"><img src="linux.png"><p>Linux</p></a>
-      <a class="tech" href="https://www.microsoft.com/microsoft-365"><img src="microsoft.png"><p>M365</p></a>
-      <a class="tech" href="https://www.kaspersky.com"><img src="kaspersky.png"><p>Kaspersky</p></a>
-      <a class="tech" href="https://www.sophos.com"><img src="sophos.png"><p>Sophos</p></a>
-      <a class="tech" href="https://www.atlassian.com/software/jira"><img src="jira.png"><p>Jira</p></a>
-      <a class="tech" href="https://github.com"><img src="github.png"><p>GitHub</p></a>
+      <a class="tech" href="https://github.com/Wanjerumarcc"><img src="github.png"><p>GitHub</p></a>
       <a class="tech" href="https://openai.com/chatgpt"><img src="chatgpt.png"><p>ChatGPT</p></a>
     </div>
 
@@ -245,7 +280,6 @@
 <section id="contact" class="fade">
   <h2>Contact</h2>
   <p>Email: wanjerumarc@icloud.com</p>
-
   <div class="contact-icons">
     <a href="mailto:wanjerumarc@icloud.com"><i class="fa fa-envelope"></i></a>
     <a href="https://github.com/Wanjerumarcc"><i class="fa fa-github"></i></a>
@@ -268,8 +302,11 @@
   faders.forEach(f => observer.observe(f));
 
   let position = 0;
+  const maxScroll = -600;
   function slide(dir) {
     position += dir * 200;
+    if (position > 0) position = 0;
+    if (position < maxScroll) position = maxScroll;
     document.getElementById("slider").style.transform = `translateX(${position}px)`;
   }
 </script>
