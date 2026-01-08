@@ -1,540 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>John Mark Kiritu | IT Support Specialist</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8" />
+<title>John Mark Kiritu | IT Support Specialist</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <style>
-    /* GLOBAL */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: "Segoe UI", sans-serif;
-      background: #0b0f14;
-      color: #e6e6e6;
-      line-height: 1.6;
-    }
-
-    a {
-      color: #00bcd4;
-      text-decoration: none;
-    }
-    .logo {
-  height: 42px;
-  width: auto;
-  background: #ffffff;
-  padding: 6px 10px;
-  border-radius: 8px;
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Segoe UI",sans-serif;
+  background:#0b0f14;
+  color:#e6e6e6;
+  line-height:1.6
 }
-/* STORY */
-.story {
-  max-width: 900px;
-  margin: auto;
-  font-size: 18px;
-  opacity: 0.95;
+a{color:#00bcd4;text-decoration:none}
+
+.logo{
+  height:42px;
+  background:#fff;
+  padding:6px 10px;
+  border-radius:8px
+}
+
+/* NAV */
+nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 60px;
+  position:fixed;
+  width:100%;
+  background:rgba(11,15,20,.9);
+  z-index:1000
+}
+nav ul{display:flex;gap:25px;list-style:none}
+
+/* HERO */
+header{
+  height:100vh;
+  background:
+    linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),
+    url("desktop.jpgg") center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  padding:0 60px
+}
+.hero-text{animation:slideIn 1.2s ease forwards}
+@keyframes slideIn{
+  from{opacity:0;transform:translateX(-40px)}
+  to{opacity:1;transform:translateX(0)}
+}
+.hero-text h1{font-size:60px}
+.hero-text span{color:#00bcd4}
+.hero-text p{margin:15px 0 30px;font-size:20px}
+.btn{
+  padding:12px 30px;
+  border:1px solid #00bcd4;
+  border-radius:30px;
+  margin-right:15px;
+  transition:.3s
+}
+.btn:hover{background:#00bcd4;color:#000}
+
+/* SECTIONS */
+section{padding:100px 60px;max-width:1200px;margin:auto}
+h2{font-size:36px;margin-bottom:20px;color:#00bcd4}
+
+/* FADE */
+.fade{opacity:0;transform:translateY(30px);transition:.8s}
+.fade.show{opacity:1;transform:none}
+
+/* ABOUT */
+.about{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+  align-items:center
+}
+.about img{width:100%;border-radius:10px}
+
+/* JOURNEY */
+.timeline-journey{
+  max-width:900px;
+  margin:auto;
+  border-left:2px solid #00bcd4;
+  padding-left:30px
+}
+.timeline-item{
+  margin-bottom:35px;
+  position:relative
+}
+.timeline-item::before{
+  content:"";
+  position:absolute;
+  left:-41px;
+  top:6px;
+  width:14px;
+  height:14px;
+  background:#00bcd4;
+  border-radius:50%
 }
 
 /* EXPERIENCE */
-.experience {
-  max-width: 1000px;
-  margin: auto;
-}
-
-.job {
-  margin-bottom: 35px;
-  padding-left: 20px;
-  border-left: 2px solid #00bcd4;
-}
-
-.job h3 {
-  margin-bottom: 5px;
-}
-
-.job span {
-  font-size: 14px;
-  opacity: 0.7;
-}
-
-.job ul {
-  margin-top: 10px;
-  padding-left: 18px;
-}
-
-.job li {
-  margin-bottom: 6px;
+.job{
+  margin-bottom:35px;
+  padding-left:20px;
+  border-left:2px solid #00bcd4
 }
 
 /* TECHNOLOGIES */
-.tech-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 30px;
-  margin-top: 40px;
+.tech-grid{
+  display:flex;
+  gap:50px;
+  overflow:hidden
+}
+.tech{
+  text-align:center;
+  animation:float 20s linear infinite
+}
+@keyframes float{
+  from{transform:translateX(-200px)}
+  to{transform:translateX(1200px)}
+}
+.tech img{
+  height:48px;
+  filter:none
 }
 
-.tech {
-  text-align: center;
-  opacity: 0.85;
-  transition: 0.3s;
+/* FOOTER */
+footer{text-align:center;padding:30px;background:#070a0f}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .about{grid-template-columns:1fr}
+  header{padding:0 30px}
+  nav{padding:20px 30px}
+  .hero-text h1{font-size:42px}
 }
-
-.tech img {
-  height: 48px;
-  filter: grayscale(100%) brightness(1.4);
-}
-
-.tech:hover {
-  opacity: 1;
-  transform: translateY(-4px);
-}
-
-.tech p {
-  margin-top: 10px;
-  font-size: 14px;
-}
-/* JOURNEY TIMELINE */
-.timeline-journey {
-  max-width: 900px;
-  margin: 40px auto 0;
-  border-left: 2px solid #00bcd4;
-  padding-left: 30px;
-}
-
-.timeline-item {
-  margin-bottom: 35px;
-  position: relative;
-}
-
-.timeline-item::before {
-  content: "";
-  position: absolute;
-  left: -41px;
-  top: 5px;
-  width: 14px;
-  height: 14px;
-  background: #00bcd4;
-  border-radius: 50%;
-}
-
-.timeline-item h3 {
-  margin-bottom: 6px;
-  font-size: 20px;
-}
-
-.timeline-item p {
-  opacity: 0.9;
-  font-size: 16px;
-}
-
-
-    /* NAV */
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 60px;
-      position: fixed;
-      width: 100%;
-      background: rgba(11,15,20,0.9);
-      z-index: 1000;
-    }
-
-    nav ul {
-      display: flex;
-      gap: 25px;
-      list-style: none;
-    }
-
-    /* HERO */
-    header {
-      height: 100vh;
-      background: linear-gradient(
-          rgba(0,0,0,0.7),
-          rgba(0,0,0,0.7)
-        ),
-          <img src="desktop.jpgg" alt="wallpaper" class="background image">
-        center/cover no-repeat;
-      display: flex;
-      align-items: center;
-      padding: 0 60px;
-    }
-
-    .hero-text {
-      animation: slideIn 1.2s ease forwards;
-    }
-
-    @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateX(-40px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    .hero-text h1 {
-      font-size: 60px;
-      font-weight: 700;
-    }
-
-    .hero-text span {
-      color: #00bcd4;
-    }
-
-    .hero-text p {
-      margin: 15px 0 30px;
-      font-size: 20px;
-      opacity: 0.9;
-    }
-
-    .btn {
-      padding: 12px 30px;
-      border: 1px solid #00bcd4;
-      border-radius: 30px;
-      margin-right: 15px;
-      display: inline-block;
-      transition: 0.3s;
-    }
-
-    .btn:hover {
-      background: #00bcd4;
-      color: #000;
-    }
-
-    /* SECTIONS */
-    section {
-      padding: 100px 60px;
-      max-width: 1200px;
-      margin: auto;
-    }
-
-    h2 {
-      font-size: 36px;
-      margin-bottom: 20px;
-      color: #00bcd4;
-    }
-
-    /* FADE-IN ANIMATION */
-    .fade {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s ease;
-    }
-
-    .fade.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ABOUT */
-    .about {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      align-items: center;
-    }
-
-    .about img {
-      width: 100%;
-      border-radius: 10px;
-      filter: grayscale(100%);
-    }
-
-    /* SKILLS */
-    .skill {
-      margin-bottom: 20px;
-    }
-
-    .bar {
-      background: #1a1f27;
-      border-radius: 20px;
-      overflow: hidden;
-    }
-
-    .bar div {
-      height: 10px;
-      background: #00bcd4;
-    }
-
-    /* EXPERIENCE */
-    .timeline {
-      border-left: 2px solid #00bcd4;
-      padding-left: 20px;
-    }
-
-    .timeline div {
-      margin-bottom: 20px;
-    }
-
-    /* FOOTER */
-    footer {
-      text-align: center;
-      padding: 30px;
-      background: #070a0f;
-      font-size: 14px;
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 900px) {
-      .about {
-        grid-template-columns: 1fr;
-      }
-
-      header {
-        padding: 0 30px;
-      }
-
-      nav {
-        padding: 20px 30px;
-      }
-
-      .hero-text h1 {
-        font-size: 42px;
-      }
-    }
-  </style>
+</style>
 </head>
 
 <body>
 
-  <!-- NAV -->
-  <nav>
-   <img src="logo.png" alt="Marc Wanjeru Logo" class="logo">
-    <ul>
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#resume">Resume</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
+<nav>
+<img src="logo.png" class="logo">
+<ul>
+<li><a href="#home">Home</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#journey">Journey</a></li>
+<li><a href="#technologies">Technologies</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+</nav>
 
-  <!-- HERO -->
-  <header id="home">
-    <div class="hero-text">
-      <h1>Marc <span>Wanjeru</span></h1>
-      <p>IT Systems & Web Specialist</p>
-      <a class="btn" href="#">Download CV</a>
-      <a class="btn" href="#contact">Contact Me</a>
-    </div>
-  </header>
+<header id="home">
+<div class="hero-text">
+<h1>Marc <span>Wanjeru</span></h1>
+<p>IT Systems & Web Specialist</p>
+<a class="btn">Download CV</a>
+</div>
+</header>
 
-  <!-- ABOUT -->
-  <section id="about" class="fade">
-    <h2>About Me</h2>
-    <div class="about">
-      <p>
-        I am an IT Systems Specialist with experience in networking,
-        cybersecurity, and web-based systems. I design, deploy, and secure
-        digital infrastructure that improves efficiency and reliability.
-      </p>
-      <img src="image" alt="Profile">
-    </div>
-  </section>
-  <section id="journey" class="fade">
- <section id="journey" class="fade">
-  <h2>Professional Journey</h2>
-
-  <div class="timeline-journey">
-
-    <div class="timeline-item">
-      <h3>Foundation in IT Support</h3>
-      <p>
-        Began my career providing hands-on technical support, troubleshooting
-        hardware, software, and network issues while building strong user-focused
-        problem-solving skills.
-      </p>
-    </div>
-
-    <div class="timeline-item">
-      <h3>Enterprise & NGO Environments</h3>
-      <p>
-        Gained exposure to large-scale IT operations through internships and graduate
-        trainee programs, supporting enterprise systems, infrastructure, and security
-        initiatives.
-      </p>
-    </div>
-
-    <div class="timeline-item">
-      <h3>Infrastructure & Security Roles</h3>
-      <p>
-        Progressed into system administration roles, managing networks, endpoint
-        security, cloud collaboration platforms, and mission-critical IT services.
-      </p>
-    </div>
-
-    <div class="timeline-item">
-      <h3>Current Focus</h3>
-      <p>
-        Specializing in secure, reliable, and scalable IT systems that enable
-        organizations to operate efficiently while maintaining high security standards.
-      </p>
-    </div>
-
-  </div>
+<section id="about" class="fade">
+<h2>About Me</h2>
+<div class="about">
+<p>IT Systems Specialist experienced in networking, cybersecurity and enterprise systems.</p>
+<img src="image" alt="Profile">
+</div>
 </section>
 
-<section id="experience" class="fade">
-  <h2>Professional Experience</h2>
-
-  <div class="experience">
-
-    <div class="job">
-      <h3>System Administrator — Double Q (C4 Logistics Ltd)</h3>
-      <span>September 2024 – November 2024</span>
-      <ul>
-        <li>Managed enterprise IT infrastructure including switches, wireless APs, PABX, and CCTV</li>
-        <li>Administered endpoint security and firewall policies using Kaspersky</li>
-        <li>Provided Level 2 technical support across departments and remote offices</li>
-      </ul>
-    </div>
-
-    <div class="job">
-      <h3>IT Support Officer — Oxfam in Uganda</h3>
-      <span>January 2024 – June 2024</span>
-      <ul>
-        <li>Delivered end-user support across hardware, software, and network services</li>
-        <li>Supported Microsoft 365 (Exchange, SharePoint, Teams)</li>
-        <li>Managed IT assets and service requests</li>
-      </ul>
-    </div>
-
-    <div class="job">
-      <h3>Graduate Trainee — IT Department, Oxfam</h3>
-      <span>July 2023 – December 2023</span>
-      <ul>
-        <li>Assisted with enterprise systems and infrastructure support</li>
-        <li>Participated in IT security and compliance activities</li>
-        <li>Contributed to documentation and process improvements</li>
-      </ul>
-    </div>
-
-    <div class="job">
-      <h3>IT Intern — Oxfam in Uganda</h3>
-      <span>January 2023 – June 2023</span>
-      <ul>
-        <li>Provided first-line IT support</li>
-        <li>Assisted with installations, upgrades, and maintenance</li>
-        <li>Supported daily IT operations</li>
-      </ul>
-    </div>
-
-  </div>
+<section id="journey" class="fade">
+<h2>Professional Journey</h2>
+<div class="timeline-journey">
+<div class="timeline-item"><h3>IT Foundations</h3><p>Hands-on technical support and troubleshooting.</p></div>
+<div class="timeline-item"><h3>Enterprise Exposure</h3><p>NGO and logistics infrastructure environments.</p></div>
+<div class="timeline-item"><h3>Systems & Security</h3><p>Administration, networking and cybersecurity.</p></div>
+</div>
 </section>
 
-
-  <!-- RESUME -->
-  <section id="resume" class="fade">
-    <h2>Skills</h2>
-
-    <div class="skill">
-      <p>Networking</p>
-      <div class="bar"><div style="width:90%"></div></div>
-    </div>
-
-    <div class="skill">
-      <p>Cybersecurity</p>
-      <div class="bar"><div style="width:85%"></div></div>
-    </div>
-
-    <div class="skill">
-      <p>HTML / CSS / PHP</p>
-      <div class="bar"><div style="width:80%"></div></div>
-    </div>
-
-    <h2 style="margin-top:50px;">Experience</h2>
-    <div class="timeline">
-      <div>
-        <strong>IT Systems Engineer</strong><br>
-        Infrastructure & Security Deployments
-      </div>
-      <div>
-        <strong>Web Systems Developer</strong><br>
-        Digital Logistics & Automation Solutions
-      </div>
-    </div>
-  </section>
 <section id="technologies" class="fade">
-  <h2>Technologies & Platforms</h2>
-
-  <div class="tech-grid">
-
-    <div class="tech">
-      <img src="cisco.png" alt="Cisco">
-      <p>Cisco / Networking</p>
-    </div>
-
-    <div class="tech">
-      <img src="windows.png" alt="Windows">
-      <p>Windows & Server</p>
-    </div>
-
-    <div class="tech">
-      <img src="linux.png" alt="Linux">
-      <p>Linux (Ubuntu)</p>
-    </div>
-
-    <div class="tech">
-      <img src="microsoft.png" alt="Microsoft 365">
-      <p>Microsoft 365</p>
-    </div>
-
-    <div class="tech">
-      <img src="kaspersky.png" alt="Kaspersky">
-      <p>Cybersecurity</p>
-    </div>
-     <div class="tech">
-      <img src="team viewer.png" alt="team viewer">
-      <p>ITSM Tools</p>
-    </div>
-     <div class="tech">
-      <img src="sophos.png" alt="sophos">
-      <p>Cybersecurity</p>
-    </div>
-
-    <div class="tech">
-      <img src="jira.png" alt="Jira">
-      <p>ITSM Tools</p>
-    </div>
-
-  </div>
+<h2>Technologies & Platforms</h2>
+<div class="tech-grid">
+<a class="tech" href="https://www.cisco.com" target="_blank"><img src="cisco.png"><p>Cisco</p></a>
+<a class="tech" href="https://www.microsoft.com/windows" target="_blank"><img src="windows.png"><p>Windows</p></a>
+<a class="tech" href="https://ubuntu.com" target="_blank"><img src="linux.png"><p>Linux</p></a>
+<a class="tech" href="https://www.microsoft.com/microsoft-365" target="_blank"><img src="microsoft.png"><p>M365</p></a>
+<a class="tech" href="https://www.kaspersky.com" target="_blank"><img src="kaspersky.png"><p>Kaspersky</p></a>
+<a class="tech" href="https://www.atlassian.com/software/jira" target="_blank"><img src="jira.png"><p>Jira</p></a>
+</div>
 </section>
 
-  <!-- CONTACT -->
-  <section id="contact" class="fade">
-    <h2>Contact</h2>
-    <p>Email: wanjerumarc@icloud.com.com</p>
-    <p>Phone: +256769593704</p>
-  </section>
+<section id="contact" class="fade">
+<h2>Contact</h2>
+<p>Email: wanjerumarc@icloud.com</p>
+<p>Phone: +256769593704</p>
+</section>
 
-  <footer>
-    © 2026 John Mark Kiritu
-  </footer>
+<footer>© 2026 John Mark Kiritu</footer>
 
-  <!-- SCROLL FADE SCRIPT -->
-  <script>
-    const faders = document.querySelectorAll('.fade');
-
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('show');
-        }
-      });
-    }, { threshold: 0.2 });
-
-    faders.forEach(fade => observer.observe(fade));
-  </script>
+<script>
+const faders=document.querySelectorAll('.fade');
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')});
+},{threshold:.2});
+faders.forEach(f=>observer.observe(f));
+</script>
 
 </body>
 </html>
