@@ -101,6 +101,39 @@
   margin-top: 10px;
   font-size: 14px;
 }
+/* JOURNEY TIMELINE */
+.timeline-journey {
+  max-width: 900px;
+  margin: 40px auto 0;
+  border-left: 2px solid #00bcd4;
+  padding-left: 30px;
+}
+
+.timeline-item {
+  margin-bottom: 35px;
+  position: relative;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -41px;
+  top: 5px;
+  width: 14px;
+  height: 14px;
+  background: #00bcd4;
+  border-radius: 50%;
+}
+
+.timeline-item h3 {
+  margin-bottom: 6px;
+  font-size: 20px;
+}
+
+.timeline-item p {
+  opacity: 0.9;
+  font-size: 16px;
+}
 
 
     /* NAV */
@@ -309,27 +342,48 @@
     </div>
   </section>
   <section id="journey" class="fade">
+ <section id="journey" class="fade">
   <h2>Professional Journey</h2>
-  <div class="story">
-    <p>
-      I am an IT Systems Specialist with progressive experience across IT support,
-      infrastructure management, networking, and cybersecurity within enterprise
-      and NGO environments.
-    </p>
-    <p>
-      My career began in hands-on technical support roles, where I developed a
-      strong foundation in troubleshooting, user support, and systems administration.
-      Through structured internships and graduate trainee programs, I gained exposure
-      to large-scale organizational IT operations and security-focused environments.
-    </p>
-    <p>
-      I have since supported and managed critical IT systems including network
-      infrastructure, endpoint security, cloud collaboration platforms, and
-      enterprise applications. My focus remains on reliability, security,
-      and operational efficiency.
-    </p>
+
+  <div class="timeline-journey">
+
+    <div class="timeline-item">
+      <h3>Foundation in IT Support</h3>
+      <p>
+        Began my career providing hands-on technical support, troubleshooting
+        hardware, software, and network issues while building strong user-focused
+        problem-solving skills.
+      </p>
+    </div>
+
+    <div class="timeline-item">
+      <h3>Enterprise & NGO Environments</h3>
+      <p>
+        Gained exposure to large-scale IT operations through internships and graduate
+        trainee programs, supporting enterprise systems, infrastructure, and security
+        initiatives.
+      </p>
+    </div>
+
+    <div class="timeline-item">
+      <h3>Infrastructure & Security Roles</h3>
+      <p>
+        Progressed into system administration roles, managing networks, endpoint
+        security, cloud collaboration platforms, and mission-critical IT services.
+      </p>
+    </div>
+
+    <div class="timeline-item">
+      <h3>Current Focus</h3>
+      <p>
+        Specializing in secure, reliable, and scalable IT systems that enable
+        organizations to operate efficiently while maintaining high security standards.
+      </p>
+    </div>
+
   </div>
 </section>
+
 <section id="experience" class="fade">
   <h2>Professional Experience</h2>
 
