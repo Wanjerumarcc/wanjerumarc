@@ -35,6 +35,72 @@
   padding: 6px 10px;
   border-radius: 8px;
 }
+/* STORY */
+.story {
+  max-width: 900px;
+  margin: auto;
+  font-size: 18px;
+  opacity: 0.95;
+}
+
+/* EXPERIENCE */
+.experience {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.job {
+  margin-bottom: 35px;
+  padding-left: 20px;
+  border-left: 2px solid #00bcd4;
+}
+
+.job h3 {
+  margin-bottom: 5px;
+}
+
+.job span {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.job ul {
+  margin-top: 10px;
+  padding-left: 18px;
+}
+
+.job li {
+  margin-bottom: 6px;
+}
+
+/* TECHNOLOGIES */
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.tech {
+  text-align: center;
+  opacity: 0.85;
+  transition: 0.3s;
+}
+
+.tech img {
+  height: 48px;
+  filter: grayscale(100%) brightness(1.4);
+}
+
+.tech:hover {
+  opacity: 1;
+  transform: translateY(-4px);
+}
+
+.tech p {
+  margin-top: 10px;
+  font-size: 14px;
+}
 
 
     /* NAV */
@@ -242,6 +308,76 @@
       <img src="image" alt="Profile">
     </div>
   </section>
+  <section id="journey" class="fade">
+  <h2>Professional Journey</h2>
+  <div class="story">
+    <p>
+      I am an IT Systems Specialist with progressive experience across IT support,
+      infrastructure management, networking, and cybersecurity within enterprise
+      and NGO environments.
+    </p>
+    <p>
+      My career began in hands-on technical support roles, where I developed a
+      strong foundation in troubleshooting, user support, and systems administration.
+      Through structured internships and graduate trainee programs, I gained exposure
+      to large-scale organizational IT operations and security-focused environments.
+    </p>
+    <p>
+      I have since supported and managed critical IT systems including network
+      infrastructure, endpoint security, cloud collaboration platforms, and
+      enterprise applications. My focus remains on reliability, security,
+      and operational efficiency.
+    </p>
+  </div>
+</section>
+<section id="experience" class="fade">
+  <h2>Professional Experience</h2>
+
+  <div class="experience">
+
+    <div class="job">
+      <h3>System Administrator — Double Q (C4 Logistics Ltd)</h3>
+      <span>September 2024 – November 2024</span>
+      <ul>
+        <li>Managed enterprise IT infrastructure including switches, wireless APs, PABX, and CCTV</li>
+        <li>Administered endpoint security and firewall policies using Kaspersky</li>
+        <li>Provided Level 2 technical support across departments and remote offices</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <h3>IT Support Officer — Oxfam in Uganda</h3>
+      <span>January 2024 – June 2024</span>
+      <ul>
+        <li>Delivered end-user support across hardware, software, and network services</li>
+        <li>Supported Microsoft 365 (Exchange, SharePoint, Teams)</li>
+        <li>Managed IT assets and service requests</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <h3>Graduate Trainee — IT Department, Oxfam</h3>
+      <span>July 2023 – December 2023</span>
+      <ul>
+        <li>Assisted with enterprise systems and infrastructure support</li>
+        <li>Participated in IT security and compliance activities</li>
+        <li>Contributed to documentation and process improvements</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <h3>IT Intern — Oxfam in Uganda</h3>
+      <span>January 2023 – June 2023</span>
+      <ul>
+        <li>Provided first-line IT support</li>
+        <li>Assisted with installations, upgrades, and maintenance</li>
+        <li>Supported daily IT operations</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
 
   <!-- RESUME -->
   <section id="resume" class="fade">
