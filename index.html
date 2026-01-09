@@ -14,6 +14,7 @@
   --nav-bg: rgba(11,15,20,.9);
   --footer-bg: #070a0f;
   --shadow: rgba(0,0,0,.5);
+  --timeline-accent: #00bcd4;
 }
 
 [data-theme="light"] {
@@ -24,6 +25,7 @@
   --nav-bg: rgba(255,255,255,.95);
   --footer-bg: #e9ecef;
   --shadow: rgba(0,0,0,.1);
+  --timeline-accent: #00a0b8;
 }
 
 /* GLOBAL */
@@ -36,7 +38,12 @@ body{
   line-height:1.6;
   transition: background 0.4s ease, color 0.4s ease;
 }
-a{color:var(--accent);text-decoration:none; transition: color 0.3s}
+a{
+  color:var(--accent);
+  text-decoration:none;
+  transition: color 0.3s;
+}
+a:hover{color:var(--accent); opacity:0.9;}
 
 /* LOGO */
 .logo{
@@ -59,16 +66,17 @@ nav{
   background:var(--nav-bg);
   backdrop-filter: blur(10px);
   z-index:1000;
-  transition: background 0.4s;
+  transition: background 0.4s ease;
 }
-nav ul{display:flex;gap:25px;list-style:none}
+nav ul{
+  display:flex;
+  gap:25px;
+  list-style:none;
+}
 nav ul a{
   padding:8px 0;
   transition: color 0.3s;
   position: relative;
-}
-nav ul a:hover{
-  color: var(--accent);
 }
 nav ul a::after {
   content: '';
@@ -78,7 +86,7 @@ nav ul a::after {
   bottom: 0;
   left: 50%;
   background: var(--accent);
-  transition: all 0.3s;
+  transition: all 0.3s ease;
 }
 nav ul a:hover::after {
   width: 100%;
@@ -98,7 +106,7 @@ nav ul a:hover::after {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
 }
 .theme-toggle:hover {
   background: rgba(0,188,212,.15);
@@ -114,21 +122,32 @@ header{
   align-items:center;
   padding:0 60px;
 }
-.hero-text{animation:slideIn 1.2s ease forwards; max-width: 700px;}
+.hero-text{
+  animation:slideIn 1.2s ease forwards;
+  max-width: 700px;
+}
 @keyframes slideIn{
   from{opacity:0;transform:translateX(-40px)}
   to{opacity:1;transform:translateX(0)}
 }
-.hero-text h1{font-size:60px; margin-bottom:10px;}
-.hero-text span{color:var(--accent)}
-.hero-text p{margin:15px 0 30px;font-size:20px}
+.hero-text h1{
+  font-size:60px;
+  margin-bottom:10px;
+}
+.hero-text span{
+  color:var(--accent);
+}
+.hero-text p{
+  margin:15px 0 30px;
+  font-size:20px;
+}
 .btn{
   display:inline-block;
   padding:12px 30px;
   border:2px solid var(--accent);
   border-radius:30px;
   margin-right:15px;
-  transition:.3s;
+  transition:all .3s ease;
   font-weight:600;
   color: var(--text);
 }
@@ -139,7 +158,11 @@ header{
 }
 
 /* SECTIONS */
-section{padding:100px 60px;max-width:1200px;margin:auto}
+section{
+  padding:100px 60px;
+  max-width:1200px;
+  margin:auto;
+}
 h2{
   font-size:36px;
   margin-bottom:40px;
@@ -147,9 +170,16 @@ h2{
   text-align:center;
 }
 
-/* FADE */
-.fade{opacity:0;transform:translateY(30px);transition:all .8s ease}
-.fade.show{opacity:1;transform:none}
+/* FADE IN ANIMATION */
+.fade{
+  opacity:0;
+  transform:translateY(30px);
+  transition:all .8s ease;
+}
+.fade.show{
+  opacity:1;
+  transform:none;
+}
 
 /* ABOUT */
 .about{
@@ -164,12 +194,16 @@ h2{
   box-shadow:0 10px 30px var(--shadow);
 }
 
-/* TIMELINE */
+/* JOURNEY - TIMELINE */
 .timeline-journey{
   max-width:900px;
   margin:40px auto 0;
-  border-left:3px solid var(--accent);
+  border-left:3px solid var(--timeline-accent);
   padding-left:40px;
+  position:relative;
+}
+.timeline-item{
+  margin-bottom:40px;
   position:relative;
 }
 .timeline-item::before{
@@ -184,8 +218,12 @@ h2{
   box-shadow:0 0 0 4px rgba(0,188,212,.2);
 }
 
-/* SLIDERS */
-.slider-wrapper{position:relative;margin-top:40px;overflow:hidden;}
+/* SLIDER BASE */
+.slider-wrapper{
+  position:relative;
+  margin-top:40px;
+  overflow:hidden;
+}
 .slider-grid{
   display:flex;
   gap:40px;
@@ -196,15 +234,89 @@ h2{
 }
 .slider-grid::-webkit-scrollbar{display:none}
 
-/* CARDS */
+/* SLIDER ARROWS */
+.slider-arrow{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(0,188,212,.2);
+  border:2px solid var(--accent);
+  color:var(--accent);
+  font-size:28px;
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  cursor:pointer;
+  z-index:10;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:.3s;
+}
+.slider-arrow:hover{
+  background:var(--accent);
+  color:#000;
+}
+.slider-arrow.left{left:10px}
+.slider-arrow.right{right:10px}
+
+/* TECH & PROJECT CARDS */
 .tech, .project-card, .story {
   background:var(--card-bg);
   transition: all .3s ease;
   box-shadow:0 5px 15px var(--shadow);
+  border-radius:12px;
 }
-.tech:hover, .project-card:hover, .story:hover {
+.tech{
+  min-width:130px;
+  text-align:center;
+  padding:20px;
+  flex-shrink:0;
+}
+.tech img{
+  height:60px;
+  object-fit:contain;
+}
+.tech p{
+  margin-top:12px;
+  font-size:15px;
+  color:#ccc;
+}
+.tech:hover{
   transform:translateY(-8px);
   box-shadow:0 15px 30px rgba(0,188,212,.2);
+}
+
+.project-card{
+  min-width:300px;
+  padding:25px;
+  flex-shrink:0;
+}
+.project-card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 15px 30px rgba(0,188,212,.2);
+}
+.project-card h3{
+  margin-bottom:12px;
+  color:var(--accent);
+}
+
+.story{
+  padding:30px;
+  margin-bottom:30px;
+}
+.story:hover{
+  transform:translateX(10px);
+}
+.story h3{
+  margin-bottom:12px;
+  color:var(--accent);
+}
+
+/* CONTACT */
+#contact p{
+  font-size:18px;
+  margin:15px 0;
 }
 
 /* FOOTER */
@@ -213,34 +325,88 @@ footer{
   padding:40px;
   background:var(--footer-bg);
   font-size:14px;
-  transition: background 0.4s;
+  transition: background 0.4s ease;
+}
+footer a{
+  color:var(--accent);
+  margin:0 10px;
 }
 
-/* WHATSAPP */
+/* WHATSAPP FLOAT */
 .whatsapp-float{
+  position:fixed;
+  bottom:25px;
+  right:25px;
   background:#25D366;
+  color:#fff;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  z-index:999;
   box-shadow:0 4px 15px rgba(0,0,0,.4);
   transition:.3s;
 }
-.whatsapp-float:hover{transform:scale(1.1);}
+.whatsapp-float:hover{
+  transform:scale(1.1);
+  opacity:.9;
+}
 
 /* RESPONSIVE */
 @media(max-width:900px){
-  nav{padding:20px 30px; flex-direction:column; gap:15px;}
-  nav ul{gap:15px; flex-wrap:wrap; justify-content:center;}
+  nav{
+    padding:20px 30px;
+    flex-direction:column;
+    gap:15px;
+  }
+  nav > div{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+    align-items:center;
+  }
+  nav ul{
+    gap:15px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
   header{padding:0 30px}
   .hero-text h1{font-size:42px}
-  .about{grid-template-columns:1fr; text-align:center;}
+  .hero-text p{font-size:18px}
+  .about{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+  .about img{
+    max-width:300px;
+    margin:auto;
+  }
   section{padding:80px 30px;}
+  h2{font-size:32px}
+  .slider-arrow{
+    width:40px;
+    height:40px;
+    font-size:24px;
+  }
+}
+@media(max-width:600px){
+  .hero-text h1{font-size:36px}
+  .btn{
+    padding:10px 24px;
+    font-size:14px;
+  }
 }
 </style>
 </head>
 <body>
 
-<!-- NAV WITH TOGGLE -->
+<!-- NAV WITH THEME TOGGLE -->
 <nav>
   <img src="logo.png" class="logo" alt="Marc Wanjeru Logo">
-  <div style="display:flex; align-items:center; gap:30px;">
+  <div>
     <ul>
       <li><a href="#home">Home</a></li>
       <li><a href="#about">About</a></li>
@@ -256,23 +422,145 @@ footer{
   </div>
 </nav>
 
-<!-- Rest of your body content remains exactly the same -->
-<!-- (Hero, About, Journey, Projects, etc.) -->
+<!-- HERO -->
+<header id="home">
+  <div class="hero-text">
+    <h1>Marc <span>Wanjeru</span></h1>
+    <p>IT Systems & Web Specialist</p>
+    <a href="path-to-your-cv.pdf" class="btn" download>Download CV</a>
+    <a href="#contact" class="btn" style="background:var(--accent); color:#000;">Get in Touch</a>
+  </div>
+</header>
+
+<!-- ABOUT -->
+<section id="about" class="fade">
+  <h2>About Me</h2>
+  <div class="about">
+    <p>
+      IT Systems Specialist with experience in enterprise IT support, networking,
+      cybersecurity, and infrastructure operations. Passionate about building secure, 
+      efficient systems that empower organizations and teams.
+    </p>
+    <img src="profile.jpg" alt="Marc Wanjeru - Professional Portrait">
+  </div>
+</section>
+
+<!-- JOURNEY -->
+<section id="journey" class="fade">
+  <h2>Professional Journey</h2>
+  <div class="timeline-journey">
+    <div class="timeline-item"><h3>Foundations</h3><p>Hands-on IT support and troubleshooting in dynamic environments.</p></div>
+    <div class="timeline-item"><h3>Enterprise Growth</h3><p>Supporting NGO and logistics infrastructure at scale.</p></div>
+    <div class="timeline-item"><h3>Systems & Security</h3><p>Advanced infrastructure, networking, and cybersecurity implementations.</p></div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="fade">
+  <h2>Projects</h2>
+  <div class="slider-wrapper">
+    <button class="slider-arrow left" onclick="scrollSlider('projectsGrid',-1)">‹</button>
+    <button class="slider-arrow right" onclick="scrollSlider('projectsGrid',1)">›</button>
+    <div class="slider-grid" id="projectsGrid">
+      <div class="project-card">
+        <h3>IT Infrastructure Upgrade</h3>
+        <p>Designed and deployed LAN, wireless networks, and endpoint security for mid-sized organizations.</p>
+      </div>
+      <div class="project-card">
+        <h3>Endpoint Security Deployment</h3>
+        <p>Implemented Kaspersky Security Center for enterprise-wide endpoint protection and compliance.</p>
+      </div>
+      <div class="project-card">
+        <h3>Digital Logistics System</h3>
+        <p>Built internal systems to streamline logistics, procurement, and operational workflows.</p>
+      </div>
+      <div class="project-card">
+        <h3>Microsoft 365 Administration</h3>
+        <p>Managed users, permissions, collaboration tools, and migration projects.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORIES -->
+<section id="stories" class="fade">
+  <h2>Stories & Experiences</h2>
+  <div class="stories">
+    <div class="story">
+      <h3>Working in High-Impact Environments</h3>
+      <p>
+        Supporting NGO operations taught me how critical system uptime and security
+        are when technology directly supports humanitarian work.
+      </p>
+    </div>
+    <div class="story">
+      <h3>Learning Through Challenges</h3>
+      <p>
+        From network failures to security incidents, each challenge strengthened my
+        problem-solving and decision-making under pressure.
+      </p>
+    </div>
+    <div class="story">
+      <h3>Growth Beyond Technical Skills</h3>
+      <p>
+        Collaborating with diverse teams improved my communication, documentation,
+        and leadership abilities.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- TECHNOLOGIES -->
+<section id="technologies" class="fade">
+  <h2>Technologies & Platforms</h2>
+  <div class="slider-wrapper">
+    <button class="slider-arrow left" onclick="scrollSlider('techGrid',-1)">‹</button>
+    <button class="slider-arrow right" onclick="scrollSlider('techGrid',1)">›</button>
+    <div class="slider-grid" id="techGrid">
+      <a class="tech" href="https://www.cisco.com" target="_blank"><img src="cisco.png" alt="Cisco"><p>Cisco</p></a>
+      <a class="tech" href="https://www.microsoft.com/en-us/windows" target="_blank"><img src="windows.png" alt="Windows"><p>Windows</p></a>
+      <a class="tech" href="https://ubuntu.com" target="_blank"><img src="linux.png" alt="Linux"><p>Linux</p></a>
+      <a class="tech" href="https://www.microsoft.com/microsoft-365" target="_blank"><img src="microsoft365.png" alt="Microsoft 365"><p>Microsoft 365</p></a>
+      <a class="tech" href="https://www.kaspersky.com" target="_blank"><img src="kaspersky.png" alt="Kaspersky"><p>Kaspersky</p></a>
+      <a class="tech" href="https://www.atlassian.com/software/jira" target="_blank"><img src="jira.png" alt="Jira"><p>Jira</p></a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="fade">
+  <h2>Contact</h2>
+  <p>Email: <a href="mailto:wanjerumarc@icloud.com">wanjerumarc@icloud.com</a></p>
+  <p>Phone: <a href="tel:+256769593704">+256 769 593 704</a></p>
+  <p>Location: Johannesburg, South Africa</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Marc Wanjeru. All rights reserved.</p>
+  <p>
+    <a href="https://www.linkedin.com/in/your-profile" target="_blank">LinkedIn</a> • 
+    <a href="https://github.com/your-username" target="_blank">GitHub</a>
+  </p>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a class="whatsapp-float" href="https://wa.me/256769593704?text=Hi%20Marc%2C%20I'd%20like%20to%20connect!" target="_blank" aria-label="Chat on WhatsApp">💬</a>
 
 <!-- SCRIPTS -->
 <script>
-// ===== THEME TOGGLE SCRIPT =====
+// Theme Toggle
 const themeToggle = document.getElementById('themeToggle');
 const body = document.body;
 
-// Check for saved theme preference or default to dark
-const currentTheme = localStorage.getItem('theme') || 'dark';
-if (currentTheme === 'light') {
+// Load saved theme or default to dark
+const savedTheme = localStorage.getItem('theme') || 'dark';
+if (savedTheme === 'light') {
   body.setAttribute('data-theme', 'light');
   themeToggle.textContent = '☀️';
 }
 
-// Toggle theme on click
+// Toggle function
 themeToggle.addEventListener('click', () => {
   if (body.hasAttribute('data-theme')) {
     body.removeAttribute('data-theme');
@@ -285,7 +573,7 @@ themeToggle.addEventListener('click', () => {
   }
 });
 
-// ===== EXISTING SCRIPTS (Fade + Slider) =====
+// Fade-in on scroll
 const faders = document.querySelectorAll('.fade');
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
@@ -294,8 +582,10 @@ const observer = new IntersectionObserver(entries => {
     }
   });
 }, { threshold: 0.1 });
+
 faders.forEach(fade => observer.observe(fade));
 
+// Slider scroll function
 function scrollSlider(id, direction) {
   const slider = document.getElementById(id);
   const scrollAmount = 320;
