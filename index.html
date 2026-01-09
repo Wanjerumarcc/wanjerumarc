@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <title>Marc Wanjeru | IT Systems & Web Specialist</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<!-- FAVICON ADDED -->
+<!-- FAVICON -->
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" href="favicon.png">
@@ -259,6 +259,62 @@ h2{
   margin-left: 10px;
 }
 
+/* SERVICES SECTION - NEW */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+.service-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 5px 15px var(--shadow);
+  transition: all 0.3s ease;
+}
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0,188,212,.2);
+}
+.service-card i {
+  font-size: 48px;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+.service-card h3 {
+  color: var(--accent);
+  margin-bottom: 15px;
+}
+.service-card p {
+  font-size: 15px;
+  opacity: 0.9;
+}
+
+/* CONTACT SECTION - UPGRADED WITH CALENDLY */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-top: 40px;
+  align-items: start;
+}
+.contact-info h3 {
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+.contact-info p {
+  font-size: 18px;
+  margin: 15px 0;
+}
+.calendly-wrapper {
+  min-height: 650px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px var(--shadow);
+}
+
 /* SLIDER BASE */
 .slider-wrapper{
   position:relative;
@@ -354,12 +410,6 @@ h2{
   color:var(--accent);
 }
 
-/* CONTACT */
-#contact p{
-  font-size:18px;
-  margin:15px 0;
-}
-
 /* FOOTER */
 footer{
   text-align:center;
@@ -432,8 +482,14 @@ footer a{
     height:40px;
     font-size:24px;
   }
-  .journey-grid {
+  .journey-grid, .services-grid {
     grid-template-columns: 1fr;
+  }
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+  .calendly-wrapper {
+    min-height: 800px;
   }
 }
 @media(max-width:600px){
@@ -444,6 +500,9 @@ footer a{
   }
 }
 </style>
+<!-- CALENDLY SCRIPT -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 </head>
 <body>
 
@@ -455,6 +514,7 @@ footer a{
       <li><a href="#home">Home</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#journey">Journey</a></li>
+      <li><a href="#services">Services</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#stories">Stories</a></li>
       <li><a href="#technologies">Technologies</a></li>
@@ -489,11 +549,10 @@ footer a{
   </div>
 </section>
 
-<!-- JOURNEY - GRID VERSION -->
+<!-- JOURNEY -->
 <section id="journey" class="fade">
   <h2>Professional Journey</h2>
   <div class="journey-grid">
-    <!-- Card 1 -->
     <div class="journey-card">
       <img src="company1.png" alt="Company 1 Logo">
       <div class="content">
@@ -510,7 +569,6 @@ footer a{
       </div>
     </div>
 
-    <!-- Card 2 -->
     <div class="journey-card">
       <img src="company2.png" alt="Company 2 Logo">
       <div class="content">
@@ -527,7 +585,6 @@ footer a{
       </div>
     </div>
 
-    <!-- Card 3 -->
     <div class="journey-card">
       <img src="company3.png" alt="Company 3 Logo">
       <div class="content">
@@ -542,6 +599,43 @@ footer a{
           </ul>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEW SERVICES SECTION -->
+<section id="services" class="fade">
+  <h2>Services I Offer</h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <i>💻</i>
+      <h3>IT Consultation</h3>
+      <p>Expert advice on system architecture, infrastructure planning, cloud migration, and technology strategy tailored to your business needs.</p>
+    </div>
+    <div class="service-card">
+      <i>🔧</i>
+      <h3>Hardware & Software Repairs</h3>
+      <p>Diagnosis and repair of laptops, desktops, servers, printers, and software issues — both remote and on-site support.</p>
+    </div>
+    <div class="service-card">
+      <i>🛒</i>
+      <h3>Tech Buyers Guide</h3>
+      <p>Personalized recommendations for purchasing laptops, networking gear, security tools, and software to fit your budget and requirements.</p>
+    </div>
+    <div class="service-card">
+      <i>🌐</i>
+      <h3>Network Setup & Security</h3>
+      <p>Design, installation, and securing of wired/wireless networks, firewalls, VPNs, and endpoint protection for homes and businesses.</p>
+    </div>
+    <div class="service-card">
+      <i>☁️</i>
+      <h3>Microsoft 365 & Cloud Solutions</h3>
+      <p>Setup, administration, migration, and optimization of Microsoft 365, Azure, email, and collaboration tools.</p>
+    </div>
+    <div class="service-card">
+      <i>🛡️</i>
+      <h3>Cybersecurity Services</h3>
+      <p>Vulnerability assessments, antivirus deployment, security audits, and incident response planning.</p>
     </div>
   </div>
 </section>
@@ -618,12 +712,22 @@ footer a{
   </div>
 </section>
 
-<!-- CONTACT -->
+<!-- CONTACT - FULLY UPGRADED -->
 <section id="contact" class="fade">
-  <h2>Contact</h2>
-  <p>Email: <a href="mailto:wanjerumarc@icloud.com">wanjerumarc@icloud.com</a></p>
-  <p>Phone: <a href="tel:+256769593704">+256 769 593 704</a></p>
-  <p>Location: Johannesburg, South Africa</p>
+  <h2>Let's Connect</h2>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <h3>Get in Touch</h3>
+      <p>Email: <a href="mailto:wanjerumarc@icloud.com">wanjerumarc@icloud.com</a></p>
+      <p>Phone: <a href="tel:+256769593704">+256 769 593 704</a></p>
+      <p>Location: Johannesburg, South Africa</p>
+      <p style="margin-top:30px;">I'm available for freelance projects, consultations, repairs, and collaboration. Feel free to reach out via email, phone, WhatsApp, or book a free 30-minute discovery call below.</p>
+    </div>
+    <div class="calendly-wrapper">
+      <!-- Replace YOUR_CALENDLY_LINK with your actual Calendly URL -->
+      <div class="calendly-inline-widget" data-url="https://calendly.com/your-calendly-username/30min" style="min-width:320px; height:100%;"></div>
+    </div>
+  </div>
 </section>
 
 <!-- FOOTER -->
@@ -644,14 +748,12 @@ footer a{
 const themeToggle = document.getElementById('themeToggle');
 const body = document.body;
 
-// Load saved theme or default to dark
 const savedTheme = localStorage.getItem('theme') || 'dark';
 if (savedTheme === 'light') {
   body.setAttribute('data-theme', 'light');
   themeToggle.textContent = '☀️';
 }
 
-// Toggle function
 themeToggle.addEventListener('click', () => {
   if (body.hasAttribute('data-theme')) {
     body.removeAttribute('data-theme');
@@ -682,6 +784,16 @@ function scrollSlider(id, direction) {
   const scrollAmount = 320;
   slider.scrollLeft += direction * scrollAmount;
 }
+
+// Initialize Calendly widget after page load
+window.onload = function() {
+  if (window.Calendly) {
+    Calendly.initInlineWidget({
+      url: 'https://calendly.com/wanjerumarc/30min',
+      parentElement: document.querySelector('.calendly-inline-widget')
+    });
+  }
+};
 </script>
 </body>
 </html>
