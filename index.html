@@ -1,181 +1,261 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Marc Wanjeru | IT Systems & Web Specialist</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<title>Marc Wanjeru | IT Systems Specialist</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- ICONS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
 <style>
-/* ===== GLOBAL ===== */
-* { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
-body {
-  font-family: "Segoe UI", sans-serif;
+/* RESET */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Segoe UI",sans-serif;
   background:#0b0f14;
   color:#e6e6e6;
+  line-height:1.6
 }
-a { color:#00bcd4; text-decoration:none; }
+a{color:#00bcd4;text-decoration:none}
+img{max-width:100%}
 
-/* ===== NAV ===== */
-nav {
+/* NAV */
+nav{
   position:fixed;
-  top:0; width:100%;
+  top:0;
+  width:100%;
+  z-index:1000;
+  background:rgba(11,15,20,.95);
+  padding:15px 30px;
   display:flex;
   justify-content:space-between;
-  align-items:center;
-  padding:15px 25px;
-  background:rgba(11,15,20,0.95);
-  z-index:1000;
+  align-items:center
 }
-.logo { height:40px; background:#fff; padding:5px; border-radius:8px; }
-nav ul {
+.logo{
+  height:40px;
+  background:#fff;
+  padding:6px 10px;
+  border-radius:8px
+}
+nav ul{
   list-style:none;
   display:flex;
-  gap:20px;
+  gap:20px
 }
-.menu-toggle {
+.menu-toggle{
   display:none;
   font-size:26px;
-  cursor:pointer;
-  color:#00bcd4;
+  cursor:pointer
 }
 
-/* ===== HERO ===== */
-header {
+/* HERO */
+header{
   height:100vh;
   background:
-    linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),
+    linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),
     url("desktop.jpg") center/cover no-repeat;
   display:flex;
   align-items:center;
-  padding:0 30px;
+  padding:0 40px
 }
-.hero-text h1 { font-size:48px; }
-.hero-text span { color:#00bcd4; }
-.hero-text p { margin:15px 0; font-size:18px; }
-.btn {
+.hero-text{
+  animation:slideIn 1.2s ease forwards
+}
+@keyframes slideIn{
+  from{opacity:0;transform:translateX(-40px)}
+  to{opacity:1;transform:translateX(0)}
+}
+.hero-text h1{font-size:52px}
+.hero-text span{color:#00bcd4}
+.hero-text p{font-size:20px;margin:15px 0}
+.btn{
   display:inline-block;
-  padding:12px 28px;
+  padding:12px 30px;
   border:1px solid #00bcd4;
   border-radius:30px;
-  margin-right:10px;
+  transition:.3s
 }
+.btn:hover{background:#00bcd4;color:#000}
 
-/* ===== SECTIONS ===== */
-section {
-  padding:90px 25px;
+/* SECTIONS */
+section{
+  padding:100px 40px;
   max-width:1200px;
-  margin:auto;
+  margin:auto
 }
-h2 { color:#00bcd4; margin-bottom:25px; }
+h2{
+  font-size:34px;
+  margin-bottom:30px;
+  color:#00bcd4
+}
 
-/* ===== SLIDERS ===== */
-.slider-wrapper {
+/* FADE */
+.fade{
+  opacity:0;
+  transform:translateY(30px);
+  transition:.8s
+}
+.fade.show{
+  opacity:1;
+  transform:none
+}
+
+/* ABOUT */
+.about{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+  align-items:center
+}
+
+/* TIMELINE */
+.timeline{
+  border-left:2px solid #00bcd4;
+  padding-left:30px
+}
+.timeline-item{
+  margin-bottom:30px;
+  position:relative
+}
+.timeline-item::before{
+  content:"";
+  position:absolute;
+  left:-41px;
+  top:6px;
+  width:14px;
+  height:14px;
+  background:#00bcd4;
+  border-radius:50%
+}
+
+/* SLIDERS */
+.slider-wrapper{
   position:relative;
 }
-.slider {
+.slider{
   display:flex;
   gap:20px;
   overflow-x:auto;
-  scroll-snap-type:x mandatory;
-  -webkit-overflow-scrolling:touch;
+  scroll-behavior:smooth;
+  padding-bottom:10px
 }
-.slider::-webkit-scrollbar { display:none; }
-.card {
-  min-width:280px;
-  background:#141a22;
+.slider::-webkit-scrollbar{display:none}
+.card{
+  min-width:260px;
+  background:#121821;
   padding:20px;
   border-radius:12px;
-  scroll-snap-align:start;
+  flex-shrink:0
 }
-.arrow {
+.card h3{color:#00bcd4;margin-bottom:10px}
+
+/* SLIDER ARROWS */
+.slider-btn{
   position:absolute;
   top:50%;
   transform:translateY(-50%);
-  background:#00bcd4;
-  color:#000;
-  border:none;
   width:40px;
   height:40px;
   border-radius:50%;
-  cursor:pointer;
-}
-.arrow.left { left:-10px; }
-.arrow.right { right:-10px; }
-
-/* ===== TECHNOLOGIES ===== */
-.tech img { height:45px; }
-
-/* ===== CONTACT FORM ===== */
-form {
-  max-width:500px;
-  margin:auto;
-}
-input, textarea {
-  width:100%;
-  margin-bottom:15px;
-  padding:12px;
-  border-radius:6px;
+  background:#00bcd4;
+  color:#000;
   border:none;
+  cursor:pointer;
+  z-index:10
 }
-button.submit {
-  width:100%;
+.slider-btn.left{left:-15px}
+.slider-btn.right{right:-15px}
+
+/* TECHNOLOGIES */
+.tech{
+  min-width:120px;
+  text-align:center
+}
+.tech img{height:48px;margin-bottom:8px}
+
+/* CONTACT */
+form{
+  display:grid;
+  gap:15px;
+  max-width:500px
+}
+input,textarea{
+  padding:12px;
+  border-radius:8px;
+  border:none;
+  background:#1a1f27;
+  color:#fff
+}
+button.submit{
   background:#00bcd4;
   border:none;
   padding:12px;
   border-radius:25px;
+  cursor:pointer
 }
 
-/* ===== FLOATING FAB ===== */
-.fab {
+/* FLOATING FAB */
+.fab{
   position:fixed;
   bottom:25px;
   right:25px;
+  z-index:2000
 }
-.fab-main {
-  width:56px;
-  height:56px;
+.fab-main{
+  width:55px;
+  height:55px;
   border-radius:50%;
   background:#00bcd4;
-  border:none;
-  font-size:28px;
-}
-.fab-item {
-  position:absolute;
-  right:0;
-  width:48px;
-  height:48px;
-  border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
-  background:#1a1f27;
+  font-size:22px;
+  cursor:pointer
+}
+.fab-menu{
+  display:none;
+  flex-direction:column;
+  gap:15px;
+  margin-bottom:15px;
+  align-items:center
+}
+.fab-menu a{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:#121821;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   color:#00bcd4;
-  opacity:0;
-  transform:scale(0);
-  transition:.3s;
+  font-size:20px
 }
-.fab.active .fab-item {
-  opacity:1;
-  transform:scale(1);
-}
-.fab-item.whatsapp { bottom:70px; }
-.fab-item.email { bottom:130px; }
-.fab-item.linkedin { bottom:190px; }
 
-/* ===== MOBILE ===== */
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:30px;
+  background:#070a0f
+}
+
+/* RESPONSIVE */
 @media(max-width:900px){
-  nav ul {
+  .about{grid-template-columns:1fr}
+  header{padding:0 20px}
+  nav ul{
     position:absolute;
     top:70px;
-    right:0;
+    right:30px;
     background:#0b0f14;
     flex-direction:column;
-    width:100%;
-    display:none;
+    padding:20px;
+    display:none
   }
-  nav ul.show { display:flex; }
-  .menu-toggle { display:block; }
+  nav ul.show{display:flex}
+  .menu-toggle{display:block}
+  .hero-text h1{font-size:40px}
 }
 </style>
 </head>
@@ -184,107 +264,136 @@ button.submit {
 
 <!-- NAV -->
 <nav>
-  <img src="logo.png" class="logo">
-  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-  <ul id="nav-links">
-    <li><a href="#home">Home</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#certs">Certifications</a></li>
-    <li><a href="#tech">Technologies</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+<img src="logo.png" class="logo" alt="Logo">
+<i class="fas fa-bars menu-toggle" onclick="toggleMenu()"></i>
+<ul id="navMenu">
+<li><a href="#home">Home</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#journey">Journey</a></li>
+<li><a href="#projects">Projects</a></li>
+<li><a href="#certs">Certifications</a></li>
+<li><a href="#technologies">Technologies</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
 </nav>
 
 <!-- HERO -->
 <header id="home">
-  <div class="hero-text">
-    <h1>Marc <span>Wanjeru</span></h1>
-    <p>IT Systems & Web Specialist</p>
-    <a class="btn" href="#projects">My Work</a>
-  </div>
+<div class="hero-text">
+<h1>Marc <span>Wanjeru</span></h1>
+<p>IT Systems & Web Specialist</p>
+<a class="btn" href="#projects">My Work</a>
+</div>
 </header>
 
+<!-- ABOUT -->
+<section id="about" class="fade">
+<h2>About Me</h2>
+<div class="about">
+<p>
+IT Systems Specialist with experience in enterprise IT support,
+networking, cybersecurity, and Microsoft 365 administration.
+</p>
+<img src="profile.jpg" alt="Profile">
+</div>
+</section>
+
+<!-- JOURNEY -->
+<section id="journey" class="fade">
+<h2>Professional Journey</h2>
+<div class="timeline">
+<div class="timeline-item"><h3>Foundations</h3><p>Hands-on IT support & troubleshooting.</p></div>
+<div class="timeline-item"><h3>Enterprise Growth</h3><p>NGO & logistics environments.</p></div>
+<div class="timeline-item"><h3>Systems & Security</h3><p>Infrastructure, networking, cybersecurity.</p></div>
+</div>
+</section>
+
 <!-- PROJECTS -->
-<section id="projects">
+<section id="projects" class="fade">
 <h2>Projects</h2>
 <div class="slider-wrapper">
-<button class="arrow left" onclick="scrollLeft('proj')">‹</button>
-<div class="slider" id="proj">
-  <div class="card">Web Systems<br>Internal tools & automation</div>
-  <div class="card">Infrastructure<br>Enterprise networks</div>
-  <div class="card">Security<br>Endpoint & firewall</div>
+<button class="slider-btn left" onclick="slide('projects',-1)">‹</button>
+<div class="slider" id="projects-slider">
+<div class="card"><h3>IT Infrastructure Upgrade</h3><p>LAN, Wi-Fi & endpoint security.</p></div>
+<div class="card"><h3>Endpoint Security</h3><p>Kaspersky enterprise deployment.</p></div>
+<div class="card"><h3>Web Systems</h3><p>Internal tools & automation.</p></div>
 </div>
-<button class="arrow right" onclick="scrollRight('proj')">›</button>
+<button class="slider-btn right" onclick="slide('projects',1)">›</button>
 </div>
 </section>
 
 <!-- CERTIFICATIONS -->
-<section id="certs">
+<section id="certs" class="fade">
 <h2>Certifications</h2>
 <div class="slider-wrapper">
-<button class="arrow left" onclick="scrollLeft('cert')">‹</button>
-<div class="slider" id="cert">
-  <div class="card">CompTIA A+<br>Core IT Support</div>
-  <div class="card">Network Fundamentals</div>
-  <div class="card">Cybersecurity Basics</div>
+<button class="slider-btn left" onclick="slide('certs',-1)">‹</button>
+<div class="slider" id="certs-slider">
+<div class="card"><h3>CompTIA A+</h3></div>
+<div class="card"><h3>Network Fundamentals</h3></div>
+<div class="card"><h3>Cybersecurity Awareness</h3></div>
 </div>
-<button class="arrow right" onclick="scrollRight('cert')">›</button>
+<button class="slider-btn right" onclick="slide('certs',1)">›</button>
 </div>
 </section>
 
 <!-- TECHNOLOGIES -->
-<section id="tech">
+<section id="technologies" class="fade">
 <h2>Technologies</h2>
 <div class="slider" id="tech-slider">
-  <div class="card tech"><img src="cisco.png"></div>
-  <div class="card tech"><img src="windows.png"></div>
-  <div class="card tech"><img src="linux.png"></div>
-  <div class="card tech"><img src="microsoft.png"></div>
+<div class="card tech"><img src="cisco.png"><p>Cisco</p></div>
+<div class="card tech"><img src="windows.png"><p>Windows</p></div>
+<div class="card tech"><img src="linux.png"><p>Linux</p></div>
+<div class="card tech"><img src="microsoft.png"><p>Microsoft 365</p></div>
+<div class="card tech"><img src="jira.png"><p>Jira</p></div>
 </div>
 </section>
 
 <!-- CONTACT -->
-<section id="contact">
+<section id="contact" class="fade">
 <h2>Contact</h2>
 <form>
-<input placeholder="Name">
-<input placeholder="Email">
-<textarea placeholder="Message"></textarea>
+<input placeholder="Name" required>
+<input type="email" placeholder="Email" required>
+<textarea rows="5" placeholder="Message"></textarea>
 <button class="submit">Send</button>
 </form>
 </section>
 
+<footer>© 2026 Marc Wanjeru</footer>
+
 <!-- FLOATING CONTACT -->
 <div class="fab">
-<button class="fab-main" onclick="toggleFab()">+</button>
-<a href="https://wa.me/256769593704" class="fab-item whatsapp">🟢</a>
-<a href="mailto:wanjerumarc@icloud.com" class="fab-item email">✉</a>
-<a href="https://linkedin.com" class="fab-item linkedin">in</a>
+<div class="fab-menu" id="fabMenu">
+<a href="https://wa.me/256769593704" target="_blank"><i class="fab fa-whatsapp"></i></a>
+<a href="mailto:wanjerumarc@icloud.com"><i class="fas fa-envelope"></i></a>
+<a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
+</div>
+<div class="fab-main" onclick="toggleFab()"><i class="fas fa-plus"></i></div>
 </div>
 
 <script>
+/* MENU */
 function toggleMenu(){
-  document.getElementById("nav-links").classList.toggle("show");
-}
-function scrollLeft(id){
-  document.getElementById(id).scrollBy({left:-300,behavior:"smooth"});
-}
-function scrollRight(id){
-  document.getElementById(id).scrollBy({left:300,behavior:"smooth"});
-}
-function toggleFab(){
-  document.querySelector(".fab").classList.toggle("active");
+  document.getElementById("navMenu").classList.toggle("show")
 }
 
-/* infinite tech loop */
-const tech = document.getElementById("tech-slider");
-setInterval(()=>{
-  tech.scrollBy({left:1});
-  if(tech.scrollLeft + tech.clientWidth >= tech.scrollWidth){
-    tech.scrollLeft = 0;
-  }
-},30);
+/* SLIDER */
+function slide(id,dir){
+  document.getElementById(id+"-slider").scrollLeft+=dir*280
+}
+
+/* FAB */
+function toggleFab(){
+  const m=document.getElementById("fabMenu")
+  m.style.display=m.style.display==="flex"?"none":"flex"
+}
+
+/* FADE */
+const faders=document.querySelectorAll(".fade")
+const obs=new IntersectionObserver(e=>{
+  e.forEach(x=>x.isIntersecting&&x.target.classList.add("show"))
+},{threshold:.2})
+faders.forEach(f=>obs.observe(f))
 </script>
 
 </body>
