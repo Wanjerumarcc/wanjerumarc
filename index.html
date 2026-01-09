@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Marc Wanjeru | IT Systems & Web Specialist</title>
+  <title>Marc Wanjeru | IT Systems & Web Specialist - Kampala, Uganda</title>
+  <meta name="description" content="Marc Wanjeru is an experienced IT systems and cybersecurity specialist based in Kampala, Uganda. Expert in networking, Microsoft 365, Kaspersky, Sophos, endpoint security, and enterprise infrastructure solutions." />
+  <meta name="robots" content="index, follow" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
@@ -43,7 +45,6 @@
       transition: background .4s, color .4s;
     }
 
-    /* GLASS CARD */
     .glass-card {
       background: var(--glass);
       backdrop-filter: var(--blur);
@@ -109,13 +110,13 @@
     }
     .btn.secondary:hover { background: #fff; color: #000; }
 
-    /* NAVIGATION - CENTERED, NO UNDERLINE, LIQUID BUBBLE HOVER */
+    /* NAVIGATION - VISIBLE ON DESKTOP & MOBILE */
     nav {
       position: fixed;
       top: 0; width: 100%;
       padding: 30px 60px;
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
       z-index: 1000;
       transition: background .4s, padding .4s;
@@ -134,7 +135,7 @@
       color: #fff;
       font-weight: 500;
       font-size: 18px;
-      padding: 12px 24px;
+      padding: 12px 28px;
       border-radius: 50px;
       position: relative;
       overflow: hidden;
@@ -145,7 +146,7 @@
       position: absolute;
       top: 0; left: -100%;
       width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(0,201,177,0.2), transparent);
+      background: linear-gradient(90deg, transparent, rgba(0,201,177,0.25), transparent);
       transition: left .6s;
       z-index: -1;
     }
@@ -156,10 +157,8 @@
       color: var(--highlight);
     }
 
-    /* HAMBURGER WITH THEME TOGGLE */
+    /* HAMBURGER MENU (MOBILE ONLY) */
     .hamburger {
-      position: fixed;
-      top: 30px; right: 60px;
       display: none;
       align-items: center;
       gap: 20px;
@@ -220,7 +219,7 @@
     .about p { font-size: 18px; color: var(--text-muted); }
     .about img { width: 100%; border-radius: 20px; box-shadow: var(--shadow); }
 
-    /* PROFESSIONAL JOURNEY - GRID (NO CAROUSEL FOR SIMPLICITY & RELIABILITY) */
+    /* PROFESSIONAL JOURNEY */
     .journey-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -378,10 +377,11 @@
     }
     .whatsapp-float:hover { transform: scale(1.15); }
 
-    /* RESPONSIVE */
+    /* RESPONSIVE FIXES */
     @media (max-width: 1024px) {
       .desktop-menu { display: none; }
       .hamburger { display: flex; }
+      nav { justify-content: flex-end; padding: 30px 60px; }
     }
     @media (max-width: 900px) {
       section { padding: 100px 30px; }
@@ -389,6 +389,10 @@
       .hero-glass { padding: 50px 40px; }
       .hero-glass h1 { font-size: 52px; }
       .hero-glass p { font-size: 22px; }
+    }
+    @media (max-width: 600px) {
+      .hero-glass h1 { font-size: 42px; }
+      .btn { padding: 14px 30px; font-size: 16px; }
     }
   </style>
 </head>
