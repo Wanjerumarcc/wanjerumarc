@@ -1,4 +1,204 @@
-<!DOCTYPE html>
+<!<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Marc Wanjeru | IT Systems Specialist</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ICONS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:Segoe UI, sans-serif; background:#0b0f14; color:#e6e6e6; }
+    a { color:#00bcd4; text-decoration:none; }
+    img { max-width:100%; }
+
+    /* NAV */
+    nav {
+      position:fixed; top:0; width:100%; z-index:1000;
+      display:flex; justify-content:space-between; align-items:center;
+      padding:15px 40px; background:rgba(11,15,20,.95);
+    }
+    nav ul { list-style:none; display:flex; gap:20px; }
+    .logo { height:40px; background:#fff; padding:5px 8px; border-radius:6px; }
+
+    /* HERO */
+    header {
+      height:100vh; display:flex; align-items:center;
+      padding:0 40px; background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)), url('desktop.jpgg') center/cover no-repeat;
+    }
+    .hero-text h1 { font-size:52px; }
+    .hero-text span { color:#00bcd4; }
+    .hero-text p { font-size:20px; margin:15px 0; }
+    .btn { border:1px solid #00bcd4; padding:10px 25px; border-radius:30px; margin-right:10px; }
+
+    /* SECTIONS */
+    section { padding:100px 40px; max-width:1200px; margin:auto; }
+    h2 { color:#00bcd4; margin-bottom:30px; font-size:32px; }
+
+    /* ABOUT */
+    .about { display:grid; grid-template-columns:1fr 1fr; gap:30px; }
+
+    /* SLIDER GENERIC */
+    .slider-container { position:relative; }
+    .slider { display:flex; gap:20px; overflow:hidden; scroll-behavior:smooth; }
+    .card {
+      min-width:280px; background:#121821; padding:20px; border-radius:12px;
+      flex-shrink:0;
+    }
+
+    .slider-btn {
+      position:absolute; top:50%; transform:translateY(-50%);
+      background:#00bcd4; color:#000; border:none;
+      width:40px; height:40px; border-radius:50%; cursor:pointer;
+    }
+    .left { left:-20px; }
+    .right { right:-20px; }
+
+    /* TECHNOLOGIES */
+    .tech img { height:45px; }
+
+    /* CONTACT */
+    form { display:grid; gap:15px; max-width:500px; }
+    input, textarea {
+      padding:12px; border-radius:8px; border:none;
+      background:#1a1f27; color:#fff;
+    }
+    button.submit { background:#00bcd4; border:none; padding:12px; border-radius:25px; cursor:pointer; }
+
+    /* FLOATING CONTACT BUTTON */
+    .fab {
+      position:fixed; bottom:25px; right:25px; z-index:2000;
+    }
+    .fab-main {
+      width:55px; height:55px; border-radius:50%; background:#00bcd4;
+      display:flex; align-items:center; justify-content:center; cursor:pointer;
+    }
+    .fab-menu {
+      display:none; flex-direction:column; gap:15px; margin-bottom:15px;
+    }
+    .fab a {
+      width:45px; height:45px; border-radius:50%; background:#121821;
+      display:flex; align-items:center; justify-content:center;
+      color:#00bcd4;
+    }
+
+    /* FOOTER */
+    footer { text-align:center; padding:30px; background:#070a0f; }
+
+    /* RESPONSIVE */
+    @media(max-width:900px){
+      .about { grid-template-columns:1fr; }
+      header { padding:0 20px; }
+      nav ul { display:none; }
+      .hero-text h1 { font-size:38px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <img src="logo.png" class="logo" />
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certs">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<header id="home">
+  <div class="hero-text">
+    <h1>Marc <span>Wanjeru</span></h1>
+    <p>IT Systems & Web Specialist</p>
+    <a class="btn" href="#projects">My Work</a>
+  </div>
+</header>
+
+<section id="projects">
+  <h2>Projects & Experience</h2>
+  <div class="slider-container">
+    <button class="slider-btn left" onclick="slide('projects',-1)"><i class="fas fa-chevron-left"></i></button>
+    <div class="slider" id="projects-slider">
+      <div class="card"><h3>Enterprise IT Support</h3><p>Oxfam Uganda infrastructure & user support.</p></div>
+      <div class="card"><h3>System Administration</h3><p>Security, networks, and endpoints at C4 Logistics.</p></div>
+      <div class="card"><h3>Web Systems</h3><p>Internal tools & automation solutions.</p></div>
+    </div>
+    <button class="slider-btn right" onclick="slide('projects',1)"><i class="fas fa-chevron-right"></i></button>
+  </div>
+</section>
+
+<section id="certs">
+  <h2>Certifications</h2>
+  <div class="slider-container">
+    <button class="slider-btn left" onclick="slide('certs',-1)"><i class="fas fa-chevron-left"></i></button>
+    <div class="slider" id="certs-slider">
+      <div class="card"><h3>CompTIA A+</h3><p>Core IT support & troubleshooting.</p></div>
+      <div class="card"><h3>Network Fundamentals</h3><p>Networking & infrastructure basics.</p></div>
+      <div class="card"><h3>Cybersecurity Awareness</h3><p>Security operations & best practices.</p></div>
+    </div>
+    <button class="slider-btn right" onclick="slide('certs',1)"><i class="fas fa-chevron-right"></i></button>
+  </div>
+</section>
+
+<section id="technologies">
+  <h2>Technologies</h2>
+  <div class="slider" id="tech-slider">
+    <div class="card tech"><img src="cisco.png"><p>Cisco</p></div>
+    <div class="card tech"><img src="windows.png"><p>Windows</p></div>
+    <div class="card tech"><img src="linux.png"><p>Linux</p></div>
+    <div class="card tech"><img src="microsoft.png"><p>Microsoft 365</p></div>
+    <div class="card tech"><img src="jira.png"><p>Jira</p></div>
+  </div>
+</section>
+
+<section id="contact">
+  <h2>Contact Me</h2>
+  <form>
+    <input type="text" placeholder="Your Name" required>
+    <input type="email" placeholder="Email Address" required>
+    <input type="text" placeholder="Subject">
+    <textarea rows="5" placeholder="Message"></textarea>
+    <button class="submit">Send Message</button>
+  </form>
+</section>
+
+<footer>© 2026 Marc Wanjeru</footer>
+
+<!-- FLOATING CONTACT -->
+<div class="fab">
+  <div class="fab-menu" id="fabMenu">
+    <a href="https://wa.me/256769593704" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <a href="mailto:wanjerumarc@icloud.com"><i class="fas fa-envelope"></i></a>
+    <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
+  </div>
+  <div class="fab-main" onclick="toggleFab()"><i class="fas fa-plus"></i></div>
+</div>
+
+<script>
+  function slide(id,dir){
+    const slider=document.getElementById(id+'-slider');
+    slider.scrollLeft+=dir*300;
+  }
+  function toggleFab(){
+    const menu=document.getElementById('fabMenu');
+    menu.style.display=menu.style.display==='flex'?'none':'flex';
+  }
+
+  /* Infinite tech rotation */
+  const tech=document.getElementById('tech-slider');
+  setInterval(()=>{
+    tech.scrollLeft+=1;
+    if(tech.scrollLeft>=tech.scrollWidth-tech.clientWidth){
+      tech.scrollLeft=0;
+    }
+  },30);
+</script>
+
+</body>
+</html>
+DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
