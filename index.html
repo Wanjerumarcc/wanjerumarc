@@ -1,113 +1,202 @@
-<!<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Marc Wanjeru | IT Systems Specialist</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<title>Marc Wanjeru | IT Systems & Web Specialist</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- ICONS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<style>
+/* ===== GLOBAL ===== */
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "Segoe UI", sans-serif;
+  background:#0b0f14;
+  color:#e6e6e6;
+}
+a { color:#00bcd4; text-decoration:none; }
 
-  <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:Segoe UI, sans-serif; background:#0b0f14; color:#e6e6e6; }
-    a { color:#00bcd4; text-decoration:none; }
-    img { max-width:100%; }
+/* ===== NAV ===== */
+nav {
+  position:fixed;
+  top:0; width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 25px;
+  background:rgba(11,15,20,0.95);
+  z-index:1000;
+}
+.logo { height:40px; background:#fff; padding:5px; border-radius:8px; }
+nav ul {
+  list-style:none;
+  display:flex;
+  gap:20px;
+}
+.menu-toggle {
+  display:none;
+  font-size:26px;
+  cursor:pointer;
+  color:#00bcd4;
+}
 
-    /* NAV */
-    nav {
-      position:fixed; top:0; width:100%; z-index:1000;
-      display:flex; justify-content:space-between; align-items:center;
-      padding:15px 40px; background:rgba(11,15,20,.95);
-    }
-    nav ul { list-style:none; display:flex; gap:20px; }
-    .logo { height:40px; background:#fff; padding:5px 8px; border-radius:6px; }
+/* ===== HERO ===== */
+header {
+  height:100vh;
+  background:
+    linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),
+    url("desktop.jpg") center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  padding:0 30px;
+}
+.hero-text h1 { font-size:48px; }
+.hero-text span { color:#00bcd4; }
+.hero-text p { margin:15px 0; font-size:18px; }
+.btn {
+  display:inline-block;
+  padding:12px 28px;
+  border:1px solid #00bcd4;
+  border-radius:30px;
+  margin-right:10px;
+}
 
-    /* HERO */
-    header {
-      height:100vh; display:flex; align-items:center;
-      padding:0 40px; background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)), url('desktop.jpgg') center/cover no-repeat;
-    }
-    .hero-text h1 { font-size:52px; }
-    .hero-text span { color:#00bcd4; }
-    .hero-text p { font-size:20px; margin:15px 0; }
-    .btn { border:1px solid #00bcd4; padding:10px 25px; border-radius:30px; margin-right:10px; }
+/* ===== SECTIONS ===== */
+section {
+  padding:90px 25px;
+  max-width:1200px;
+  margin:auto;
+}
+h2 { color:#00bcd4; margin-bottom:25px; }
 
-    /* SECTIONS */
-    section { padding:100px 40px; max-width:1200px; margin:auto; }
-    h2 { color:#00bcd4; margin-bottom:30px; font-size:32px; }
+/* ===== SLIDERS ===== */
+.slider-wrapper {
+  position:relative;
+}
+.slider {
+  display:flex;
+  gap:20px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+}
+.slider::-webkit-scrollbar { display:none; }
+.card {
+  min-width:280px;
+  background:#141a22;
+  padding:20px;
+  border-radius:12px;
+  scroll-snap-align:start;
+}
+.arrow {
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:#00bcd4;
+  color:#000;
+  border:none;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  cursor:pointer;
+}
+.arrow.left { left:-10px; }
+.arrow.right { right:-10px; }
 
-    /* ABOUT */
-    .about { display:grid; grid-template-columns:1fr 1fr; gap:30px; }
+/* ===== TECHNOLOGIES ===== */
+.tech img { height:45px; }
 
-    /* SLIDER GENERIC */
-    .slider-container { position:relative; }
-    .slider { display:flex; gap:20px; overflow:hidden; scroll-behavior:smooth; }
-    .card {
-      min-width:280px; background:#121821; padding:20px; border-radius:12px;
-      flex-shrink:0;
-    }
+/* ===== CONTACT FORM ===== */
+form {
+  max-width:500px;
+  margin:auto;
+}
+input, textarea {
+  width:100%;
+  margin-bottom:15px;
+  padding:12px;
+  border-radius:6px;
+  border:none;
+}
+button.submit {
+  width:100%;
+  background:#00bcd4;
+  border:none;
+  padding:12px;
+  border-radius:25px;
+}
 
-    .slider-btn {
-      position:absolute; top:50%; transform:translateY(-50%);
-      background:#00bcd4; color:#000; border:none;
-      width:40px; height:40px; border-radius:50%; cursor:pointer;
-    }
-    .left { left:-20px; }
-    .right { right:-20px; }
+/* ===== FLOATING FAB ===== */
+.fab {
+  position:fixed;
+  bottom:25px;
+  right:25px;
+}
+.fab-main {
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  background:#00bcd4;
+  border:none;
+  font-size:28px;
+}
+.fab-item {
+  position:absolute;
+  right:0;
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#1a1f27;
+  color:#00bcd4;
+  opacity:0;
+  transform:scale(0);
+  transition:.3s;
+}
+.fab.active .fab-item {
+  opacity:1;
+  transform:scale(1);
+}
+.fab-item.whatsapp { bottom:70px; }
+.fab-item.email { bottom:130px; }
+.fab-item.linkedin { bottom:190px; }
 
-    /* TECHNOLOGIES */
-    .tech img { height:45px; }
-
-    /* CONTACT */
-    form { display:grid; gap:15px; max-width:500px; }
-    input, textarea {
-      padding:12px; border-radius:8px; border:none;
-      background:#1a1f27; color:#fff;
-    }
-    button.submit { background:#00bcd4; border:none; padding:12px; border-radius:25px; cursor:pointer; }
-
-    /* FLOATING CONTACT BUTTON */
-    .fab {
-      position:fixed; bottom:25px; right:25px; z-index:2000;
-    }
-    .fab-main {
-      width:55px; height:55px; border-radius:50%; background:#00bcd4;
-      display:flex; align-items:center; justify-content:center; cursor:pointer;
-    }
-    .fab-menu {
-      display:none; flex-direction:column; gap:15px; margin-bottom:15px;
-    }
-    .fab a {
-      width:45px; height:45px; border-radius:50%; background:#121821;
-      display:flex; align-items:center; justify-content:center;
-      color:#00bcd4;
-    }
-
-    /* FOOTER */
-    footer { text-align:center; padding:30px; background:#070a0f; }
-
-    /* RESPONSIVE */
-    @media(max-width:900px){
-      .about { grid-template-columns:1fr; }
-      header { padding:0 20px; }
-      nav ul { display:none; }
-      .hero-text h1 { font-size:38px; }
-    }
-  </style>
+/* ===== MOBILE ===== */
+@media(max-width:900px){
+  nav ul {
+    position:absolute;
+    top:70px;
+    right:0;
+    background:#0b0f14;
+    flex-direction:column;
+    width:100%;
+    display:none;
+  }
+  nav ul.show { display:flex; }
+  .menu-toggle { display:block; }
+}
+</style>
 </head>
+
 <body>
 
+<!-- NAV -->
 <nav>
-  <img src="logo.png" class="logo" />
-  <ul>
+  <img src="logo.png" class="logo">
+  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  <ul id="nav-links">
     <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#certs">Certifications</a></li>
+    <li><a href="#tech">Technologies</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
 
+<!-- HERO -->
 <header id="home">
   <div class="hero-text">
     <h1>Marc <span>Wanjeru</span></h1>
@@ -116,399 +205,86 @@
   </div>
 </header>
 
+<!-- PROJECTS -->
 <section id="projects">
-  <h2>Projects & Experience</h2>
-  <div class="slider-container">
-    <button class="slider-btn left" onclick="slide('projects',-1)"><i class="fas fa-chevron-left"></i></button>
-    <div class="slider" id="projects-slider">
-      <div class="card"><h3>Enterprise IT Support</h3><p>Oxfam Uganda infrastructure & user support.</p></div>
-      <div class="card"><h3>System Administration</h3><p>Security, networks, and endpoints at C4 Logistics.</p></div>
-      <div class="card"><h3>Web Systems</h3><p>Internal tools & automation solutions.</p></div>
-    </div>
-    <button class="slider-btn right" onclick="slide('projects',1)"><i class="fas fa-chevron-right"></i></button>
-  </div>
+<h2>Projects</h2>
+<div class="slider-wrapper">
+<button class="arrow left" onclick="scrollLeft('proj')">‹</button>
+<div class="slider" id="proj">
+  <div class="card">Web Systems<br>Internal tools & automation</div>
+  <div class="card">Infrastructure<br>Enterprise networks</div>
+  <div class="card">Security<br>Endpoint & firewall</div>
+</div>
+<button class="arrow right" onclick="scrollRight('proj')">›</button>
+</div>
 </section>
 
+<!-- CERTIFICATIONS -->
 <section id="certs">
-  <h2>Certifications</h2>
-  <div class="slider-container">
-    <button class="slider-btn left" onclick="slide('certs',-1)"><i class="fas fa-chevron-left"></i></button>
-    <div class="slider" id="certs-slider">
-      <div class="card"><h3>CompTIA A+</h3><p>Core IT support & troubleshooting.</p></div>
-      <div class="card"><h3>Network Fundamentals</h3><p>Networking & infrastructure basics.</p></div>
-      <div class="card"><h3>Cybersecurity Awareness</h3><p>Security operations & best practices.</p></div>
-    </div>
-    <button class="slider-btn right" onclick="slide('certs',1)"><i class="fas fa-chevron-right"></i></button>
-  </div>
+<h2>Certifications</h2>
+<div class="slider-wrapper">
+<button class="arrow left" onclick="scrollLeft('cert')">‹</button>
+<div class="slider" id="cert">
+  <div class="card">CompTIA A+<br>Core IT Support</div>
+  <div class="card">Network Fundamentals</div>
+  <div class="card">Cybersecurity Basics</div>
+</div>
+<button class="arrow right" onclick="scrollRight('cert')">›</button>
+</div>
 </section>
 
-<section id="technologies">
-  <h2>Technologies</h2>
-  <div class="slider" id="tech-slider">
-    <div class="card tech"><img src="cisco.png"><p>Cisco</p></div>
-    <div class="card tech"><img src="windows.png"><p>Windows</p></div>
-    <div class="card tech"><img src="linux.png"><p>Linux</p></div>
-    <div class="card tech"><img src="microsoft.png"><p>Microsoft 365</p></div>
-    <div class="card tech"><img src="jira.png"><p>Jira</p></div>
-  </div>
+<!-- TECHNOLOGIES -->
+<section id="tech">
+<h2>Technologies</h2>
+<div class="slider" id="tech-slider">
+  <div class="card tech"><img src="cisco.png"></div>
+  <div class="card tech"><img src="windows.png"></div>
+  <div class="card tech"><img src="linux.png"></div>
+  <div class="card tech"><img src="microsoft.png"></div>
+</div>
 </section>
 
+<!-- CONTACT -->
 <section id="contact">
-  <h2>Contact Me</h2>
-  <form>
-    <input type="text" placeholder="Your Name" required>
-    <input type="email" placeholder="Email Address" required>
-    <input type="text" placeholder="Subject">
-    <textarea rows="5" placeholder="Message"></textarea>
-    <button class="submit">Send Message</button>
-  </form>
+<h2>Contact</h2>
+<form>
+<input placeholder="Name">
+<input placeholder="Email">
+<textarea placeholder="Message"></textarea>
+<button class="submit">Send</button>
+</form>
 </section>
-
-<footer>© 2026 Marc Wanjeru</footer>
 
 <!-- FLOATING CONTACT -->
 <div class="fab">
-  <div class="fab-menu" id="fabMenu">
-    <a href="https://wa.me/256769593704" target="_blank"><i class="fab fa-whatsapp"></i></a>
-    <a href="mailto:wanjerumarc@icloud.com"><i class="fas fa-envelope"></i></a>
-    <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
-  </div>
-  <div class="fab-main" onclick="toggleFab()"><i class="fas fa-plus"></i></div>
+<button class="fab-main" onclick="toggleFab()">+</button>
+<a href="https://wa.me/256769593704" class="fab-item whatsapp">🟢</a>
+<a href="mailto:wanjerumarc@icloud.com" class="fab-item email">✉</a>
+<a href="https://linkedin.com" class="fab-item linkedin">in</a>
 </div>
 
 <script>
-  function slide(id,dir){
-    const slider=document.getElementById(id+'-slider');
-    slider.scrollLeft+=dir*300;
+function toggleMenu(){
+  document.getElementById("nav-links").classList.toggle("show");
+}
+function scrollLeft(id){
+  document.getElementById(id).scrollBy({left:-300,behavior:"smooth"});
+}
+function scrollRight(id){
+  document.getElementById(id).scrollBy({left:300,behavior:"smooth"});
+}
+function toggleFab(){
+  document.querySelector(".fab").classList.toggle("active");
+}
+
+/* infinite tech loop */
+const tech = document.getElementById("tech-slider");
+setInterval(()=>{
+  tech.scrollBy({left:1});
+  if(tech.scrollLeft + tech.clientWidth >= tech.scrollWidth){
+    tech.scrollLeft = 0;
   }
-  function toggleFab(){
-    const menu=document.getElementById('fabMenu');
-    menu.style.display=menu.style.display==='flex'?'none':'flex';
-  }
-
-  /* Infinite tech rotation */
-  const tech=document.getElementById('tech-slider');
-  setInterval(()=>{
-    tech.scrollLeft+=1;
-    if(tech.scrollLeft>=tech.scrollWidth-tech.clientWidth){
-      tech.scrollLeft=0;
-    }
-  },30);
-</script>
-
-</body>
-</html>
-DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>John Mark Kiritu | IT Systems Specialist</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- ICONS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: "Segoe UI", sans-serif;
-      background: #0b0f14;
-      color: #e6e6e6;
-      line-height: 1.6;
-    }
-
-    a {
-      color: #00bcd4;
-      text-decoration: none;
-    }
-
-    /* NAV */
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: rgba(11,15,20,0.95);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 50px;
-      z-index: 1000;
-    }
-
-    nav ul {
-      display: flex;
-      list-style: none;
-      gap: 25px;
-    }
-
-    nav li a {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-    }
-
-    .logo {
-      height: 40px;
-      background: #fff;
-      padding: 6px 10px;
-      border-radius: 8px;
-    }
-
-    /* HERO */
-    header {
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 0 60px;
-      background:
-        linear-gradient(rgba(0,0,0,.75), rgba(0,0,0,.75)),
-        url("desktop.jpg") center/cover no-repeat;
-    }
-
-    .hero-text h1 {
-      font-size: 58px;
-    }
-
-    .hero-text span {
-      color: #00bcd4;
-    }
-
-    .btn {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 30px;
-      border: 1px solid #00bcd4;
-      border-radius: 30px;
-      transition: .3s;
-    }
-
-    .btn:hover {
-      background: #00bcd4;
-      color: #000;
-    }
-
-    section {
-      padding: 100px 60px;
-      max-width: 1200px;
-      margin: auto;
-    }
-
-    h2 {
-      color: #00bcd4;
-      margin-bottom: 25px;
-    }
-
-    /* FADE (FAILSAFE FIX) */
-    .fade {
-      opacity: 1;
-      transform: none;
-    }
-
-    .js .fade {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: .8s;
-    }
-
-    .fade.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ABOUT */
-    .about {
-      max-width: 900px;
-      font-size: 18px;
-    }
-
-    /* JOURNEY */
-    .timeline-journey {
-      border-left: 2px solid #00bcd4;
-      padding-left: 30px;
-    }
-
-    .timeline-item {
-      margin-bottom: 30px;
-    }
-
-    /* EXPERIENCE */
-    .job {
-      margin-bottom: 30px;
-      border-left: 2px solid #00bcd4;
-      padding-left: 20px;
-    }
-
-    /* TECHNOLOGIES SLIDER */
-    .tech-wrapper {
-      position: relative;
-      overflow: hidden;
-    }
-
-    .tech-slider {
-      display: flex;
-      gap: 40px;
-      transition: transform 0.5s ease;
-    }
-
-    .tech {
-      min-width: 120px;
-      text-align: center;
-    }
-
-    .tech img {
-      height: 50px;
-    }
-
-    .arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 30px;
-      cursor: pointer;
-      color: #00bcd4;
-      z-index: 10;
-    }
-
-    .arrow.left { left: 10px; }
-    .arrow.right { right: 10px; }
-
-    /* CONTACT */
-    .contact-icons a {
-      font-size: 26px;
-      margin-right: 20px;
-    }
-
-    /* WHATSAPP */
-    .whatsapp-float {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
-      background: #25D366;
-      color: #fff;
-      padding: 14px 16px;
-      border-radius: 50%;
-      font-size: 26px;
-      z-index: 1000;
-    }
-
-    footer {
-      text-align: center;
-      padding: 30px;
-      background: #070a0f;
-      font-size: 14px;
-    }
-  </style>
-</head>
-
-<body class="js">
-
-<nav>
-  <img src="logo.png" class="logo" alt="Logo">
-  <ul>
-    <li><a href="#home"><i class="fa fa-house"></i>Home</a></li>
-    <li><a href="#about"><i class="fa fa-user"></i>About</a></li>
-    <li><a href="#journey"><i class="fa fa-road"></i>Journey</a></li>
-    <li><a href="#experience"><i class="fa fa-briefcase"></i>Experience</a></li>
-    <li><a href="#technologies"><i class="fa fa-microchip"></i>Tech</a></li>
-    <li><a href="#contact"><i class="fa fa-envelope"></i>Contact</a></li>
-  </ul>
-</nav>
-
-<header id="home">
-  <div class="hero-text">
-    <h1>Marc <span>Wanjeru</span></h1>
-    <p>IT Systems & Infrastructure Specialist</p>
-    <a class="btn" href="mailto:wanjerumarc@icloud.com?subject=Request Teams Meeting">
-      Request a Teams Meeting
-    </a>
-  </div>
-</header>
-
-<section id="about" class="fade">
-  <h2>About Me</h2>
-  <div class="about">
-    IT Systems Specialist with experience across NGO and enterprise environments,
-    focusing on infrastructure, cybersecurity, and reliable digital operations.
-  </div>
-</section>
-
-<section id="journey" class="fade">
-  <h2>Professional Journey</h2>
-  <div class="timeline-journey">
-    <div class="timeline-item">IT Support Foundations</div>
-    <div class="timeline-item">Enterprise & NGO Environments</div>
-    <div class="timeline-item">Infrastructure & Security Roles</div>
-    <div class="timeline-item">Scalable & Secure Systems Focus</div>
-  </div>
-</section>
-
-<section id="experience" class="fade">
-  <h2>Experience</h2>
-  <div class="job">System Administrator — Double Q (C4 Logistics)</div>
-  <div class="job">IT Support Officer — Oxfam in Uganda</div>
-  <div class="job">Graduate Trainee — Oxfam</div>
-</section>
-
-<section id="technologies" class="fade">
-  <h2>Technologies & Platforms</h2>
-
-  <div class="tech-wrapper">
-    <i class="fa fa-chevron-left arrow left" onclick="slide(-1)"></i>
-
-    <div class="tech-slider" id="slider">
-      <a class="tech" href="https://www.cisco.com"><img src="cisco.png"><p>Cisco</p></a>
-      <a class="tech" href="https://www.microsoft.com/windows"><img src="windows.png"><p>Windows</p></a>
-      <a class="tech" href="https://ubuntu.com"><img src="linux.png"><p>Linux</p></a>
-      <a class="tech" href="https://github.com/Wanjerumarcc"><img src="github.png"><p>GitHub</p></a>
-      <a class="tech" href="https://openai.com/chatgpt"><img src="chatgpt.png"><p>ChatGPT</p></a>
-    </div>
-
-    <i class="fa fa-chevron-right arrow right" onclick="slide(1)"></i>
-  </div>
-</section>
-
-<section id="contact" class="fade">
-  <h2>Contact</h2>
-  <p>Email: wanjerumarc@icloud.com</p>
-  <div class="contact-icons">
-    <a href="mailto:wanjerumarc@icloud.com"><i class="fa fa-envelope"></i></a>
-    <a href="https://github.com/Wanjerumarcc"><i class="fa fa-github"></i></a>
-  </div>
-</section>
-
-<footer>
-  © 2026 John Mark Kiritu
-</footer>
-
-<a href="https://wa.me/256769593704" class="whatsapp-float">
-  <i class="fa-brands fa-whatsapp"></i>
-</a>
-
-<script>
-  const faders = document.querySelectorAll('.fade');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => e.isIntersecting && e.target.classList.add('show'));
-  }, { threshold: 0.2 });
-  faders.forEach(f => observer.observe(f));
-
-  let position = 0;
-  const maxScroll = -600;
-  function slide(dir) {
-    position += dir * 200;
-    if (position > 0) position = 0;
-    if (position < maxScroll) position = maxScroll;
-    document.getElementById("slider").style.transform = `translateX(${position}px)`;
-  }
+},30);
 </script>
 
 </body>
