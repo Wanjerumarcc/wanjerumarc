@@ -259,7 +259,7 @@ h2{
   margin-left: 10px;
 }
 
-/* SERVICES SECTION - NEW */
+/* SERVICES SECTION */
 .services-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -292,7 +292,7 @@ h2{
   opacity: 0.9;
 }
 
-/* CONTACT SECTION - UPGRADED WITH CALENDLY */
+/* CONTACT SECTION */
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -313,6 +313,24 @@ h2{
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 10px 30px var(--shadow);
+}
+
+/* PARTNER BADGES IN TECHNOLOGIES */
+.partner-badges {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 50px;
+  flex-wrap: wrap;
+}
+.partner-badges img {
+  height: 80px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px var(--shadow));
+  transition: transform 0.3s;
+}
+.partner-badges img:hover {
+  transform: scale(1.1);
 }
 
 /* SLIDER BASE */
@@ -491,6 +509,12 @@ footer a{
   .calendly-wrapper {
     min-height: 800px;
   }
+  .partner-badges {
+    gap: 30px;
+  }
+  .partner-badges img {
+    height: 60px;
+  }
 }
 @media(max-width:600px){
   .hero-text h1{font-size:36px}
@@ -603,7 +627,7 @@ footer a{
   </div>
 </section>
 
-<!-- NEW SERVICES SECTION -->
+<!-- SERVICES -->
 <section id="services" class="fade">
   <h2>Services I Offer</h2>
   <div class="services-grid">
@@ -695,7 +719,7 @@ footer a{
   </div>
 </section>
 
-<!-- TECHNOLOGIES -->
+<!-- TECHNOLOGIES - WITH PARTNER BADGES -->
 <section id="technologies" class="fade">
   <h2>Technologies & Platforms</h2>
   <div class="slider-wrapper">
@@ -710,9 +734,15 @@ footer a{
       <a class="tech" href="https://www.atlassian.com/software/jira" target="_blank"><img src="jira.png" alt="Jira"><p>Jira</p></a>
     </div>
   </div>
+
+  <!-- PARTNER BADGES -->
+  <div class="partner-badges">
+    <img src="https://7723998.fs1.hubspotusercontent-na1.net/hub/7723998/hubfs/Kaspersky%20gold.webp" alt="Kaspersky Partner">
+    <img src="https://www.avanet.com/assets/sophos-platinum-partner-badge-2024.jpg" alt="Sophos Partner">
+  </div>
 </section>
 
-<!-- CONTACT - FULLY UPGRADED -->
+<!-- CONTACT -->
 <section id="contact" class="fade">
   <h2>Let's Connect</h2>
   <div class="contact-grid">
@@ -720,19 +750,18 @@ footer a{
       <h3>Get in Touch</h3>
       <p>Email: <a href="mailto:wanjerumarc@icloud.com">wanjerumarc@icloud.com</a></p>
       <p>Phone: <a href="tel:+256769593704">+256 769 593 704</a></p>
-      <p>Location: Johannesburg, South Africa</p>
       <p style="margin-top:30px;">I'm available for freelance projects, consultations, repairs, and collaboration. Feel free to reach out via email, phone, WhatsApp, or book a free 30-minute discovery call below.</p>
     </div>
     <div class="calendly-wrapper">
-      <!-- Replace YOUR_CALENDLY_LINK with your actual Calendly URL -->
       <div class="calendly-inline-widget" data-url="https://calendly.com/your-calendly-username/30min" style="min-width:320px; height:100%;"></div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- FOOTER - UPDATED LOCATION WITH FLAG -->
 <footer>
   <p>© 2026 Marc Wanjeru. All rights reserved.</p>
+  <p>Location: 🇺🇬 Kampala, Uganda</p>
   <p>
     <a href="https://www.linkedin.com/in/your-profile" target="_blank">LinkedIn</a> • 
     <a href="https://github.com/your-username" target="_blank">GitHub</a>
@@ -785,7 +814,7 @@ function scrollSlider(id, direction) {
   slider.scrollLeft += direction * scrollAmount;
 }
 
-// Initialize Calendly widget after page load
+// Initialize Calendly widget
 window.onload = function() {
   if (window.Calendly) {
     Calendly.initInlineWidget({
