@@ -173,6 +173,12 @@ h2{
   color:var(--accent);
   text-align:center;
 }
+h3.subsection{
+  font-size:24px;
+  margin:50px 0 20px;
+  text-align:center;
+  color:var(--accent);
+}
 
 /* FADE IN ANIMATION */
 .fade{
@@ -315,16 +321,33 @@ h2{
   box-shadow: 0 10px 30px var(--shadow);
 }
 
-/* PARTNER BADGES IN TECHNOLOGIES */
+/* LOGO GRIDS */
+.logo-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 30px;
+}
+.logo-grid img {
+  height: 60px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+.logo-grid img:hover {
+  transform: scale(1.1);
+}
+
+/* PARTNER BADGES */
 .partner-badges {
   display: flex;
   justify-content: center;
-  gap: 40px;
-  margin-top: 50px;
+  gap: 60px;
+  margin: 60px 0 40px;
   flex-wrap: wrap;
 }
 .partner-badges img {
-  height: 80px;
+  height: 90px;
   object-fit: contain;
   filter: drop-shadow(0 4px 8px var(--shadow));
   transition: transform 0.3s;
@@ -500,8 +523,11 @@ footer a{
     height:40px;
     font-size:24px;
   }
-  .journey-grid, .services-grid {
-    grid-template-columns: 1fr;
+  .journey-grid, .services-grid, .logo-grid {
+    gap: 30px;
+  }
+  .logo-grid img {
+    height: 50px;
   }
   .contact-grid {
     grid-template-columns: 1fr;
@@ -510,10 +536,10 @@ footer a{
     min-height: 800px;
   }
   .partner-badges {
-    gap: 30px;
+    gap: 40px;
   }
   .partner-badges img {
-    height: 60px;
+    height: 70px;
   }
 }
 @media(max-width:600px){
@@ -719,26 +745,30 @@ footer a{
   </div>
 </section>
 
-<!-- TECHNOLOGIES - WITH PARTNER BADGES -->
+<!-- TECHNOLOGIES - EXPANDED WITH OFFICIAL LOGOS -->
 <section id="technologies" class="fade">
-  <h2>Technologies & Platforms</h2>
-  <div class="slider-wrapper">
-    <button class="slider-arrow left" onclick="scrollSlider('techGrid',-1)">‹</button>
-    <button class="slider-arrow right" onclick="scrollSlider('techGrid',1)">›</button>
-    <div class="slider-grid" id="techGrid">
-      <a class="tech" href="https://www.cisco.com" target="_blank"><img src="cisco.png" alt="Cisco"><p>Cisco</p></a>
-      <a class="tech" href="https://www.microsoft.com/en-us/windows" target="_blank"><img src="windows.png" alt="Windows"><p>Windows</p></a>
-      <a class="tech" href="https://ubuntu.com" target="_blank"><img src="linux.png" alt="Linux"><p>Linux</p></a>
-      <a class="tech" href="https://www.microsoft.com/microsoft-365" target="_blank"><img src="microsoft365.png" alt="Microsoft 365"><p>Microsoft 365</p></a>
-      <a class="tech" href="https://www.kaspersky.com" target="_blank"><img src="kaspersky.png" alt="Kaspersky"><p>Kaspersky</p></a>
-      <a class="tech" href="https://www.atlassian.com/software/jira" target="_blank"><img src="jira.png" alt="Jira"><p>Jira</p></a>
-    </div>
+  <h2>Technologies & Platforms I've Worked With</h2>
+  <div class="logo-grid">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Cisco_logo_blue_2016.svg" alt="Cisco Meraki">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/ESET_logo.svg" alt="ESET NOD32">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Windows_11_logo.svg" alt="Windows 10/11">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Ubuntu_logo.svg" alt="Ubuntu Linux">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Microsoft_365_%282022%29.svg" alt="Microsoft 365">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/ServiceNow_logo.svg" alt="ServiceNow">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Jira_Logo.svg" alt="Atlassian Jira">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Sage_Group_logo.svg" alt="Pastel for Finance">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Zoom_logo.svg" alt="Zoom">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_Teams-icon.svg" alt="Microsoft Teams">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Logitech_International_S.A._logo.svg" alt="Logitech">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Kaspersky_Lab_logo.svg" alt="Kaspersky">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Sophos_logo.svg" alt="Sophos">
   </div>
 
-  <!-- PARTNER BADGES -->
+  <!-- PARTNER BADGES - SEPARATE AND AT THE BOTTOM -->
+  <h3 class="subsection">Certified Partner Experience</h3>
   <div class="partner-badges">
-    <img src="https://7723998.fs1.hubspotusercontent-na1.net/hub/7723998/hubfs/Kaspersky%20gold.webp" alt="Kaspersky Partner">
-    <img src="https://www.avanet.com/assets/sophos-platinum-partner-badge-2024.jpg" alt="Sophos Partner">
+    <img src="https://seeklogo.com/images/K/kaspersky-gold-partner-logo-4E4E4E4E4E-seeklogo.com.png" alt="Kaspersky Gold Partner">
+    <img src="https://www.avanet.com/assets/sophos-platinum-partner-badge-2024.jpg" alt="Sophos Platinum Partner">
   </div>
 </section>
 
@@ -758,7 +788,7 @@ footer a{
   </div>
 </section>
 
-<!-- FOOTER - UPDATED LOCATION WITH FLAG -->
+<!-- FOOTER -->
 <footer>
   <p>© 2026 Marc Wanjeru. All rights reserved.</p>
   <p>Location: 🇺🇬 Kampala, Uganda</p>
@@ -818,7 +848,7 @@ function scrollSlider(id, direction) {
 window.onload = function() {
   if (window.Calendly) {
     Calendly.initInlineWidget({
-      url: 'https://calendly.com/wanjerumarc/30min',
+      url: 'https://calendly.com/your-calendly-username/30min',
       parentElement: document.querySelector('.calendly-inline-widget')
     });
   }
