@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Marc Wanjeru is an experienced IT systems and cybersecurity specialist based in Kampala, Uganda. Expert in networking, Microsoft 365, Kaspersky, Sophos, endpoint security, and enterprise infrastructure solutions." />
-  <meta name="robots" content="index, follow" />
-  <title>Marc Wanjeru | IT Systems & Web Specialist - Kampala, Uganda</title>
+  <meta name="description" content="Marc Wanjeru - IT Systems & Cybersecurity Specialist | Kampala, Uganda" />
+  <title>Marc Wanjeru | IT Systems & Web Specialist - Kampala</title>
 
   <!-- Favicons -->
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
@@ -28,6 +27,7 @@
       --pill-hover: rgba(0, 212, 192, 0.18);
       --shadow: 0 8px 32px rgba(0,0,0,0.4);
       --nav-height: 68px;
+      --footer-bg: #0d1b22;
     }
     [data-theme="light"] {
       --bg: #f8fafc;
@@ -39,6 +39,7 @@
       --pill-bg: rgba(240,245,255,0.92);
       --pill-hover: rgba(0,180,162,0.14);
       --shadow: 0 8px 32px rgba(0,0,0,0.1);
+      --footer-bg: #f1f5f9;
     }
 
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -54,7 +55,7 @@
       overflow-x: hidden;
     }
 
-    /* Subtle watercolor-inspired overlay (artistic bleed/noise feel) */
+    /* Subtle watercolor overlay */
     .watercolor-bg {
       position: fixed;
       inset: 0;
@@ -67,7 +68,7 @@
     }
     [data-theme="light"] .watercolor-bg { opacity: 0.15; }
 
-    /* Futuristic Pill Navbar */
+    /* Pill Navbar */
     .nav-container {
       position: fixed;
       top: 16px;
@@ -78,11 +79,7 @@
       max-width: 1180px;
       transition: all 0.4s ease;
     }
-    .nav-container.scrolled {
-      top: 8px;
-      width: 90%;
-      max-width: 1120px;
-    }
+    .nav-container.scrolled { top: 8px; width: 90%; max-width: 1120px; }
     nav.pill-nav {
       height: var(--nav-height);
       background: var(--glass);
@@ -99,18 +96,8 @@
       font-weight: 500;
     }
     .nav-left { display: flex; align-items: center; gap: 16px; }
-    .gear-icon {
-      font-size: 24px;
-      color: var(--highlight);
-      opacity: 0.9;
-    }
-    .nav-items {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex: 1;
-      justify-content: center;
-    }
+    .gear-icon { font-size: 24px; color: var(--highlight); opacity: 0.9; }
+    .nav-items { display: flex; align-items: center; gap: 8px; flex: 1; justify-content: center; }
     .nav-item {
       color: var(--text);
       text-decoration: none;
@@ -119,8 +106,7 @@
       transition: all 0.3s ease;
       white-space: nowrap;
     }
-    .nav-item:hover,
-    .nav-item.active {
+    .nav-item:hover, .nav-item.active {
       background: var(--pill-hover);
       color: var(--highlight);
       box-shadow: inset 0 1px 4px rgba(0,0,0,0.15);
@@ -136,13 +122,9 @@
       gap: 8px;
       transition: all 0.3s;
     }
-    .nav-cta:hover {
-      background: #00a894;
-      transform: translateY(-1px);
-    }
+    .nav-cta:hover { background: #00a894; transform: translateY(-1px); }
     .theme-toggle {
-      width: 52px;
-      height: 28px;
+      width: 52px; height: 28px;
       background: rgba(255,255,255,0.12);
       border-radius: 999px;
       position: relative;
@@ -161,24 +143,19 @@
     [data-theme="light"] .theme-toggle::before { left: 26px; }
     [data-theme="light"] .theme-toggle { background: var(--highlight); }
 
-    /* Mobile - hide items, show hamburger if needed (simple version here) */
     @media (max-width: 1024px) {
       .nav-items { display: none; }
       .nav-cta { margin-left: auto; }
     }
 
-    /* Respect reduced motion */
-    @media (prefers-reduced-motion: reduce) {
-      * { transition: none !important; }
-    }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 
-    /* Hero & Sections (your refined styles) */
+    /* Hero */
     header#home {
       height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
     }
     .hero-glass {
       background: var(--glass);
@@ -236,21 +213,21 @@
     }
     .btn.secondary:hover { background: #fff; color: #000; }
 
+    /* Sections */
     main section { padding: 140px 60px 100px; max-width: 1400px; margin: auto; }
     h2 { font-size: 48px; margin-bottom: 60px; text-align: center; color: var(--highlight); font-weight: 600; }
     .fade { opacity: 0; transform: translateY(30px); transition: all .8s; }
     .fade.show { opacity: 1; transform: none; }
 
-    /* About, Journey, Services, etc. - keep your grid/card styles here */
     .about { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
     .about p { font-size: 18px; color: var(--text-muted); }
     .about img { width: 100%; border-radius: 20px; box-shadow: var(--shadow); }
 
-    .journey-grid, .services-grid { 
-      display: grid; 
-      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); 
-      gap: 40px; 
-      margin-top: 50px; 
+    .journey-grid, .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 40px;
+      margin-top: 50px;
     }
     .journey-card, .service-card {
       background: var(--glass);
@@ -265,7 +242,6 @@
     .service-card { text-align: center; }
     .service-card i { font-size: 60px; color: var(--highlight); margin-bottom: 25px; display: block; }
 
-    /* Contact section */
     .contact-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -280,30 +256,67 @@
     }
     .calendly-inline-widget { width: 100%; height: 720px; }
 
+    /* Footer */
     footer {
-      text-align: center;
-      padding: 80px;
+      background: var(--footer-bg);
       color: var(--text-muted);
-      font-size: 16px;
+      padding: 80px 60px 40px;
+      margin-top: 80px;
+      border-top: 1px solid var(--glass-border);
     }
-    footer a { color: var(--highlight); margin: 0 15px; }
-
-    .whatsapp-float {
-      position: fixed;
-      bottom: 30px; right: 30px;
-      background: #25D366;
+    .footer-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 60px 40px;
+    }
+    .footer-brand h3 {
+      color: var(--highlight);
+      font-size: 28px;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    .footer-brand p { font-size: 15px; line-height: 1.7; max-width: 320px; }
+    .footer-column h4 {
       color: #fff;
-      width: 65px; height: 65px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 32px;
-      box-shadow: var(--shadow);
-      z-index: 999;
-      transition: transform .3s;
+      font-size: 18px;
+      margin-bottom: 20px;
+      font-weight: 600;
     }
-    .whatsapp-float:hover { transform: scale(1.15); }
+    [data-theme="light"] .footer-column h4 { color: #0f172a; }
+    .footer-column ul { list-style: none; }
+    .footer-column li { margin-bottom: 12px; }
+    .footer-column a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.3s;
+      font-size: 15px;
+    }
+    .footer-column a:hover { color: var(--highlight); }
+    .social-icons {
+      display: flex;
+      gap: 16px;
+      margin-top: 20px;
+      justify-content: center;
+    }
+    .social-icons a {
+      color: var(--text-muted);
+      font-size: 22px;
+      transition: color 0.3s, transform 0.3s;
+    }
+    .social-icons a:hover {
+      color: var(--highlight);
+      transform: translateY(-2px);
+    }
+    .copyright {
+      text-align: center;
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px solid var(--glass-border);
+      font-size: 14px;
+    }
+    .copyright a { color: var(--highlight); text-decoration: none; }
 
     @media (max-width: 900px) {
       section { padding: 100px 30px; }
@@ -313,6 +326,7 @@
     }
     @media (max-width: 768px) {
       .calendly-inline-widget { height: 600px !important; }
+      footer { padding: 60px 30px 40px; }
     }
   </style>
 </head>
@@ -320,13 +334,12 @@
 
   <div class="watercolor-bg"></div>
 
-  <!-- Futuristic Pill Navbar -->
+  <!-- Pill Navbar -->
   <div class="nav-container" id="navContainer">
     <nav class="pill-nav">
       <div class="nav-left">
         <span class="gear-icon">⚙️</span>
       </div>
-
       <div class="nav-items" id="desktopNav">
         <a href="#home" class="nav-item">Home</a>
         <a href="#about" class="nav-item">About</a>
@@ -336,9 +349,7 @@
         <a href="#technologies" class="nav-item">Technologies</a>
         <a href="#contact" class="nav-item">Contact</a>
       </div>
-
       <a href="#contact" class="nav-cta">Get in Touch →</a>
-
       <div class="theme-toggle" id="themeToggle"></div>
     </nav>
   </div>
@@ -389,7 +400,7 @@
             <li>Ensured system uptime for critical operations</li>
           </ul>
         </div>
-        <!-- Add your other real journey cards here -->
+        <!-- Add remaining journey entries here -->
       </div>
     </section>
 
@@ -444,18 +455,61 @@
   </main>
 
   <footer>
-    <p>© <script>document.write(new Date().getFullYear());</script> Marc Wanjeru. All rights reserved.</p>
-    <p>Location: 🇺🇬 Kampala, Uganda</p>
-    <p>
-      <a href="https://www.linkedin.com/in/your-profile" target="_blank">LinkedIn</a> •
-      <a href="https://github.com/your-username" target="_blank">GitHub</a>
-    </p>
+    <div class="footer-container">
+      <div class="footer-brand">
+        <h3>Marc Wanjeru</h3>
+        <p>IT Systems & Cybersecurity Specialist based in Kampala, Uganda.<br>Making complex infrastructure simple, secure, and reliable for businesses and organizations.</p>
+      </div>
+
+      <div class="footer-column">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#journey">Journey</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#technologies">Technologies</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Contact Information</h4>
+        <ul>
+          <li><a href="tel:+256769593704">+256 769 593 704</a></li>
+          <li><a href="mailto:wanjerumarc@icloud.com">wanjerumarc@icloud.com</a></li>
+          <li>Kampala, Central Region, Uganda</li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Availability</h4>
+        <ul>
+          <li>Mon - Thu: 9:00 - 18:00 EAT</li>
+          <li>Fri: 9:00 - 17:00 EAT</li>
+          <li>Sat: By appointment</li>
+          <li>Sun: Closed</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="social-icons">
+      <a href="https://www.linkedin.com/in/your-profile" target="_blank" aria-label="LinkedIn">in</a>
+      <a href="https://github.com/your-username" target="_blank" aria-label="GitHub">gh</a>
+      <!-- Add more icons if desired -->
+    </div>
+
+    <div class="copyright">
+      © <script>document.write(new Date().getFullYear());</script> Marc Wanjeru. All rights reserved.<br>
+      Built with passion in Kampala, Uganda.
+    </div>
   </footer>
 
   <a class="whatsapp-float" href="https://wa.me/256769593704?text=Hi%20Marc%2C%20I'd%20like%20to%20connect!" target="_blank" aria-label="Chat on WhatsApp">💬</a>
 
   <script>
-    // Navbar scroll shrink
+    // Navbar scroll effect
     window.addEventListener('scroll', () => {
       document.getElementById('navContainer').classList.toggle('scrolled', window.scrollY > 80);
     });
@@ -475,7 +529,7 @@
       }
     });
 
-    // Fade-in observer
+    // Fade-in on scroll
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) entry.target.classList.add('show');
