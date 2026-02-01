@@ -1,222 +1,300 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark"> <!-- default to dark -->
 <head>
-<meta charset="UTF-8">
-<title>Responsive Glass Navigation</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Marc Wanjeru | Portfolio</title>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<style>
-/* ================= RESET ================= */
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Inter,system-ui,sans-serif;
-}
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
-/* ================= BACKGROUND ================= */
-body{
-  min-height:100vh;
-  background:url("desktop1.jpg") center/contain no-repeat fixed;
-  background-color:#0e0e0e;
-  display:flex;
-  align-items:center;
-  overflow:hidden;
-}
+  <style>
+    :root {
+      --bg-body: #0e0e0e;
+      --bg-overlay: rgba(0,0,0,0.45);
+      --bg-glass: rgba(40,40,40,0.88);
+      --bg-glass-sidebar: rgba(45,45,45,0.94);
+      --bg-icon: rgba(255,255,255,0.12);
+      --bg-hover: #3b82f6;
+      --text: #ffffff;
+      --text-secondary: #aaaaaa;
+      --border: rgba(255,255,255,0.15);
+    }
 
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.35);
-  z-index:-1;
-}
+    [data-theme="light"] {
+      --bg-body: #f0f4f8;
+      --bg-overlay: rgba(255,255,255,0.25);
+      --bg-glass: rgba(255,255,255,0.75);
+      --bg-glass-sidebar: rgba(255,255,255,0.82);
+      --bg-icon: rgba(0,0,0,0.08);
+      --bg-hover: #2563eb;
+      --text: #1f2937;
+      --text-secondary: #6b7280;
+      --border: rgba(0,0,0,0.12);
+    }
 
-/* ================= ICON NAV ================= */
-.icon-nav{
-  width:70px;
-  height:92vh;
-  margin-left:16px;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  background:rgba(40,40,40,.85);
-  backdrop-filter:blur(20px);
-  border-radius:26px;
+    body {
+      min-height: 100dvh;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg-body) url('desktop1.jpg') center / cover no-repeat fixed;
+      color: var(--text);
+      transition: background-color 0.4s ease, color 0.4s ease;
+      overflow-x: hidden;
+    }
 
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  padding:16px 0;
-  gap:18px;
-  color:white;
-  z-index:3;
-}
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: var(--bg-overlay);
+      z-index: -1;
+      transition: background 0.4s ease;
+    }
 
-.icon-nav button,
-.icon-nav i{
-  width:42px;
-  height:42px;
-  border-radius:14px;
-  border:none;
-  background:rgba(255,255,255,.15);
-  color:white;
-  cursor:pointer;
+    /* ================= ICON NAV ================= */
+    .icon-nav {
+      position: fixed;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 70px;
+      height: 92vh;
+      max-height: 920px;
+      background: var(--bg-glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 26px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px 0;
+      gap: 18px;
+      z-index: 100;
+      transition: all 0.4s ease;
+    }
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition:.25s;
-}
+    .icon-nav button,
+    .icon-nav i {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: var(--bg-icon);
+      color: var(--text);
+      font-size: 1.35rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      border: none;
+    }
 
-.icon-nav i:hover,
-.icon-nav button:hover{
-  background:#3b82f6;
-}
+    .icon-nav button:hover,
+    .icon-nav i:hover,
+    .icon-nav button.active,
+    .icon-nav i.active {
+      background: var(--bg-hover);
+      transform: scale(1.08);
+    }
 
-/* ================= SLIDE SIDEBAR ================= */
-.sidebar{
-  position:fixed;
-  left:90px; /* always attached to icon bar */
-  top:50%;
-  transform:translateY(-50%) translateX(-110%);
-  width:300px;
-  height:92vh;
-  padding:24px;
+    /* ================= SIDEBAR ================= */
+    .sidebar {
+      position: fixed;
+      left: 90px;
+      top: 50%;
+      transform: translateY(-50%) translateX(-120%);
+      width: 300px;
+      height: 92vh;
+      max-height: 920px;
+      padding: 28px 24px;
+      background: var(--bg-glass-sidebar);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--border);
+      border-radius: 26px;
+      color: var(--text);
+      z-index: 90;
+      transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), background 0.4s ease, border-color 0.4s ease;
+      overflow-y: auto;
+    }
 
-  background:rgba(45,45,45,.95);
-  backdrop-filter:blur(24px);
-  border-radius:26px;
+    .sidebar.open {
+      transform: translateY(-50%) translateX(0);
+    }
 
-  color:white;
-  display:flex;
-  flex-direction:column;
-  transition:transform .35s ease;
-  z-index:2;
-}
+    .profile img {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--border);
+    }
 
-.sidebar.open{
-  transform:translateY(-50%) translateX(0);
-}
+    .profile h4 { font-size: 15px; font-weight: 500; line-height: 1.25; }
+    .profile span  { font-size: 12.5px; color: var(--text-secondary); }
 
-/* ================= PROFILE ================= */
-.profile{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  margin-bottom:28px;
-}
+    .menu a {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      border-radius: 16px;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 15px;
+      transition: all 0.22s ease;
+    }
 
-.profile img{
-  width:46px;
-  height:46px;
-  border-radius:50%;
-}
+    .menu a i { min-width: 20px; font-size: 1.25rem; }
+    .menu a:hover,
+    .menu a.active { background: rgba(255,255,255,0.14); } /* works ok in both modes */
 
-.profile h4{
-  font-size:15px;
-  line-height:1.2;
-}
+    /* Overlay for closing sidebar */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s;
+      z-index: 80;
+    }
 
-.profile span{
-  font-size:12px;
-  color:#cfcfcf;
-}
+    .overlay.active { opacity: 1; pointer-events: all; }
 
-/* ================= MENU ================= */
-.menu{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-
-.menu a{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  padding:14px 16px;
-  border-radius:16px;
-  text-decoration:none;
-  color:white;
-  transition:.25s;
-}
-
-.menu a i{
-  min-width:18px;
-}
-
-.menu a:hover,
-.menu a.active{
-  background:rgba(255,255,255,.18);
-}
-
-/* ================= MOBILE ================= */
-@media(max-width:768px){
-  body{
-    background-size:cover;
-  }
-
-  .sidebar{
-    left:70px;        /* still from icon bar */
-    top:0;
-    height:100vh;
-    transform:translateX(-110%);
-    border-radius:0 26px 26px 0;
-  }
-
-  .sidebar.open{
-    transform:translateX(0);
-  }
-}
-</style>
+    /* Mobile adjustments */
+    @media (max-width: 768px) {
+      .icon-nav { left: 12px; width: 64px; border-radius: 20px; }
+      .sidebar {
+        left: 76px;
+        width: 82vw;
+        max-width: 320px;
+        height: 100dvh;
+        top: 0;
+        transform: translateX(-110%);
+        border-radius: 0 24px 24px 0;
+      }
+      .sidebar.open { transform: translateX(0); }
+    }
+  </style>
 </head>
-
 <body>
 
-<!-- ICON NAV (ALWAYS VISIBLE) -->
-<nav class="icon-nav">
-  <button id="toggle"><i class="fa-solid fa-bars"></i></button>
+  <div class="overlay" id="overlay"></div>
 
-  <i class="fa-solid fa-house"></i>
-  <i class="fa-solid fa-user"></i>
-  <i class="fa-solid fa-graduation-cap"></i>
-  <i class="fa-solid fa-briefcase"></i>
-  <i class="fa-solid fa-certificate"></i>
-  <i class="fa-solid fa-microchip"></i>
-  <i class="fa-solid fa-layer-group"></i>
-  <i class="fa-solid fa-envelope"></i>
-</nav>
+  <!-- ICON NAV -->
+  <nav class="icon-nav">
+    <button id="toggle" aria-label="Toggle menu"><i class="fa-solid fa-bars"></i></button>
 
-<!-- SLIDE-OUT SIDEBAR -->
-<aside class="sidebar" id="sidebar">
-  <div class="profile">
-    <img src="https://i.pravatar.cc/100" alt="">
-    <div>
-      <h4>Hello 👋<br>Marc Wanjeru</h4>
-      <span>Portfolio Navigation</span>
-    </div>
-  </div>
+    <i class="fa-solid fa-house active" data-section="home"></i>
+    <i class="fa-solid fa-user" data-section="about"></i>
+    <i class="fa-solid fa-graduation-cap" data-section="education"></i>
+    <i class="fa-solid fa-briefcase" data-section="journey"></i>
+    <i class="fa-solid fa-certificate" data-section="certs"></i>
+    <i class="fa-solid fa-microchip" data-section="tech"></i>
+    <i class="fa-solid fa-layer-group" data-section="services"></i>
 
-  <nav class="menu">
-    <a class="active"><i class="fa-solid fa-house"></i>Home</a>
-    <a><i class="fa-solid fa-user"></i>About</a>
-    <a><i class="fa-solid fa-graduation-cap"></i>Education</a>
-    <a><i class="fa-solid fa-briefcase"></i>Professional Journey</a>
-    <a><i class="fa-solid fa-certificate"></i>Certification</a>
-    <a><i class="fa-solid fa-microchip"></i>Technologies</a>
-    <a><i class="fa-solid fa-layer-group"></i>Services</a>
-    <a><i class="fa-solid fa-envelope"></i>Contact Us</a>
+    <!-- Dark mode toggle button -->
+    <button id="theme-toggle" aria-label="Toggle dark/light mode">
+      <i class="fa-solid fa-moon" id="theme-icon"></i>
+    </button>
+
+    <i class="fa-solid fa-envelope" data-section="contact"></i>
   </nav>
-</aside>
 
-<script>
-const toggle = document.getElementById("toggle");
-const sidebar = document.getElementById("sidebar");
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="profile">
+      <img src="https://i.pravatar.cc/100?u=marc" alt="Profile">
+      <div>
+        <h4>Hello 👋<br>Marc Wanjeru</h4>
+        <span>Portfolio Navigation</span>
+      </div>
+    </div>
 
-toggle.addEventListener("click", () => {
-  sidebar.classList.toggle("open");
-});
-</script>
+    <nav class="menu">
+      <a class="active" href="#home"><i class="fa-solid fa-house"></i>Home</a>
+      <a href="#about"><i class="fa-solid fa-user"></i>About</a>
+      <a href="#education"><i class="fa-solid fa-graduation-cap"></i>Education</a>
+      <a href="#journey"><i class="fa-solid fa-briefcase"></i>Professional Journey</a>
+      <a href="#certs"><i class="fa-solid fa-certificate"></i>Certification</a>
+      <a href="#tech"><i class="fa-solid fa-microchip"></i>Technologies</a>
+      <a href="#services"><i class="fa-solid fa-layer-group"></i>Services</a>
+      <a href="#contact"><i class="fa-solid fa-envelope"></i>Contact</a>
+    </nav>
+  </aside>
 
+  <script>
+    // ── Theme handling ───────────────────────────────────────────────
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon   = document.getElementById('theme-icon');
+    const html        = document.documentElement;
+
+    function setTheme(theme) {
+      html.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      themeIcon.className = theme === 'light'
+        ? 'fa-solid fa-sun'
+        : 'fa-solid fa-moon';
+    }
+
+    // Init theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      setTheme(savedTheme);
+    } else {
+      // Respect system preference
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setTheme(prefersDark ? 'dark' : 'light');
+    }
+
+    // Toggle listener
+    themeToggle.addEventListener('click', () => {
+      const current = html.getAttribute('data-theme');
+      setTheme(current === 'dark' ? 'light' : 'dark');
+    });
+
+    // Listen for system preference change
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+      if (!localStorage.getItem('theme')) { // only if user didn't override
+        setTheme(e.matches ? 'dark' : 'light');
+      }
+    });
+
+    // ── Sidebar handling ─────────────────────────────────────────────
+    const toggleBtn = document.getElementById('toggle');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+
+    function openSidebar()  { sidebar.classList.add('open');   overlay.classList.add('active'); }
+    function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('active'); }
+
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+    });
+
+    overlay.addEventListener('click', closeSidebar);
+
+    // Optional: sync active icon (you can expand this later)
+    document.querySelectorAll('.icon-nav i[data-section]').forEach(icon => {
+      icon.addEventListener('click', () => {
+        document.querySelectorAll('.icon-nav i').forEach(i => i.classList.remove('active'));
+        icon.classList.add('active');
+        if (window.innerWidth <= 768) openSidebar();
+      });
+    });
+  </script>
 </body>
 </html>
