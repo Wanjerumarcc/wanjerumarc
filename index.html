@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Marc Wanjeru — Creative Developer & Designer</title>
 
+  <!-- Favicons (replace paths with your actual files) -->
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -42,7 +48,7 @@
       z-index: -2;
     }
 
-    /* Unified left vertical navigation bar (icons + hamburger) */
+    /* Unified left navigation bar (now includes logo at top) */
     .unified-nav {
       position: fixed;
       left: 16px;
@@ -53,12 +59,32 @@
       backdrop-filter: blur(18px);
       border: 1px solid var(--border);
       border-radius: 24px;
-      padding: 16px 0;
+      padding: 12px 0 16px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 14px;
       z-index: 110;
+    }
+
+    .nav-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 12px rgba(59,130,246,0.3);
+      transition: all 0.3s;
+    }
+
+    .nav-logo:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(59,130,246,0.5);
+    }
+
+    .nav-logo svg {
+      width: 100%;
+      height: 100%;
     }
 
     .nav-top {
@@ -106,11 +132,9 @@
       transform: scale(1.07);
     }
 
-    .theme-toggle {
-      margin-top: auto;
-    }
+    .theme-toggle { margin-top: auto; }
 
-    /* Slide-out detailed sidebar */
+    /* Slide-out sidebar */
     .slide-sidebar {
       position: fixed;
       left: 100px;
@@ -196,7 +220,7 @@
       line-height: 1.55;
     }
 
-    /* Footer – slim & compact */
+    /* Slim footer */
     footer {
       background: rgba(15,23,42,0.92);
       backdrop-filter: blur(10px);
@@ -215,10 +239,22 @@
       text-align: center;
     }
 
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .footer-brand .logo {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 0.8rem;
+    }
+
     .footer-brand h2 {
       font-size: 1.6rem;
       color: white;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.4rem;
     }
 
     .footer-column h3 {
@@ -281,16 +317,24 @@
       .unified-nav { left: 14px; width: 62px; }
       .bar-item { width: 42px; height: 42px; font-size: 1.2rem; }
       .slide-sidebar { left: 88px; width: 82vw; max-width: 310px; }
-      #hamburger { width: 46px; height: 46px; font-size: 1.3rem; }
       footer { padding: 3rem 5% 2.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Unified navigation bar (hamburger + icons) -->
+  <!-- Unified navigation bar (logo + hamburger + icons) -->
   <nav class="unified-nav">
-    <!-- Hamburger at the top -->
+    <!-- Your logo at the very top -->
+    <div class="nav-logo">
+      <!-- Replace this SVG with your actual logo SVG code -->
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="45" fill="#3b82f6"/>
+        <text x="50" y="58" font-family="Inter, sans-serif" font-size="36" font-weight="700" fill="white" text-anchor="middle">MW</text>
+      </svg>
+    </div>
+
+    <!-- Hamburger below logo -->
     <div id="hamburger" class="nav-top">
       <i class="fa-solid fa-bars"></i>
     </div>
@@ -342,10 +386,17 @@
     </div>
   </main>
 
-  <!-- Slim footer -->
+  <!-- Slim footer with logo -->
   <footer>
     <div class="footer-grid">
       <div class="footer-brand">
+        <div class="logo">
+          <!-- Same logo SVG as in nav bar (or use <img src="your-logo.svg">) -->
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="45" fill="#3b82f6"/>
+            <text x="50" y="58" font-family="Inter, sans-serif" font-size="36" font-weight="700" fill="white" text-anchor="middle">MW</text>
+          </svg>
+        </div>
         <h2>Marc Wanjeru</h2>
         <p>Creative Developer & Designer</p>
       </div>
@@ -421,7 +472,7 @@
       setTheme(current === 'dark' ? 'light' : 'dark');
     });
 
-    // Hamburger toggle (now inside unified bar)
+    // Hamburger toggle
     const hamburger = document.getElementById('hamburger');
     const sidebar = document.getElementById('slide-sidebar');
 
@@ -429,21 +480,17 @@
       sidebar.classList.toggle('open');
     });
 
-    // Close sidebar on outside click
     document.addEventListener('click', e => {
       if (!sidebar.contains(e.target) && !hamburger.contains(e.target) && !e.target.closest('.unified-nav')) {
         sidebar.classList.remove('open');
       }
     });
 
-    // Close after clicking sidebar link
     document.querySelectorAll('.sidebar-links a').forEach(link => {
-      link.addEventListener('click', () => {
-        sidebar.classList.remove('open');
-      });
+      link.addEventListener('click', () => sidebar.classList.remove('open'));
     });
 
-    // Active link highlighting on scroll
+    // Active link highlighting
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.sidebar-links a, .bar-item[data-section]');
 
