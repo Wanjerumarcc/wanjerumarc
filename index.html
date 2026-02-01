@@ -7,7 +7,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
@@ -23,23 +23,38 @@
 
     * { margin:0; padding:0; box-sizing:border-box; }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       min-height: 100dvh;
       font-family: 'Inter', system-ui, sans-serif;
-      background: var(--bg) url('desktop1.jpg') center / cover no-repeat fixed;
+      background: var(--bg);
       color: var(--text);
       line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Parallax background wrapper */
+    .parallax-bg {
+      position: fixed;
+      inset: 0;
+      background: url('desktop1.jpg') center / cover no-repeat;
+      transform: translateZ(0);
+      z-index: -3;
+      will-change: transform;
     }
 
     body::before {
       content: "";
       position: fixed;
       inset: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.45), rgba(0,0,0,0.7));
+      background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.75));
       z-index: -2;
     }
 
-    /* Hamburger button */
+    /* Hamburger */
     #hamburger {
       position: fixed;
       top: 18px;
@@ -60,12 +75,9 @@
       transition: all 0.25s;
     }
 
-    #hamburger:hover {
-      background: var(--accent);
-      color: white;
-    }
+    #hamburger:hover { background: var(--accent); color: white; }
 
-    /* Vertical icon bar */
+    /* Vertical bar */
     .vertical-bar {
       position: fixed;
       left: 18px;
@@ -97,8 +109,7 @@
       transition: all 0.22s;
     }
 
-    .bar-item:hover,
-    .bar-item.active {
+    .bar-item:hover, .bar-item.active {
       background: var(--accent);
       color: white;
       transform: scale(1.07);
@@ -150,7 +161,7 @@
     }
 
     .profile h4 { font-size: 1.18rem; font-weight: 600; }
-    .profile span  { font-size: 0.93rem; color: var(--text-light); }
+    .profile span { font-size: 0.93rem; color: var(--text-light); }
 
     .sidebar-links a {
       display: flex;
@@ -164,35 +175,44 @@
       transition: background 0.2s;
     }
 
-    .sidebar-links a:hover,
-    .sidebar-links a.active { background: rgba(255,255,255,0.09); }
+    .sidebar-links a:hover, .sidebar-links a.active { background: rgba(255,255,255,0.09); }
 
-    /* Hero */
+    /* Hero with parallax layers */
     .hero {
+      position: relative;
       min-height: 100dvh;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 0 6%;
       text-align: center;
+      perspective: 1200px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      transform-style: preserve-3d;
     }
 
     .hero h1 {
-      font-size: clamp(3.4rem, 8.5vw, 5.8rem);
+      font-size: clamp(3.6rem, 9vw, 6.4rem);
       font-weight: 700;
       line-height: 1.05;
-      margin-bottom: 1.6rem;
+      margin-bottom: 1.4rem;
+      transform: translateZ(40px);
     }
 
     .hero .subtitle {
-      font-size: clamp(1.2rem, 3.2vw, 1.45rem);
+      font-size: clamp(1.25rem, 3.5vw, 1.6rem);
       color: var(--text-light);
       max-width: 720px;
       margin: 0 auto;
       line-height: 1.55;
+      transform: translateZ(20px);
     }
 
-    /* ── Slim & compact footer ──────────────────────────────────────── */
+    /* Footer – slim */
     footer {
       background: rgba(15,23,42,0.92);
       backdrop-filter: blur(10px);
@@ -223,26 +243,17 @@
       margin-bottom: 1rem;
     }
 
-    .footer-column ul {
-      list-style: none;
-    }
-
-    .footer-column ul li {
-      margin-bottom: 0.6rem;
-    }
+    .footer-column ul { list-style: none; }
+    .footer-column ul li { margin-bottom: 0.6rem; }
 
     .footer-column a {
       color: var(--text-light);
       text-decoration: none;
     }
 
-    .footer-column a:hover {
-      color: var(--accent);
-    }
+    .footer-column a:hover { color: var(--accent); }
 
-    .contact-centered {
-      max-width: 260px;
-    }
+    .contact-centered { max-width: 260px; }
 
     .contact-line {
       display: flex;
@@ -292,10 +303,23 @@
       .slide-sidebar { left: 86px; width: 82vw; max-width: 310px; }
       #hamburger { left: 14px; top: 14px; width: 48px; height: 48px; font-size: 1.35rem; }
       footer { padding: 3rem 5% 2.5rem; }
+      .hero h1 { font-size: 3.8rem; }
+    }
+
+    /* Respect reduced motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      .parallax-bg,
+      .hero h1,
+      .hero .subtitle {
+        transform: none !important;
+      }
     }
   </style>
 </head>
 <body>
+
+  <!-- Parallax background layer -->
+  <div class="parallax-bg"></div>
 
   <!-- Hamburger -->
   <button id="hamburger">
@@ -304,16 +328,16 @@
 
   <!-- Vertical icons -->
   <nav class="vertical-bar">
-    <div class="bar-item active" title="Home"><i class="fa-solid fa-house"></i></div>
-    <div class="bar-item" title="About"><i class="fa-solid fa-user"></i></div>
-    <div class="bar-item" title="Education"><i class="fa-solid fa-graduation-cap"></i></div>
-    <div class="bar-item" title="Experience"><i class="fa-solid fa-briefcase"></i></div>
-    <div class="bar-item" title="Technologies"><i class="fa-solid fa-microchip"></i></div>
-    <div class="bar-item" title="Services"><i class="fa-solid fa-layer-group"></i></div>
+    <div class="bar-item active" data-section="home" title="Home"><i class="fa-solid fa-house"></i></div>
+    <div class="bar-item" data-section="about" title="About"><i class="fa-solid fa-user"></i></div>
+    <div class="bar-item" data-section="education" title="Education"><i class="fa-solid fa-graduation-cap"></i></div>
+    <div class="bar-item" data-section="experience" title="Experience"><i class="fa-solid fa-briefcase"></i></div>
+    <div class="bar-item" data-section="technologies" title="Technologies"><i class="fa-solid fa-microchip"></i></div>
+    <div class="bar-item" data-section="services" title="Services"><i class="fa-solid fa-layer-group"></i></div>
     <div class="bar-item theme-toggle" id="theme-toggle" title="Toggle theme">
       <i class="fa-solid fa-moon" id="theme-icon"></i>
     </div>
-    <div class="bar-item" title="Contact"><i class="fa-solid fa-envelope"></i></div>
+    <div class="bar-item" data-section="contact" title="Contact"><i class="fa-solid fa-envelope"></i></div>
   </nav>
 
   <!-- Slide-out sidebar -->
@@ -337,7 +361,7 @@
     </div>
   </aside>
 
-  <!-- Hero -->
+  <!-- Hero with parallax layers -->
   <main class="hero">
     <div class="hero-content">
       <h1>Welcome to My Portfolio</h1>
@@ -348,10 +372,37 @@
     </div>
   </main>
 
-  <!-- Slim centered footer -->
+  <!-- Example sections for smooth scrolling -->
+  <section id="about" style="min-height:100vh; padding:12rem 5% 6rem; background:rgba(0,0,0,0.2);">
+    <h2 style="font-size:3.5rem; text-align:center; margin-bottom:2rem;">About Me</h2>
+    <p style="max-width:800px; margin:0 auto; text-align:center; color:var(--text-light); font-size:1.2rem;">
+      This is a placeholder section. Click navigation links to see smooth scrolling + parallax in action.
+    </p>
+  </section>
+
+  <section id="education" style="min-height:100vh; padding:12rem 5% 6rem; background:rgba(0,0,0,0.15);">
+    <h2 style="font-size:3.5rem; text-align:center;">Education</h2>
+  </section>
+
+  <section id="experience" style="min-height:100vh; padding:12rem 5% 6rem; background:rgba(0,0,0,0.2);">
+    <h2 style="font-size:3.5rem; text-align:center;">Experience</h2>
+  </section>
+
+  <section id="technologies" style="min-height:100vh; padding:12rem 5% 6rem; background:rgba(0,0,0,0.15);">
+    <h2 style="font-size:3.5rem; text-align:center;">Technologies</h2>
+  </section>
+
+  <section id="services" style="min-height:100vh; padding:12rem 5% 6rem; background:rgba(0,0,0,0.2);">
+    <h2 style="font-size:3.5rem; text-align:center;">Services</h2>
+  </section>
+
+  <section id="contact" style="min-height:100vh; padding:12rem 5% 6rem; background:rgba(0,0,0,0.15);">
+    <h2 style="font-size:3.5rem; text-align:center;">Contact</h2>
+  </section>
+
+  <!-- Slim footer -->
   <footer>
     <div class="footer-grid">
-
       <div class="footer-brand">
         <h2>Marc Wanjeru</h2>
         <p>Creative Developer & Designer</p>
@@ -400,7 +451,6 @@
           <li><a href="#">Training</a></li>
         </ul>
       </div>
-
     </div>
 
     <div class="copyright">
@@ -437,16 +487,53 @@
       sidebar.classList.toggle('open');
     });
 
-    // Close when clicking outside
     document.addEventListener('click', e => {
       if (!sidebar.contains(e.target) && !hamburger.contains(e.target)) {
         sidebar.classList.remove('open');
       }
     });
 
-    // Close after link click
     document.querySelectorAll('.sidebar-links a').forEach(a => {
       a.addEventListener('click', () => sidebar.classList.remove('open'));
+    });
+
+    // Parallax effect (simple JS version)
+    window.addEventListener('scroll', () => {
+      const scroll = window.scrollY;
+
+      // Background parallax
+      document.querySelector('.parallax-bg').style.transform = 
+        `translateY(${scroll * 0.4}px) scale(1.05)`;
+
+      // Hero title & subtitle depth
+      const heroTitle = document.querySelector('.hero h1');
+      const heroSub = document.querySelector('.hero .subtitle');
+
+      if (heroTitle && heroSub) {
+        heroTitle.style.transform = `translateY(${scroll * 0.15}px) translateZ(40px)`;
+        heroSub.style.transform  = `translateY(${scroll * 0.08}px) translateZ(20px)`;
+      }
+    });
+
+    // Active link highlighting
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.sidebar-links a, .vertical-bar .bar-item[data-section]');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (scrollY >= sectionTop - 200) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}` || link.getAttribute('data-section') === current) {
+          link.classList.add('active');
+        }
+      });
     });
   </script>
 </body>
