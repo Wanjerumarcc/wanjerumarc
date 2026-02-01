@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Responsive Glass Sidebar</title>
+<title>Responsive Glass Navigation</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
@@ -16,11 +16,11 @@
   font-family:Inter,system-ui,sans-serif;
 }
 
-/* ================= DESKTOP BACKGROUND ================= */
+/* ================= BACKGROUND ================= */
 body{
   min-height:100vh;
   background:url("desktop1.jpg") center/contain no-repeat fixed;
-  background-color:#111;
+  background-color:#0e0e0e;
   display:flex;
   align-items:center;
   overflow:hidden;
@@ -34,15 +34,15 @@ body::before{
   z-index:-1;
 }
 
-/* ================= ICON BAR ================= */
+/* ================= ICON NAV ================= */
 .icon-nav{
   width:70px;
   height:92vh;
   margin-left:16px;
 
-  background:rgba(255,255,255,.12);
+  background:rgba(40,40,40,.85);
   backdrop-filter:blur(20px);
-  border-radius:24px;
+  border-radius:26px;
 
   display:flex;
   flex-direction:column;
@@ -59,13 +59,14 @@ body::before{
   height:42px;
   border-radius:14px;
   border:none;
-  background:rgba(255,255,255,.18);
+  background:rgba(255,255,255,.15);
   color:white;
   cursor:pointer;
 
   display:flex;
   align-items:center;
   justify-content:center;
+  transition:.25s;
 }
 
 .icon-nav i:hover,
@@ -76,25 +77,24 @@ body::before{
 /* ================= SLIDE SIDEBAR ================= */
 .sidebar{
   position:fixed;
-  left:90px;
+  left:90px; /* always attached to icon bar */
   top:50%;
   transform:translateY(-50%) translateX(-110%);
   width:300px;
   height:92vh;
   padding:24px;
 
-  background:rgba(255,255,255,.14);
+  background:rgba(45,45,45,.95);
   backdrop-filter:blur(24px);
   border-radius:26px;
 
   color:white;
   display:flex;
   flex-direction:column;
-  transition:.4s ease;
+  transition:transform .35s ease;
   z-index:2;
 }
 
-/* visible state */
 .sidebar.open{
   transform:translateY(-50%) translateX(0);
 }
@@ -104,7 +104,7 @@ body::before{
   display:flex;
   align-items:center;
   gap:14px;
-  margin-bottom:30px;
+  margin-bottom:28px;
 }
 
 .profile img{
@@ -115,25 +115,34 @@ body::before{
 
 .profile h4{
   font-size:15px;
+  line-height:1.2;
 }
 
 .profile span{
   font-size:12px;
-  color:#ddd;
+  color:#cfcfcf;
 }
 
 /* ================= MENU ================= */
+.menu{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
 .menu a{
   display:flex;
   align-items:center;
   gap:14px;
   padding:14px 16px;
-  margin-bottom:10px;
   border-radius:16px;
-
-  color:white;
   text-decoration:none;
-  transition:.3s;
+  color:white;
+  transition:.25s;
+}
+
+.menu a i{
+  min-width:18px;
 }
 
 .menu a:hover,
@@ -148,11 +157,10 @@ body::before{
   }
 
   .sidebar{
-    left:0;
-    width:85%;
-    height:100vh;
+    left:70px;        /* still from icon bar */
     top:0;
-    transform:translateX(-100%);
+    height:100vh;
+    transform:translateX(-110%);
     border-radius:0 26px 26px 0;
   }
 
@@ -179,7 +187,7 @@ body::before{
   <i class="fa-solid fa-envelope"></i>
 </nav>
 
-<!-- SLIDE-OUT MENU -->
+<!-- SLIDE-OUT SIDEBAR -->
 <aside class="sidebar" id="sidebar">
   <div class="profile">
     <img src="https://i.pravatar.cc/100" alt="">
@@ -189,7 +197,7 @@ body::before{
     </div>
   </div>
 
-  <div class="menu">
+  <nav class="menu">
     <a class="active"><i class="fa-solid fa-house"></i>Home</a>
     <a><i class="fa-solid fa-user"></i>About</a>
     <a><i class="fa-solid fa-graduation-cap"></i>Education</a>
@@ -198,16 +206,16 @@ body::before{
     <a><i class="fa-solid fa-microchip"></i>Technologies</a>
     <a><i class="fa-solid fa-layer-group"></i>Services</a>
     <a><i class="fa-solid fa-envelope"></i>Contact Us</a>
-  </div>
+  </nav>
 </aside>
 
 <script>
 const toggle = document.getElementById("toggle");
 const sidebar = document.getElementById("sidebar");
 
-toggle.onclick = () => {
+toggle.addEventListener("click", () => {
   sidebar.classList.toggle("open");
-};
+});
 </script>
 
 </body>
