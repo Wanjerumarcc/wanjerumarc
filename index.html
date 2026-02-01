@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Marc Wanjeru — Creative Developer & Designer</title>
 
-  <!-- Favicons (replace paths with your actual files) -->
+  <!-- Favicons (replace with your generated files) -->
+  <link rel="icon" href="nobklogo.png" type="image/png">
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
+  <link rel="manifest" href="/manifest.json">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,7 +49,7 @@
       z-index: -2;
     }
 
-    /* Unified left navigation bar (now includes logo at top) */
+    /* Unified left navigation bar (logo + hamburger + icons) */
     .unified-nav {
       position: fixed;
       left: 16px;
@@ -68,8 +69,8 @@
     }
 
     .nav-logo {
-      width: 48px;
-      height: 48px;
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
       overflow: hidden;
       border: 2px solid var(--accent);
@@ -77,14 +78,15 @@
       transition: all 0.3s;
     }
 
+    .nav-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
     .nav-logo:hover {
       transform: scale(1.1);
       box-shadow: 0 0 20px rgba(59,130,246,0.5);
-    }
-
-    .nav-logo svg {
-      width: 100%;
-      height: 100%;
     }
 
     .nav-top {
@@ -220,7 +222,7 @@
       line-height: 1.55;
     }
 
-    /* Slim footer */
+    /* Slim footer with logo */
     footer {
       background: rgba(15,23,42,0.92);
       backdrop-filter: blur(10px);
@@ -246,9 +248,19 @@
     }
 
     .footer-brand .logo {
-      width: 80px;
-      height: 80px;
+      width: 90px;
+      height: 90px;
       margin-bottom: 0.8rem;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid var(--accent);
+      box-shadow: 0 0 16px rgba(59,130,246,0.3);
+    }
+
+    .footer-brand .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .footer-brand h2 {
@@ -316,6 +328,7 @@
     @media (max-width: 768px) {
       .unified-nav { left: 14px; width: 62px; }
       .bar-item { width: 42px; height: 42px; font-size: 1.2rem; }
+      .nav-logo { width: 44px; height: 44px; }
       .slide-sidebar { left: 88px; width: 82vw; max-width: 310px; }
       footer { padding: 3rem 5% 2.5rem; }
     }
@@ -325,16 +338,12 @@
 
   <!-- Unified navigation bar (logo + hamburger + icons) -->
   <nav class="unified-nav">
-    <!-- Your logo at the very top -->
+    <!-- Your logo at the top -->
     <div class="nav-logo">
-      <!-- Replace this SVG with your actual logo SVG code -->
-      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="50" r="45" fill="#3b82f6"/>
-        <text x="50" y="58" font-family="Inter, sans-serif" font-size="36" font-weight="700" fill="white" text-anchor="middle">MW</text>
-      </svg>
+      <img src="nobklogo.png" alt="Marc Wanjeru Logo">
     </div>
 
-    <!-- Hamburger below logo -->
+    <!-- Hamburger -->
     <div id="hamburger" class="nav-top">
       <i class="fa-solid fa-bars"></i>
     </div>
@@ -354,10 +363,10 @@
     </div>
   </nav>
 
-  <!-- Slide-out detailed sidebar -->
+  <!-- Slide-out sidebar -->
   <aside class="slide-sidebar" id="slide-sidebar">
     <div class="profile">
-      <img src="https://i.pravatar.cc/100?u=marc" alt="Marc Wanjeru">
+      <img src="nobklogo.png" alt="Marc Wanjeru">
       <div>
         <h4>Marc Wanjeru</h4>
         <span>Creative Developer & Designer</span>
@@ -391,11 +400,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="logo">
-          <!-- Same logo SVG as in nav bar (or use <img src="your-logo.svg">) -->
-          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="45" fill="#3b82f6"/>
-            <text x="50" y="58" font-family="Inter, sans-serif" font-size="36" font-weight="700" fill="white" text-anchor="middle">MW</text>
-          </svg>
+          <img src="nobklogo.png" alt="Marc Wanjeru Logo">
         </div>
         <h2>Marc Wanjeru</h2>
         <p>Creative Developer & Designer</p>
