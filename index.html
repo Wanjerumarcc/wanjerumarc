@@ -1,278 +1,251 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Marc Wanjeru — IT & Cybersecurity Specialist</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
 
-  <style>
-    :root {
-      --bg: #0a0a0a;
-      --glass: rgba(20, 20, 25, 0.78);
-      --border: rgba(255,255,255,0.08);
-      --blur: blur(18px);
-      --text: #e8e8e8;
-      --muted: #9e9e9e;
-      --accent: #00ff9d;
-      --accent-glow: rgba(0,255,157,0.25);
-      --radius: 16px;
-      --sidebar-width-collapsed: 90px;
-      --sidebar-width-expanded: 280px;
-    }
+        body {
+            background: linear-gradient(to bottom, #001f3f, #000000); /* Navy blue to black gradient for a liquid depth feel */
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+        }
 
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      font-family: system-ui, -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
+        /* Liquid Glass Theme */
+        .glass-container {
+            background: rgba(0, 31, 63, 0.3); /* Semi-transparent navy blue */
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 800px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
 
-    /* ── Vertical Bento Sidebar ── */
-    .sidebar {
-      position: fixed;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: var(--sidebar-width-collapsed);
-      background: var(--glass);
-      backdrop-filter: var(--blur);
-      border-right: 1px solid var(--border);
-      z-index: 1000;
-      padding: 32px 16px;
-      overflow: hidden;
-      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
+        /* Add liquid animation effect with subtle waves */
+        .glass-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+            animation: liquid-flow 10s infinite linear;
+            z-index: -1;
+        }
 
-    .sidebar.expanded {
-      width: var(--sidebar-width-expanded);
-      padding: 32px 24px;
-    }
+        @keyframes liquid-flow {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(10%, 10%) rotate(5deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
 
-    .sidebar-header {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 48px;
-      white-space: nowrap;
-      overflow: hidden;
-    }
+        /* Navbar */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 31, 63, 0.5);
+            backdrop-filter: blur(10px);
+            padding: 10px 0;
+            z-index: 1000;
+        }
 
-    .avatar {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid var(--accent);
-      box-shadow: 0 0 20px var(--accent-glow);
-      flex-shrink: 0;
-    }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+        }
 
-    .user-name {
-      font-size: 1.3rem;
-      font-weight: 600;
-      opacity: 0;
-      transform: translateX(20px);
-      transition: all 0.4s ease;
-    }
+        nav ul li {
+            margin: 0 15px;
+        }
 
-    .sidebar.expanded .user-name {
-      opacity: 1;
-      transform: translateX(0);
-    }
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
 
-    .bento-menu {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+        nav ul li a:hover {
+            color: #add8e6; /* Light blue hover */
+        }
 
-    .bento-item {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 14px 16px;
-      border-radius: var(--radius);
-      background: rgba(30,30,35,0.6);
-      border: 1px solid var(--border);
-      color: var(--text);
-      text-decoration: none;
-      cursor: pointer;
-      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-      white-space: nowrap;
-    }
+        /* Sections */
+        section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 20px 20px;
+        }
 
-    .bento-item:hover,
-    .bento-item.active {
-      background: rgba(0,255,157,0.12);
-      transform: translateX(8px);
-      box-shadow: 0 8px 24px rgba(0,255,157,0.18);
-    }
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #add8e6;
+        }
 
-    .bento-item.active::before {
-      content: '';
-      position: absolute;
-      left: -24px;
-      top: 0;
-      bottom: 0;
-      width: 5px;
-      background: var(--accent);
-      border-radius: 0 4px 4px 0;
-    }
+        p, ul {
+            line-height: 1.6;
+        }
 
-    .bento-icon {
-      font-size: 1.6rem;
-      width: 32px;
-      text-align: center;
-      flex-shrink: 0;
-    }
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
 
-    .bento-label {
-      opacity: 0;
-      transform: translateX(-20px);
-      transition: all 0.4s ease;
-    }
+        /* Contact Form */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
 
-    .sidebar.expanded .bento-label {
-      opacity: 1;
-      transform: translateX(0);
-    }
+        input, textarea {
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border-radius: 5px;
+        }
 
-    /* Main content */
-    main {
-      margin-left: var(--sidebar-width-collapsed);
-      padding: 40px;
-      transition: margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      min-height: 100vh;
-    }
+        button {
+            padding: 10px;
+            background: #add8e6;
+            color: #001f3f;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
 
-    .sidebar.expanded + main {
-      margin-left: var(--sidebar-width-expanded);
-    }
-
-    section {
-      padding: 120px 0;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    h2 {
-      font-size: 3.2rem;
-      text-align: center;
-      margin-bottom: 3rem;
-      color: white;
-    }
-
-    .glass-card {
-      background: rgba(30,30,35,0.6);
-      backdrop-filter: var(--blur);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 32px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-    }
-  </style>
+        button:hover {
+            background: #ffffff;
+        }
+    </style>
 </head>
 <body>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About Me</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#technologies">Technologies</a></li>
+            <li><a href="#certifications">Certifications</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
 
-<!-- Vertical Bento Sidebar -->
-<div class="sidebar" id="sidebar">
-  <div class="sidebar-header">
-    <img src="https://images.unsplash.com/photo-1556155099-490a1ba16284?w=800&auto=format&fit=crop&q=80" alt="Marc Wanjeru" class="avatar">
-    <span class="user-name">Marc Wanjeru</span>
-  </div>
+    <section id="home">
+        <div class="glass-container">
+            <h1>Welcome to My Portfolio</h1>
+            <p>Explore my journey, skills, and offerings in this liquid navy blue glass-themed space.</p>
+        </div>
+    </section>
 
-  <div class="bento-menu">
-    <a href="#home" class="bento-item active">
-      <span class="bento-icon">⌂</span>
-      <span class="bento-label">Home</span>
-    </a>
-    <a href="#about" class="bento-item">
-      <span class="bento-icon">👤</span>
-      <span class="bento-label">About Me</span>
-    </a>
-    <a href="#education" class="bento-item">
-      <span class="bento-icon">🎓</span>
-      <span class="bento-label">Education Timeline</span>
-    </a>
-    <a href="#journey" class="bento-item">
-      <span class="bento-icon">💼</span>
-      <span class="bento-label">Professional Journey</span>
-    </a>
-    <a href="#projects" class="bento-item">
-      <span class="bento-icon">📁</span>
-      <span class="bento-label">Projects</span>
-    </a>
-    <a href="#technologies" class="bento-item">
-      <span class="bento-icon">&lt;/&gt;</span>
-      <span class="bento-label">Technologies</span>
-    </a>
-    <a href="#services" class="bento-item">
-      <span class="bento-icon">⚙</span>
-      <span class="bento-label">Services</span>
-    </a>
-    <a href="#contact" class="bento-item">
-      <span class="bento-icon">✉</span>
-      <span class="bento-label">Contact Page</span>
-    </a>
-    <a href="#settings" class="bento-item">
-      <span class="bento-icon">⚙</span>
-      <span class="bento-label">Settings</span>
-    </a>
-  </div>
-</div>
+    <section id="about">
+        <div class="glass-container">
+            <h2>About Me</h2>
+            <p>I'm a passionate [your profession, e.g., web developer] with a love for creating intuitive and visually appealing digital experiences. Based in [your location], I blend creativity with technical expertise to bring ideas to life.</p>
+        </div>
+    </section>
 
-<!-- Main Content -->
-<main>
-  <!-- Placeholder sections — we will build them one by one -->
-  <section id="home"><div class="glass-card"><h2>Home</h2><p>Coming next...</p></div></section>
-  <section id="about"><div class="glass-card"><h2>About Me</h2><p>Coming next...</p></div></section>
-  <section id="education"><div class="glass-card"><h2>Education Timeline</h2><p>Coming next...</p></div></section>
-  <section id="journey"><div class="glass-card"><h2>Professional Journey</h2><p>Coming next...</p></div></section>
-  <section id="projects"><div class="glass-card"><h2>Projects</h2><p>Coming next...</p></div></section>
-  <section id="technologies"><div class="glass-card"><h2>Technologies</h2><p>Coming next...</p></div></section>
-  <section id="services"><div class="glass-card"><h2>Services</h2><p>Coming next...</p></div></section>
-  <section id="contact"><div class="glass-card"><h2>Contact Page</h2><p>Coming next...</p></div></section>
-  <section id="settings"><div class="glass-card"><h2>Settings</h2><p>Coming next...</p></div></section>
-</main>
+    <section id="education">
+        <div class="glass-container">
+            <h2>Education</h2>
+            <ul>
+                <li>[Degree] in [Field], [University], [Year]</li>
+                <li>[Another Degree or Course], [Institution], [Year]</li>
+                <!-- Add more as needed -->
+            </ul>
+        </div>
+    </section>
 
-<script>
-// Expand sidebar on hover
-const sidebar = document.getElementById('sidebar');
+    <section id="experience">
+        <div class="glass-container">
+            <h2>Professional Experience</h2>
+            <ul>
+                <li>[Job Title] at [Company], [Duration] - [Description]</li>
+                <li>[Another Job Title] at [Company], [Duration] - [Description]</li>
+                <!-- Add more as needed -->
+            </ul>
+        </div>
+    </section>
 
-sidebar.addEventListener('mouseenter', () => {
-  sidebar.classList.add('expanded');
-});
+    <section id="technologies">
+        <div class="glass-container">
+            <h2>Technologies I've Used</h2>
+            <ul>
+                <li>HTML, CSS, JavaScript</li>
+                <li>React, Node.js</li>
+                <li>Python, Django</li>
+                <!-- Add more as needed -->
+            </ul>
+        </div>
+    </section>
 
-sidebar.addEventListener('mouseleave', () => {
-  sidebar.classList.remove('expanded');
-});
+    <section id="certifications">
+        <div class="glass-container">
+            <h2>Certifications Timeline</h2>
+            <ul>
+                <li>[Certification Name], [Issuing Organization], [Year]</li>
+                <li>[Another Certification], [Issuing Organization], [Year]</li>
+                <!-- Add more as needed -->
+            </ul>
+        </div>
+    </section>
 
-// Active link highlight on scroll
-const sections = document.querySelectorAll('section[id]');
-const bentoItems = document.querySelectorAll('.bento-item');
+    <section id="services">
+        <div class="glass-container">
+            <h2>Services I Offer</h2>
+            <ul>
+                <li>Web Development</li>
+                <li>UI/UX Design</li>
+                <li>Consulting</li>
+                <!-- Add more as needed -->
+            </ul>
+        </div>
+    </section>
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        bentoItems.forEach(item => {
-          item.classList.remove('active');
-          if (item.getAttribute('href') === `#${entry.target.id}`) {
-            item.classList.add('active');
-          }
+    <section id="contact">
+        <div class="glass-container">
+            <h2>Contact Me</h2>
+            <form action="#" method="post"> <!-- Replace with actual form handler -->
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Your Message" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling for navbar links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
         });
-      }
-    });
-  },
-  { threshold: 0.6 }
-);
-
-sections.forEach(section => observer.observe(section));
-</script>
-
+    </script>
 </body>
 </html>
