@@ -16,7 +16,7 @@
       --bg: #000000;
       --glass: rgba(20, 25, 40, 0.95);
       --accent: #3b82f6;
-      --accent-glow: rgba(59, 130, 246, 0.4);
+      --tech-color: #60a5fa;
       --text: #ffffff;
       --text-light: #cbd5e1;
       --border: rgba(255,255,255,0.1);
@@ -24,10 +24,10 @@
     }
 
     [data-theme="light"] {
-      --bg: #f1f5f9;
+      --bg: #f8fafc;
       --glass: rgba(255, 255, 255, 0.95);
       --accent: #2563eb;
-      --accent-glow: rgba(37, 99, 235, 0.2);
+      --tech-color: #1d4ed8;
       --text: #0f172a;
       --text-light: #475569;
       --border: rgba(0, 0, 0, 0.1);
@@ -36,130 +36,120 @@
 
     * { margin:0; padding:0; box-sizing:border-box; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
-
-    /* BG IMAGE */
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; transition: background 0.3s; }
+    
     body::before {
       content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('wllpbk.jpg');
-      background-size: cover; background-position: center; z-index: -1;
+      background-size: cover; z-index: -1;
     }
 
-    /* NAVIGATION */
+    /* FLOATING BUBBLE (ORIGINAL) */
     .floating-bubble {
       position: fixed; left: 24px; top: 24px; width: 64px; height: 64px;
       border-radius: 50%; overflow: hidden; border: 3px solid var(--accent);
-      box-shadow: 0 8px 32px var(--accent-glow); cursor: pointer; z-index: 130;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5); cursor: pointer; z-index: 200;
+      transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     .floating-bubble.hidden { opacity: 0; transform: scale(0.5); pointer-events: none; }
-    
+    .floating-bubble img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ICON MENU (FIXED ON DESKTOP) */
     .icon-menu {
-      position: fixed; left: 16px; top: 50%; transform: translateY(-50%) translateX(-120px);
+      position: absolute; left: 16px; top: 50%; transform: translateY(-50%) translateX(-120px);
       width: 80px; background: var(--glass); backdrop-filter: blur(20px);
       border: 1px solid var(--border); border-radius: 32px; padding: 20px 0;
-      display: flex; flex-direction: column; align-items: center; gap: 18px; z-index: 120;
+      display: flex; flex-direction: column; align-items: center; gap: 18px; z-index: 150;
       opacity: 0; transition: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .icon-menu.visible { opacity: 1; transform: translateY(-50%) translateX(0); }
+    .icon-menu.is-fixed { position: fixed; }
 
-    .hamburger-btn {
-      width: 56px; height: 56px; border-radius: 18px; background: var(--card-bg);
-      color: var(--text); font-size: 1.5rem; display: grid; place-items: center; cursor: pointer;
-    }
-
-    .icon-item {
+    .icon-item, .hamburger-btn {
       width: 52px; height: 52px; border-radius: 16px; background: var(--card-bg);
       color: var(--text); font-size: 1.3rem; display: grid; place-items: center; cursor: pointer; transition: 0.3s;
+      position: relative;
     }
-    .icon-item:hover, .icon-item.active { background: var(--accent); color: white; transform: scale(1.1); }
+    .icon-item:hover, .icon-item.active { background: var(--accent); color: white; }
 
+    /* SETTINGS DROPDOWN */
+    .settings-dropdown {
+      position: absolute; left: 90px; bottom: 0; width: 220px;
+      background: var(--glass); border: 1px solid var(--border);
+      border-radius: 20px; padding: 15px; display: none; flex-direction: column; gap: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 160;
+    }
+    .settings-dropdown.show { display: flex; }
+    .setting-row { display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; }
+    .toggle-switch { width: 40px; height: 20px; background: #444; border-radius: 20px; position: relative; cursor: pointer; }
+    .toggle-switch.active { background: var(--accent); }
+    .toggle-switch::before { content: ""; position: absolute; width: 16px; height: 16px; background: white; border-radius: 50%; top: 2px; left: 2px; transition: 0.3s; }
+    .toggle-switch.active::before { left: 22px; }
+
+    /* TEXT MENU (ORIGINAL SLIDE) */
     .text-menu {
       position: fixed; left: 112px; top: 50%; transform: translateY(-50%) translateX(-120%);
       width: 320px; background: var(--glass); backdrop-filter: blur(25px);
       border: 1px solid var(--border); border-radius: 28px; padding: 40px;
-      z-index: 115; transition: 0.5s; opacity: 0; pointer-events: none;
+      z-index: 145; transition: 0.5s; opacity: 0; pointer-events: none;
     }
     .text-menu.open { transform: translateY(-50%) translateX(0); opacity: 1; pointer-events: auto; }
     .text-links a {
       display: flex; align-items: center; gap: 15px; padding: 15px 20px;
-      border-radius: 12px; color: var(--text); text-decoration: none; transition: 0.3s;
+      border-radius: 12px; color: var(--text); text-decoration: none; transition: 0.3s; margin-bottom: 5px;
     }
     .text-links a:hover { background: var(--accent); color: white; }
 
-    /* HERO */
-    .parallax-section { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 100px 5%; }
-    
-    .hero-grid {
-      display: grid; grid-template-columns: 1.2fr 0.8fr; align-items: center;
-      gap: 3rem; background: var(--card-bg); backdrop-filter: blur(15px);
-      padding: 4rem; border-radius: 50px; border: 1px solid var(--border); max-width: 1200px;
+    /* HERO LAYOUT */
+    .hero-container {
+      display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 2rem;
+      background: var(--card-bg); backdrop-filter: blur(15px); padding: 4rem;
+      border-radius: 50px; border: 1px solid var(--border); max-width: 1200px; width: 100%;
     }
-    .hero-text h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); margin-bottom: 1rem; }
-    
     .hero-img-box { position: relative; width: 100%; height: 400px; display: flex; align-items: flex-end; justify-content: center; }
     .popout-circle {
       position: absolute; bottom: 20px; width: 280px; height: 280px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), #60a5fa); z-index: 1;
-      animation: breathe 5s infinite; transition: 0.5s;
+      background: linear-gradient(135deg, var(--accent), #60a5fa); z-index: 1; animation: breathe 5s infinite;
     }
-    .popout-img { position: relative; width: 320px; z-index: 2; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5)); transition: 0.5s; }
-    .hero-img-box:hover .popout-img { transform: translateY(-15px) scale(1.05); }
+    .popout-img { position: relative; width: 340px; z-index: 2; transition: 0.5s; cursor: pointer; }
+    .hero-img-box:hover .popout-img { transform: translateY(-20px) scale(1.05); }
 
-    @keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+    @keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
 
-    /* EXPERIENCE SECTION */
+    /* EXPERIENCE CARDS */
     .exp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; width: 100%; max-width: 1200px; }
     .exp-card {
       background: var(--glass); padding: 2.5rem; border-radius: 30px; border: 1px solid var(--border);
-      text-align: center; transition: 0.3s; position: relative; overflow: hidden;
+      text-align: center; transition: 0.3s;
     }
-    .exp-card:hover { transform: translateY(-10px); border-color: var(--accent); }
-    .comp-logo { width: 80px; height: 80px; margin: 0 auto 1.5rem; border-radius: 15px; background: white; padding: 10px; display: flex; align-items: center; justify-content: center; }
-    .comp-logo img { max-width: 100%; max-height: 100%; }
-    
-    .exp-card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
-    .exp-card h3 a { color: var(--accent); text-decoration: none; }
-    .exp-card .pos { font-weight: 600; opacity: 0.8; margin-bottom: 1rem; display: block; }
-    .exp-card .dur { font-size: 0.9rem; opacity: 0.6; display: block; margin-bottom: 1.5rem; }
+    .exp-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+    .tech-link { color: var(--tech-color); font-weight: 600; text-decoration: none; border-bottom: 1px solid transparent; transition: 0.3s; }
+    .tech-link:hover { border-bottom-color: var(--tech-color); }
 
-    .btn-roles {
-      background: var(--card-bg); border: 1px solid var(--accent); color: var(--text);
-      padding: 10px 20px; border-radius: 50px; cursor: pointer; transition: 0.3s; font-weight: 600;
-    }
-    .btn-roles:hover { background: var(--accent); color: white; }
-
-    /* MODAL POPUP */
+    /* MODAL */
     .modal {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
-      display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9);
+      backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px;
     }
     .modal-content {
-      background: var(--glass); border: 1px solid var(--border); padding: 3rem;
-      border-radius: 30px; max-width: 800px; width: 100%; max-height: 80vh; overflow-y: auto;
-      position: relative; animation: slideUp 0.4s ease;
+      background: var(--glass); padding: 3rem; border-radius: 30px; max-width: 900px; width: 100%;
+      max-height: 85vh; overflow-y: auto; position: relative; border: 1px solid var(--border);
     }
-    @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    .close-modal { position: absolute; top: 20px; right: 20px; font-size: 2rem; cursor: pointer; opacity: 0.5; }
-    .modal-content h2 { color: var(--accent); margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
-    .modal-content ul { padding-left: 20px; }
-    .modal-content li { margin-bottom: 12px; line-height: 1.6; color: var(--text-light); }
+    .modal-content li { margin-bottom: 15px; line-height: 1.6; color: var(--text-light); }
 
-    /* FOOTER */
-    footer { background: var(--glass); padding: 5rem 5% 3rem; border-top: 1px solid var(--border); }
-    .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; }
-    .footer-brand img { width: 80px; margin-bottom: 1rem; border-radius: 50%; border: 2px solid var(--accent); }
-    .footer-column h3 { margin-bottom: 1.5rem; font-size: 1.1rem; color: var(--accent); }
-    .footer-column ul { list-style: none; }
-    .footer-column li { margin-bottom: 10px; opacity: 0.7; font-size: 0.9rem; }
-    .footer-column a { color: inherit; text-decoration: none; transition: 0.3s; }
-    .footer-column a:hover { color: var(--accent); }
-    .socials { display: flex; gap: 15px; margin-top: 1rem; }
-    .socials a { font-size: 1.4rem; opacity: 0.8; }
+    /* FOOTER (RESTORED) */
+    footer { background: var(--glass); padding: 5rem 5% 3rem; border-top: 1px solid var(--border); margin-top: 4rem; }
+    .footer-grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; }
+    .footer-logo { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--accent); margin-bottom: 1.5rem; }
+    .footer-col h3 { color: var(--accent); margin-bottom: 1.5rem; font-size: 1.2rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 10px; opacity: 0.8; }
+    .footer-col a { color: inherit; text-decoration: none; }
 
-    @media (max-width: 900px) {
-      .hero-grid { grid-template-columns: 1fr; text-align: center; }
-      .hero-img-box { height: 320px; }
+    @media (max-width: 1024px) {
+      .hero-container { grid-template-columns: 1fr; text-align: center; padding: 2rem; }
+      .icon-menu { position: relative !important; top: 0 !important; left: 0 !important; transform: none !important; width: 100%; flex-direction: row; justify-content: center; opacity: 1; border-radius: 0; }
+      .floating-bubble { display: none; }
     }
   </style>
 </head>
@@ -169,198 +159,178 @@
 
   <nav class="icon-menu" id="icon-menu">
     <div id="hamburger" class="hamburger-btn"><i class="fa-solid fa-bars"></i></div>
-    <div class="icon-item active" data-sec="home"><i class="fa-solid fa-house"></i></div>
-    <div class="icon-item" data-sec="experience"><i class="fa-solid fa-briefcase"></i></div>
-    <div class="icon-item" data-sec="about"><i class="fa-solid fa-user"></i></div>
-    <div class="icon-item" id="theme-toggle"><i class="fa-solid fa-moon" id="theme-icon"></i></div>
+    <div class="icon-item" onclick="scrollToSec('home')"><i class="fa-solid fa-house"></i></div>
+    <div class="icon-item" onclick="scrollToSec('experience')"><i class="fa-solid fa-briefcase"></i></div>
+    <div class="icon-item" onclick="scrollToSec('about')"><i class="fa-solid fa-user"></i></div>
+    
+    <div class="icon-item" id="settings-btn">
+      <i class="fa-solid fa-gear"></i>
+      <div class="settings-dropdown" id="settings-dropdown">
+        <div class="setting-row">
+          <span>Dark Mode</span>
+          <div class="toggle-switch active" id="theme-toggle"></div>
+        </div>
+        <div class="setting-row">
+          <span>Fixed Menu</span>
+          <div class="toggle-switch active" id="nav-lock-toggle"></div>
+        </div>
+      </div>
+    </div>
   </nav>
 
   <aside class="text-menu" id="text-menu">
     <div class="text-links">
       <a href="#home"><i class="fa-solid fa-house"></i> Home</a>
-      <a href="#experience"><i class="fa-solid fa-briefcase"></i> Experience</a>
-      <a href="#about"><i class="fa-solid fa-user"></i> About</a>
+      <a href="#experience"><i class="fa-solid fa-briefcase"></i> Prof Journey</a>
+      <a href="#about"><i class="fa-solid fa-user"></i> About Me</a>
       <a href="#education"><i class="fa-solid fa-graduation-cap"></i> Education</a>
       <a href="#contact"><i class="fa-solid fa-envelope"></i> Contact</a>
     </div>
   </aside>
 
-  <section id="home" class="parallax-section">
-    <div class="hero-grid">
+  <section id="home" style="min-height:100vh; display:flex; align-items:center; justify-content:center; padding: 80px 5%;">
+    <div class="hero-container">
       <div class="hero-text">
-        <span style="color:var(--accent); font-weight:800; letter-spacing:2px;">IT PROFESSIONAL</span>
-        <h1>John Mark Kiritu</h1>
-        <p>System Administrator and IT Support Specialist. I deliver high-availability infrastructure and cybersecurity solutions.</p>
-        <a href="#experience" style="background:var(--accent); color:white; padding:15px 35px; border-radius:50px; text-decoration:none; font-weight:bold; display:inline-block;">VIEW MY JOURNEY</a>
+        <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1rem;">John Mark Kiritu</h1>
+        <p style="font-size: 1.2rem; opacity: 0.8; margin-bottom: 2rem;">System Administrator & IT Support Officer delivering high-performance infrastructure solutions.</p>
+        <a href="#experience" style="background:var(--accent); color:white; padding:15px 30px; border-radius:50px; text-decoration:none; font-weight:700;">EXPLORE MY WORK</a>
       </div>
       <div class="hero-img-box">
         <div class="popout-circle"></div>
-        <img src="profilepic.png" class="popout-img">
+        <img src="profilepic.png" class="popout-img" alt="Profile">
       </div>
     </div>
   </section>
 
-  <section id="experience" class="parallax-section" style="flex-direction: column;">
-    <h2 style="font-size: 3rem; margin-bottom: 3rem;">Professional Journey</h2>
+  <section id="experience" style="padding: 100px 5%; text-align: center;">
+    <h2 style="font-size: 3rem; margin-bottom: 4rem;">Professional Journey</h2>
     <div class="exp-grid">
       
       <div class="exp-card">
-        <div class="comp-logo"><i class="fa-solid fa-truck-fast" style="color:#333; font-size:2rem;"></i></div>
-        <h3><a href="https://doubleq.com" target="_blank">Double Q (C4 Logistics)</a></h3>
-        <span class="pos">System Administrator</span>
-        <span class="dur">Sept 2024 – Nov 2024</span>
-        <button class="btn-roles" onclick="openModal('modal-c4')">View Roles</button>
+        <h3>Double Q (C4 Logistics Ltd)</h3>
+        <p class="pos">SYSTEM ADMINISTRATOR</p>
+        <p class="dur">SEPTEMBER 2024 – NOVEMBER 2024</p>
+        <button class="btn-roles" onclick="openModal('m1')" style="margin-top:20px; background:var(--accent); color:white; border:none; padding:10px 20px; border-radius:10px; cursor:pointer;">View Roles</button>
       </div>
 
       <div class="exp-card">
-        <div class="comp-logo"><i class="fa-solid fa-hand-holding-heart" style="color:#008d3f; font-size:2rem;"></i></div>
-        <h3><a href="https://uganda.oxfam.org" target="_blank">Oxfam in Uganda</a></h3>
-        <span class="pos">IT Support Officer</span>
-        <span class="dur">Nov 2022 – May 2024</span>
-        <button class="btn-roles" onclick="openModal('modal-ox-support')">View Roles</button>
-      </div>
-
-      <div class="exp-card">
-        <div class="comp-logo"><i class="fa-solid fa-graduation-cap" style="color:#008d3f; font-size:2rem;"></i></div>
-        <h3><a href="https://uganda.oxfam.org" target="_blank">Oxfam in Uganda</a></h3>
-        <span class="pos">Graduate Trainee</span>
-        <span class="dur">July 2022 – Nov 2022</span>
-        <button class="btn-roles" onclick="openModal('modal-ox-grad')">View Roles</button>
-      </div>
-
-      <div class="exp-card">
-        <div class="comp-logo"><i class="fa-solid fa-briefcase" style="color:#008d3f; font-size:2rem;"></i></div>
-        <h3><a href="https://uganda.oxfam.org" target="_blank">Oxfam in Uganda</a></h3>
-        <span class="pos">IT Intern</span>
-        <span class="dur">Feb 2022 – July 2022</span>
-        <button class="btn-roles" onclick="openModal('modal-ox-intern')">View Roles</button>
+        <h3>OXFAM IN UGANDA</h3>
+        <p class="pos">IT SUPPORT OFFICER</p>
+        <p class="dur">NOV 2022 - MAY 2024</p>
+        <button class="btn-roles" onclick="openModal('m2')" style="margin-top:20px; background:var(--accent); color:white; border:none; padding:10px 20px; border-radius:10px; cursor:pointer;">View Roles</button>
       </div>
 
     </div>
   </section>
 
-  <div id="modal-c4" class="modal">
+  <div id="m1" class="modal">
     <div class="modal-content">
-      <span class="close-modal" onclick="closeModal()">&times;</span>
-      <h2>Double Q (C4 Logistics) Roles</h2>
+      <span onclick="closeModal()" style="position:absolute; right:20px; top:20px; cursor:pointer; font-size:2rem;">&times;</span>
+      <h2 style="color:var(--accent); margin-bottom:2rem;">System Administrator Roles</h2>
       <ul>
-        <li>Administer and maintain IT infrastructure (Switches, PABX, Microsoft Power Apps, Camera Surveillance).</li>
-        <li>Implement and monitor Kaspersky Endpoint Protection and configure firewalls.</li>
-        <li>Generate performance and incident reports using Transport Management Systems.</li>
-        <li>Provide Level 2 support for O365, Windows 10/11, and Network issues.</li>
+        <li>Administer and maintain the company’s IT infrastructure, including switches, PABX, <a href="https://powerapps.microsoft.com" class="tech-link">Microsoft Power Apps</a>, wireless access points, and camera surveillance systems.</li>
+        <li>Implement and monitor <a href="https://www.kaspersky.com" class="tech-link">Kaspersky Endpoint Protection</a> and configure firewall rules to enforce cybersecurity policies.</li>
+        <li>Generate system performance and incident reports using tools such as the Transport Management System.</li>
+        <li>Provide Level 2 technical support for <a href="https://www.microsoft.com/windows" class="tech-link">Windows 10/11</a>, <a href="https://www.office.com" class="tech-link">Microsoft Office 365</a>, Outlook, and network connectivity issues.</li>
+        <li>Utilizing remote tools like <a href="https://anydesk.com" class="tech-link">AnyDesk</a> and <a href="https://www.teamviewer.com" class="tech-link">TeamViewer</a> to support field offices.</li>
       </ul>
     </div>
   </div>
 
-  <div id="modal-ox-support" class="modal">
+  <div id="m2" class="modal">
     <div class="modal-content">
-      <span class="close-modal" onclick="closeModal()">&times;</span>
-      <h2>IT Support Officer Roles</h2>
+      <span onclick="closeModal()" style="position:absolute; right:20px; top:20px; cursor:pointer; font-size:2rem;">&times;</span>
+      <h2 style="color:var(--accent); margin-bottom:2rem;">IT Support Officer Roles</h2>
       <ul>
-        <li>Ensured system uptime via Microsoft 365 Admin Center and Cisco Meraki Dashboard.</li>
-        <li>Configured Cisco Meraki cameras, L2/L3 switches, and network segmentation.</li>
-        <li>Managed IT Asset Lifecycle using Excel and SharePoint.</li>
-        <li>Tier 1-3 support via ServiceNow and Jira Service Management.</li>
-        <li>Contributed to Power BI dashboard development and Power Apps automation.</li>
+        <li>Ensured maximum network and system uptime through proactive monitoring utilizing tools such as the <a href="https://admin.microsoft.com" class="tech-link">Microsoft 365 Admin Center</a> and <a href="https://meraki.cisco.com" class="tech-link">Cisco Meraki Dashboard</a>.</li>
+        <li>Installed, configured, and upgraded network equipment including <a href="https://meraki.cisco.com" class="tech-link">Cisco Meraki</a> cameras, access points, and Layer 2/3 switches.</li>
+        <li>Maintained an IT asset register using <a href="https://www.microsoft.com/excel" class="tech-link">Microsoft Excel</a> and <a href="https://www.microsoft.com/sharepoint" class="tech-link">SharePoint</a>.</li>
+        <li>Delivered Tier 1 technical support with efficient escalation to Tier 2 and Tier 3 via <a href="https://www.servicenow.com" class="tech-link">ServiceNow</a> and <a href="https://www.atlassian.com/software/jira" class="tech-link">Jira Service Management</a>.</li>
+        <li>Contributed to digital transformation projects supporting tools like <a href="https://powerbi.microsoft.com" class="tech-link">Power BI</a> (dashboard development) and <a href="https://www.box.com" class="tech-link">Box Drive</a>.</li>
       </ul>
     </div>
   </div>
 
-  <div id="modal-ox-grad" class="modal">
-    <div class="modal-content">
-      <span class="close-modal" onclick="closeModal()">&times;</span>
-      <h2>Graduate Trainee Roles</h2>
-      <ul>
-        <li>Resolved 80+ daily tickets via ServiceNow/Jira.</li>
-        <li>Configured Windows 10, Ubuntu Linux, and macOS devices.</li>
-        <li>Integrated AV systems: Logitech Rally, Zoom Rooms, and MS Teams Rooms.</li>
-        <li>Maintained enterprise MFP printer networks (HP, Xerox, Kyocera).</li>
-      </ul>
-    </div>
-  </div>
-
-  <div id="modal-ox-intern" class="modal">
-    <div class="modal-content">
-      <span class="close-modal" onclick="closeModal()">&times;</span>
-      <h2>IT Intern Roles</h2>
-      <ul>
-        <li>Helpdesk support via TeamViewer/AnyDesk for multiple departments.</li>
-        <li>Staff training on Box Drive, OneDrive, and MFA (Microsoft Authenticator).</li>
-        <li>OS deployment using Rufus, Ventoy, and UNetbootin.</li>
-        <li>Structured Cat6 cabling and VLAN setup on Meraki switches.</li>
-        <li>Endpoint protection via Windows Defender ATP.</li>
-      </ul>
-    </div>
-  </div>
-
-  <section id="about" class="parallax-section">
-    <div style="background:var(--card-bg); backdrop-filter:blur(10px); padding:4rem; border-radius:40px; border:1px solid var(--border); max-width:900px; text-align:center;">
+  <section id="about" style="padding: 100px 5%; display: flex; justify-content: center;">
+    <div style="background:var(--card-bg); padding: 4rem; border-radius: 40px; border: 1px solid var(--border); max-width: 800px; text-align: center;">
       <h2>About Me</h2>
-      <p style="margin-top:1.5rem; line-height:1.8; opacity:0.8;">I am a highly skilled IT professional with over 2 years of experience in system administration and technical support. My core expertise lies in Microsoft 365 ecosystems, Cisco Meraki networking, and cybersecurity compliance.</p>
+      <p style="margin-top:20px; line-height:1.8; opacity:0.8;">Self-motivated IT professional with over 2 years of experience in IT support, networking, and Microsoft 365 administration. Expert in troubleshooting and infrastructure maintenance.</p>
     </div>
   </section>
 
   <footer id="contact">
     <div class="footer-grid">
-      <div class="footer-brand">
-        <img src="nobklogo.png">
+      <div class="footer-col">
+        <img src="nobklogo.png" class="footer-logo">
         <h3>John Mark Kiritu</h3>
-        <p>IT Specialist & Developer</p>
-        <div class="socials">
-          <a href="#"><i class="fab fa-linkedin"></i></a>
-          <a href="#"><i class="fab fa-github"></i></a>
-          <a href="#"><i class="fab fa-whatsapp"></i></a>
-        </div>
+        <p>IT Specialist & Designer</p>
       </div>
-      <div class="footer-column">
+      <div class="footer-col">
         <h3>Information</h3>
         <ul>
           <li><a href="#home">Home</a></li>
           <li><a href="#about">About Me</a></li>
-          <li><a href="#experience">Experience</a></li>
+          <li><a href="#">Professional Blog</a></li>
         </ul>
       </div>
-      <div class="footer-column">
-        <h3>Our Services</h3>
+      <div class="footer-col">
+        <h3>Helpful Links</h3>
         <ul>
-          <li>Web Development</li>
-          <li>IT Support</li>
-          <li>Cyber Security</li>
+          <li><a href="#experience">Services</a></li>
+          <li><a href="#">Support Center</a></li>
+          <li><a href="#">Privacy Policy</a></li>
         </ul>
       </div>
-      <div class="footer-column">
+      <div class="footer-col">
         <h3>Contact</h3>
         <ul>
           <li>Kampala, Uganda</li>
           <li>marc@wanjeru.dev</li>
-          <li>+256 700 000000</li>
+          <li><div style="display:flex; gap:10px; margin-top:10px;"><i class="fab fa-linkedin"></i> <i class="fab fa-whatsapp"></i></div></li>
         </ul>
       </div>
     </div>
-    <div style="text-align:center; margin-top:4rem; opacity:0.4; font-size:0.8rem;">© 2026 John Mark Kiritu — All Rights Reserved</div>
   </footer>
 
   <script>
     const bubble = document.getElementById('floating-bubble');
     const iconMenu = document.getElementById('icon-menu');
     const textMenu = document.getElementById('text-menu');
-    const hamburger = document.getElementById('hamburger');
+    const settingsBtn = document.getElementById('settings-btn');
+    const settingsDropdown = document.getElementById('settings-dropdown');
+    const themeToggle = document.getElementById('theme-toggle');
+    const navLockToggle = document.getElementById('nav-lock-toggle');
 
+    // NAV LOGIC
     bubble.onclick = () => { bubble.classList.add('hidden'); iconMenu.classList.add('visible'); };
-    hamburger.onclick = (e) => { e.stopPropagation(); textMenu.classList.toggle('open'); };
+    document.getElementById('hamburger').onclick = (e) => { e.stopPropagation(); textMenu.classList.toggle('open'); };
 
-    document.onclick = (e) => {
-      if (!iconMenu.contains(e.target) && !bubble.contains(e.target)) {
-        iconMenu.classList.remove('visible'); bubble.classList.remove('hidden'); textMenu.classList.remove('open');
-      }
+    // SETTINGS LOGIC
+    settingsBtn.onclick = (e) => { e.stopPropagation(); settingsDropdown.classList.toggle('show'); };
+    
+    themeToggle.onclick = () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      themeToggle.classList.toggle('active');
     };
 
+    navLockToggle.onclick = () => {
+      iconMenu.classList.toggle('is-fixed');
+      navLockToggle.classList.toggle('active');
+    };
+
+    // UTILS
+    function scrollToSec(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
     function openModal(id) { document.getElementById(id).style.display = 'flex'; }
     function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
 
-    document.querySelectorAll('[data-sec]').forEach(item => {
-      item.onclick = () => document.getElementById(item.getAttribute('data-sec')).scrollIntoView({ behavior: 'smooth' });
-    });
+    window.onclick = (e) => {
+      if (!iconMenu.contains(e.target) && !bubble.contains(e.target)) {
+        iconMenu.classList.remove('visible'); bubble.classList.remove('hidden'); textMenu.classList.remove('open');
+      }
+      if (!settingsBtn.contains(e.target)) settingsDropdown.classList.remove('show');
+    };
   </script>
 </body>
 </html>
