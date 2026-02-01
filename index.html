@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Glass Sidebar Desktop UI</title>
+<title>Desktop UI with Dual Navigation</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
 <style>
@@ -14,39 +13,71 @@
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family: "Inter", system-ui, sans-serif;
+  font-family:Inter,system-ui,sans-serif;
 }
 
 /* ================= DESKTOP ================= */
 body{
   min-height:100vh;
+  background:url("desktop.jpg") center/cover no-repeat fixed;
   display:flex;
   align-items:center;
-  justify-content:center;
-  gap:30px;
-
-  background:url("desktop.jpg") center/cover no-repeat fixed;
   overflow:hidden;
 }
 
-/* dark overlay for contrast */
 body::before{
   content:"";
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.25);
+  background:rgba(0,0,0,.3);
   z-index:-1;
 }
 
-/* ================= SIDEBAR ================= */
-.sidebar{
-  width:280px;
+/* ================= ICON NAV (LEFT DOCK) ================= */
+.icon-nav{
+  width:80px;
   height:90vh;
-  padding:20px;
+  margin-left:20px;
 
-  background:rgba(255,255,255,0.08);
+  background:rgba(255,255,255,.08);
   backdrop-filter:blur(24px);
-  border:1px solid rgba(255,255,255,0.15);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:26px;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:20px 0;
+  gap:20px;
+  color:#f1f1f7;
+}
+
+.icon-nav i{
+  width:44px;
+  height:44px;
+  border-radius:14px;
+  background:rgba(255,255,255,.12);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.icon-nav i:hover{
+  background:#3b82f6;
+}
+
+/* ================= MAIN SIDEBAR ================= */
+.sidebar{
+  width:300px;
+  height:90vh;
+  margin-left:20px;
+  padding:24px;
+
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(24px);
+  border:1px solid rgba(255,255,255,.15);
   border-radius:26px;
 
   color:#f1f1f7;
@@ -54,25 +85,18 @@ body::before{
   flex-direction:column;
 }
 
-/* mini sidebar */
-.sidebar.mini{
-  width:90px;
-  padding:20px 12px;
-}
-
 /* ================= PROFILE ================= */
 .profile{
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:14px;
   margin-bottom:30px;
 }
 
 .profile img{
-  width:42px;
-  height:42px;
+  width:46px;
+  height:46px;
   border-radius:50%;
-  object-fit:cover;
 }
 
 .profile h4{
@@ -85,188 +109,85 @@ body::before{
   color:#b5b5c8;
 }
 
-.sidebar.mini .profile h4,
-.sidebar.mini .profile span{
-  display:none;
-}
-
-/* ================= SECTIONS ================= */
-.section-title{
-  font-size:11px;
-  letter-spacing:1px;
-  color:#b5b5c8;
-  margin-bottom:10px;
-}
-
 /* ================= MENU ================= */
 .menu a{
   display:flex;
   align-items:center;
   gap:14px;
-  padding:12px 14px;
-  margin-bottom:8px;
-
+  padding:14px 16px;
   border-radius:16px;
   text-decoration:none;
   color:#f1f1f7;
+  margin-bottom:10px;
   transition:.3s;
-}
-
-.menu a i{
-  min-width:20px;
 }
 
 .menu a:hover,
 .menu a.active{
-  background:rgba(255,255,255,0.12);
+  background:rgba(255,255,255,.12);
 }
 
-.sidebar.mini .menu span{
-  display:none;
+.menu i{
+  min-width:20px;
 }
 
-/* ================= SERVICES ================= */
-.services{
-  margin:20px 0;
-  padding:14px;
-  border-radius:18px;
-  background:rgba(0,0,0,0.25);
-}
-
-.service{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin-bottom:12px;
-}
-
-.service i{
-  width:34px;
-  height:34px;
-  border-radius:12px;
-  background:rgba(255,255,255,0.15);
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.sidebar.mini .service span{
-  display:none;
-}
-
-/* ================= SETTINGS ================= */
-.settings{
+/* ================= FOOTER ================= */
+.footer{
   margin-top:auto;
-  padding:12px;
   display:flex;
   justify-content:space-between;
-
-  background:rgba(0,0,0,0.25);
-  border-radius:16px;
-}
-
-.settings i{
-  cursor:pointer;
-  opacity:.85;
-}
-
-.settings i:hover{
-  opacity:1;
-}
-
-/* ================= CREATE BUTTON ================= */
-.create-btn{
-  margin-top:20px;
-  padding:16px;
-  border-radius:18px;
-  text-align:center;
-
-  background:#3b82f6;
-  font-weight:600;
-  cursor:pointer;
-}
-
-.sidebar.mini .create-btn span{
-  display:none;
-}
-
-.sidebar.mini .create-btn{
   padding:14px;
+  border-radius:16px;
+  background:rgba(0,0,0,.25);
 }
 
-.sidebar.mini .create-btn::before{
-  content:"+";
-  font-size:22px;
+.footer i{
+  cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<!-- FULL SIDEBAR -->
-<div class="sidebar">
+<!-- ICON NAVIGATION (LEFT) -->
+<nav class="icon-nav">
+  <i class="fa-solid fa-house"></i>
+  <i class="fa-solid fa-user"></i>
+  <i class="fa-solid fa-graduation-cap"></i>
+  <i class="fa-solid fa-briefcase"></i>
+  <i class="fa-solid fa-certificate"></i>
+  <i class="fa-solid fa-microchip"></i>
+  <i class="fa-solid fa-layer-group"></i>
+  <i class="fa-solid fa-envelope"></i>
+</nav>
+
+<!-- MAIN TEXT NAVIGATION -->
+<aside class="sidebar">
   <div class="profile">
     <img src="https://i.pravatar.cc/100" alt="">
     <div>
-      <h4>Good Day 👋<br>Vitaliy D.</h4>
-      <span>Menu: 6</span>
+      <h4>Hello 👋<br>Marc Wanjeru</h4>
+      <span>Portfolio Navigation</span>
     </div>
   </div>
 
-  <div class="section-title">MENU</div>
   <div class="menu">
-    <a class="active"><i class="fa-solid fa-border-all"></i><span>Dashboard</span></a>
-    <a><i class="fa-solid fa-list-check"></i><span>My project task</span></a>
-    <a><i class="fa-regular fa-calendar"></i><span>Calendar</span></a>
-    <a><i class="fa-regular fa-envelope"></i><span>Mail</span></a>
-    <a><i class="fa-regular fa-bell"></i><span>Notification</span></a>
-    <a><i class="fa-solid fa-chart-line"></i><span>Sales</span></a>
+    <a class="active"><i class="fa-solid fa-house"></i>Home</a>
+    <a><i class="fa-solid fa-user"></i>About</a>
+    <a><i class="fa-solid fa-graduation-cap"></i>Education</a>
+    <a><i class="fa-solid fa-briefcase"></i>Professional Journey</a>
+    <a><i class="fa-solid fa-certificate"></i>Certification</a>
+    <a><i class="fa-solid fa-microchip"></i>Technologies</a>
+    <a><i class="fa-solid fa-layer-group"></i>Services</a>
+    <a><i class="fa-solid fa-envelope"></i>Contact Us</a>
   </div>
 
-  <div class="section-title">SERVICE</div>
-  <div class="services">
-    <div class="service"><i class="fa-brands fa-jira"></i><span>Jira Software</span></div>
-    <div class="service"><i class="fa-brands fa-slack"></i><span>Slack</span></div>
-    <div class="service"><i class="fa-solid fa-headset"></i><span>Intercom</span></div>
-  </div>
-
-  <div class="settings">
+  <div class="footer">
     <i class="fa-solid fa-gear"></i>
     <i class="fa-regular fa-moon"></i>
     <i class="fa-solid fa-arrow-right-from-bracket"></i>
   </div>
-
-  <div class="create-btn"><span>Create new task</span></div>
-</div>
-
-<!-- MINI SIDEBAR -->
-<div class="sidebar mini">
-  <div class="profile">
-    <img src="https://i.pravatar.cc/100" alt="">
-  </div>
-
-  <div class="menu">
-    <a class="active"><i class="fa-solid fa-border-all"></i></a>
-    <a><i class="fa-solid fa-list-check"></i></a>
-    <a><i class="fa-regular fa-calendar"></i></a>
-    <a><i class="fa-regular fa-envelope"></i></a>
-    <a><i class="fa-regular fa-bell"></i></a>
-    <a><i class="fa-solid fa-chart-line"></i></a>
-  </div>
-
-  <div class="services">
-    <div class="service"><i class="fa-brands fa-jira"></i></div>
-    <div class="service"><i class="fa-brands fa-slack"></i></div>
-    <div class="service"><i class="fa-solid fa-headset"></i></div>
-  </div>
-
-  <div class="settings">
-    <i class="fa-solid fa-gear"></i>
-  </div>
-
-  <div class="create-btn"></div>
-</div>
+</aside>
 
 </body>
 </html>
