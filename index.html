@@ -1,360 +1,260 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Marc's Portfolio</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8">
+<title>Glass Sidebar UI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    body {
-      background: linear-gradient(135deg, #001428, #000814);
-      color: #e0f0ff;
-      min-height: 100vh;
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      overflow-x: hidden;
-      scrollbar-width: none;
-    }
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
-    body::-webkit-scrollbar {
-      display: none;
-    }
+<style>
+:root{
+  --bg:#0f0f14;
+  --glass:rgba(255,255,255,0.08);
+  --glass-border:rgba(255,255,255,0.15);
+  --text:#eaeaf0;
+  --muted:#a0a0b5;
+  --accent:#3b82f6;
+}
 
-    /* Fixed Vertical Sidebar */
-    .sidebar {
-      position: fixed;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 280px;
-      background: rgba(0, 31, 63, 0.42);
-      backdrop-filter: blur(18px) saturate(190%);
-      border-right: 1px solid rgba(173, 216, 230, 0.15);
-      padding: 5rem 2rem 2rem;
-      z-index: 1000;
-      overflow-y: auto;
-      scrollbar-width: none;
-    }
+*{
+  box-sizing:border-box;
+  font-family:Inter,system-ui,sans-serif;
+}
 
-    .sidebar::-webkit-scrollbar {
-      display: none;
-    }
+body{
+  margin:0;
+  background:linear-gradient(135deg,#f5b7b1,#f7dc6f);
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:30px;
+}
 
-    .sidebar h1 {
-      font-size: 2.2rem;
-      color: #b3e0ff;
-      margin-bottom: 3.5rem;
-      text-align: center;
-      letter-spacing: 2px;
-    }
+/* ===== SIDEBAR ===== */
+.sidebar{
+  width:280px;
+  height:90vh;
+  background:var(--glass);
+  backdrop-filter:blur(25px);
+  border:1px solid var(--glass-border);
+  border-radius:24px;
+  padding:20px;
+  color:var(--text);
+  display:flex;
+  flex-direction:column;
+}
 
-    .nav-list {
-      list-style: none;
-    }
+.sidebar.mini{
+  width:90px;
+  padding:20px 12px;
+}
 
-    .nav-list li {
-      margin: 1.4rem 0;
-    }
+/* ===== HEADER ===== */
+.profile{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:30px;
+}
 
-    .nav-list a {
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-      padding: 1.1rem 1.4rem;
-      color: #d0e8ff;
-      text-decoration: none;
-      border-radius: 14px;
-      font-weight: 500;
-      font-size: 1.15rem;
-      transition: all 0.3s ease;
-    }
+.profile img{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+}
 
-    .nav-list a:hover,
-    .nav-list a.active {
-      background: rgba(173, 216, 230, 0.20);
-      color: white;
-      transform: translateX(12px);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-    }
+.profile h4{
+  margin:0;
+  font-size:14px;
+}
 
-    .nav-icon {
-      width: 28px;
-      height: 28px;
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      flex-shrink: 0;
-    }
+.profile span{
+  font-size:12px;
+  color:var(--muted);
+}
 
-    /* Main Content */
-    .main-content {
-      margin-left: 280px;
-      padding: 4rem 5rem 3rem;
-    }
+.mini .profile h4,
+.mini .profile span{
+  display:none;
+}
 
-    section {
-      margin-bottom: 8rem;
-      scroll-margin-top: 3rem;
-    }
+/* ===== MENU ===== */
+.section-title{
+  font-size:11px;
+  letter-spacing:1px;
+  color:var(--muted);
+  margin-bottom:10px;
+}
 
-    .glass-card {
-      background: rgba(0, 31, 63, 0.35);
-      backdrop-filter: blur(16px) saturate(170%);
-      border: 1px solid rgba(173, 216, 230, 0.16);
-      border-radius: 20px;
-      padding: 3rem;
-      box-shadow: 0 12px 45px rgba(0,0,0,0.30);
-      position: relative;
-      overflow: hidden;
-    }
+.menu a{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:12px 14px;
+  border-radius:14px;
+  text-decoration:none;
+  color:var(--text);
+  margin-bottom:8px;
+  transition:.3s;
+}
 
-    .glass-card::before {
-      content: '';
-      position: absolute;
-      inset: -50%;
-      background: radial-gradient(circle at 30% 20%, rgba(173,216,230,0.10) 0%, transparent 65%);
-      animation: liquid 22s infinite alternate;
-      pointer-events: none;
-    }
+.menu a:hover,
+.menu a.active{
+  background:rgba(255,255,255,0.1);
+}
 
-    @keyframes liquid {
-      0%   { transform: translate(15%, 10%) rotate(5deg); }
-      100% { transform: translate(-15%, -10%) rotate(-5deg); }
-    }
+.menu i{
+  font-size:16px;
+  min-width:20px;
+}
 
-    h2 {
-      color: #b3e0ff;
-      margin-bottom: 2rem;
-      font-size: 2.6rem;
-      position: relative;
-      display: inline-block;
-    }
+.mini .menu span{
+  display:none;
+}
 
-    h2::after {
-      content: '';
-      position: absolute;
-      bottom: -12px;
-      left: 0;
-      width: 80px;
-      height: 4px;
-      background: linear-gradient(to right, #81d4fa, transparent);
-      border-radius: 4px;
-    }
+/* ===== SERVICES ===== */
+.services{
+  background:rgba(0,0,0,0.25);
+  padding:14px;
+  border-radius:18px;
+  margin:20px 0;
+}
 
-    ul {
-      list-style: none;
-      padding-left: 0;
-    }
+.service{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:12px;
+}
 
-    ul li {
-      margin: 1.4rem 0;
-      padding-left: 2rem;
-      position: relative;
-      font-size: 1.1rem;
-    }
+.service i{
+  width:34px;
+  height:34px;
+  border-radius:10px;
+  background:rgba(255,255,255,0.12);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
 
-    ul li::before {
-      content: "→";
-      position: absolute;
-      left: 0;
-      color: #81d4fa;
-      font-size: 1.4rem;
-    }
+.mini .services{
+  padding:10px;
+}
 
-    form {
-      display: grid;
-      gap: 1.6rem;
-      max-width: 700px;
-    }
+.mini .service span{
+  display:none;
+}
 
-    input, textarea {
-      padding: 1.3rem;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(173,216,230,0.25);
-      border-radius: 14px;
-      color: white;
-      font-size: 1.1rem;
-    }
+/* ===== SETTINGS ===== */
+.settings{
+  margin-top:auto;
+  display:flex;
+  justify-content:space-between;
+  padding:10px;
+  border-radius:16px;
+  background:rgba(0,0,0,0.25);
+}
 
-    input:focus, textarea:focus {
-      outline: none;
-      border-color: #81d4fa;
-      box-shadow: 0 0 0 4px rgba(129, 212, 250, 0.20);
-    }
+.settings i{
+  font-size:16px;
+  cursor:pointer;
+}
 
-    button {
-      padding: 1.3rem;
-      background: linear-gradient(90deg, #81d4fa, #4fc3f7);
-      color: #001428;
-      border: none;
-      border-radius: 14px;
-      font-weight: bold;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
+/* ===== CREATE BUTTON ===== */
+.create-btn{
+  margin-top:20px;
+  background:var(--accent);
+  color:white;
+  padding:16px;
+  border-radius:18px;
+  text-align:center;
+  font-weight:600;
+  cursor:pointer;
+}
 
-    button:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 35px rgba(129, 212, 250, 0.45);
-    }
-  </style>
+.mini .create-btn span{
+  display:none;
+}
+
+.mini .create-btn{
+  padding:14px;
+}
+
+/* ===== MINI ICON CENTER ===== */
+.mini .create-btn::before{
+  content:"+";
+  font-size:22px;
+}
+</style>
 </head>
+
 <body>
 
-  <aside class="sidebar">
-    <h1>Marc</h1>
-    <ul class="nav-list">
-      <li><a href="#home" class="active">
-        <div class="nav-icon" style="background-image: url('https://www.clipartmax.com/png/middle/433-4338423_home-button-image-black-home-icon-png.png');"></div>
-        Home
-      </a></li>
-      <li><a href="#about">
-        <div class="nav-icon" style="background-image: url('https://media.istockphoto.com/id/1469196566/vector/man-and-woman-avatar-profile-male-and-female-face-silhouette-profile-picture-portrait-symbol.jpg?s=612x612&w=0&k=20&c=lJJ5Ew_RDJYFPPRNK8f8No9DUN-srMCIDb3AoXexdrM=');"></div>
-        About Me
-      </a></li>
-      <li><a href="#education">
-        <div class="nav-icon" style="background-image: url('https://www.clipartmax.com/png/middle/94-946040_graduation-cap-icon-png.png');"></div>
-        Education
-      </a></li>
-      <li><a href="#experience">
-        <div class="nav-icon" style="background-image: url('https://www.clipartmax.com/png/middle/33-330391_briefcase-work-job-work-icon-ico.png');"></div>
-        Experience
-      </a></li>
-      <li><a href="#technologies">
-        <div class="nav-icon" style="background-image: url('https://thumbs.dreamstime.com/b/code-brackets-icon-programming-development-vector-design-generative-ai-simple-flat-curly-braces-universally-recognized-407203271.jpg');"></div>
-        Technologies
-      </a></li>
-      <li><a href="#certifications">
-        <div class="nav-icon" style="background-image: url('https://www.clipartmax.com/png/middle/217-2173888_cka%C2%AE-certification-certification-icon-circle.png');"></div>
-        Certifications
-      </a></li>
-      <li><a href="#services">
-        <div class="nav-icon" style="background-image: url('https://thumbs.dreamstime.com/b/tools-box-icon-white-background-tools-box-sign-flat-style-toolbox-symbol-tools-box-icon-white-background-tools-box-sign-106772790.jpg');"></div>
-        Services
-      </a></li>
-      <li><a href="#contact">
-        <div class="nav-icon" style="background-image: url('https://www.clipartmax.com/png/middle/314-3144147_email-icon-clipart-computer-icons-email-clip-art-open-envelope-icon-png.png');"></div>
-        Contact
-      </a></li>
-    </ul>
-  </aside>
+<!-- FULL SIDEBAR -->
+<div class="sidebar">
+  <div class="profile">
+    <img src="https://i.pravatar.cc/100" alt="">
+    <div>
+      <h4>Good Day 👋<br>Vitaliy D.</h4>
+      <span>Menu: 6</span>
+    </div>
+  </div>
 
-  <main class="main-content">
+  <div class="section-title">MENU</div>
+  <div class="menu">
+    <a class="active"><i class="fa-solid fa-border-all"></i><span>Dashboard</span></a>
+    <a><i class="fa-solid fa-list-check"></i><span>My project task</span></a>
+    <a><i class="fa-regular fa-calendar"></i><span>Calendar</span></a>
+    <a><i class="fa-regular fa-envelope"></i><span>Mail</span></a>
+    <a><i class="fa-regular fa-bell"></i><span>Notification</span></a>
+    <a><i class="fa-solid fa-chart-line"></i><span>Sales</span></a>
+  </div>
 
-    <section id="home">
-      <div class="glass-card">
-        <h2>Welcome</h2>
-        <p>Hi, I'm Marc — a passionate developer & creator based in Kampala. Welcome to my digital space.</p>
-      </div>
-    </section>
+  <div class="section-title">SERVICE</div>
+  <div class="services">
+    <div class="service"><i class="fa-brands fa-jira"></i><span>Jira Software</span></div>
+    <div class="service"><i class="fa-brands fa-slack"></i><span>Slack</span></div>
+    <div class="service"><i class="fa-solid fa-headset"></i><span>Intercom</span></div>
+  </div>
 
-    <section id="about">
-      <div class="glass-card">
-        <h2>About Me</h2>
-        <p>[Your detailed bio here — passions, journey, values, interests, etc.]</p>
-      </div>
-    </section>
+  <div class="settings">
+    <i class="fa-solid fa-gear"></i>
+    <i class="fa-regular fa-moon"></i>
+    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+  </div>
 
-    <section id="education">
-      <div class="glass-card">
-        <h2>Education</h2>
-        <ul>
-          <li>Bachelor of Science in [Field], [University], [Year–Year]</li>
-          <li>[Other qualification], [Institution], [Year]</li>
-        </ul>
-      </div>
-    </section>
+  <div class="create-btn"><span>Create new task</span></div>
+</div>
 
-    <section id="experience">
-      <div class="glass-card">
-        <h2>Professional Experience</h2>
-        <ul>
-          <li>[Role] — [Company / Project], [Period]<br>[Key achievements & responsibilities]</li>
-          <li>[Previous Role] — [Company], [Period]<br>[Description]</li>
-        </ul>
-      </div>
-    </section>
+<!-- MINI SIDEBAR -->
+<div class="sidebar mini">
+  <div class="profile">
+    <img src="https://i.pravatar.cc/100" alt="">
+  </div>
 
-    <section id="technologies">
-      <div class="glass-card">
-        <h2>Technologies & Tools</h2>
-        <ul>
-          <li>Frontend: HTML • CSS • JavaScript • React • Tailwind • Vue</li>
-          <li>Backend: Node.js • Express • Python • Django • Firebase</li>
-          <li>Others: Git • Docker • AWS • Figma • PostgreSQL</li>
-        </ul>
-      </div>
-    </section>
+  <div class="menu">
+    <a class="active"><i class="fa-solid fa-border-all"></i></a>
+    <a><i class="fa-solid fa-list-check"></i></a>
+    <a><i class="fa-regular fa-calendar"></i></a>
+    <a><i class="fa-regular fa-envelope"></i></a>
+    <a><i class="fa-regular fa-bell"></i></a>
+    <a><i class="fa-solid fa-chart-line"></i></a>
+  </div>
 
-    <section id="certifications">
-      <div class="glass-card">
-        <h2>Certifications</h2>
-        <ul>
-          <li>[Certification Name] — [Issuer], [Year]</li>
-          <li>[Another Certification] — [Issuer], [Year]</li>
-        </ul>
-      </div>
-    </section>
+  <div class="services">
+    <div class="service"><i class="fa-brands fa-jira"></i></div>
+    <div class="service"><i class="fa-brands fa-slack"></i></div>
+    <div class="service"><i class="fa-solid fa-headset"></i></div>
+  </div>
 
-    <section id="services">
-      <div class="glass-card">
-        <h2>Services I Offer</h2>
-        <ul>
-          <li>Custom Web & Mobile Applications</li>
-          <li>UI/UX Design & Prototyping</li>
-          <li>Frontend & Full-Stack Development</li>
-          <li>Consulting & Code Reviews</li>
-        </ul>
-      </div>
-    </section>
+  <div class="settings">
+    <i class="fa-solid fa-gear"></i>
+  </div>
 
-    <section id="contact">
-      <div class="glass-card">
-        <h2>Get in Touch</h2>
-        <form>
-          <input type="text" placeholder="Your Name" required>
-          <input type="email" placeholder="Email Address" required>
-          <textarea rows="6" placeholder="Your message..." required></textarea>
-          <button type="submit">Send Message</button>
-        </form>
-      </div>
-    </section>
-
-  </main>
-
-  <script>
-    // Active link highlighting on scroll
-    const sections = document.querySelectorAll('section');
-    const navLinks  = document.querySelectorAll('.nav-list a');
-
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop - 160;
-        if (scrollY >= sectionTop) current = section.getAttribute('id');
-      });
-
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === '#' + current) {
-          link.classList.add('active');
-        }
-      });
-    });
-
-    // Smooth scrolling
-    document.querySelectorAll('.nav-list a').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
-      });
-    });
-  </script>
+  <div class="create-btn"></div>
+</div>
 
 </body>
 </html>
