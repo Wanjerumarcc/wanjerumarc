@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Marc Wanjeru — Creative Developer & Designer</title>
+  <title>John Mark Kiritu — Creative Developer & Designer</title>
 
   <!-- Favicons -->
   <link rel="icon" href="nobklogo.png" type="image/png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
@@ -19,8 +19,8 @@
       --bg: #000000;
       --glass: rgba(25, 30, 45, 0.88);
       --accent: #3b82f6;
-      --text: #e2e8f0;
-      --text-light: #94a3b8;
+      --text: #ffffff;
+      --text-light: #cccccc;
       --border: rgba(255,255,255,0.10);
     }
 
@@ -36,14 +36,6 @@
       color: var(--text);
       line-height: 1.6;
       overflow-x: hidden;
-    }
-
-    /* Footer overrides – no wallpaper */
-    footer {
-      background: rgba(15,23,42,0.95);
-      backdrop-filter: blur(12px);
-      position: relative;
-      z-index: 10;
     }
 
     /* Floating minimal logo button */
@@ -99,7 +91,6 @@
     .expanded-nav.visible {
       opacity: 1;
       pointer-events: auto;
-      transform: translateY(-50%);
     }
 
     .nav-top {
@@ -117,11 +108,7 @@
 
     .nav-top:hover { background: var(--accent); color: white; transform: scale(1.1); }
 
-    .nav-icons {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
+    .nav-icons { display: flex; flex-direction: column; gap: 14px; }
 
     .bar-item {
       width: 50px;
@@ -205,47 +192,122 @@
     .sidebar-links a:hover,
     .sidebar-links a.active { background: rgba(255,255,255,0.10); }
 
-    /* Hero & other sections */
-    .parallax-section {
-      position: relative;
-      overflow: hidden;
+    /* Fused Hero + About section */
+    #intro {
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 8rem 5% 6rem;
+      padding: 6rem 5% 4rem;
+      position: relative;
+      text-align: center;
     }
 
-    .parallax-bg-layer {
+    #intro::before {
+      content: "";
       position: absolute;
-      inset: -20%;
-      background-size: cover;
-      background-position: center;
-      transform: translateZ(0);
-      will-change: transform;
-      z-index: -1;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.75));
+      z-index: 1;
     }
 
-    .section-content {
+    .intro-content {
       position: relative;
       z-index: 2;
-      max-width: 1100px;
+      max-width: 1200px;
       width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
     }
 
-    .section-content h1, .section-content h2 {
-      font-size: clamp(3.5rem, 9vw, 6.5rem);
+    .intro-text {
+      text-align: left;
+    }
+
+    .intro-text h1 {
+      font-size: clamp(3.8rem, 9vw, 7rem);
       font-weight: 900;
-      margin-bottom: 1.8rem;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+      color: white;
+      letter-spacing: -2px;
+    }
+
+    .intro-text .subtitle {
+      font-size: clamp(1.4rem, 3.5vw, 1.8rem);
+      color: var(--text-light);
+      max-width: 620px;
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+    }
+
+    .intro-profile {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+
+    .profile-circle {
+      width: 380px;
+      height: 380px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 8px solid rgba(59,130,246,0.3);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+    }
+
+    .profile-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      margin-top: -60px; /* head sticks out of circle */
+    }
+
+    .profile-name {
+      position: absolute;
+      bottom: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2.5rem;
+      border-radius: 60px;
+      text-align: center;
+      min-width: 320px;
+    }
+
+    .profile-name h3 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin: 0;
       color: white;
     }
 
-    .section-content p, .section-content .subtitle {
-      font-size: clamp(1.25rem, 3vw, 1.6rem);
-      color: var(--text-light);
-      max-width: 760px;
-      margin: 0 auto;
-      line-height: 1.7;
+    .profile-name p {
+      font-size: 1.1rem;
+      color: var(--accent);
+      margin: 0.3rem 0 0;
+    }
+
+    @media (max-width: 1024px) {
+      .intro-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 4rem;
+      }
+      .intro-text { text-align: center; }
+      .profile-circle { width: 320px; height: 320px; }
+      .profile-name { bottom: -50px; min-width: 280px; }
+      .profile-circle img { margin-top: -50px; }
+    }
+
+    @media (max-width: 768px) {
+      .unified-nav { left: 14px; width: 64px; }
+      .floating-logo { left: 20px; top: 20px; width: 56px; height: 56px; }
+      .expanded-nav { left: 14px; width: 68px; }
+      .slide-sidebar { left: 90px; width: 84vw; max-width: 320px; }
     }
 
     /* Footer */
@@ -255,6 +317,8 @@
       padding: 4rem 5% 3rem;
       font-size: 0.96rem;
       color: var(--text-light);
+      position: relative;
+      z-index: 10;
     }
 
     .footer-grid {
@@ -329,21 +393,13 @@
       color: #64748b;
       font-size: 0.9rem;
     }
-
-    @media (max-width: 768px) {
-      .unified-nav { left: 14px; width: 64px; }
-      .bar-item { width: 44px; height: 44px; font-size: 1.25rem; }
-      .nav-logo { width: 48px; height: 48px; }
-      .slide-sidebar { left: 90px; width: 84vw; max-width: 320px; }
-      footer { padding: 3.5rem 5% 2.5rem; }
-    }
   </style>
 </head>
 <body>
 
-  <!-- Floating minimal logo button -->
+  <!-- Floating minimal logo -->
   <div class="floating-logo" id="floating-logo">
-    <img src="nobklogo.png" alt="Marc Wanjeru">
+    <img src="nobklogo.png" alt="John Mark Kiritu">
   </div>
 
   <!-- Expanded vertical icon bar -->
@@ -369,9 +425,9 @@
   <!-- Slide-out text sidebar -->
   <aside class="slide-sidebar" id="slide-sidebar">
     <div class="profile">
-      <img src="nobklogo.png" alt="Marc Wanjeru">
+      <img src="nobklogo.png" alt="John Mark Kiritu">
       <div>
-        <h4>Marc Wanjeru</h4>
+        <h4>John Mark Kiritu</h4>
         <span>Creative Developer & Designer</span>
       </div>
     </div>
@@ -387,62 +443,85 @@
     </div>
   </aside>
 
-  <!-- Hero -->
+  <!-- Fused Hero/About section -->
   <section id="home" class="parallax-section">
-    <div class="parallax-bg-layer"></div>
     <div class="section-content">
-      <h1>Welcome to My Portfolio</h1>
-      <p class="subtitle">
-        I'm Marc Wanjeru from Kampala.<br>
-        Explore the navigation on the left to learn more about me.
-      </p>
-    </div>
-  </section>
-
-  <!-- About section – full black + wallpaper -->
-  <section id="about" class="parallax-section">
-    <div class="parallax-bg-layer" style="background-image: url('wllpbk.jpg'); opacity: 0.45; filter: brightness(0.6);"></div>
-    <div class="section-content">
-      <div class="about-grid">
-        <div class="about-left">
-          <h2>ABOUT</h2>
-          <div class="about-email">marc@wanjeru.dev</div>
-          <p>
-            Self-motivated, results-driven and highly skilled IT professional with over 2 years experience in IT support, networking and IT service management. I have experience in managing enterprise-level environments, including Active Directory, Microsoft 365, endpoint security solutions, and cloud-based services. Recognized for problem-solving, strong analytical skills, and the ability to deliver innovative IT solutions that enhance productivity.
+      <div class="intro-content">
+        <div class="intro-text">
+          <h1>Welcome to My Portfolio</h1>
+          <p class="subtitle">
+            I'm John Mark Kiritu from Kampala.<br>
+            Explore the navigation on the left to learn more about me.
           </p>
         </div>
 
-        <div class="about-right">
-          <img src="no bk prof pic.png" alt="Marc Wanjeru">
+        <div class="intro-profile">
+          <div class="profile-circle">
+            <img src="no bk prof pic.png" alt="John Mark Kiritu">
+          </div>
+
+          <div class="profile-name">
+            <h3>John Mark Kiritu</h3>
+            <p>Creative Developer & Designer</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Remaining sections -->
-  <section id="education" class="parallax-section">...</section>
-  <section id="experience" class="parallax-section">...</section>
-  <section id="technologies" class="parallax-section">...</section>
-  <section id="services" class="parallax-section">...</section>
-  <section id="contact" class="parallax-section">...</section>
+  <!-- Other sections (placeholders) -->
+  <section id="education" class="parallax-section">
+    <div class="section-content">
+      <h2>Education</h2>
+      <p>Your education background...</p>
+    </div>
+  </section>
+
+  <section id="experience" class="parallax-section">
+    <div class="section-content">
+      <h2>Experience</h2>
+      <p>Professional journey...</p>
+    </div>
+  </section>
+
+  <section id="technologies" class="parallax-section">
+    <div class="section-content">
+      <h2>Technologies</h2>
+      <p>Tools & platforms...</p>
+    </div>
+  </section>
+
+  <section id="services" class="parallax-section">
+    <div class="section-content">
+      <h2>Services</h2>
+      <p>What I offer...</p>
+    </div>
+  </section>
+
+  <section id="contact" class="parallax-section">
+    <div class="section-content">
+      <h2>Contact</h2>
+      <p>Let's connect.<br>marc@wanjeru.dev • +256 700 123 456</p>
+    </div>
+  </section>
 
   <!-- Footer -->
   <footer>
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="logo">
-          <img src="nobklogo.png" alt="Marc Wanjeru Logo">
+          <img src="nobklogo.png" alt="John Mark Kiritu Logo">
         </div>
-        <h2>Marc Wanjeru</h2>
+        <h2>John Mark Kiritu</h2>
         <p>Creative Developer & Designer</p>
       </div>
 
       <div class="footer-column">
         <h3>Information</h3>
         <ul>
+          <li><a href="#home">Home</a></li>
           <li><a href="#about">About Me</a></li>
           <li><a href="#">Blog</a></li>
-          <li><a href="#">Testimonials</a></li>
           <li><a href="#">Events</a></li>
         </ul>
       </div>
@@ -483,41 +562,41 @@
     </div>
 
     <div class="copyright">
-      © 2026 Marc Wanjeru — All Rights Reserved
+      © 2026 John Mark Kiritu — All Rights Reserved
     </div>
   </footer>
 
   <script>
-    // Floating logo → expand nav bar → hamburger → slide sidebar
+    // Floating logo → expanded nav → hamburger → sidebar
     const floatingLogo = document.getElementById('floating-logo');
     const expandedNav = document.getElementById('expanded-nav');
     const hamburger = document.getElementById('hamburger');
     const sidebar = document.getElementById('slide-sidebar');
 
-    // Step 1: Click floating logo → show expanded nav bar
+    // Click floating logo → expand nav bar
     floatingLogo.addEventListener('click', () => {
       expandedNav.classList.add('visible');
       floatingLogo.classList.add('hidden');
     });
 
-    // Step 2: Click hamburger in expanded bar → open sidebar
+    // Click hamburger → open sidebar
     hamburger.addEventListener('click', () => {
       sidebar.classList.toggle('open');
     });
 
-    // Close sidebar when clicking outside
+    // Close sidebar on outside click
     document.addEventListener('click', e => {
       if (!sidebar.contains(e.target) && !hamburger.contains(e.target) && !expandedNav.contains(e.target) && !floatingLogo.contains(e.target)) {
         sidebar.classList.remove('open');
       }
     });
 
-    // Close sidebar after link click
+    // Close sidebar after clicking a link
     document.querySelectorAll('.sidebar-links a').forEach(link => {
       link.addEventListener('click', () => sidebar.classList.remove('open'));
     });
 
-    // Optional: click outside expanded nav to collapse back to floating logo
+    // Collapse nav bar when clicking outside (back to floating logo)
     document.addEventListener('click', e => {
       if (!expandedNav.contains(e.target) && !floatingLogo.contains(e.target) && expandedNav.classList.contains('visible')) {
         expandedNav.classList.remove('visible');
