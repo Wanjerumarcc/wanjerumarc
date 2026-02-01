@@ -13,321 +13,291 @@
 
   <style>
     :root {
-      --bg: #000000;
-      --glass: rgba(15, 20, 35, 0.95);
+      --bg: #030712;
+      --liquid-glass: rgba(255, 255, 255, 0.08);
+      --glass-border: rgba(255, 255, 255, 0.12);
       --accent: #3b82f6;
-      --tech-color: #00d4ff; 
+      --tech-color: #60a5fa;
       --text: #ffffff;
-      --text-light: #cbd5e1;
-      --border: rgba(255,255,255,0.1);
-      --card-bg: rgba(255, 255, 255, 0.05);
+      --text-light: #94a3b8;
     }
 
     [data-theme="light"] {
       --bg: #f8fafc;
-      --glass: rgba(255, 255, 255, 0.98);
+      --liquid-glass: rgba(0, 0, 0, 0.05);
+      --glass-border: rgba(0, 0, 0, 0.1);
       --accent: #2563eb;
       --tech-color: #1d4ed8;
       --text: #0f172a;
       --text-light: #475569;
-      --border: rgba(0, 0, 0, 0.1);
-      --card-bg: rgba(0, 0, 0, 0.05);
     }
 
-    * { margin:0; padding:0; box-sizing:border-box; }
+    * { margin:0; padding:0; box-sizing:border-box; outline: none; }
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; transition: 0.3s; }
     
     body::before {
       content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('wllpbk.jpg');
-      background-size: cover; background-position: center; z-index: -1;
+      background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('wllpbk.jpg');
+      background-size: cover; z-index: -1;
     }
 
-    /* NAVIGATION LOGIC */
+    /* LIQUID GLASS NAV */
     .floating-bubble {
-      position: fixed; left: 24px; top: 24px; width: 64px; height: 64px;
-      border-radius: 50%; overflow: hidden; border: 3px solid var(--accent);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.5); cursor: pointer; z-index: 500;
-      transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: fixed; left: 24px; top: 24px; width: 66px; height: 66px;
+      border-radius: 50%; border: 2px solid var(--accent); cursor: pointer; z-index: 500;
+      transition: 0.5s; overflow: hidden; box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
     }
-    .floating-bubble.hidden { opacity: 0; transform: scale(0.5); pointer-events: none; }
     .floating-bubble img { width: 100%; height: 100%; object-fit: cover; }
+    .floating-bubble.hidden { opacity: 0; transform: scale(0); }
 
     .icon-menu {
-      position: fixed; left: 16px; top: 50%; transform: translateY(-50%) translateX(-150%);
-      width: 76px; background: var(--glass); backdrop-filter: blur(20px);
-      border: 1px solid var(--border); border-radius: 30px; padding: 20px 0;
-      display: flex; flex-direction: column; align-items: center; gap: 15px; z-index: 400;
-      opacity: 0; transition: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: fixed; left: 20px; top: 50%; transform: translateY(-50%) translateX(-150%);
+      width: 76px; background: var(--liquid-glass); backdrop-filter: blur(25px) saturate(180%);
+      border: 1px solid var(--glass-border); border-radius: 40px; padding: 25px 0;
+      display: flex; flex-direction: column; align-items: center; gap: 20px; z-index: 400;
+      opacity: 0; transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
     }
     .icon-menu.visible { transform: translateY(-50%) translateX(0); opacity: 1; }
-    .icon-menu.static { position: absolute; } 
+    .icon-menu.static { position: absolute; }
 
     .icon-item, .hamburger-btn {
-      width: 50px; height: 50px; border-radius: 14px; background: var(--card-bg);
-      color: var(--text); font-size: 1.2rem; display: grid; place-items: center; 
-      cursor: pointer; transition: 0.3s; position: relative;
+      width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.05);
+      color: var(--text); display: grid; place-items: center; cursor: pointer; transition: 0.3s;
     }
-    .icon-item:hover, .icon-item.active { background: var(--accent); color: white; }
+    .icon-item:hover, .icon-item.active { background: var(--accent); color: #fff; transform: scale(1.15); box-shadow: 0 0 15px var(--accent); }
 
-    /* SETTINGS DROPDOWN */
-    .settings-panel {
-      position: absolute; left: 85px; bottom: 0; width: 200px;
-      background: var(--glass); border: 1px solid var(--border);
-      border-radius: 20px; padding: 15px; display: none; flex-direction: column; gap: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    }
-    .settings-panel.active { display: flex; }
-    .setting-item { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; font-weight: 600; }
-    
-    .switch { width: 36px; height: 18px; background: #333; border-radius: 20px; cursor: pointer; position: relative; }
-    .switch::after { content: ""; position: absolute; width: 14px; height: 14px; background: white; border-radius: 50%; top: 2px; left: 2px; transition: 0.3s; }
-    .switch.on { background: var(--accent); }
-    .switch.on::after { left: 20px; }
-
-    /* TEXT MENU SLIDE OUT */
     .text-menu {
-      position: fixed; left: 105px; top: 50%; transform: translateY(-50%) translateX(-120%);
-      width: 300px; background: var(--glass); backdrop-filter: blur(25px);
-      border: 1px solid var(--border); border-radius: 25px; padding: 35px;
+      position: fixed; left: 110px; top: 50%; transform: translateY(-50%) translateX(-120%);
+      width: 280px; background: var(--liquid-glass); backdrop-filter: blur(30px);
+      border: 1px solid var(--glass-border); border-radius: 30px; padding: 30px;
       z-index: 350; transition: 0.5s; opacity: 0; pointer-events: none;
     }
     .text-menu.open { transform: translateY(-50%) translateX(0); opacity: 1; pointer-events: auto; }
-    .text-links a {
-      display: flex; align-items: center; gap: 12px; padding: 14px;
-      border-radius: 10px; color: var(--text); text-decoration: none; transition: 0.3s; margin-bottom: 5px;
-    }
-    .text-links a:hover { background: var(--accent); color: white; }
 
-    /* HERO & CTA BUTTONS */
+    /* SECTION BASICS */
+    section { min-height: 100vh; padding: 120px 8%; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+
+    /* HERO */
     .hero-card {
-      display: grid; grid-template-columns: 1.2fr 0.8fr; align-items: center; gap: 3rem;
-      background: var(--card-bg); backdrop-filter: blur(15px); padding: 5rem;
-      border-radius: 45px; border: 1px solid var(--border); max-width: 1200px; width: 100%;
+      display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4rem; width: 100%; max-width: 1200px;
     }
-    .hero-image { position: relative; width: 100%; height: 400px; display: flex; align-items: flex-end; justify-content: center; }
-    .circle-bg {
-      position: absolute; bottom: 20px; width: 280px; height: 280px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), #60a5fa); z-index: 1;
-      animation: breathe 5s ease-in-out infinite; box-shadow: 0 0 40px var(--accent);
-    }
-    .profile-img { position: relative; width: 320px; z-index: 2; transition: 0.5s; cursor: crosshair; }
-    .hero-image:hover .profile-img { transform: translateY(-25px) scale(1.03); }
+    .profile-wrap { position: relative; width: 320px; height: 320px; margin: auto; }
+    .profile-wrap img { width: 100%; z-index: 10; position: relative; transition: 0.5s; }
+    .blob { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 350px; height: 350px; background: var(--accent); filter: blur(60px); opacity: 0.4; border-radius: 50%; z-index: 1; }
 
-    .cta-group { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 2rem; }
-    .btn-main {
-      padding: 14px 28px; border-radius: 12px; font-weight: 700; text-decoration: none;
-      display: inline-flex; align-items: center; gap: 10px; transition: 0.3s;
-    }
-    .btn-cv { background: var(--accent); color: white; border: none; }
-    .btn-hire { background: transparent; color: var(--text); border: 2px solid var(--accent); }
-    .btn-apt { background: var(--card-bg); color: var(--text); border: 1px solid var(--border); }
-    .btn-main:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+    /* BUTTONS */
+    .cta-row { display: flex; gap: 15px; margin-top: 30px; flex-wrap: wrap; }
+    .btn { padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: 700; transition: 0.3s; border: none; cursor: pointer; }
+    .btn-p { background: var(--accent); color: #fff; }
+    .btn-s { background: transparent; border: 1.5px solid var(--accent); color: var(--text); }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
 
-    @keyframes breathe { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.08); opacity: 1; } }
+    /* EXP TILES */
+    .exp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; width: 100%; }
+    .tile { background: var(--liquid-glass); border: 1px solid var(--glass-border); padding: 40px; border-radius: 30px; transition: 0.4s; text-align: center; }
+    .tile:hover { transform: translateY(-10px); border-color: var(--accent); }
 
-    /* EXPERIENCE GRID */
-    .exp-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; width: 100%; max-width: 1200px; padding: 2rem 0; }
-    .exp-tile {
-      background: var(--glass); padding: 2.5rem; border-radius: 25px; border: 1px solid var(--border);
-      text-align: center; transition: 0.4s;
-    }
-    .exp-tile:hover { border-color: var(--accent); background: rgba(59, 130, 246, 0.05); }
-    .tech-hl { color: var(--tech-color); font-weight: 700; text-decoration: none; }
-
-    /* MODALS */
-    .modal-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92);
-      backdrop-filter: blur(12px); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 25px;
-    }
-    .modal-box {
-      background: var(--glass); padding: 3.5rem; border-radius: 35px; max-width: 850px; width: 100%;
-      max-height: 85vh; overflow-y: auto; position: relative; border: 1px solid var(--border);
-    }
+    /* MODAL */
+    .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(15px); display: none; z-index: 2000; padding: 40px; align-items: center; justify-content: center; }
+    .modal-content { background: var(--liquid-glass); border: 1px solid var(--glass-border); padding: 50px; border-radius: 40px; max-width: 900px; width: 100%; max-height: 85vh; overflow-y: auto; }
+    .tech-link { color: var(--tech-color); font-weight: 700; text-decoration: none; border-bottom: 1px solid transparent; transition: 0.3s; }
+    .tech-link:hover { border-bottom-color: var(--tech-color); }
 
     /* FOOTER */
-    footer { background: var(--glass); padding: 5rem 5% 3rem; border-top: 1px solid var(--border); margin-top: 5rem; }
-    .f-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 4rem; }
-    .f-logo { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--accent); margin-bottom: 1.5rem; }
-    .f-col h3 { color: var(--accent); margin-bottom: 1.5rem; font-size: 1.1rem; text-transform: uppercase; }
-    .f-col ul { list-style: none; }
-    .f-col li { margin-bottom: 12px; opacity: 0.7; font-size: 0.9rem; }
-    .f-col a { color: inherit; text-decoration: none; transition: 0.3s; }
-    .f-col a:hover { color: var(--accent); }
+    footer { padding: 80px 8% 40px; background: var(--liquid-glass); border-top: 1px solid var(--glass-border); }
+    .f-main { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 50px; max-width: 1200px; margin: auto; }
+    .social-links { display: flex; gap: 20px; font-size: 1.5rem; margin-top: 20px; }
+    .f-bottom { margin-top: 60px; padding-top: 30px; border-top: 1px solid var(--glass-border); display: flex; justify-content: space-between; font-size: 0.85rem; opacity: 0.6; }
 
     @media (max-width: 1024px) {
-      .hero-card { grid-template-columns: 1fr; text-align: center; padding: 3rem 1.5rem; }
-      .cta-group { justify-content: center; }
-      .floating-bubble { display: none; }
+      .hero-card { grid-template-columns: 1fr; text-align: center; }
+      .cta-row { justify-content: center; }
     }
   </style>
 </head>
 <body>
 
-  <div class="floating-bubble" id="floating-bubble"><img src="nobklogo.png"></div>
-
+  <div class="floating-bubble" id="bubble"><img src="nobklogo.png"></div>
+  
   <nav class="icon-menu" id="icon-menu">
     <div id="hamburger" class="hamburger-btn"><i class="fa-solid fa-bars"></i></div>
-    <div class="icon-item" onclick="go('home')"><i class="fa-solid fa-house"></i></div>
-    <div class="icon-item" onclick="go('experience')"><i class="fa-solid fa-briefcase"></i></div>
-    <div class="icon-item" onclick="go('about')"><i class="fa-solid fa-user"></i></div>
+    <div class="icon-item" onclick="to('home')"><i class="fa-solid fa-house"></i></div>
+    <div class="icon-item" onclick="to('about')"><i class="fa-solid fa-user"></i></div>
+    <div class="icon-item" onclick="to('experience')"><i class="fa-solid fa-briefcase"></i></div>
     
     <div class="icon-item" id="set-btn">
-      <i class="fa-solid fa-cog"></i>
-      <div class="settings-panel" id="set-panel">
-        <div class="setting-item">
-          <span>Dark Mode</span>
-          <div class="switch on" id="t-theme"></div>
+      <i class="fa-solid fa-sliders"></i>
+      <div class="text-menu" id="set-panel" style="left: 85px; width: 220px; font-size: 0.9rem;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:15px">
+            <span>Dark Mode</span>
+            <input type="checkbox" checked onchange="toggleMode()">
         </div>
-        <div class="setting-item">
-          <span>Fixed Menu</span>
-          <div class="switch on" id="t-fix"></div>
+        <div style="display:flex; justify-content:space-between">
+            <span>Static Nav</span>
+            <input type="checkbox" onchange="toggleNav()">
         </div>
       </div>
     </div>
   </nav>
 
   <aside class="text-menu" id="text-menu">
-    <div class="text-links">
-      <a href="#home"><i class="fa-solid fa-house"></i> Home</a>
-      <a href="#experience"><i class="fa-solid fa-briefcase"></i> Professional Journey</a>
-      <a href="#about"><i class="fa-solid fa-user"></i> About Me</a>
-      <a href="#education"><i class="fa-solid fa-graduation-cap"></i> Education</a>
-      <a href="#contact"><i class="fa-solid fa-envelope"></i> Contact</a>
-    </div>
+    <a href="#home" style="display:block; padding:12px; color:var(--text); text-decoration:none;">Home</a>
+    <a href="#about" style="display:block; padding:12px; color:var(--text); text-decoration:none;">About Me</a>
+    <a href="#experience" style="display:block; padding:12px; color:var(--text); text-decoration:none;">Professional Journey</a>
+    <a href="#contact" style="display:block; padding:12px; color:var(--text); text-decoration:none;">Contact</a>
   </aside>
 
-  <section id="home" style="min-height:100vh; display:flex; align-items:center; justify-content:center; padding: 100px 5%;">
+  <section id="home">
     <div class="hero-card">
       <div class="hero-text">
-        <span style="color:var(--accent); font-weight:900; letter-spacing:3px;">IT SPECIALIST</span>
-        <h1 style="font-size: clamp(3rem, 6vw, 5rem); margin: 15px 0;">John Mark Kiritu</h1>
-        <p style="font-size: 1.25rem; opacity: 0.8; line-height: 1.6;">Bridging infrastructure, security, and digital automation.</p>
-        
-        <div class="cta-group">
-          <a href="my_cv.pdf" class="btn-main btn-cv" download>
-            <i class="fa-solid fa-download"></i> Download CV
-          </a>
-          <a href="#contact" class="btn-main btn-apt">
-            <i class="fa-solid fa-calendar-check"></i> Appointment
-          </a>
-          <a href="mailto:marc@wanjeru.dev" class="btn-main btn-hire">
-            <i class="fa-solid fa-paper-plane"></i> Hire Me
-          </a>
+        <h4 style="color:var(--accent); letter-spacing:4px; font-weight:900">IT SPECIALIST</h4>
+        <h1 style="font-size: clamp(3rem, 6vw, 5rem); margin:10px 0;">John Mark Kiritu</h1>
+        <p style="font-size:1.2rem; opacity:0.8; line-height:1.7">A versatile System Administrator and IT Support Professional dedicated to building resilient infrastructures and driving digital transformation.</p>
+        <div class="cta-row">
+            <a href="cv.pdf" download class="btn btn-p"><i class="fa-solid fa-download"></i> Download CV</a>
+            <button onclick="to('contact')" class="btn btn-s">Make Appointment</button>
+            <button onclick="window.location.href='mailto:marc@wanjeru.dev'" class="btn btn-s">Hire Me</button>
         </div>
       </div>
-      <div class="hero-image">
-        <div class="circle-bg"></div>
-        <img src="profilepic.png" class="profile-img" alt="John Mark Kiritu">
+      <div class="profile-wrap">
+        <div class="blob"></div>
+        <img src="profilepic.png">
       </div>
     </div>
   </section>
 
-  <section id="experience" style="padding: 100px 5%; display: flex; flex-direction: column; align-items: center;">
-    <h2 style="font-size: 3rem; margin-bottom: 4rem;">Professional Journey</h2>
-    <div class="exp-container">
-      <div class="exp-tile">
-        <h3 style="color:var(--accent)">Double Q (C4 Logistics)</h3>
-        <p style="font-weight:700; margin:10px 0;">SYSTEM ADMINISTRATOR</p>
-        <button onclick="pop('modal-1')" style="margin-top:25px; background:var(--accent); color:white; border:none; padding:12px 25px; border-radius:12px; cursor:pointer; font-weight:700;">View Roles</button>
-      </div>
-
-      <div class="exp-tile">
-        <h3 style="color:var(--accent)">Oxfam in Uganda</h3>
-        <p style="font-weight:700; margin:10px 0;">IT SUPPORT OFFICER</p>
-        <button onclick="pop('modal-2')" style="margin-top:25px; background:var(--accent); color:white; border:none; padding:12px 25px; border-radius:12px; cursor:pointer; font-weight:700;">View Roles</button>
-      </div>
+  <section id="about">
+    <div style="max-width:900px; text-align:center; background:var(--liquid-glass); padding:60px; border-radius:40px; border:1px solid var(--glass-border)">
+        <h2 style="font-size:2.5rem; margin-bottom:20px">About Me</h2>
+        <p style="line-height:1.8; opacity:0.8; font-size:1.1rem">
+            Self-motivated IT professional with over 2 years of experience in IT support, networking, and Microsoft 365 administration. Proven expertise in optimizing system performance and enforcing cybersecurity protocols across complex enterprise environments.
+        </p>
     </div>
   </section>
 
-  <div id="modal-1" class="modal-overlay">
-    <div class="modal-box">
-      <span onclick="unpop()" style="position:absolute; right:30px; top:20px; font-size:2.5rem; cursor:pointer;">&times;</span>
-      <h2>Double Q (C4 Logistics Ltd)</h2>
-      <ul>
-        <li>Administer and maintain the company’s IT infrastructure... <a href="https://powerapps.microsoft.com" class="tech-hl">Microsoft Power Apps</a></li>
+  <section id="experience">
+    <h2 style="font-size:3rem; margin-bottom:50px">Professional Journey</h2>
+    <div class="exp-grid">
+        <div class="tile">
+            <h3>Double Q (C4 Logistics Ltd)</h3>
+            <p>System Administrator</p>
+            <button onclick="pop('m1')" class="btn btn-p" style="margin-top:20px">View Roles</button>
+        </div>
+        <div class="tile">
+            <h3>Oxfam in Uganda</h3>
+            <p>IT Support Officer</p>
+            <button onclick="pop('m2')" class="btn btn-p" style="margin-top:20px">View Roles</button>
+        </div>
+        <div class="tile">
+            <h3>Oxfam in Uganda</h3>
+            <p>Graduate Trainee / Intern</p>
+            <button onclick="pop('m3')" class="btn btn-p" style="margin-top:20px">View Roles</button>
+        </div>
+    </div>
+  </section>
+
+  <div class="modal" id="m1">
+    <div class="modal-content">
+        <span onclick="unpop()" style="float:right; cursor:pointer; font-size:2rem">&times;</span>
+        <h2>Double Q (C4 Logistics) Roles</h2>
+        <ul style="margin-top:20px; line-height:1.8">
+            <li>Administer and maintain the company’s IT infrastructure, including switches, PABX, <a href="https://powerapps.microsoft.com" class="tech-link">Microsoft Power Apps</a>, wireless access points, and camera surveillance systems, ensuring high availability security and optimal performance.</li>
+            <li>Implement and monitor <a href="https://www.kaspersky.com" class="tech-link">Kaspersky Endpoint Protection</a> and configure firewall rules to enforce cybersecurity policies and maintain compliance.</li>
+            <li>Generate system performance and incident reports using tools such as the Transport Management System for analysis and decision making.</li>
+            <li>Provide Level 2 technical support for Windows 10/11, <a href="https://www.microsoft.com/en-us/microsoft-365/outlook/" class="tech-link">Microsoft Outlook</a>, and network connectivity issues, utilizing remote tools like Any Desk and TeamViewer to support field offices.</li>
         </ul>
     </div>
   </div>
 
-  <div id="modal-2" class="modal-overlay">
-    <div class="modal-box">
-      <span onclick="unpop()" style="position:absolute; right:30px; top:20px; font-size:2.5rem; cursor:pointer;">&times;</span>
-      <h2>Oxfam in Uganda</h2>
-      <ul>
-        <li>Monitoring via <a href="https://meraki.cisco.com" class="tech-hl">Cisco Meraki Dashboard</a> and <a href="https://admin.microsoft.com" class="tech-hl">Microsoft 365 Admin Center</a>.</li>
+  <div class="modal" id="m2">
+    <div class="modal-content">
+        <span onclick="unpop()" style="float:right; cursor:pointer; font-size:2rem">&times;</span>
+        <h2>IT Support Officer Roles</h2>
+        <ul style="margin-top:20px; line-height:1.8">
+            <li>Ensured maximum network and system uptime through proactive monitoring utilizing tools such as <a href="https://admin.microsoft.com" class="tech-link">Microsoft 365 Admin Center</a> and <a href="https://meraki.cisco.com" class="tech-link">Cisco Meraki Dashboard</a>.</li>
+            <li>Maintained and routinely updated an IT asset register using <a href="https://www.microsoft.com/en-us/microsoft-365/excel" class="tech-link">Microsoft Excel</a> and <a href="https://www.microsoft.com/en-us/microsoft-365/sharepoint" class="tech-link">SharePoint</a>.</li>
+            <li>Delivered Tier 1 technical support and resolved end-user incidents via <a href="https://www.servicenow.com" class="tech-link">ServiceNow</a> and <a href="https://www.atlassian.com/software/jira" class="tech-link">Jira Service Management</a>.</li>
+            <li>Contributed to digital transformation projects, supporting tools like <a href="https://powerbi.microsoft.com" class="tech-link">Power BI</a> and <a href="https://www.box.com" class="tech-link">Box Drive</a>.</li>
+        </ul>
+    </div>
+  </div>
+
+  <div class="modal" id="m3">
+    <div class="modal-content">
+        <span onclick="unpop()" style="float:right; cursor:pointer; font-size:2rem">&times;</span>
+        <h2>Graduate Trainee & Intern Roles</h2>
+        <ul style="margin-top:20px; line-height:1.8">
+            <li>Logged and resolved over 80 daily IT support tickets through <a href="https://www.servicenow.com" class="tech-link">ServiceNow</a> and <a href="https://www.atlassian.com/software/jira" class="tech-link">Jira Service Management</a>.</li>
+            <li>Installed, configured, and troubleshot end-user devices running Windows 10, Ubuntu Linux, and macOS Monterey.</li>
+            <li>Supported enterprise video conferencing systems: <a href="https://www.logitech.com" class="tech-link">Logitech Rally</a>, Zoom Rooms, and Microsoft Teams Rooms.</li>
+            <li>Configured LAN/WAN infrastructure using <a href="https://meraki.cisco.com" class="tech-link">Cisco Meraki</a> switches and routers, including VLANs and DHCP reservations.</li>
+            <li>Handled endpoint deployments using <a href="https://learn.microsoft.com/en-us/mem/configmgr/" class="tech-link">Microsoft Endpoint Configuration Manager (MECM/SCCM)</a>.</li>
         </ul>
     </div>
   </div>
 
   <footer id="contact">
-    <div class="f-grid">
-      <div class="f-col">
-        <img src="nobklogo.png" class="f-logo">
-        <h3>John Mark Kiritu</h3>
-        <p>IT Specialist & Designer</p>
-      </div>
-      <div class="f-col">
-        <h3>Information</h3>
-        <ul>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#about">About Me</a></li>
-        </ul>
-      </div>
-      <div class="f-col">
-        <h3>Helpful Links</h3>
-        <ul>
-          <li><a href="my_cv.pdf" download><i class="fa-solid fa-file-pdf"></i> Download CV</a></li>
-          <li><a href="#">Support Center</a></li>
-          <li><a href="https://www.microsoft.com" target="_blank"><i class="fab fa-microsoft"></i> Microsoft Tools</a></li>
-        </ul>
-      </div>
-      <div class="f-col">
-        <h3>Contact</h3>
-        <ul>
-          <li>Kampala, Uganda</li>
-          <li>marc@wanjeru.dev</li>
-          <li>
-            <div style="display:flex; gap:15px; margin-top:15px; font-size:1.2rem;">
-              <i class="fab fa-linkedin"></i> <i class="fab fa-whatsapp"></i>
+    <div class="f-main">
+        <div>
+            <img src="nobklogo.png" class="f-logo">
+            <h3>John Mark Kiritu</h3>
+            <p style="opacity:0.6; margin-top:10px">Building the future of IT.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
             </div>
-          </li>
-        </ul>
-      </div>
+        </div>
+        <div>
+            <h4>Helpful Links</h4>
+            <ul style="list-style:none; margin-top:20px; line-height:2">
+                <li><a href="cv.pdf" download><i class="fa-solid fa-file-pdf"></i> Download CV</a></li>
+                <li><a href="https://www.microsoft.com" target="_blank"><i class="fab fa-microsoft"></i> Microsoft Resources</a></li>
+                <li><a href="#about">About Me</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4>Quick Contact</h4>
+            <p style="opacity:0.6; margin-top:20px">Kampala, Uganda<br>marc@wanjeru.dev<br>+256 7xx xxxxxx</p>
+        </div>
+    </div>
+    <div class="f-bottom">
+        <span>© 2026 John Mark Kiritu — All Rights Reserved</span>
+        <span>Terms & Conditions | Cookies Policy</span>
     </div>
   </footer>
 
   <script>
-    const bubble = document.getElementById('floating-bubble');
+    const bubble = document.getElementById('bubble');
     const iconMenu = document.getElementById('icon-menu');
     const textMenu = document.getElementById('text-menu');
     const setBtn = document.getElementById('set-btn');
     const setPanel = document.getElementById('set-panel');
-    const tTheme = document.getElementById('t-theme');
-    const tFix = document.getElementById('t-fix');
 
     bubble.onclick = () => { bubble.classList.add('hidden'); iconMenu.classList.add('visible'); };
     document.getElementById('hamburger').onclick = (e) => { e.stopPropagation(); textMenu.classList.toggle('open'); };
-    setBtn.onclick = (e) => { e.stopPropagation(); setPanel.classList.toggle('active'); };
-    
-    tTheme.onclick = () => {
-      const mode = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', mode);
-      tTheme.classList.toggle('on');
-    };
+    setBtn.onclick = (e) => { e.stopPropagation(); setPanel.classList.toggle('open'); };
 
-    tFix.onclick = () => { iconMenu.classList.toggle('static'); tFix.classList.toggle('on'); };
+    function to(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
     function pop(id) { document.getElementById(id).style.display = 'flex'; }
-    function unpop() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
-    function go(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
+    function unpop() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+
+    function toggleMode() {
+        const d = document.documentElement;
+        d.setAttribute('data-theme', d.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    }
+
+    function toggleNav() { iconMenu.classList.toggle('static'); }
 
     window.onclick = (e) => {
-      if (!iconMenu.contains(e.target) && !bubble.contains(e.target)) {
-        iconMenu.classList.remove('visible'); bubble.classList.remove('hidden'); textMenu.classList.remove('open');
-      }
-      if (!setBtn.contains(e.target)) setPanel.classList.remove('active');
-    };
+        if (!iconMenu.contains(e.target) && !bubble.contains(e.target)) {
+            iconMenu.classList.remove('visible'); bubble.classList.remove('hidden'); textMenu.classList.remove('open');
+        }
+        if(!setBtn.contains(e.target)) setPanel.classList.remove('open');
+    }
   </script>
 </body>
 </html>
