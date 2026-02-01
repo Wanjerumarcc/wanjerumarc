@@ -17,11 +17,11 @@
   <style>
     :root {
       --bg: #000000;
-      --glass: rgba(25, 30, 45, 0.82);
+      --glass: rgba(25, 30, 45, 0.88);
       --accent: #3b82f6;
-      --text: #ffffff;
-      --text-light: #cccccc;
-      --border: rgba(255,255,255,0.08);
+      --text: #e2e8f0;
+      --text-light: #94a3b8;
+      --border: rgba(255,255,255,0.10);
     }
 
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -31,68 +31,105 @@
     body {
       min-height: 100dvh;
       font-family: 'Inter', system-ui, sans-serif;
-      background: var(--bg);
+      background: url('wllpbk.jpg') center / cover no-repeat fixed;
+      background-color: #000;
       color: var(--text);
       line-height: 1.6;
       overflow-x: hidden;
     }
 
-    /* Unified left nav bar with logo */
-    .unified-nav {
+    /* Footer overrides – no wallpaper */
+    footer {
+      background: rgba(15,23,42,0.95);
+      backdrop-filter: blur(12px);
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Floating minimal logo button */
+    .floating-logo {
+      position: fixed;
+      left: 24px;
+      top: 24px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid var(--accent);
+      box-shadow: 0 8px 30px rgba(59,130,246,0.4);
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 120;
+    }
+
+    .floating-logo.hidden {
+      opacity: 0;
+      transform: scale(0.6) translateY(-20px);
+      pointer-events: none;
+    }
+
+    .floating-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Expanded vertical icon bar */
+    .expanded-nav {
       position: fixed;
       left: 16px;
       top: 50%;
       transform: translateY(-50%);
-      width: 72px;
+      width: 76px;
       background: var(--glass);
-      backdrop-filter: blur(18px);
+      backdrop-filter: blur(20px);
       border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 12px 0 16px;
+      border-radius: 28px;
+      padding: 80px 0 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 14px;
+      gap: 16px;
       z-index: 110;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    .nav-logo {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 2px solid var(--accent);
-      box-shadow: 0 0 12px rgba(59,130,246,0.3);
-      transition: all 0.3s;
+    .expanded-nav.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(-50%);
     }
-
-    .nav-logo img { width: 100%; height: 100%; object-fit: cover; }
-    .nav-logo:hover { transform: scale(1.1); box-shadow: 0 0 20px rgba(59,130,246,0.5); }
 
     .nav-top {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.07);
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.08);
       color: var(--text);
-      font-size: 1.45rem;
+      font-size: 1.5rem;
       display: grid;
       place-items: center;
       cursor: pointer;
       transition: all 0.25s;
     }
 
-    .nav-top:hover { background: var(--accent); color: white; transform: scale(1.08); }
+    .nav-top:hover { background: var(--accent); color: white; transform: scale(1.1); }
 
-    .nav-icons { display: flex; flex-direction: column; gap: 12px; }
+    .nav-icons {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
 
     .bar-item {
-      width: 46px;
-      height: 46px;
-      border-radius: 14px;
+      width: 50px;
+      height: 50px;
+      border-radius: 16px;
       background: rgba(255,255,255,0.06);
       color: var(--text);
-      font-size: 1.35rem;
+      font-size: 1.4rem;
       display: grid;
       place-items: center;
       cursor: pointer;
@@ -102,26 +139,26 @@
     .bar-item:hover, .bar-item.active {
       background: var(--accent);
       color: white;
-      transform: scale(1.07);
+      transform: scale(1.08);
     }
 
     .theme-toggle { margin-top: auto; }
 
-    /* Slide-out sidebar */
+    /* Slide-out text sidebar */
     .slide-sidebar {
       position: fixed;
-      left: 100px;
+      left: 108px;
       top: 50%;
       transform: translateY(-50%) translateX(-120%);
-      width: 320px;
-      max-height: 88vh;
+      width: 340px;
+      max-height: 90vh;
       background: var(--glass);
-      backdrop-filter: blur(20px);
+      backdrop-filter: blur(22px);
       border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 40px 32px;
-      z-index: 100;
-      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border-radius: 24px;
+      padding: 44px 36px;
+      z-index: 105;
+      transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
       overflow-y: auto;
       pointer-events: none;
       opacity: 0;
@@ -139,35 +176,36 @@
     .profile {
       display: flex;
       align-items: center;
-      gap: 16px;
-      margin-bottom: 36px;
+      gap: 18px;
+      margin-bottom: 40px;
     }
 
     .profile img {
-      width: 58px;
-      height: 58px;
+      width: 64px;
+      height: 64px;
       border-radius: 50%;
       border: 2px solid var(--border);
     }
 
-    .profile h4 { font-size: 1.2rem; font-weight: 600; }
-    .profile span { font-size: 0.94rem; color: var(--text-light); }
+    .profile h4 { font-size: 1.3rem; font-weight: 600; }
+    .profile span { font-size: 0.98rem; color: var(--text-light); }
 
     .sidebar-links a {
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding: 15px 20px;
-      border-radius: 12px;
+      gap: 18px;
+      padding: 16px 22px;
+      border-radius: 14px;
       color: var(--text);
       text-decoration: none;
-      font-size: 1.03rem;
+      font-size: 1.08rem;
       transition: background 0.2s;
     }
 
-    .sidebar-links a:hover, .sidebar-links a.active { background: rgba(255,255,255,0.09); }
+    .sidebar-links a:hover,
+    .sidebar-links a.active { background: rgba(255,255,255,0.10); }
 
-    /* Parallax sections */
+    /* Hero & other sections */
     .parallax-section {
       position: relative;
       overflow: hidden;
@@ -193,101 +231,28 @@
       z-index: 2;
       max-width: 1100px;
       width: 100%;
-      padding: 0 5%;
     }
 
-    .section-content h2 {
-      font-size: clamp(3.5rem, 8vw, 6rem);
+    .section-content h1, .section-content h2 {
+      font-size: clamp(3.5rem, 9vw, 6.5rem);
       font-weight: 900;
-      margin-bottom: 1.5rem;
-      color: white;
-      letter-spacing: -1px;
-      line-height: 1;
-    }
-
-    .section-content h2 span {
-      display: block;
-      font-size: 0.4em;
-      font-weight: 400;
-      color: var(--accent);
-      margin-bottom: 0.8rem;
-      letter-spacing: normal;
-    }
-
-    /* About section – matching your new reference */
-    #about {
-      background: #000;
+      margin-bottom: 1.8rem;
       color: white;
     }
 
-    #about .parallax-bg-layer {
-      background-image: url('wllpbk.jpg');
-      opacity: 0.4;
-      filter: brightness(0.6) contrast(1.1);
+    .section-content p, .section-content .subtitle {
+      font-size: clamp(1.25rem, 3vw, 1.6rem);
+      color: var(--text-light);
+      max-width: 760px;
+      margin: 0 auto;
+      line-height: 1.7;
     }
 
-    #about .section-content {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6rem;
-      align-items: center;
-    }
-
-    .about-left {
-      text-align: left;
-    }
-
-    .about-title {
-      font-size: clamp(3rem, 7vw, 5.5rem);
-      font-weight: 900;
-      line-height: 1;
-      margin-bottom: 1.5rem;
-      letter-spacing: -2px;
-    }
-
-    .about-email {
-      font-size: 1.3rem;
-      color: #aaaaaa;
-      margin-bottom: 2.5rem;
-      font-weight: 300;
-    }
-
-    .about-text {
-      font-size: 1.25rem;
-      line-height: 1.9;
-      color: #cccccc;
-      max-width: 620px;
-    }
-
-    .about-right img {
-      width: 100%;
-      max-width: 520px;
-      border-radius: 8px;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.8);
-      filter: grayscale(60%) contrast(1.15);
-      transition: all 0.5s ease;
-    }
-
-    .about-right img:hover {
-      filter: grayscale(0%) contrast(1.2);
-      transform: scale(1.02);
-    }
-
-    @media (max-width: 1024px) {
-      #about .section-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-        gap: 4rem;
-      }
-      .about-left { text-align: center; }
-      .about-right img { max-width: 420px; }
-    }
-
-    /* Footer (kept slim) */
+    /* Footer */
     footer {
-      background: rgba(15,23,42,0.92);
-      backdrop-filter: blur(10px);
-      padding: 3.5rem 5% 2.5rem;
+      background: rgba(15,23,42,0.95);
+      backdrop-filter: blur(12px);
+      padding: 4rem 5% 3rem;
       font-size: 0.96rem;
       color: var(--text-light);
     }
@@ -297,95 +262,92 @@
       margin: 0 auto;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 2.5rem 2rem;
+      gap: 3rem 2.5rem;
       justify-items: center;
       text-align: center;
     }
 
     .footer-brand .logo {
-      width: 90px;
-      height: 90px;
-      margin-bottom: 0.8rem;
+      width: 100px;
+      height: 100px;
+      margin-bottom: 1rem;
       border-radius: 50%;
       overflow: hidden;
       border: 3px solid var(--accent);
     }
 
-    .footer-brand .logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+    .footer-brand .logo img { width: 100%; height: 100%; object-fit: cover; }
 
-    .footer-brand h2 { font-size: 1.6rem; color: white; margin-bottom: 0.4rem; }
+    .footer-brand h2 { font-size: 1.7rem; color: white; margin-bottom: 0.5rem; }
 
-    .footer-column h3 { color: white; font-size: 1.05rem; margin-bottom: 1rem; }
+    .footer-column h3 { color: white; font-size: 1.1rem; margin-bottom: 1.2rem; }
     .footer-column ul { list-style: none; }
-    .footer-column ul li { margin-bottom: 0.6rem; }
+    .footer-column ul li { margin-bottom: 0.7rem; }
     .footer-column a { color: var(--text-light); text-decoration: none; }
     .footer-column a:hover { color: var(--accent); }
 
-    .contact-centered { max-width: 260px; }
+    .contact-centered { max-width: 280px; }
 
     .contact-line {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.8rem;
-      margin-bottom: 0.7rem;
+      gap: 0.9rem;
+      margin-bottom: 0.8rem;
     }
 
     .social-icons {
       display: flex;
       justify-content: center;
-      gap: 1rem;
-      margin-top: 1.4rem;
+      gap: 1.2rem;
+      margin-top: 1.6rem;
     }
 
     .social-icons a {
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.07);
       color: var(--text-light);
       display: grid;
       place-items: center;
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       transition: all 0.25s;
     }
 
     .social-icons a:hover {
       background: var(--accent);
       color: white;
-      transform: translateY(-3px);
+      transform: translateY(-4px);
     }
 
     .copyright {
       text-align: center;
-      margin-top: 3rem;
-      padding-top: 1.8rem;
-      border-top: 1px solid rgba(255,255,255,0.06);
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.07);
       color: #64748b;
-      font-size: 0.88rem;
+      font-size: 0.9rem;
     }
 
     @media (max-width: 768px) {
-      .unified-nav { left: 14px; width: 62px; }
-      .bar-item { width: 42px; height: 42px; font-size: 1.2rem; }
-      .nav-logo { width: 44px; height: 44px; }
-      .slide-sidebar { left: 88px; width: 82vw; max-width: 310px; }
-      footer { padding: 3rem 5% 2.5rem; }
+      .unified-nav { left: 14px; width: 64px; }
+      .bar-item { width: 44px; height: 44px; font-size: 1.25rem; }
+      .nav-logo { width: 48px; height: 48px; }
+      .slide-sidebar { left: 90px; width: 84vw; max-width: 320px; }
+      footer { padding: 3.5rem 5% 2.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Unified nav bar -->
-  <nav class="unified-nav">
-    <div class="nav-logo">
-      <img src="nobklogo.png" alt="Marc Wanjeru Logo">
-    </div>
+  <!-- Floating minimal logo button -->
+  <div class="floating-logo" id="floating-logo">
+    <img src="nobklogo.png" alt="Marc Wanjeru">
+  </div>
 
+  <!-- Expanded vertical icon bar -->
+  <nav class="expanded-nav" id="expanded-nav">
     <div id="hamburger" class="nav-top">
       <i class="fa-solid fa-bars"></i>
     </div>
@@ -404,7 +366,7 @@
     </div>
   </nav>
 
-  <!-- Slide-out sidebar -->
+  <!-- Slide-out text sidebar -->
   <aside class="slide-sidebar" id="slide-sidebar">
     <div class="profile">
       <img src="nobklogo.png" alt="Marc Wanjeru">
@@ -437,9 +399,9 @@
     </div>
   </section>
 
-  <!-- About section – matching your latest reference -->
+  <!-- About section – full black + wallpaper -->
   <section id="about" class="parallax-section">
-    <div class="parallax-bg-layer" style="background-image: url('wllpbk.jpg');"></div>
+    <div class="parallax-bg-layer" style="background-image: url('wllpbk.jpg'); opacity: 0.45; filter: brightness(0.6);"></div>
     <div class="section-content">
       <div class="about-grid">
         <div class="about-left">
@@ -451,52 +413,18 @@
         </div>
 
         <div class="about-right">
-          <img src="no bk prof pic.png" alt="Marc Wanjeru Professional Photo">
+          <img src="no bk prof pic.png" alt="Marc Wanjeru">
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Other placeholder sections -->
-  <section id="education" class="parallax-section">
-    <div class="parallax-bg-layer"></div>
-    <div class="section-content">
-      <h2>Education</h2>
-      <p>Your education background...</p>
-    </div>
-  </section>
-
-  <section id="experience" class="parallax-section">
-    <div class="parallax-bg-layer"></div>
-    <div class="section-content">
-      <h2>Experience</h2>
-      <p>Professional journey...</p>
-    </div>
-  </section>
-
-  <section id="technologies" class="parallax-section">
-    <div class="parallax-bg-layer"></div>
-    <div class="section-content">
-      <h2>Technologies</h2>
-      <p>Tools & platforms...</p>
-    </div>
-  </section>
-
-  <section id="services" class="parallax-section">
-    <div class="parallax-bg-layer"></div>
-    <div class="section-content">
-      <h2>Services</h2>
-      <p>What I offer...</p>
-    </div>
-  </section>
-
-  <section id="contact" class="parallax-section">
-    <div class="parallax-bg-layer"></div>
-    <div class="section-content">
-      <h2>Contact</h2>
-      <p>Let's connect.<br>marc@wanjeru.dev • +256 700 123 456</p>
-    </div>
-  </section>
+  <!-- Remaining sections -->
+  <section id="education" class="parallax-section">...</section>
+  <section id="experience" class="parallax-section">...</section>
+  <section id="technologies" class="parallax-section">...</section>
+  <section id="services" class="parallax-section">...</section>
+  <section id="contact" class="parallax-section">...</section>
 
   <!-- Footer -->
   <footer>
@@ -560,6 +488,44 @@
   </footer>
 
   <script>
+    // Floating logo → expand nav bar → hamburger → slide sidebar
+    const floatingLogo = document.getElementById('floating-logo');
+    const expandedNav = document.getElementById('expanded-nav');
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.getElementById('slide-sidebar');
+
+    // Step 1: Click floating logo → show expanded nav bar
+    floatingLogo.addEventListener('click', () => {
+      expandedNav.classList.add('visible');
+      floatingLogo.classList.add('hidden');
+    });
+
+    // Step 2: Click hamburger in expanded bar → open sidebar
+    hamburger.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+
+    // Close sidebar when clicking outside
+    document.addEventListener('click', e => {
+      if (!sidebar.contains(e.target) && !hamburger.contains(e.target) && !expandedNav.contains(e.target) && !floatingLogo.contains(e.target)) {
+        sidebar.classList.remove('open');
+      }
+    });
+
+    // Close sidebar after link click
+    document.querySelectorAll('.sidebar-links a').forEach(link => {
+      link.addEventListener('click', () => sidebar.classList.remove('open'));
+    });
+
+    // Optional: click outside expanded nav to collapse back to floating logo
+    document.addEventListener('click', e => {
+      if (!expandedNav.contains(e.target) && !floatingLogo.contains(e.target) && expandedNav.classList.contains('visible')) {
+        expandedNav.classList.remove('visible');
+        floatingLogo.classList.remove('hidden');
+        sidebar.classList.remove('open');
+      }
+    });
+
     // Theme toggle
     const html = document.documentElement;
     const themeIcon = document.getElementById('theme-icon');
@@ -578,24 +544,6 @@
     themeToggle.addEventListener('click', () => {
       const current = html.getAttribute('data-theme') || 'dark';
       setTheme(current === 'dark' ? 'light' : 'dark');
-    });
-
-    // Hamburger ↔ sidebar
-    const hamburger = document.getElementById('hamburger');
-    const sidebar = document.getElementById('slide-sidebar');
-
-    hamburger.addEventListener('click', () => {
-      sidebar.classList.toggle('open');
-    });
-
-    document.addEventListener('click', e => {
-      if (!sidebar.contains(e.target) && !hamburger.contains(e.target) && !e.target.closest('.unified-nav')) {
-        sidebar.classList.remove('open');
-      }
-    });
-
-    document.querySelectorAll('.sidebar-links a').forEach(link => {
-      link.addEventListener('click', () => sidebar.classList.remove('open'));
     });
 
     // Active link highlighting
