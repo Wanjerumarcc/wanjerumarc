@@ -3,39 +3,37 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Marc Wanjeru | Portfolio Navigation</title>
+  <title>Marc Wanjeru | Portfolio</title>
 
-  <!-- Inter font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Font Awesome 6.5 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
   <style>
     :root {
       --bg-body: #0e0e0e;
-      --bg-overlay: rgba(0,0,0,0.45);
-      --bg-glass: rgba(40,40,40,0.88);
-      --bg-glass-sidebar: rgba(45,45,45,0.94);
-      --bg-icon: rgba(255,255,255,0.12);
+      --bg-overlay: rgba(0,0,0,0.5);
+      --bg-glass: rgba(35,35,40,0.78);
+      --bg-glass-sidebar: rgba(40,40,45,0.82);
+      --bg-icon: rgba(255,255,255,0.08);
       --bg-hover: #3b82f6;
-      --text: #ffffff;
-      --text-secondary: #aaaaaa;
-      --border: rgba(255,255,255,0.15);
+      --text: #f1f5f9;
+      --text-sec: #94a3b8;
+      --border: rgba(255,255,255,0.09);
     }
 
     [data-theme="light"] {
-      --bg-body: #f0f4f8;
-      --bg-overlay: rgba(255,255,255,0.25);
-      --bg-glass: rgba(255,255,255,0.78);
-      --bg-glass-sidebar: rgba(255,255,255,0.85);
-      --bg-icon: rgba(0,0,0,0.09);
+      --bg-body: #f8fafc;
+      --bg-overlay: rgba(255,255,255,0.4);
+      --bg-glass: rgba(255,255,255,0.72);
+      --bg-glass-sidebar: rgba(255,255,255,0.80);
+      --bg-icon: rgba(0,0,0,0.06);
       --bg-hover: #2563eb;
-      --text: #1f2937;
-      --text-secondary: #6b7280;
-      --border: rgba(0,0,0,0.14);
+      --text: #0f172a;
+      --text-sec: #64748b;
+      --border: rgba(0,0,0,0.08);
     }
 
     * {
@@ -51,11 +49,10 @@
     }
 
     body {
-      min-height: 100dvh;
       font-family: 'Inter', system-ui, sans-serif;
       background: var(--bg-body) url('desktop1.jpg') center / cover no-repeat fixed;
       color: var(--text);
-      transition: background-color 0.4s ease, color 0.4s ease;
+      transition: background-color 0.5s ease;
     }
 
     body::before {
@@ -64,45 +61,43 @@
       inset: 0;
       background: var(--bg-overlay);
       z-index: -1;
-      transition: background 0.4s ease;
     }
 
-    /* Icon Nav (vertical bar) */
+    /* Icon Nav – lighter blur, smaller footprint */
     .icon-nav {
       position: fixed;
-      left: 16px;
+      inset-inline-start: 12px;
       top: 50%;
       transform: translateY(-50%);
-      width: 70px;
-      height: 92vh;
-      max-height: 920px;
+      width: 64px;
+      height: 88vh;
+      max-height: 860px;
       background: var(--bg-glass);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--border);
-      border-radius: 26px;
+      border-radius: 22px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 16px 0;
-      gap: 18px;
+      padding: 12px 0;
+      gap: 14px;
       z-index: 100;
-      transition: all 0.4s ease;
+      contain: paint;
     }
 
     .icon-nav button,
     .icon-nav i {
-      width: 46px;
-      height: 46px;
-      border-radius: 14px;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
       background: var(--bg-icon);
       color: var(--text);
-      font-size: 1.35rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      font-size: 1.25rem;
+      display: grid;
+      place-items: center;
       cursor: pointer;
-      transition: all 0.25s ease;
+      transition: background 0.2s ease, transform 0.2s ease;
       border: none;
     }
 
@@ -111,31 +106,34 @@
     .icon-nav button.active,
     .icon-nav i.active {
       background: var(--bg-hover);
-      transform: scale(1.08);
+      transform: scale(1.06);
     }
 
-    /* Sidebar */
+    /* Sidebar – optimized blur, forced layer, fast transition */
     .sidebar {
       position: fixed;
-      left: 90px;
+      inset-inline-start: 84px;
       top: 50%;
       transform: translateY(-50%) translateX(-120%);
-      width: 300px;
-      height: 92vh;
-      max-height: 920px;
-      padding: 28px 24px;
+      width: 290px;
+      height: 88vh;
+      max-height: 860px;
+      padding: 24px;
       background: var(--bg-glass-sidebar);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--border);
-      border-radius: 26px;
+      border-radius: 22px;
       color: var(--text);
       z-index: 90;
-      transition: transform 0.38s cubic-bezier(0.32, 0.72, 0.0, 1), opacity 0.38s ease;
+      transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.32s ease;
       overflow-y: auto;
       overscroll-behavior: contain;
       pointer-events: none;
       opacity: 0;
+      will-change: transform, opacity;
+      contain: paint;
+      content-visibility: auto;
     }
 
     .sidebar.open {
@@ -144,106 +142,78 @@
       opacity: 1;
     }
 
-    /* Completely hide scrollbar but keep scrolling */
-    .sidebar::-webkit-scrollbar {
-      display: none;
-      width: 0;
-      background: transparent;
-    }
-    .sidebar {
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
+    /* Scrollbar hiding – cross-browser */
+    .sidebar::-webkit-scrollbar { display: none; width: 0; background: transparent; }
+    .sidebar { scrollbar-width: none; -ms-overflow-style: none; }
 
-    /* Extra strong hide on close (prevents 1px artifacts) */
-    .sidebar:not(.open) {
-      visibility: hidden;
-    }
+    .sidebar:not(.open) { visibility: hidden; }
 
-    /* Profile */
+    /* Profile & Menu */
     .profile {
       display: flex;
       align-items: center;
-      gap: 14px;
-      margin-bottom: 32px;
+      gap: 12px;
+      margin-block-end: 28px;
     }
     .profile img {
-      width: 52px;
-      height: 52px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       object-fit: cover;
       border: 2px solid var(--border);
     }
-    .profile h4 {
-      font-size: 15px;
-      font-weight: 500;
-      line-height: 1.25;
-    }
-    .profile span {
-      font-size: 12.5px;
-      color: var(--text-secondary);
-    }
+    .profile h4 { font-size: 14.5px; font-weight: 600; line-height: 1.3; }
+    .profile span   { font-size: 12px; color: var(--text-sec); }
 
-    /* Menu links */
     .menu {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
     }
     .menu a {
       display: flex;
       align-items: center;
-      gap: 14px;
-      padding: 14px 18px;
-      border-radius: 16px;
-      text-decoration: none;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 14px;
       color: var(--text);
-      font-size: 15px;
-      transition: all 0.22s ease;
+      text-decoration: none;
+      font-size: 14.5px;
+      transition: background 0.18s ease;
     }
-    .menu a i {
-      min-width: 20px;
-      font-size: 1.25rem;
-    }
+    .menu a i { min-width: 18px; font-size: 1.2rem; }
     .menu a:hover,
-    .menu a.active {
-      background: rgba(255,255,255,0.12);
-    }
+    .menu a.active { background: rgba(255,255,255,0.09); }
 
-    /* Overlay (for clicking outside to close) */
+    /* Overlay */
     .overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.4);
+      background: rgba(0,0,0,0.35);
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.4s;
+      transition: opacity 0.32s;
       z-index: 80;
     }
-    .overlay.active {
-      opacity: 1;
-      pointer-events: all;
-    }
+    .overlay.active { opacity: 1; pointer-events: auto; }
 
-    /* Mobile adjustments */
+    /* Mobile */
     @media (max-width: 768px) {
       .icon-nav {
-        left: 12px;
-        width: 64px;
-        border-radius: 20px;
+        inset-inline-start: 10px;
+        width: 60px;
+        border-radius: 18px;
       }
       .sidebar {
-        left: 76px;
-        width: 82vw;
-        max-width: 320px;
+        inset-inline-start: 78px;
+        width: 80vw;
+        max-width: 300px;
         height: 100dvh;
         top: 0;
         transform: translateX(-115%);
-        border-radius: 0 24px 24px 0;
+        border-radius: 0 20px 20px 0;
       }
-      .sidebar.open {
-        transform: translateX(0);
-      }
+      .sidebar.open { transform: translateX(0); }
     }
   </style>
 </head>
@@ -251,7 +221,6 @@
 
   <div class="overlay" id="overlay"></div>
 
-  <!-- Vertical Icon Navigation -->
   <nav class="icon-nav">
     <button id="toggle" aria-label="Toggle menu"><i class="fa-solid fa-bars"></i></button>
 
@@ -263,15 +232,13 @@
     <i class="fa-solid fa-microchip" data-section="tech"></i>
     <i class="fa-solid fa-layer-group" data-section="services"></i>
 
-    <!-- Theme toggle -->
-    <button id="theme-toggle" aria-label="Toggle dark/light mode">
+    <button id="theme-toggle" aria-label="Toggle theme">
       <i class="fa-solid fa-moon" id="theme-icon"></i>
     </button>
 
     <i class="fa-solid fa-envelope" data-section="contact"></i>
   </nav>
 
-  <!-- Slide-out Sidebar -->
   <aside class="sidebar" id="sidebar">
     <div class="profile">
       <img src="https://i.pravatar.cc/100?u=marc" alt="Profile">
@@ -294,10 +261,10 @@
   </aside>
 
   <script>
-    // Theme handling
+    // Theme
+    const html = document.documentElement;
     const themeToggle = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
-    const html = document.documentElement;
 
     function setTheme(theme) {
       html.setAttribute('data-theme', theme);
@@ -305,44 +272,32 @@
       themeIcon.className = theme === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
     }
 
-    // Load saved or system preference
     const saved = localStorage.getItem('theme');
-    if (saved) {
-      setTheme(saved);
-    } else {
-      setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    }
+    if (saved) setTheme(saved);
+    else setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 
-    themeToggle.addEventListener('click', () => {
-      const current = html.getAttribute('data-theme');
-      setTheme(current === 'dark' ? 'light' : 'dark');
-    });
+    themeToggle.onclick = () => {
+      setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    };
 
-    // Sidebar controls
+    // Sidebar
     const toggle = document.getElementById('toggle');
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('overlay');
 
-    function open() {
-      sidebar.classList.add('open');
-      overlay.classList.add('active');
-    }
+    const open = () => { sidebar.classList.add('open'); overlay.classList.add('active'); };
+    const close = () => { sidebar.classList.remove('open'); overlay.classList.remove('active'); };
 
-    function close() {
-      sidebar.classList.remove('open');
-      overlay.classList.remove('active');
-    }
+    toggle.onclick = () => sidebar.classList.contains('open') ? close() : open();
+    overlay.onclick = close;
 
-    toggle.addEventListener('click', () => sidebar.classList.contains('open') ? close() : open());
-    overlay.addEventListener('click', close);
-
-    // Optional: clicking icons on mobile opens sidebar
-    document.querySelectorAll('.icon-nav i[data-section]').forEach(icon => {
-      icon.addEventListener('click', () => {
+    // Optional icon → active + open on mobile
+    document.querySelectorAll('.icon-nav i[data-section]').forEach(el => {
+      el.onclick = () => {
         document.querySelectorAll('.icon-nav i').forEach(i => i.classList.remove('active'));
-        icon.classList.add('active');
+        el.classList.add('active');
         if (window.innerWidth <= 768) open();
-      });
+      };
     });
   </script>
 </body>
