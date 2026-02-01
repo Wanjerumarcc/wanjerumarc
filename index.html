@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>John Mark Kiritu — Creative Developer & Designer</title>
+  <title>John Mark Kiritu — Portfolio</title>
 
   <link rel="icon" href="nobklogo.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
   <style>
     :root {
       --bg: #000000;
-      --glass: rgba(20, 25, 40, 0.92);
+      --glass: rgba(20, 25, 40, 0.95);
       --accent: #3b82f6;
       --accent-glow: rgba(59, 130, 246, 0.4);
       --text: #ffffff;
@@ -36,47 +36,36 @@
 
     * { margin:0; padding:0; box-sizing:border-box; }
     html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
 
-    body {
-      min-height: 100dvh;
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('wllpbk.jpg');
-      background-attachment: fixed;
-      background-size: cover;
-      color: var(--text);
-      overflow-x: hidden;
-      transition: background 0.3s ease;
-    }
-
-    [data-theme="light"] body {
-      background-image: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('wllpbk.jpg');
+    /* BG IMAGE */
+    body::before {
+      content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('wllpbk.jpg');
+      background-size: cover; background-position: center; z-index: -1;
     }
 
     /* NAVIGATION */
     .floating-bubble {
       position: fixed; left: 24px; top: 24px; width: 64px; height: 64px;
       border-radius: 50%; overflow: hidden; border: 3px solid var(--accent);
-      box-shadow: 0 8px 32px var(--accent-glow); cursor: pointer;
-      z-index: 130; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 8px 32px var(--accent-glow); cursor: pointer; z-index: 130;
     }
-    .floating-bubble.hidden { opacity: 0; transform: scale(0.5) translateY(-30px); pointer-events: none; }
-    .floating-bubble img { width: 100%; height: 100%; object-fit: cover; }
-
+    .floating-bubble.hidden { opacity: 0; transform: scale(0.5); pointer-events: none; }
+    
     .icon-menu {
       position: fixed; left: 16px; top: 50%; transform: translateY(-50%) translateX(-120px);
       width: 80px; background: var(--glass); backdrop-filter: blur(20px);
       border: 1px solid var(--border); border-radius: 32px; padding: 20px 0;
       display: flex; flex-direction: column; align-items: center; gap: 18px; z-index: 120;
-      opacity: 0; transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      opacity: 0; transition: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .icon-menu.visible { opacity: 1; transform: translateY(-50%) translateX(0); }
 
     .hamburger-btn {
       width: 56px; height: 56px; border-radius: 18px; background: var(--card-bg);
-      color: var(--text); font-size: 1.5rem; display: grid; place-items: center; cursor: pointer; transition: 0.3s;
+      color: var(--text); font-size: 1.5rem; display: grid; place-items: center; cursor: pointer;
     }
-    .hamburger-btn:hover { background: var(--accent); color: white; transform: rotate(90deg); }
 
     .icon-item {
       width: 52px; height: 52px; border-radius: 16px; background: var(--card-bg);
@@ -86,152 +75,112 @@
 
     .text-menu {
       position: fixed; left: 112px; top: 50%; transform: translateY(-50%) translateX(-120%);
-      width: 340px; background: var(--glass); backdrop-filter: blur(25px);
+      width: 320px; background: var(--glass); backdrop-filter: blur(25px);
       border: 1px solid var(--border); border-radius: 28px; padding: 40px;
-      z-index: 115; transition: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-      opacity: 0; pointer-events: none;
+      z-index: 115; transition: 0.5s; opacity: 0; pointer-events: none;
     }
     .text-menu.open { transform: translateY(-50%) translateX(0); opacity: 1; pointer-events: auto; }
-
-    .profile-nav { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; }
-    .profile-nav img { width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--accent); }
-
     .text-links a {
       display: flex; align-items: center; gap: 15px; padding: 15px 20px;
       border-radius: 12px; color: var(--text); text-decoration: none; transition: 0.3s;
     }
-    .text-links a:hover, .text-links a.active { background: var(--accent); color: white; }
+    .text-links a:hover { background: var(--accent); color: white; }
 
-    /* HERO SECTION */
-    .parallax-section {
-      min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 80px 5%;
-    }
-
+    /* HERO */
+    .parallax-section { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 100px 5%; }
+    
     .hero-grid {
       display: grid; grid-template-columns: 1.2fr 0.8fr; align-items: center;
-      gap: 4rem; background: var(--card-bg); backdrop-filter: blur(15px);
-      padding: 5rem; border-radius: 50px; border: 1px solid var(--border);
-      max-width: 1250px; width: 100%;
+      gap: 3rem; background: var(--card-bg); backdrop-filter: blur(15px);
+      padding: 4rem; border-radius: 50px; border: 1px solid var(--border); max-width: 1200px;
     }
-
-    .hero-text h1 {
-      font-size: clamp(3rem, 6vw, 5rem); line-height: 1.1; margin-bottom: 1.5rem;
-      background: linear-gradient(45deg, var(--text) 30%, var(--accent));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
-
-    .hero-text p { font-size: 1.25rem; color: var(--text-light); margin-bottom: 2.5rem; line-height: 1.8; }
-
-    /* IMAGE POPOUT & BREATHING */
-    .hero-img-box {
-      position: relative; width: 100%; height: 450px;
-      display: flex; align-items: flex-end; justify-content: center;
-    }
-
-    @keyframes breathe {
-      0%, 100% { transform: scale(1); box-shadow: 0 0 20px var(--accent-glow); }
-      50% { transform: scale(1.05); box-shadow: 0 0 60px var(--accent-glow); }
-    }
-
-    @keyframes spin-slow {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
+    .hero-text h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); margin-bottom: 1rem; }
+    
+    .hero-img-box { position: relative; width: 100%; height: 400px; display: flex; align-items: flex-end; justify-content: center; }
     .popout-circle {
-      position: absolute; bottom: 30px; width: 320px; height: 320px;
-      border-radius: 50%; background: linear-gradient(135deg, var(--accent), #60a5fa);
-      z-index: 1; animation: breathe 4s ease-in-out infinite;
-      transition: 0.5s ease;
+      position: absolute; bottom: 20px; width: 280px; height: 280px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #60a5fa); z-index: 1;
+      animation: breathe 5s infinite; transition: 0.5s;
     }
+    .popout-img { position: relative; width: 320px; z-index: 2; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5)); transition: 0.5s; }
+    .hero-img-box:hover .popout-img { transform: translateY(-15px) scale(1.05); }
 
-    .popout-img {
-      position: relative; width: 380px; height: auto; z-index: 2;
-      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6));
-      transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      pointer-events: auto; cursor: pointer;
-    }
+    @keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
 
-    .hero-img-box:hover .popout-circle {
-      background: linear-gradient(225deg, var(--accent), #93c5fd);
-      filter: hue-rotate(15deg);
+    /* EXPERIENCE SECTION */
+    .exp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; width: 100%; max-width: 1200px; }
+    .exp-card {
+      background: var(--glass); padding: 2.5rem; border-radius: 30px; border: 1px solid var(--border);
+      text-align: center; transition: 0.3s; position: relative; overflow: hidden;
     }
+    .exp-card:hover { transform: translateY(-10px); border-color: var(--accent); }
+    .comp-logo { width: 80px; height: 80px; margin: 0 auto 1.5rem; border-radius: 15px; background: white; padding: 10px; display: flex; align-items: center; justify-content: center; }
+    .comp-logo img { max-width: 100%; max-height: 100%; }
+    
+    .exp-card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+    .exp-card h3 a { color: var(--accent); text-decoration: none; }
+    .exp-card .pos { font-weight: 600; opacity: 0.8; margin-bottom: 1rem; display: block; }
+    .exp-card .dur { font-size: 0.9rem; opacity: 0.6; display: block; margin-bottom: 1.5rem; }
 
-    .hero-img-box:hover .popout-img {
-      transform: translateY(-20px) scale(1.05);
+    .btn-roles {
+      background: var(--card-bg); border: 1px solid var(--accent); color: var(--text);
+      padding: 10px 20px; border-radius: 50px; cursor: pointer; transition: 0.3s; font-weight: 600;
     }
+    .btn-roles:hover { background: var(--accent); color: white; }
 
-    /* EDUCATION TIMELINE */
-    .timeline { display: flex; gap: 2rem; flex-wrap: wrap; margin-top: 3rem; justify-content: center; }
-    .timeline-card {
-      background: var(--glass); padding: 2rem; border-radius: 20px;
-      border: 1px solid var(--border); flex: 1; min-width: 280px; text-align: center;
+    /* MODAL POPUP */
+    .modal {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
+      display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px;
     }
-    .timeline-card i { font-size: 2.5rem; color: var(--accent); margin-bottom: 1rem; }
+    .modal-content {
+      background: var(--glass); border: 1px solid var(--border); padding: 3rem;
+      border-radius: 30px; max-width: 800px; width: 100%; max-height: 80vh; overflow-y: auto;
+      position: relative; animation: slideUp 0.4s ease;
+    }
+    @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .close-modal { position: absolute; top: 20px; right: 20px; font-size: 2rem; cursor: pointer; opacity: 0.5; }
+    .modal-content h2 { color: var(--accent); margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+    .modal-content ul { padding-left: 20px; }
+    .modal-content li { margin-bottom: 12px; line-height: 1.6; color: var(--text-light); }
 
-    /* FULL ORIGINAL FOOTER */
-    footer {
-      background: var(--glass); backdrop-filter: blur(14px); padding: 5rem 5% 3rem;
-      border-top: 1px solid var(--border); color: var(--text-light);
-    }
-    .footer-grid {
-      max-width: 1400px; margin: 0 auto; display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem;
-    }
-    .footer-brand .logo {
-      width: 100px; height: 100px; margin-bottom: 1.2rem; border-radius: 50%; border: 3px solid var(--accent); overflow: hidden;
-    }
-    .footer-brand .logo img { width: 100%; height: 100%; object-fit: cover; }
-    .footer-column h3 { color: var(--text); margin-bottom: 1.5rem; font-size: 1.2rem; }
+    /* FOOTER */
+    footer { background: var(--glass); padding: 5rem 5% 3rem; border-top: 1px solid var(--border); }
+    .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; }
+    .footer-brand img { width: 80px; margin-bottom: 1rem; border-radius: 50%; border: 2px solid var(--accent); }
+    .footer-column h3 { margin-bottom: 1.5rem; font-size: 1.1rem; color: var(--accent); }
     .footer-column ul { list-style: none; }
-    .footer-column ul li { margin-bottom: 0.8rem; }
-    .footer-column a { color: var(--text-light); text-decoration: none; transition: 0.3s; }
-    .footer-column a:hover { color: var(--accent); padding-left: 5px; }
+    .footer-column li { margin-bottom: 10px; opacity: 0.7; font-size: 0.9rem; }
+    .footer-column a { color: inherit; text-decoration: none; transition: 0.3s; }
+    .footer-column a:hover { color: var(--accent); }
+    .socials { display: flex; gap: 15px; margin-top: 1rem; }
+    .socials a { font-size: 1.4rem; opacity: 0.8; }
 
-    .social-icons { display: flex; gap: 1rem; margin-top: 1.5rem; }
-    .social-icons a {
-      width: 45px; height: 45px; border-radius: 50%; background: var(--card-bg);
-      color: var(--text); display: grid; place-items: center; font-size: 1.2rem; transition: 0.3s;
-    }
-    .social-icons a:hover { background: var(--accent); color: white; transform: translateY(-5px); }
-
-    @media (max-width: 1024px) {
-      .hero-grid { grid-template-columns: 1fr; text-align: center; padding: 3rem 2rem; }
-      .hero-img-box { height: 380px; }
-      .popout-circle { width: 250px; height: 250px; }
-      .popout-img { width: 300px; }
-      .text-menu { width: calc(100% - 40px); left: 20px; }
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; text-align: center; }
+      .hero-img-box { height: 320px; }
     }
   </style>
 </head>
 <body>
 
-  <div class="floating-bubble" id="floating-bubble">
-    <img src="nobklogo.png" alt="Logo">
-  </div>
+  <div class="floating-bubble" id="floating-bubble"><img src="nobklogo.png"></div>
 
   <nav class="icon-menu" id="icon-menu">
     <div id="hamburger" class="hamburger-btn"><i class="fa-solid fa-bars"></i></div>
-    <div class="icon-items">
-      <div class="icon-item active" data-section="home"><i class="fa-solid fa-house"></i></div>
-      <div class="icon-item" data-section="about"><i class="fa-solid fa-user"></i></div>
-      <div class="icon-item" data-section="education"><i class="fa-solid fa-graduation-cap"></i></div>
-      <div class="icon-item" id="theme-toggle"><i class="fa-solid fa-moon" id="theme-icon"></i></div>
-      <div class="icon-item" data-section="contact"><i class="fa-solid fa-envelope"></i></div>
-    </div>
+    <div class="icon-item active" data-sec="home"><i class="fa-solid fa-house"></i></div>
+    <div class="icon-item" data-sec="experience"><i class="fa-solid fa-briefcase"></i></div>
+    <div class="icon-item" data-sec="about"><i class="fa-solid fa-user"></i></div>
+    <div class="icon-item" id="theme-toggle"><i class="fa-solid fa-moon" id="theme-icon"></i></div>
   </nav>
 
   <aside class="text-menu" id="text-menu">
-    <div class="profile-nav">
-      <img src="nobklogo.png" alt="Profile">
-      <div><strong>John Mark Kiritu</strong><br><small>IT Professional</small></div>
-    </div>
     <div class="text-links">
-      <a href="#home" class="active"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="#home"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="#experience"><i class="fa-solid fa-briefcase"></i> Experience</a>
       <a href="#about"><i class="fa-solid fa-user"></i> About</a>
       <a href="#education"><i class="fa-solid fa-graduation-cap"></i> Education</a>
-      <a href="#experience"><i class="fa-solid fa-briefcase"></i> Experience</a>
-      <a href="#services"><i class="fa-solid fa-gear"></i> Services</a>
       <a href="#contact"><i class="fa-solid fa-envelope"></i> Contact</a>
     </div>
   </aside>
@@ -239,93 +188,156 @@
   <section id="home" class="parallax-section">
     <div class="hero-grid">
       <div class="hero-text">
-        <span style="color:var(--accent); font-weight:900; letter-spacing:3px; text-transform:uppercase; font-size:0.9rem;">Available for Projects</span>
+        <span style="color:var(--accent); font-weight:800; letter-spacing:2px;">IT PROFESSIONAL</span>
         <h1>John Mark Kiritu</h1>
-        <p>A Kampala-based IT Specialist & Creative Developer. I bridge the gap between technical infrastructure and high-end digital design.</p>
-        <a href="#contact" style="background:var(--accent); color:white; padding:18px 40px; border-radius:50px; text-decoration:none; font-weight:800; display:inline-block; box-shadow:0 10px 30px var(--accent-glow);">START A CONVERSATION</a>
+        <p>System Administrator and IT Support Specialist. I deliver high-availability infrastructure and cybersecurity solutions.</p>
+        <a href="#experience" style="background:var(--accent); color:white; padding:15px 35px; border-radius:50px; text-decoration:none; font-weight:bold; display:inline-block;">VIEW MY JOURNEY</a>
       </div>
-
       <div class="hero-img-box">
         <div class="popout-circle"></div>
-        <img src="profilepic.png" alt="John Mark Kiritu" class="popout-img">
+        <img src="profilepic.png" class="popout-img">
       </div>
     </div>
   </section>
+
+  <section id="experience" class="parallax-section" style="flex-direction: column;">
+    <h2 style="font-size: 3rem; margin-bottom: 3rem;">Professional Journey</h2>
+    <div class="exp-grid">
+      
+      <div class="exp-card">
+        <div class="comp-logo"><i class="fa-solid fa-truck-fast" style="color:#333; font-size:2rem;"></i></div>
+        <h3><a href="https://doubleq.com" target="_blank">Double Q (C4 Logistics)</a></h3>
+        <span class="pos">System Administrator</span>
+        <span class="dur">Sept 2024 – Nov 2024</span>
+        <button class="btn-roles" onclick="openModal('modal-c4')">View Roles</button>
+      </div>
+
+      <div class="exp-card">
+        <div class="comp-logo"><i class="fa-solid fa-hand-holding-heart" style="color:#008d3f; font-size:2rem;"></i></div>
+        <h3><a href="https://uganda.oxfam.org" target="_blank">Oxfam in Uganda</a></h3>
+        <span class="pos">IT Support Officer</span>
+        <span class="dur">Nov 2022 – May 2024</span>
+        <button class="btn-roles" onclick="openModal('modal-ox-support')">View Roles</button>
+      </div>
+
+      <div class="exp-card">
+        <div class="comp-logo"><i class="fa-solid fa-graduation-cap" style="color:#008d3f; font-size:2rem;"></i></div>
+        <h3><a href="https://uganda.oxfam.org" target="_blank">Oxfam in Uganda</a></h3>
+        <span class="pos">Graduate Trainee</span>
+        <span class="dur">July 2022 – Nov 2022</span>
+        <button class="btn-roles" onclick="openModal('modal-ox-grad')">View Roles</button>
+      </div>
+
+      <div class="exp-card">
+        <div class="comp-logo"><i class="fa-solid fa-briefcase" style="color:#008d3f; font-size:2rem;"></i></div>
+        <h3><a href="https://uganda.oxfam.org" target="_blank">Oxfam in Uganda</a></h3>
+        <span class="pos">IT Intern</span>
+        <span class="dur">Feb 2022 – July 2022</span>
+        <button class="btn-roles" onclick="openModal('modal-ox-intern')">View Roles</button>
+      </div>
+
+    </div>
+  </section>
+
+  <div id="modal-c4" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal()">&times;</span>
+      <h2>Double Q (C4 Logistics) Roles</h2>
+      <ul>
+        <li>Administer and maintain IT infrastructure (Switches, PABX, Microsoft Power Apps, Camera Surveillance).</li>
+        <li>Implement and monitor Kaspersky Endpoint Protection and configure firewalls.</li>
+        <li>Generate performance and incident reports using Transport Management Systems.</li>
+        <li>Provide Level 2 support for O365, Windows 10/11, and Network issues.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="modal-ox-support" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal()">&times;</span>
+      <h2>IT Support Officer Roles</h2>
+      <ul>
+        <li>Ensured system uptime via Microsoft 365 Admin Center and Cisco Meraki Dashboard.</li>
+        <li>Configured Cisco Meraki cameras, L2/L3 switches, and network segmentation.</li>
+        <li>Managed IT Asset Lifecycle using Excel and SharePoint.</li>
+        <li>Tier 1-3 support via ServiceNow and Jira Service Management.</li>
+        <li>Contributed to Power BI dashboard development and Power Apps automation.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="modal-ox-grad" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal()">&times;</span>
+      <h2>Graduate Trainee Roles</h2>
+      <ul>
+        <li>Resolved 80+ daily tickets via ServiceNow/Jira.</li>
+        <li>Configured Windows 10, Ubuntu Linux, and macOS devices.</li>
+        <li>Integrated AV systems: Logitech Rally, Zoom Rooms, and MS Teams Rooms.</li>
+        <li>Maintained enterprise MFP printer networks (HP, Xerox, Kyocera).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="modal-ox-intern" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal()">&times;</span>
+      <h2>IT Intern Roles</h2>
+      <ul>
+        <li>Helpdesk support via TeamViewer/AnyDesk for multiple departments.</li>
+        <li>Staff training on Box Drive, OneDrive, and MFA (Microsoft Authenticator).</li>
+        <li>OS deployment using Rufus, Ventoy, and UNetbootin.</li>
+        <li>Structured Cat6 cabling and VLAN setup on Meraki switches.</li>
+        <li>Endpoint protection via Windows Defender ATP.</li>
+      </ul>
+    </div>
+  </div>
 
   <section id="about" class="parallax-section">
-    <div style="background:var(--card-bg); backdrop-filter:blur(10px); padding:4rem; border-radius:40px; border:1px solid var(--border); max-width:1000px; text-align:center;">
-      <h2 style="font-size:3rem; margin-bottom:1.5rem;">Professional Profile</h2>
-      <p style="font-size:1.2rem; line-height:1.8;">Self-motivated, results-driven IT professional with over 2 years of experience in IT support, networking, and Microsoft 365 administration. Expert at troubleshooting complex systems and designing user-centric web applications.</p>
-    </div>
-  </section>
-
-  <section id="education" class="parallax-section">
-    <div style="width:100%; max-width:1100px;">
-      <h2 style="text-align:center; margin-bottom:3rem;">Education Background</h2>
-      <div class="timeline">
-        <div class="timeline-card">
-          <i class="fa-solid fa-university"></i>
-          <h3>BSc. Information Technology</h3>
-          <p>Uganda Christian University</p>
-          <small style="color:var(--accent)">2018 - 2021</small>
-        </div>
-        <div class="timeline-card">
-          <i class="fa-solid fa-school"></i>
-          <h3>UACE Certificate</h3>
-          <p>St. Lawrence College</p>
-          <small style="color:var(--accent)">2016 - 2017</small>
-        </div>
-      </div>
+    <div style="background:var(--card-bg); backdrop-filter:blur(10px); padding:4rem; border-radius:40px; border:1px solid var(--border); max-width:900px; text-align:center;">
+      <h2>About Me</h2>
+      <p style="margin-top:1.5rem; line-height:1.8; opacity:0.8;">I am a highly skilled IT professional with over 2 years of experience in system administration and technical support. My core expertise lies in Microsoft 365 ecosystems, Cisco Meraki networking, and cybersecurity compliance.</p>
     </div>
   </section>
 
   <footer id="contact">
     <div class="footer-grid">
       <div class="footer-brand">
-        <div class="logo"><img src="nobklogo.png" alt="Logo"></div>
-        <h2 style="color:var(--text); margin-bottom:0.5rem;">John Mark Kiritu</h2>
-        <p>Creative Developer & Designer</p>
-        <div class="social-icons">
-          <a href="#"><i class="fab fa-whatsapp"></i></a>
-          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        <img src="nobklogo.png">
+        <h3>John Mark Kiritu</h3>
+        <p>IT Specialist & Developer</p>
+        <div class="socials">
+          <a href="#"><i class="fab fa-linkedin"></i></a>
           <a href="#"><i class="fab fa-github"></i></a>
-          <a href="mailto:marc@wanjeru.dev"><i class="fa-solid fa-envelope"></i></a>
+          <a href="#"><i class="fab fa-whatsapp"></i></a>
         </div>
       </div>
-
       <div class="footer-column">
         <h3>Information</h3>
         <ul>
           <li><a href="#home">Home</a></li>
           <li><a href="#about">About Me</a></li>
-          <li><a href="#">Professional Blog</a></li>
-          <li><a href="#">Events</a></li>
+          <li><a href="#experience">Experience</a></li>
         </ul>
       </div>
-
-      <div class="footer-column">
-        <h3>Helpful Links</h3>
-        <ul>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#">Support Center</a></li>
-          <li><a href="#">Terms of Service</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-        </ul>
-      </div>
-
       <div class="footer-column">
         <h3>Our Services</h3>
         <ul>
-          <li><a href="#">Web Development</a></li>
-          <li><a href="#">IT Consultancy</a></li>
-          <li><a href="#">Cloud Migration</a></li>
-          <li><a href="#">Network Security</a></li>
+          <li>Web Development</li>
+          <li>IT Support</li>
+          <li>Cyber Security</li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Contact</h3>
+        <ul>
+          <li>Kampala, Uganda</li>
+          <li>marc@wanjeru.dev</li>
+          <li>+256 700 000000</li>
         </ul>
       </div>
     </div>
-    <div style="text-align:center; margin-top:5rem; padding-top:2rem; border-top:1px solid var(--border); opacity:0.5;">
-      © 2026 John Mark Kiritu — All Rights Reserved.
-    </div>
+    <div style="text-align:center; margin-top:4rem; opacity:0.4; font-size:0.8rem;">© 2026 John Mark Kiritu — All Rights Reserved</div>
   </footer>
 
   <script>
@@ -333,58 +345,21 @@
     const iconMenu = document.getElementById('icon-menu');
     const textMenu = document.getElementById('text-menu');
     const hamburger = document.getElementById('hamburger');
-    const themeToggle = document.getElementById('theme-toggle');
-    const themeIcon = document.getElementById('theme-icon');
 
-    // Toggle menu visibility
-    bubble.addEventListener('click', () => {
-      bubble.classList.add('hidden');
-      iconMenu.classList.add('visible');
-    });
+    bubble.onclick = () => { bubble.classList.add('hidden'); iconMenu.classList.add('visible'); };
+    hamburger.onclick = (e) => { e.stopPropagation(); textMenu.classList.toggle('open'); };
 
-    // Hamburger slide-out
-    hamburger.addEventListener('click', (e) => {
-      e.stopPropagation();
-      textMenu.classList.toggle('open');
-    });
-
-    // Theme Toggle
-    themeToggle.addEventListener('click', () => {
-      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      const newTheme = isDark ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', newTheme);
-      themeIcon.className = newTheme === 'dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
-    });
-
-    // Close logic
-    document.addEventListener('click', (e) => {
+    document.onclick = (e) => {
       if (!iconMenu.contains(e.target) && !bubble.contains(e.target)) {
-        iconMenu.classList.remove('visible');
-        bubble.classList.remove('hidden');
-        textMenu.classList.remove('open');
+        iconMenu.classList.remove('visible'); bubble.classList.remove('hidden'); textMenu.classList.remove('open');
       }
-    });
+    };
 
-    // Smooth Scroll Link Handler
-    document.querySelectorAll('[data-section]').forEach(item => {
-      item.addEventListener('click', () => {
-        const id = item.getAttribute('data-section');
-        document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-      });
-    });
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
 
-    // Auto-active on scroll
-    window.addEventListener('scroll', () => {
-      let current = "";
-      document.querySelectorAll('section, footer').forEach(sec => {
-        if (pageYOffset >= sec.offsetTop - 300) current = sec.getAttribute('id');
-      });
-      document.querySelectorAll('.icon-item, .text-links a').forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('data-section') === current || link.getAttribute('href') === `#${current}`) {
-          link.classList.add('active');
-        }
-      });
+    document.querySelectorAll('[data-sec]').forEach(item => {
+      item.onclick = () => document.getElementById(item.getAttribute('data-sec')).scrollIntoView({ behavior: 'smooth' });
     });
   </script>
 </body>
