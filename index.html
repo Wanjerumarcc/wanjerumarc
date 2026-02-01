@@ -23,9 +23,7 @@
 
     * { margin:0; padding:0; box-sizing:border-box; }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       min-height: 100dvh;
@@ -36,25 +34,67 @@
       overflow-x: hidden;
     }
 
-    /* Parallax background wrapper */
-    .parallax-bg {
-      position: fixed;
-      inset: 0;
-      background: url('desktop1.jpg') center / cover no-repeat;
-      transform: translateZ(0);
-      z-index: -3;
-      will-change: transform;
-    }
-
+    /* Global overlay for better contrast */
     body::before {
       content: "";
       position: fixed;
       inset: 0;
       background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.75));
-      z-index: -2;
+      z-index: -10;
     }
 
-    /* Hamburger */
+    /* Parallax wrapper for each section */
+    .parallax-section {
+      position: relative;
+      overflow: hidden;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 5% 6rem;
+      text-align: center;
+    }
+
+    .parallax-bg-layer {
+      position: absolute;
+      inset: -20%;
+      background-size: cover;
+      background-position: center;
+      transform: translateZ(0);
+      will-change: transform;
+      z-index: -1;
+    }
+
+    /* Different speeds / images per section (you can replace URLs) */
+    #hero     .parallax-bg-layer { background-image: url('desktop1.jpg'); }
+    #about    .parallax-bg-layer { background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80'); }
+    #education .parallax-bg-layer { background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80'); }
+    #experience .parallax-bg-layer { background-image: url('https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80'); }
+    #technologies .parallax-bg-layer { background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80'); }
+    #services .parallax-bg-layer { background-image: url('https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80'); }
+    #contact  .parallax-bg-layer { background-image: url('https://images.unsplash.com/photo-1517248135467-2c7ed3ab7229?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80'); }
+
+    .section-content {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+    }
+
+    .section-content h2 {
+      font-size: clamp(2.8rem, 7vw, 4.8rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      transform: translateZ(50px);
+    }
+
+    .section-content p {
+      font-size: clamp(1.15rem, 2.5vw, 1.35rem);
+      color: var(--text-light);
+      line-height: 1.6;
+      transform: translateZ(20px);
+    }
+
+    /* Hamburger & navigation (same as before) */
     #hamburger {
       position: fixed;
       top: 18px;
@@ -77,7 +117,6 @@
 
     #hamburger:hover { background: var(--accent); color: white; }
 
-    /* Vertical bar */
     .vertical-bar {
       position: fixed;
       left: 18px;
@@ -117,7 +156,6 @@
 
     .theme-toggle { margin-top: auto; }
 
-    /* Slide-out sidebar */
     .slide-sidebar {
       position: fixed;
       left: 96px;
@@ -146,20 +184,8 @@
     .slide-sidebar::-webkit-scrollbar { display: none; }
     .slide-sidebar { scrollbar-width: none; }
 
-    .profile {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 32px;
-    }
-
-    .profile img {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      border: 2px solid var(--border);
-    }
-
+    .profile { display: flex; align-items: center; gap: 14px; margin-bottom: 32px; }
+    .profile img { width: 56px; height: 56px; border-radius: 50%; border: 2px solid var(--border); }
     .profile h4 { font-size: 1.18rem; font-weight: 600; }
     .profile span { font-size: 0.93rem; color: var(--text-light); }
 
@@ -176,41 +202,6 @@
     }
 
     .sidebar-links a:hover, .sidebar-links a.active { background: rgba(255,255,255,0.09); }
-
-    /* Hero with parallax layers */
-    .hero {
-      position: relative;
-      min-height: 100dvh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 6%;
-      text-align: center;
-      perspective: 1200px;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      transform-style: preserve-3d;
-    }
-
-    .hero h1 {
-      font-size: clamp(3.6rem, 9vw, 6.4rem);
-      font-weight: 700;
-      line-height: 1.05;
-      margin-bottom: 1.4rem;
-      transform: translateZ(40px);
-    }
-
-    .hero .subtitle {
-      font-size: clamp(1.25rem, 3.5vw, 1.6rem);
-      color: var(--text-light);
-      max-width: 720px;
-      margin: 0 auto;
-      line-height: 1.55;
-      transform: translateZ(20px);
-    }
 
     /* Footer – slim */
     footer {
@@ -231,26 +222,14 @@
       text-align: center;
     }
 
-    .footer-brand h2 {
-      font-size: 1.6rem;
-      color: white;
-      margin-bottom: 0.6rem;
-    }
+    .footer-brand h2 { font-size: 1.6rem; color: white; margin-bottom: 0.6rem; }
 
-    .footer-column h3 {
-      color: white;
-      font-size: 1.05rem;
-      margin-bottom: 1rem;
-    }
+    .footer-column h3 { color: white; font-size: 1.05rem; margin-bottom: 1rem; }
 
     .footer-column ul { list-style: none; }
     .footer-column ul li { margin-bottom: 0.6rem; }
 
-    .footer-column a {
-      color: var(--text-light);
-      text-decoration: none;
-    }
-
+    .footer-column a { color: var(--text-light); text-decoration: none; }
     .footer-column a:hover { color: var(--accent); }
 
     .contact-centered { max-width: 260px; }
@@ -303,23 +282,18 @@
       .slide-sidebar { left: 86px; width: 82vw; max-width: 310px; }
       #hamburger { left: 14px; top: 14px; width: 48px; height: 48px; font-size: 1.35rem; }
       footer { padding: 3rem 5% 2.5rem; }
-      .hero h1 { font-size: 3.8rem; }
     }
 
-    /* Respect reduced motion preference */
     @media (prefers-reduced-motion: reduce) {
-      .parallax-bg,
-      .hero h1,
-      .hero .subtitle {
+      .parallax-bg-layer,
+      .section-content h2,
+      .section-content p {
         transform: none !important;
       }
     }
   </style>
 </head>
 <body>
-
-  <!-- Parallax background layer -->
-  <div class="parallax-bg"></div>
 
   <!-- Hamburger -->
   <button id="hamburger">
@@ -361,43 +335,71 @@
     </div>
   </aside>
 
-  <!-- Hero with parallax layers -->
-  <main class="hero">
-    <div class="hero-content">
+  <!-- Hero section with parallax -->
+  <section id="home" class="parallax-section hero">
+    <div class="parallax-bg-layer"></div>
+    <div class="section-content">
       <h1>Welcome to My Portfolio</h1>
       <p class="subtitle">
         I'm Marc Wanjeru from Kampala.<br>
         Explore the navigation on the left to learn more about me.
       </p>
     </div>
-  </main>
-
-  <!-- Example sections for smooth scrolling -->
-  <section id="about" style="min-height:100vh; padding:12rem 5% 6rem; background:rgba(0,0,0,0.2);">
-    <h2 style="font-size:3.5rem; text-align:center; margin-bottom:2rem;">About Me</h2>
-    <p style="max-width:800px; margin:0 auto; text-align:center; color:var(--text-light); font-size:1.2rem;">
-      This is a placeholder section. Click navigation links to see smooth scrolling + parallax in action.
-    </p>
   </section>
 
-  <section id="education" style="min-height:100vh; padding:12rem 5% 6rem; background:rgba(0,0,0,0.15);">
-    <h2 style="font-size:3.5rem; text-align:center;">Education</h2>
+  <!-- About section with parallax -->
+  <section id="about" class="parallax-section">
+    <div class="parallax-bg-layer"></div>
+    <div class="section-content">
+      <h2>About Me</h2>
+      <p>Creative developer & designer based in Kampala. Passionate about building modern, responsive, and user-centered digital experiences.</p>
+    </div>
   </section>
 
-  <section id="experience" style="min-height:100vh; padding:12rem 5% 6rem; background:rgba(0,0,0,0.2);">
-    <h2 style="font-size:3.5rem; text-align:center;">Experience</h2>
+  <!-- Education -->
+  <section id="education" class="parallax-section">
+    <div class="parallax-bg-layer"></div>
+    <div class="section-content">
+      <h2>Education</h2>
+      <p>Relevant academic background and continuous self-learning in web technologies, UI/UX principles and modern development practices.</p>
+    </div>
   </section>
 
-  <section id="technologies" style="min-height:100vh; padding:12rem 5% 6rem; background:rgba(0,0,0,0.15);">
-    <h2 style="font-size:3.5rem; text-align:center;">Technologies</h2>
+  <!-- Experience -->
+  <section id="experience" class="parallax-section">
+    <div class="parallax-bg-layer"></div>
+    <div class="section-content">
+      <h2>Experience</h2>
+      <p>Professional journey — from early projects to current work in front-end development, design systems and client collaborations.</p>
+    </div>
   </section>
 
-  <section id="services" style="min-height:100vh; padding:12rem 5% 6rem; background:rgba(0,0,0,0.2);">
-    <h2 style="font-size:3.5rem; text-align:center;">Services</h2>
+  <!-- Technologies -->
+  <section id="technologies" class="parallax-section">
+    <div class="parallax-bg-layer"></div>
+    <div class="section-content">
+      <h2>Technologies</h2>
+      <p>HTML • CSS • JavaScript • React • Next.js • Tailwind • Node.js • Git • Figma • Framer Motion...</p>
+    </div>
   </section>
 
-  <section id="contact" style="min-height:100vh; padding:12rem 5% 6rem; background:rgba(0,0,0,0.15);">
-    <h2 style="font-size:3.5rem; text-align:center;">Contact</h2>
+  <!-- Services -->
+  <section id="services" class="parallax-section">
+    <div class="parallax-bg-layer"></div>
+    <div class="section-content">
+      <h2>Services</h2>
+      <p>Web Development • UI/UX Design • Consulting • Performance Optimization • Mentoring & Training</p>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="parallax-section">
+    <div class="parallax-bg-layer"></div>
+    <div class="section-content">
+      <h2>Contact</h2>
+      <p>Let's build something great together.<br>
+      marc@wanjeru.dev • +256 700 123 456</p>
+    </div>
   </section>
 
   <!-- Slim footer -->
@@ -411,7 +413,7 @@
       <div class="footer-column">
         <h3>Information</h3>
         <ul>
-          <li><a href="#">About Me</a></li>
+          <li><a href="#about">About Me</a></li>
           <li><a href="#">Blog</a></li>
           <li><a href="#">Testimonials</a></li>
           <li><a href="#">Events</a></li>
@@ -425,7 +427,7 @@
 
         <div class="social-icons">
           <a href="#" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-          <a href="#" title="Microsoft Teams"><i class="fab fa-microsoft"></i></a>
+          <a href="#" title="Teams"><i class="fab fa-microsoft"></i></a>
           <a href="mailto:marc@wanjeru.dev" title="Email"><i class="fa-solid fa-envelope"></i></a>
           <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
           <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
@@ -435,7 +437,7 @@
       <div class="footer-column">
         <h3>Helpful Links</h3>
         <ul>
-          <li><a href="#">Services</a></li>
+          <li><a href="#services">Services</a></li>
           <li><a href="#">Support</a></li>
           <li><a href="#">Terms & Conditions</a></li>
           <li><a href="#">Privacy Policy</a></li>
@@ -445,7 +447,7 @@
       <div class="footer-column">
         <h3>Our Services</h3>
         <ul>
-          <li><a href="#">Web Development</a></li>
+          <li><a href="#services">Web Development</a></li>
           <li><a href="#">UI/UX Design</a></li>
           <li><a href="#">Consulting</a></li>
           <li><a href="#">Training</a></li>
@@ -497,22 +499,26 @@
       a.addEventListener('click', () => sidebar.classList.remove('open'));
     });
 
-    // Parallax effect (simple JS version)
+    // Parallax effect on scroll
     window.addEventListener('scroll', () => {
       const scroll = window.scrollY;
 
-      // Background parallax
-      document.querySelector('.parallax-bg').style.transform = 
-        `translateY(${scroll * 0.4}px) scale(1.05)`;
+      document.querySelectorAll('.parallax-section').forEach(section => {
+        const rect = section.getBoundingClientRect();
+        const sectionTop = rect.top + scroll;
+        const offset = (scroll - sectionTop) * 0.25; // adjust multiplier for strength
 
-      // Hero title & subtitle depth
-      const heroTitle = document.querySelector('.hero h1');
-      const heroSub = document.querySelector('.hero .subtitle');
+        const bg = section.querySelector('.parallax-bg-layer');
+        if (bg) {
+          bg.style.transform = `translateY(${offset}px) scale(1.08)`;
+        }
 
-      if (heroTitle && heroSub) {
-        heroTitle.style.transform = `translateY(${scroll * 0.15}px) translateZ(40px)`;
-        heroSub.style.transform  = `translateY(${scroll * 0.08}px) translateZ(20px)`;
-      }
+        const title = section.querySelector('h2, h1');
+        const text = section.querySelector('p.subtitle, p');
+
+        if (title) title.style.transform = `translateY(${offset * 0.4}px) translateZ(50px)`;
+        if (text)  text.style.transform  = `translateY(${offset * 0.2}px) translateZ(20px)`;
+      });
     });
 
     // Active link highlighting
