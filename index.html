@@ -14,9 +14,9 @@
   <style>
     :root {
       --bg: #000000;
-      --glass: rgba(20, 25, 40, 0.95);
+      --glass: rgba(15, 20, 35, 0.95);
       --accent: #3b82f6;
-      --tech-color: #60a5fa;
+      --tech-color: #00d4ff; /* Electric Blue for Technologies */
       --text: #ffffff;
       --text-light: #cbd5e1;
       --border: rgba(255,255,255,0.1);
@@ -25,130 +25,136 @@
 
     [data-theme="light"] {
       --bg: #f8fafc;
-      --glass: rgba(255, 255, 255, 0.95);
+      --glass: rgba(255, 255, 255, 0.98);
       --accent: #2563eb;
       --tech-color: #1d4ed8;
       --text: #0f172a;
       --text-light: #475569;
       --border: rgba(0, 0, 0, 0.1);
-      --card-bg: rgba(255, 255, 255, 0.8);
+      --card-bg: rgba(0, 0, 0, 0.05);
     }
 
     * { margin:0; padding:0; box-sizing:border-box; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; transition: background 0.3s; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; transition: 0.3s; }
     
     body::before {
       content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('wllpbk.jpg');
-      background-size: cover; z-index: -1;
+      background-size: cover; background-position: center; z-index: -1;
     }
 
-    /* FLOATING BUBBLE (ORIGINAL) */
+    /* NAVIGATION LOGIC */
     .floating-bubble {
       position: fixed; left: 24px; top: 24px; width: 64px; height: 64px;
       border-radius: 50%; overflow: hidden; border: 3px solid var(--accent);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.5); cursor: pointer; z-index: 200;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5); cursor: pointer; z-index: 500;
       transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     .floating-bubble.hidden { opacity: 0; transform: scale(0.5); pointer-events: none; }
     .floating-bubble img { width: 100%; height: 100%; object-fit: cover; }
 
-    /* ICON MENU (FIXED ON DESKTOP) */
     .icon-menu {
-      position: absolute; left: 16px; top: 50%; transform: translateY(-50%) translateX(-120px);
-      width: 80px; background: var(--glass); backdrop-filter: blur(20px);
-      border: 1px solid var(--border); border-radius: 32px; padding: 20px 0;
-      display: flex; flex-direction: column; align-items: center; gap: 18px; z-index: 150;
+      position: fixed; left: 16px; top: 50%; transform: translateY(-50%) translateX(-150%);
+      width: 76px; background: var(--glass); backdrop-filter: blur(20px);
+      border: 1px solid var(--border); border-radius: 30px; padding: 20px 0;
+      display: flex; flex-direction: column; align-items: center; gap: 15px; z-index: 400;
       opacity: 0; transition: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    .icon-menu.visible { opacity: 1; transform: translateY(-50%) translateX(0); }
-    .icon-menu.is-fixed { position: fixed; }
+    .icon-menu.visible { transform: translateY(-50%) translateX(0); opacity: 1; }
+    .icon-menu.static { position: absolute; } /* For the settings toggle */
 
     .icon-item, .hamburger-btn {
-      width: 52px; height: 52px; border-radius: 16px; background: var(--card-bg);
-      color: var(--text); font-size: 1.3rem; display: grid; place-items: center; cursor: pointer; transition: 0.3s;
-      position: relative;
+      width: 50px; height: 50px; border-radius: 14px; background: var(--card-bg);
+      color: var(--text); font-size: 1.2rem; display: grid; place-items: center; 
+      cursor: pointer; transition: 0.3s; position: relative;
     }
     .icon-item:hover, .icon-item.active { background: var(--accent); color: white; }
 
     /* SETTINGS DROPDOWN */
-    .settings-dropdown {
-      position: absolute; left: 90px; bottom: 0; width: 220px;
+    .settings-panel {
+      position: absolute; left: 85px; bottom: 0; width: 200px;
       background: var(--glass); border: 1px solid var(--border);
-      border-radius: 20px; padding: 15px; display: none; flex-direction: column; gap: 10px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 160;
+      border-radius: 20px; padding: 15px; display: none; flex-direction: column; gap: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
     }
-    .settings-dropdown.show { display: flex; }
-    .setting-row { display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; }
-    .toggle-switch { width: 40px; height: 20px; background: #444; border-radius: 20px; position: relative; cursor: pointer; }
-    .toggle-switch.active { background: var(--accent); }
-    .toggle-switch::before { content: ""; position: absolute; width: 16px; height: 16px; background: white; border-radius: 50%; top: 2px; left: 2px; transition: 0.3s; }
-    .toggle-switch.active::before { left: 22px; }
+    .settings-panel.active { display: flex; }
+    .setting-item { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; font-weight: 600; }
+    
+    .switch { width: 36px; height: 18px; background: #333; border-radius: 20px; cursor: pointer; position: relative; }
+    .switch::after { content: ""; position: absolute; width: 14px; height: 14px; background: white; border-radius: 50%; top: 2px; left: 2px; transition: 0.3s; }
+    .switch.on { background: var(--accent); }
+    .switch.on::after { left: 20px; }
 
-    /* TEXT MENU (ORIGINAL SLIDE) */
+    /* TEXT MENU SLIDE OUT */
     .text-menu {
-      position: fixed; left: 112px; top: 50%; transform: translateY(-50%) translateX(-120%);
-      width: 320px; background: var(--glass); backdrop-filter: blur(25px);
-      border: 1px solid var(--border); border-radius: 28px; padding: 40px;
-      z-index: 145; transition: 0.5s; opacity: 0; pointer-events: none;
+      position: fixed; left: 105px; top: 50%; transform: translateY(-50%) translateX(-120%);
+      width: 300px; background: var(--glass); backdrop-filter: blur(25px);
+      border: 1px solid var(--border); border-radius: 25px; padding: 35px;
+      z-index: 350; transition: 0.5s; opacity: 0; pointer-events: none;
     }
     .text-menu.open { transform: translateY(-50%) translateX(0); opacity: 1; pointer-events: auto; }
     .text-links a {
-      display: flex; align-items: center; gap: 15px; padding: 15px 20px;
-      border-radius: 12px; color: var(--text); text-decoration: none; transition: 0.3s; margin-bottom: 5px;
+      display: flex; align-items: center; gap: 12px; padding: 14px;
+      border-radius: 10px; color: var(--text); text-decoration: none; transition: 0.3s; margin-bottom: 5px;
     }
     .text-links a:hover { background: var(--accent); color: white; }
 
     /* HERO LAYOUT */
-    .hero-container {
-      display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 2rem;
-      background: var(--card-bg); backdrop-filter: blur(15px); padding: 4rem;
-      border-radius: 50px; border: 1px solid var(--border); max-width: 1200px; width: 100%;
+    .hero-card {
+      display: grid; grid-template-columns: 1.2fr 0.8fr; align-items: center; gap: 3rem;
+      background: var(--card-bg); backdrop-filter: blur(15px); padding: 5rem;
+      border-radius: 45px; border: 1px solid var(--border); max-width: 1200px; width: 100%;
     }
-    .hero-img-box { position: relative; width: 100%; height: 400px; display: flex; align-items: flex-end; justify-content: center; }
-    .popout-circle {
+    .hero-image { position: relative; width: 100%; height: 400px; display: flex; align-items: flex-end; justify-content: center; }
+    .circle-bg {
       position: absolute; bottom: 20px; width: 280px; height: 280px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), #60a5fa); z-index: 1; animation: breathe 5s infinite;
+      background: linear-gradient(135deg, var(--accent), #60a5fa); z-index: 1;
+      animation: breathe 5s ease-in-out infinite; box-shadow: 0 0 40px var(--accent);
     }
-    .popout-img { position: relative; width: 340px; z-index: 2; transition: 0.5s; cursor: pointer; }
-    .hero-img-box:hover .popout-img { transform: translateY(-20px) scale(1.05); }
+    .profile-img { position: relative; width: 320px; z-index: 2; transition: 0.5s; cursor: crosshair; }
+    .hero-image:hover .profile-img { transform: translateY(-25px) scale(1.03); }
 
-    @keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+    @keyframes breathe { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.08); opacity: 1; } }
 
-    /* EXPERIENCE CARDS */
-    .exp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; width: 100%; max-width: 1200px; }
-    .exp-card {
-      background: var(--glass); padding: 2.5rem; border-radius: 30px; border: 1px solid var(--border);
-      text-align: center; transition: 0.3s;
+    /* EXPERIENCE GRID */
+    .exp-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; width: 100%; max-width: 1200px; padding: 2rem 0; }
+    .exp-tile {
+      background: var(--glass); padding: 2.5rem; border-radius: 25px; border: 1px solid var(--border);
+      text-align: center; transition: 0.4s;
     }
-    .exp-card:hover { border-color: var(--accent); transform: translateY(-5px); }
-    .tech-link { color: var(--tech-color); font-weight: 600; text-decoration: none; border-bottom: 1px solid transparent; transition: 0.3s; }
-    .tech-link:hover { border-bottom-color: var(--tech-color); }
+    .exp-tile:hover { border-color: var(--accent); background: rgba(59, 130, 246, 0.05); }
+    .tech-hl { color: var(--tech-color); font-weight: 700; text-decoration: none; }
+    .tech-hl:hover { text-decoration: underline; }
 
-    /* MODAL */
-    .modal {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9);
-      backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px;
+    /* MODALS */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92);
+      backdrop-filter: blur(12px); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 25px;
     }
-    .modal-content {
-      background: var(--glass); padding: 3rem; border-radius: 30px; max-width: 900px; width: 100%;
+    .modal-box {
+      background: var(--glass); padding: 3.5rem; border-radius: 35px; max-width: 850px; width: 100%;
       max-height: 85vh; overflow-y: auto; position: relative; border: 1px solid var(--border);
     }
-    .modal-content li { margin-bottom: 15px; line-height: 1.6; color: var(--text-light); }
+    .modal-box h2 { color: var(--accent); margin-bottom: 2rem; font-size: 1.8rem; }
+    .modal-box h4 { margin-top: 1.5rem; color: var(--accent); text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; }
+    .modal-box ul { list-style: none; margin-top: 1rem; }
+    .modal-box li { margin-bottom: 18px; line-height: 1.7; color: var(--text-light); position: relative; padding-left: 25px; }
+    .modal-box li::before { content: "▹"; position: absolute; left: 0; color: var(--accent); }
 
-    /* FOOTER (RESTORED) */
-    footer { background: var(--glass); padding: 5rem 5% 3rem; border-top: 1px solid var(--border); margin-top: 4rem; }
-    .footer-grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; }
-    .footer-logo { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--accent); margin-bottom: 1.5rem; }
-    .footer-col h3 { color: var(--accent); margin-bottom: 1.5rem; font-size: 1.2rem; }
-    .footer-col ul { list-style: none; }
-    .footer-col li { margin-bottom: 10px; opacity: 0.8; }
-    .footer-col a { color: inherit; text-decoration: none; }
+    /* FOOTER RESTORATION */
+    footer { background: var(--glass); padding: 5rem 5% 3rem; border-top: 1px solid var(--border); margin-top: 5rem; }
+    .f-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 4rem; }
+    .f-logo { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--accent); margin-bottom: 1.5rem; }
+    .f-col h3 { color: var(--accent); margin-bottom: 1.5rem; font-size: 1.1rem; text-transform: uppercase; }
+    .f-col ul { list-style: none; }
+    .f-col li { margin-bottom: 12px; opacity: 0.7; font-size: 0.9rem; }
+    .f-col a { color: inherit; text-decoration: none; transition: 0.3s; }
+    .f-col a:hover { color: var(--accent); }
 
     @media (max-width: 1024px) {
-      .hero-container { grid-template-columns: 1fr; text-align: center; padding: 2rem; }
-      .icon-menu { position: relative !important; top: 0 !important; left: 0 !important; transform: none !important; width: 100%; flex-direction: row; justify-content: center; opacity: 1; border-radius: 0; }
+      .hero-card { grid-template-columns: 1fr; text-align: center; padding: 3rem 1.5rem; }
+      .icon-menu { position: relative !important; top: 0 !important; left: 0 !important; transform: none !important; width: 100%; flex-direction: row; justify-content: center; opacity: 1; border-radius: 0; padding: 10px; }
       .floating-bubble { display: none; }
     }
   </style>
@@ -159,20 +165,20 @@
 
   <nav class="icon-menu" id="icon-menu">
     <div id="hamburger" class="hamburger-btn"><i class="fa-solid fa-bars"></i></div>
-    <div class="icon-item" onclick="scrollToSec('home')"><i class="fa-solid fa-house"></i></div>
-    <div class="icon-item" onclick="scrollToSec('experience')"><i class="fa-solid fa-briefcase"></i></div>
-    <div class="icon-item" onclick="scrollToSec('about')"><i class="fa-solid fa-user"></i></div>
+    <div class="icon-item" onclick="go('home')"><i class="fa-solid fa-house"></i></div>
+    <div class="icon-item" onclick="go('experience')"><i class="fa-solid fa-briefcase"></i></div>
+    <div class="icon-item" onclick="go('about')"><i class="fa-solid fa-user"></i></div>
     
-    <div class="icon-item" id="settings-btn">
-      <i class="fa-solid fa-gear"></i>
-      <div class="settings-dropdown" id="settings-dropdown">
-        <div class="setting-row">
+    <div class="icon-item" id="set-btn">
+      <i class="fa-solid fa-cog"></i>
+      <div class="settings-panel" id="set-panel">
+        <div class="setting-item">
           <span>Dark Mode</span>
-          <div class="toggle-switch active" id="theme-toggle"></div>
+          <div class="switch on" id="t-theme"></div>
         </div>
-        <div class="setting-row">
+        <div class="setting-item">
           <span>Fixed Menu</span>
-          <div class="toggle-switch active" id="nav-lock-toggle"></div>
+          <div class="switch on" id="t-fix"></div>
         </div>
       </div>
     </div>
@@ -181,155 +187,175 @@
   <aside class="text-menu" id="text-menu">
     <div class="text-links">
       <a href="#home"><i class="fa-solid fa-house"></i> Home</a>
-      <a href="#experience"><i class="fa-solid fa-briefcase"></i> Prof Journey</a>
+      <a href="#experience"><i class="fa-solid fa-briefcase"></i> Professional Journey</a>
       <a href="#about"><i class="fa-solid fa-user"></i> About Me</a>
       <a href="#education"><i class="fa-solid fa-graduation-cap"></i> Education</a>
       <a href="#contact"><i class="fa-solid fa-envelope"></i> Contact</a>
     </div>
   </aside>
 
-  <section id="home" style="min-height:100vh; display:flex; align-items:center; justify-content:center; padding: 80px 5%;">
-    <div class="hero-container">
+  <section id="home" style="min-height:100vh; display:flex; align-items:center; justify-content:center; padding: 100px 5%;">
+    <div class="hero-card">
       <div class="hero-text">
-        <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1rem;">John Mark Kiritu</h1>
-        <p style="font-size: 1.2rem; opacity: 0.8; margin-bottom: 2rem;">System Administrator & IT Support Officer delivering high-performance infrastructure solutions.</p>
-        <a href="#experience" style="background:var(--accent); color:white; padding:15px 30px; border-radius:50px; text-decoration:none; font-weight:700;">EXPLORE MY WORK</a>
+        <span style="color:var(--accent); font-weight:900; letter-spacing:3px;">SYSTEM ADMINISTRATOR</span>
+        <h1 style="font-size: clamp(3rem, 6vw, 5rem); margin: 15px 0;">John Mark Kiritu</h1>
+        <p style="font-size: 1.25rem; opacity: 0.8; margin-bottom: 2.5rem; line-height: 1.6;">Bridging IT infrastructure, cybersecurity, and creative digital solutions from Kampala, Uganda.</p>
+        <a href="#experience" style="background:var(--accent); color:white; padding:18px 40px; border-radius:50px; text-decoration:none; font-weight:800; display:inline-block;">GET STARTED</a>
       </div>
-      <div class="hero-img-box">
-        <div class="popout-circle"></div>
-        <img src="profilepic.png" class="popout-img" alt="Profile">
+      <div class="hero-image">
+        <div class="circle-bg"></div>
+        <img src="profilepic.png" class="profile-img" alt="John Mark Kiritu">
       </div>
     </div>
   </section>
 
-  <section id="experience" style="padding: 100px 5%; text-align: center;">
-    <h2 style="font-size: 3rem; margin-bottom: 4rem;">Professional Journey</h2>
-    <div class="exp-grid">
+  <section id="experience" style="padding: 100px 5%; display: flex; flex-direction: column; align-items: center;">
+    <h2 style="font-size: 3.5rem; margin-bottom: 4rem;">Professional Journey</h2>
+    <div class="exp-container">
       
-      <div class="exp-card">
-        <h3>Double Q (C4 Logistics Ltd)</h3>
-        <p class="pos">SYSTEM ADMINISTRATOR</p>
-        <p class="dur">SEPTEMBER 2024 – NOVEMBER 2024</p>
-        <button class="btn-roles" onclick="openModal('m1')" style="margin-top:20px; background:var(--accent); color:white; border:none; padding:10px 20px; border-radius:10px; cursor:pointer;">View Roles</button>
+      <div class="exp-tile">
+        <h3 style="color:var(--accent)">Double Q (C4 Logistics)</h3>
+        <p style="font-weight:700; margin:10px 0;">SYSTEM ADMINISTRATOR</p>
+        <p style="font-size:0.85rem; opacity:0.6;">Sept 2024 – Nov 2024</p>
+        <button onclick="pop('modal-1')" style="margin-top:25px; background:var(--accent); color:white; border:none; padding:12px 25px; border-radius:12px; cursor:pointer; font-weight:700;">View Full Roles</button>
       </div>
 
-      <div class="exp-card">
-        <h3>OXFAM IN UGANDA</h3>
-        <p class="pos">IT SUPPORT OFFICER</p>
-        <p class="dur">NOV 2022 - MAY 2024</p>
-        <button class="btn-roles" onclick="openModal('m2')" style="margin-top:20px; background:var(--accent); color:white; border:none; padding:10px 20px; border-radius:10px; cursor:pointer;">View Roles</button>
+      <div class="exp-tile">
+        <h3 style="color:var(--accent)">Oxfam in Uganda</h3>
+        <p style="font-weight:700; margin:10px 0;">IT SUPPORT OFFICER</p>
+        <p style="font-size:0.85rem; opacity:0.6;">Nov 2022 – May 2024</p>
+        <button onclick="pop('modal-2')" style="margin-top:25px; background:var(--accent); color:white; border:none; padding:12px 25px; border-radius:12px; cursor:pointer; font-weight:700;">View Full Roles</button>
+      </div>
+
+      <div class="exp-tile">
+        <h3 style="color:var(--accent)">Oxfam (Graduate/Intern)</h3>
+        <p style="font-weight:700; margin:10px 0;">TRAINEE & INTERN</p>
+        <p style="font-size:0.85rem; opacity:0.6;">Feb 2022 – Nov 2022</p>
+        <button onclick="pop('modal-3')" style="margin-top:25px; background:var(--accent); color:white; border:none; padding:12px 25px; border-radius:12px; cursor:pointer; font-weight:700;">View Full Roles</button>
       </div>
 
     </div>
   </section>
 
-  <div id="m1" class="modal">
-    <div class="modal-content">
-      <span onclick="closeModal()" style="position:absolute; right:20px; top:20px; cursor:pointer; font-size:2rem;">&times;</span>
-      <h2 style="color:var(--accent); margin-bottom:2rem;">System Administrator Roles</h2>
+  <div id="modal-1" class="modal-overlay">
+    <div class="modal-box">
+      <span onclick="unpop()" style="position:absolute; right:30px; top:20px; font-size:2.5rem; cursor:pointer;">&times;</span>
+      <h2>Double Q (C4 Logistics Ltd)</h2>
+      <h4>Roles and Responsibilities</h4>
       <ul>
-        <li>Administer and maintain the company’s IT infrastructure, including switches, PABX, <a href="https://powerapps.microsoft.com" class="tech-link">Microsoft Power Apps</a>, wireless access points, and camera surveillance systems.</li>
-        <li>Implement and monitor <a href="https://www.kaspersky.com" class="tech-link">Kaspersky Endpoint Protection</a> and configure firewall rules to enforce cybersecurity policies.</li>
-        <li>Generate system performance and incident reports using tools such as the Transport Management System.</li>
-        <li>Provide Level 2 technical support for <a href="https://www.microsoft.com/windows" class="tech-link">Windows 10/11</a>, <a href="https://www.office.com" class="tech-link">Microsoft Office 365</a>, Outlook, and network connectivity issues.</li>
-        <li>Utilizing remote tools like <a href="https://anydesk.com" class="tech-link">AnyDesk</a> and <a href="https://www.teamviewer.com" class="tech-link">TeamViewer</a> to support field offices.</li>
+        <li>Administer and maintain the company’s IT infrastructure, including switches, PABX, <a href="https://powerapps.microsoft.com" class="tech-hl">Microsoft Power Apps</a>, wireless access points, and camera surveillance systems, ensuring high availability security and optimal performance.</li>
+        <li>Implement and monitor <a href="https://www.kaspersky.com" class="tech-hl">Kaspersky Endpoint Protection</a> and configure firewall rules to enforce cybersecurity policies and maintain compliance.</li>
+        <li>Generate system performance and incident reports using tools such as the Transport Management System for analysis and decision making.</li>
+        <li>Provide Level 2 technical support for <a href="https://www.microsoft.com/windows" class="tech-hl">Windows 10/11</a>, <a href="https://www.microsoft.com/microsoft-365" class="tech-hl">Microsoft Office 365</a>, Outlook, and network connectivity issues, utilizing remote tools like <a href="https://anydesk.com" class="tech-hl">Any Desk</a> and <a href="https://www.teamviewer.com" class="tech-hl">TeamViewer</a> to support field offices.</li>
+        <li>Install and maintain endpoint security solutions, including <a href="https://www.kaspersky.com" class="tech-hl">Kaspersky Endpoint Security</a>, to protect devices from malware and unauthorized access.</li>
       </ul>
     </div>
   </div>
 
-  <div id="m2" class="modal">
-    <div class="modal-content">
-      <span onclick="closeModal()" style="position:absolute; right:20px; top:20px; cursor:pointer; font-size:2rem;">&times;</span>
-      <h2 style="color:var(--accent); margin-bottom:2rem;">IT Support Officer Roles</h2>
+  <div id="modal-2" class="modal-overlay">
+    <div class="modal-box">
+      <span onclick="unpop()" style="position:absolute; right:30px; top:20px; font-size:2.5rem; cursor:pointer;">&times;</span>
+      <h2>Oxfam in Uganda (Support Officer)</h2>
+      <h4>Roles and Responsibilities</h4>
       <ul>
-        <li>Ensured maximum network and system uptime through proactive monitoring utilizing tools such as the <a href="https://admin.microsoft.com" class="tech-link">Microsoft 365 Admin Center</a> and <a href="https://meraki.cisco.com" class="tech-link">Cisco Meraki Dashboard</a>.</li>
-        <li>Installed, configured, and upgraded network equipment including <a href="https://meraki.cisco.com" class="tech-link">Cisco Meraki</a> cameras, access points, and Layer 2/3 switches.</li>
-        <li>Maintained an IT asset register using <a href="https://www.microsoft.com/excel" class="tech-link">Microsoft Excel</a> and <a href="https://www.microsoft.com/sharepoint" class="tech-link">SharePoint</a>.</li>
-        <li>Delivered Tier 1 technical support with efficient escalation to Tier 2 and Tier 3 via <a href="https://www.servicenow.com" class="tech-link">ServiceNow</a> and <a href="https://www.atlassian.com/software/jira" class="tech-link">Jira Service Management</a>.</li>
-        <li>Contributed to digital transformation projects supporting tools like <a href="https://powerbi.microsoft.com" class="tech-link">Power BI</a> (dashboard development) and <a href="https://www.box.com" class="tech-link">Box Drive</a>.</li>
+        <li>Ensured maximum network and system uptime through proactive monitoring, maintenance, and incident response, utilizing tools such as the <a href="https://admin.microsoft.com" class="tech-hl">Microsoft 365 Admin Center</a>, <a href="https://meraki.cisco.com" class="tech-hl">Cisco Meraki Dashboard</a>, and Service Desk ticketing systems.</li>
+        <li>Installed, configured, and upgraded network equipment including <a href="https://meraki.cisco.com" class="tech-hl">Cisco Meraki</a> cameras, access points, Layer 2/3 switches, and firewalls, applying best practices in network security and segmentation.</li>
+        <li>Maintained and routinely updated an IT asset register using <a href="https://www.microsoft.com/excel" class="tech-hl">Microsoft Excel</a> and <a href="https://www.microsoft.com/sharepoint" class="tech-hl">SharePoint</a>, supporting ITIL-compliant asset lifecycle management and audits.</li>
+        <li>Delivered Tier 1 technical support and resolved end-user incidents, with efficient escalation to Tier 2 and Tier 3 support teams via <a href="https://www.servicenow.com" class="tech-hl">ServiceNow</a>, <a href="https://www.atlassian.com/software/jira" class="tech-hl">Jira Service Management</a>, and remote access tools like <a href="https://www.teamviewer.com" class="tech-hl">TeamViewer</a> and <a href="https://anydesk.com" class="tech-hl">Any Desk</a>.</li>
+        <li>Supported the installation, deployment, patching, and maintenance of critical IT hardware and peripherals, including desktop workstations, VoIP systems, and conferencing systems.</li>
+        <li>Configured and managed LAN/WAN/VPN connectivity.</li>
+        <li>Drafted and managed IT procurement documentation, collaborating with vendors and procurement teams for the acquisition of hardware, software, and licensing.</li>
+        <li>Contributed to digital transformation projects, supporting tools like <a href="https://powerbi.microsoft.com" class="tech-hl">Power BI</a> (dashboard development), <a href="https://powerapps.microsoft.com" class="tech-hl">Power Apps</a> (workflow automation), and <a href="https://www.box.com" class="tech-hl">Box Drive</a> (cloud file collaboration).</li>
+        <li>Participated in disaster recovery planning, conducted system backups, and supported business continuity initiatives, ensuring minimal disruption during outages or upgrades.</li>
+        <li>Assisted in managing Active Directory, Group Policy Objects (GPOs), and user provisioning/deprovisioning across hybrid cloud environments.</li>
       </ul>
     </div>
   </div>
 
-  <section id="about" style="padding: 100px 5%; display: flex; justify-content: center;">
-    <div style="background:var(--card-bg); padding: 4rem; border-radius: 40px; border: 1px solid var(--border); max-width: 800px; text-align: center;">
-      <h2>About Me</h2>
-      <p style="margin-top:20px; line-height:1.8; opacity:0.8;">Self-motivated IT professional with over 2 years of experience in IT support, networking, and Microsoft 365 administration. Expert in troubleshooting and infrastructure maintenance.</p>
+  <section id="about" style="padding: 100px 5%; display:flex; justify-content:center;">
+    <div style="background:var(--card-bg); padding: 5rem; border-radius: 40px; border: 1px solid var(--border); max-width: 900px; text-align: center;">
+      <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">About Me</h2>
+      <p style="line-height: 1.8; font-size: 1.1rem; opacity: 0.8;">Self-motivated IT professional with over 2 years of experience in IT support, networking, and Microsoft 365 administration. Proven expertise in optimizing system performance and enforcing cybersecurity protocols across complex enterprise environments.</p>
     </div>
   </section>
 
   <footer id="contact">
-    <div class="footer-grid">
-      <div class="footer-col">
-        <img src="nobklogo.png" class="footer-logo">
+    <div class="f-grid">
+      <div class="f-col">
+        <img src="nobklogo.png" class="f-logo">
         <h3>John Mark Kiritu</h3>
-        <p>IT Specialist & Designer</p>
+        <p>Creative Developer & IT Specialist</p>
       </div>
-      <div class="footer-col">
+      <div class="f-col">
         <h3>Information</h3>
         <ul>
           <li><a href="#home">Home</a></li>
           <li><a href="#about">About Me</a></li>
-          <li><a href="#">Professional Blog</a></li>
+          <li><a href="#experience">Prof Journey</a></li>
         </ul>
       </div>
-      <div class="footer-col">
+      <div class="f-col">
         <h3>Helpful Links</h3>
         <ul>
-          <li><a href="#experience">Services</a></li>
           <li><a href="#">Support Center</a></li>
+          <li><a href="#">Terms of Service</a></li>
           <li><a href="#">Privacy Policy</a></li>
         </ul>
       </div>
-      <div class="footer-col">
+      <div class="f-col">
         <h3>Contact</h3>
         <ul>
           <li>Kampala, Uganda</li>
           <li>marc@wanjeru.dev</li>
-          <li><div style="display:flex; gap:10px; margin-top:10px;"><i class="fab fa-linkedin"></i> <i class="fab fa-whatsapp"></i></div></li>
+          <li>
+            <div style="display:flex; gap:15px; margin-top:15px; font-size:1.2rem;">
+              <i class="fab fa-linkedin"></i> <i class="fab fa-whatsapp"></i> <i class="fab fa-github"></i>
+            </div>
+          </li>
         </ul>
       </div>
     </div>
+    <div style="text-align:center; margin-top:5rem; opacity:0.3; font-size:0.8rem; border-top:1px solid var(--border); padding-top:2rem;">© 2026 John Mark Kiritu — All Rights Reserved</div>
   </footer>
 
   <script>
     const bubble = document.getElementById('floating-bubble');
     const iconMenu = document.getElementById('icon-menu');
     const textMenu = document.getElementById('text-menu');
-    const settingsBtn = document.getElementById('settings-btn');
-    const settingsDropdown = document.getElementById('settings-dropdown');
-    const themeToggle = document.getElementById('theme-toggle');
-    const navLockToggle = document.getElementById('nav-lock-toggle');
+    const setBtn = document.getElementById('set-btn');
+    const setPanel = document.getElementById('set-panel');
+    const tTheme = document.getElementById('t-theme');
+    const tFix = document.getElementById('t-fix');
 
-    // NAV LOGIC
+    // NAV OPEN
     bubble.onclick = () => { bubble.classList.add('hidden'); iconMenu.classList.add('visible'); };
     document.getElementById('hamburger').onclick = (e) => { e.stopPropagation(); textMenu.classList.toggle('open'); };
 
-    // SETTINGS LOGIC
-    settingsBtn.onclick = (e) => { e.stopPropagation(); settingsDropdown.classList.toggle('show'); };
+    // SETTINGS
+    setBtn.onclick = (e) => { e.stopPropagation(); setPanel.classList.toggle('active'); };
     
-    themeToggle.onclick = () => {
-      const current = document.documentElement.getAttribute('data-theme');
-      const next = current === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', next);
-      themeToggle.classList.toggle('active');
+    tTheme.onclick = () => {
+      const mode = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', mode);
+      tTheme.classList.toggle('on');
     };
 
-    navLockToggle.onclick = () => {
-      iconMenu.classList.toggle('is-fixed');
-      navLockToggle.classList.toggle('active');
+    tFix.onclick = () => {
+      iconMenu.classList.toggle('static');
+      tFix.classList.toggle('on');
     };
 
-    // UTILS
-    function scrollToSec(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
-    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-    function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+    // MODAL LOGIC
+    function pop(id) { document.getElementById(id).style.display = 'flex'; }
+    function unpop() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
+    function go(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
 
+    // CLOSE ALL ON CLICK OUTSIDE
     window.onclick = (e) => {
       if (!iconMenu.contains(e.target) && !bubble.contains(e.target)) {
         iconMenu.classList.remove('visible'); bubble.classList.remove('hidden'); textMenu.classList.remove('open');
       }
-      if (!settingsBtn.contains(e.target)) settingsDropdown.classList.remove('show');
+      if (!setBtn.contains(e.target)) setPanel.classList.remove('active');
     };
   </script>
 </body>
