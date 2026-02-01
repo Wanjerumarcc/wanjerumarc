@@ -16,7 +16,7 @@
       --bg: #000000;
       --glass: rgba(15, 20, 35, 0.95);
       --accent: #3b82f6;
-      --tech-color: #00d4ff; /* Electric Blue for Technologies */
+      --tech-color: #00d4ff; 
       --text: #ffffff;
       --text-light: #cbd5e1;
       --border: rgba(255,255,255,0.1);
@@ -62,7 +62,7 @@
       opacity: 0; transition: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .icon-menu.visible { transform: translateY(-50%) translateX(0); opacity: 1; }
-    .icon-menu.static { position: absolute; } /* For the settings toggle */
+    .icon-menu.static { position: absolute; } 
 
     .icon-item, .hamburger-btn {
       width: 50px; height: 50px; border-radius: 14px; background: var(--card-bg);
@@ -100,7 +100,7 @@
     }
     .text-links a:hover { background: var(--accent); color: white; }
 
-    /* HERO LAYOUT */
+    /* HERO & CTA BUTTONS */
     .hero-card {
       display: grid; grid-template-columns: 1.2fr 0.8fr; align-items: center; gap: 3rem;
       background: var(--card-bg); backdrop-filter: blur(15px); padding: 5rem;
@@ -115,6 +115,16 @@
     .profile-img { position: relative; width: 320px; z-index: 2; transition: 0.5s; cursor: crosshair; }
     .hero-image:hover .profile-img { transform: translateY(-25px) scale(1.03); }
 
+    .cta-group { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 2rem; }
+    .btn-main {
+      padding: 14px 28px; border-radius: 12px; font-weight: 700; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 10px; transition: 0.3s;
+    }
+    .btn-cv { background: var(--accent); color: white; border: none; }
+    .btn-hire { background: transparent; color: var(--text); border: 2px solid var(--accent); }
+    .btn-apt { background: var(--card-bg); color: var(--text); border: 1px solid var(--border); }
+    .btn-main:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+
     @keyframes breathe { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.08); opacity: 1; } }
 
     /* EXPERIENCE GRID */
@@ -125,7 +135,6 @@
     }
     .exp-tile:hover { border-color: var(--accent); background: rgba(59, 130, 246, 0.05); }
     .tech-hl { color: var(--tech-color); font-weight: 700; text-decoration: none; }
-    .tech-hl:hover { text-decoration: underline; }
 
     /* MODALS */
     .modal-overlay {
@@ -136,13 +145,8 @@
       background: var(--glass); padding: 3.5rem; border-radius: 35px; max-width: 850px; width: 100%;
       max-height: 85vh; overflow-y: auto; position: relative; border: 1px solid var(--border);
     }
-    .modal-box h2 { color: var(--accent); margin-bottom: 2rem; font-size: 1.8rem; }
-    .modal-box h4 { margin-top: 1.5rem; color: var(--accent); text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; }
-    .modal-box ul { list-style: none; margin-top: 1rem; }
-    .modal-box li { margin-bottom: 18px; line-height: 1.7; color: var(--text-light); position: relative; padding-left: 25px; }
-    .modal-box li::before { content: "▹"; position: absolute; left: 0; color: var(--accent); }
 
-    /* FOOTER RESTORATION */
+    /* FOOTER */
     footer { background: var(--glass); padding: 5rem 5% 3rem; border-top: 1px solid var(--border); margin-top: 5rem; }
     .f-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 4rem; }
     .f-logo { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--accent); margin-bottom: 1.5rem; }
@@ -154,7 +158,7 @@
 
     @media (max-width: 1024px) {
       .hero-card { grid-template-columns: 1fr; text-align: center; padding: 3rem 1.5rem; }
-      .icon-menu { position: relative !important; top: 0 !important; left: 0 !important; transform: none !important; width: 100%; flex-direction: row; justify-content: center; opacity: 1; border-radius: 0; padding: 10px; }
+      .cta-group { justify-content: center; }
       .floating-bubble { display: none; }
     }
   </style>
@@ -197,10 +201,21 @@
   <section id="home" style="min-height:100vh; display:flex; align-items:center; justify-content:center; padding: 100px 5%;">
     <div class="hero-card">
       <div class="hero-text">
-        <span style="color:var(--accent); font-weight:900; letter-spacing:3px;">SYSTEM ADMINISTRATOR</span>
+        <span style="color:var(--accent); font-weight:900; letter-spacing:3px;">IT SPECIALIST</span>
         <h1 style="font-size: clamp(3rem, 6vw, 5rem); margin: 15px 0;">John Mark Kiritu</h1>
-        <p style="font-size: 1.25rem; opacity: 0.8; margin-bottom: 2.5rem; line-height: 1.6;">Bridging IT infrastructure, cybersecurity, and creative digital solutions from Kampala, Uganda.</p>
-        <a href="#experience" style="background:var(--accent); color:white; padding:18px 40px; border-radius:50px; text-decoration:none; font-weight:800; display:inline-block;">GET STARTED</a>
+        <p style="font-size: 1.25rem; opacity: 0.8; line-height: 1.6;">Bridging infrastructure, security, and digital automation.</p>
+        
+        <div class="cta-group">
+          <a href="my_cv.pdf" class="btn-main btn-cv" download>
+            <i class="fa-solid fa-download"></i> Download CV
+          </a>
+          <a href="#contact" class="btn-main btn-apt">
+            <i class="fa-solid fa-calendar-check"></i> Appointment
+          </a>
+          <a href="mailto:marc@wanjeru.dev" class="btn-main btn-hire">
+            <i class="fa-solid fa-paper-plane"></i> Hire Me
+          </a>
+        </div>
       </div>
       <div class="hero-image">
         <div class="circle-bg"></div>
@@ -210,30 +225,19 @@
   </section>
 
   <section id="experience" style="padding: 100px 5%; display: flex; flex-direction: column; align-items: center;">
-    <h2 style="font-size: 3.5rem; margin-bottom: 4rem;">Professional Journey</h2>
+    <h2 style="font-size: 3rem; margin-bottom: 4rem;">Professional Journey</h2>
     <div class="exp-container">
-      
       <div class="exp-tile">
         <h3 style="color:var(--accent)">Double Q (C4 Logistics)</h3>
         <p style="font-weight:700; margin:10px 0;">SYSTEM ADMINISTRATOR</p>
-        <p style="font-size:0.85rem; opacity:0.6;">Sept 2024 – Nov 2024</p>
-        <button onclick="pop('modal-1')" style="margin-top:25px; background:var(--accent); color:white; border:none; padding:12px 25px; border-radius:12px; cursor:pointer; font-weight:700;">View Full Roles</button>
+        <button onclick="pop('modal-1')" style="margin-top:25px; background:var(--accent); color:white; border:none; padding:12px 25px; border-radius:12px; cursor:pointer; font-weight:700;">View Roles</button>
       </div>
 
       <div class="exp-tile">
         <h3 style="color:var(--accent)">Oxfam in Uganda</h3>
         <p style="font-weight:700; margin:10px 0;">IT SUPPORT OFFICER</p>
-        <p style="font-size:0.85rem; opacity:0.6;">Nov 2022 – May 2024</p>
-        <button onclick="pop('modal-2')" style="margin-top:25px; background:var(--accent); color:white; border:none; padding:12px 25px; border-radius:12px; cursor:pointer; font-weight:700;">View Full Roles</button>
+        <button onclick="pop('modal-2')" style="margin-top:25px; background:var(--accent); color:white; border:none; padding:12px 25px; border-radius:12px; cursor:pointer; font-weight:700;">View Roles</button>
       </div>
-
-      <div class="exp-tile">
-        <h3 style="color:var(--accent)">Oxfam (Graduate/Intern)</h3>
-        <p style="font-weight:700; margin:10px 0;">TRAINEE & INTERN</p>
-        <p style="font-size:0.85rem; opacity:0.6;">Feb 2022 – Nov 2022</p>
-        <button onclick="pop('modal-3')" style="margin-top:25px; background:var(--accent); color:white; border:none; padding:12px 25px; border-radius:12px; cursor:pointer; font-weight:700;">View Full Roles</button>
-      </div>
-
     </div>
   </section>
 
@@ -241,65 +245,42 @@
     <div class="modal-box">
       <span onclick="unpop()" style="position:absolute; right:30px; top:20px; font-size:2.5rem; cursor:pointer;">&times;</span>
       <h2>Double Q (C4 Logistics Ltd)</h2>
-      <h4>Roles and Responsibilities</h4>
       <ul>
-        <li>Administer and maintain the company’s IT infrastructure, including switches, PABX, <a href="https://powerapps.microsoft.com" class="tech-hl">Microsoft Power Apps</a>, wireless access points, and camera surveillance systems, ensuring high availability security and optimal performance.</li>
-        <li>Implement and monitor <a href="https://www.kaspersky.com" class="tech-hl">Kaspersky Endpoint Protection</a> and configure firewall rules to enforce cybersecurity policies and maintain compliance.</li>
-        <li>Generate system performance and incident reports using tools such as the Transport Management System for analysis and decision making.</li>
-        <li>Provide Level 2 technical support for <a href="https://www.microsoft.com/windows" class="tech-hl">Windows 10/11</a>, <a href="https://www.microsoft.com/microsoft-365" class="tech-hl">Microsoft Office 365</a>, Outlook, and network connectivity issues, utilizing remote tools like <a href="https://anydesk.com" class="tech-hl">Any Desk</a> and <a href="https://www.teamviewer.com" class="tech-hl">TeamViewer</a> to support field offices.</li>
-        <li>Install and maintain endpoint security solutions, including <a href="https://www.kaspersky.com" class="tech-hl">Kaspersky Endpoint Security</a>, to protect devices from malware and unauthorized access.</li>
-      </ul>
+        <li>Administer and maintain the company’s IT infrastructure... <a href="https://powerapps.microsoft.com" class="tech-hl">Microsoft Power Apps</a></li>
+        </ul>
     </div>
   </div>
 
   <div id="modal-2" class="modal-overlay">
     <div class="modal-box">
       <span onclick="unpop()" style="position:absolute; right:30px; top:20px; font-size:2.5rem; cursor:pointer;">&times;</span>
-      <h2>Oxfam in Uganda (Support Officer)</h2>
-      <h4>Roles and Responsibilities</h4>
+      <h2>Oxfam in Uganda</h2>
       <ul>
-        <li>Ensured maximum network and system uptime through proactive monitoring, maintenance, and incident response, utilizing tools such as the <a href="https://admin.microsoft.com" class="tech-hl">Microsoft 365 Admin Center</a>, <a href="https://meraki.cisco.com" class="tech-hl">Cisco Meraki Dashboard</a>, and Service Desk ticketing systems.</li>
-        <li>Installed, configured, and upgraded network equipment including <a href="https://meraki.cisco.com" class="tech-hl">Cisco Meraki</a> cameras, access points, Layer 2/3 switches, and firewalls, applying best practices in network security and segmentation.</li>
-        <li>Maintained and routinely updated an IT asset register using <a href="https://www.microsoft.com/excel" class="tech-hl">Microsoft Excel</a> and <a href="https://www.microsoft.com/sharepoint" class="tech-hl">SharePoint</a>, supporting ITIL-compliant asset lifecycle management and audits.</li>
-        <li>Delivered Tier 1 technical support and resolved end-user incidents, with efficient escalation to Tier 2 and Tier 3 support teams via <a href="https://www.servicenow.com" class="tech-hl">ServiceNow</a>, <a href="https://www.atlassian.com/software/jira" class="tech-hl">Jira Service Management</a>, and remote access tools like <a href="https://www.teamviewer.com" class="tech-hl">TeamViewer</a> and <a href="https://anydesk.com" class="tech-hl">Any Desk</a>.</li>
-        <li>Supported the installation, deployment, patching, and maintenance of critical IT hardware and peripherals, including desktop workstations, VoIP systems, and conferencing systems.</li>
-        <li>Configured and managed LAN/WAN/VPN connectivity.</li>
-        <li>Drafted and managed IT procurement documentation, collaborating with vendors and procurement teams for the acquisition of hardware, software, and licensing.</li>
-        <li>Contributed to digital transformation projects, supporting tools like <a href="https://powerbi.microsoft.com" class="tech-hl">Power BI</a> (dashboard development), <a href="https://powerapps.microsoft.com" class="tech-hl">Power Apps</a> (workflow automation), and <a href="https://www.box.com" class="tech-hl">Box Drive</a> (cloud file collaboration).</li>
-        <li>Participated in disaster recovery planning, conducted system backups, and supported business continuity initiatives, ensuring minimal disruption during outages or upgrades.</li>
-        <li>Assisted in managing Active Directory, Group Policy Objects (GPOs), and user provisioning/deprovisioning across hybrid cloud environments.</li>
-      </ul>
+        <li>Monitoring via <a href="https://meraki.cisco.com" class="tech-hl">Cisco Meraki Dashboard</a> and <a href="https://admin.microsoft.com" class="tech-hl">Microsoft 365 Admin Center</a>.</li>
+        </ul>
     </div>
   </div>
-
-  <section id="about" style="padding: 100px 5%; display:flex; justify-content:center;">
-    <div style="background:var(--card-bg); padding: 5rem; border-radius: 40px; border: 1px solid var(--border); max-width: 900px; text-align: center;">
-      <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">About Me</h2>
-      <p style="line-height: 1.8; font-size: 1.1rem; opacity: 0.8;">Self-motivated IT professional with over 2 years of experience in IT support, networking, and Microsoft 365 administration. Proven expertise in optimizing system performance and enforcing cybersecurity protocols across complex enterprise environments.</p>
-    </div>
-  </section>
 
   <footer id="contact">
     <div class="f-grid">
       <div class="f-col">
         <img src="nobklogo.png" class="f-logo">
         <h3>John Mark Kiritu</h3>
-        <p>Creative Developer & IT Specialist</p>
+        <p>IT Specialist & Designer</p>
       </div>
       <div class="f-col">
         <h3>Information</h3>
         <ul>
           <li><a href="#home">Home</a></li>
           <li><a href="#about">About Me</a></li>
-          <li><a href="#experience">Prof Journey</a></li>
         </ul>
       </div>
       <div class="f-col">
         <h3>Helpful Links</h3>
         <ul>
+          <li><a href="my_cv.pdf" download><i class="fa-solid fa-file-pdf"></i> Download CV</a></li>
           <li><a href="#">Support Center</a></li>
-          <li><a href="#">Terms of Service</a></li>
-          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="https://www.microsoft.com" target="_blank"><i class="fab fa-microsoft"></i> Microsoft Tools</a></li>
         </ul>
       </div>
       <div class="f-col">
@@ -309,13 +290,12 @@
           <li>marc@wanjeru.dev</li>
           <li>
             <div style="display:flex; gap:15px; margin-top:15px; font-size:1.2rem;">
-              <i class="fab fa-linkedin"></i> <i class="fab fa-whatsapp"></i> <i class="fab fa-github"></i>
+              <i class="fab fa-linkedin"></i> <i class="fab fa-whatsapp"></i>
             </div>
           </li>
         </ul>
       </div>
     </div>
-    <div style="text-align:center; margin-top:5rem; opacity:0.3; font-size:0.8rem; border-top:1px solid var(--border); padding-top:2rem;">© 2026 John Mark Kiritu — All Rights Reserved</div>
   </footer>
 
   <script>
@@ -327,11 +307,8 @@
     const tTheme = document.getElementById('t-theme');
     const tFix = document.getElementById('t-fix');
 
-    // NAV OPEN
     bubble.onclick = () => { bubble.classList.add('hidden'); iconMenu.classList.add('visible'); };
     document.getElementById('hamburger').onclick = (e) => { e.stopPropagation(); textMenu.classList.toggle('open'); };
-
-    // SETTINGS
     setBtn.onclick = (e) => { e.stopPropagation(); setPanel.classList.toggle('active'); };
     
     tTheme.onclick = () => {
@@ -340,17 +317,11 @@
       tTheme.classList.toggle('on');
     };
 
-    tFix.onclick = () => {
-      iconMenu.classList.toggle('static');
-      tFix.classList.toggle('on');
-    };
-
-    // MODAL LOGIC
+    tFix.onclick = () => { iconMenu.classList.toggle('static'); tFix.classList.toggle('on'); };
     function pop(id) { document.getElementById(id).style.display = 'flex'; }
     function unpop() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
     function go(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
 
-    // CLOSE ALL ON CLICK OUTSIDE
     window.onclick = (e) => {
       if (!iconMenu.contains(e.target) && !bubble.contains(e.target)) {
         iconMenu.classList.remove('visible'); bubble.classList.remove('hidden'); textMenu.classList.remove('open');
