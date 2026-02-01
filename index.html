@@ -14,11 +14,11 @@
   <style>
     :root {
       --bg: #0b0f1a;
-      --glass: rgba(25, 30, 45, 0.78);
+      --glass: rgba(25, 30, 45, 0.82);
       --accent: #3b82f6;
       --text: #e2e8f0;
       --text-light: #94a3b8;
-      --border: rgba(255,255,255,0.07);
+      --border: rgba(255,255,255,0.08);
     }
 
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -34,142 +34,97 @@
       overflow-x: hidden;
     }
 
-    /* Global overlay for better contrast */
     body::before {
       content: "";
       position: fixed;
       inset: 0;
       background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.75));
-      z-index: -10;
+      z-index: -2;
     }
 
-    /* Parallax wrapper for each section */
-    .parallax-section {
-      position: relative;
-      overflow: hidden;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 8rem 5% 6rem;
-      text-align: center;
-    }
-
-    .parallax-bg-layer {
-      position: absolute;
-      inset: -20%;
-      background-size: cover;
-      background-position: center;
-      transform: translateZ(0);
-      will-change: transform;
-      z-index: -1;
-    }
-
-    /* Different speeds / images per section (you can replace URLs) */
-    #hero     .parallax-bg-layer { background-image: url('desktop1.jpg'); }
-    #about    .parallax-bg-layer { background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80'); }
-    #education .parallax-bg-layer { background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80'); }
-    #experience .parallax-bg-layer { background-image: url('https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80'); }
-    #technologies .parallax-bg-layer { background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80'); }
-    #services .parallax-bg-layer { background-image: url('https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80'); }
-    #contact  .parallax-bg-layer { background-image: url('https://images.unsplash.com/photo-1517248135467-2c7ed3ab7229?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80'); }
-
-    .section-content {
-      position: relative;
-      z-index: 2;
-      max-width: 900px;
-    }
-
-    .section-content h2 {
-      font-size: clamp(2.8rem, 7vw, 4.8rem);
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      transform: translateZ(50px);
-    }
-
-    .section-content p {
-      font-size: clamp(1.15rem, 2.5vw, 1.35rem);
-      color: var(--text-light);
-      line-height: 1.6;
-      transform: translateZ(20px);
-    }
-
-    /* Hamburger & navigation (same as before) */
-    #hamburger {
+    /* Unified left vertical navigation bar (icons + hamburger) */
+    .unified-nav {
       position: fixed;
-      top: 18px;
-      left: 18px;
-      z-index: 120;
-      width: 50px;
-      height: 50px;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 72px;
       background: var(--glass);
-      backdrop-filter: blur(16px);
+      backdrop-filter: blur(18px);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      color: var(--text);
-      font-size: 1.4rem;
+      border-radius: 24px;
+      padding: 16px 0;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
+      gap: 14px;
+      z-index: 110;
+    }
+
+    .nav-top {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.07);
+      color: var(--text);
+      font-size: 1.45rem;
+      display: grid;
+      place-items: center;
       cursor: pointer;
       transition: all 0.25s;
     }
 
-    #hamburger:hover { background: var(--accent); color: white; }
+    .nav-top:hover {
+      background: var(--accent);
+      color: white;
+      transform: scale(1.08);
+    }
 
-    .vertical-bar {
-      position: fixed;
-      left: 18px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 66px;
-      background: var(--glass);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 14px 0;
+    .nav-icons {
       display: flex;
       flex-direction: column;
-      align-items: center;
       gap: 12px;
-      z-index: 100;
     }
 
     .bar-item {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
       background: rgba(255,255,255,0.06);
       color: var(--text);
-      font-size: 1.3rem;
+      font-size: 1.35rem;
       display: grid;
       place-items: center;
       cursor: pointer;
       transition: all 0.22s;
     }
 
-    .bar-item:hover, .bar-item.active {
+    .bar-item:hover,
+    .bar-item.active {
       background: var(--accent);
       color: white;
       transform: scale(1.07);
     }
 
-    .theme-toggle { margin-top: auto; }
+    .theme-toggle {
+      margin-top: auto;
+    }
 
+    /* Slide-out detailed sidebar */
     .slide-sidebar {
       position: fixed;
-      left: 96px;
+      left: 100px;
       top: 50%;
       transform: translateY(-50%) translateX(-120%);
-      width: 310px;
-      max-height: 86vh;
+      width: 320px;
+      max-height: 88vh;
       background: var(--glass);
       backdrop-filter: blur(20px);
       border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 36px 28px;
-      z-index: 90;
-      transition: transform 0.38s cubic-bezier(0.32, 0.72, 0, 1);
+      border-radius: 22px;
+      padding: 40px 32px;
+      z-index: 100;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
       overflow-y: auto;
       pointer-events: none;
       opacity: 0;
@@ -184,26 +139,64 @@
     .slide-sidebar::-webkit-scrollbar { display: none; }
     .slide-sidebar { scrollbar-width: none; }
 
-    .profile { display: flex; align-items: center; gap: 14px; margin-bottom: 32px; }
-    .profile img { width: 56px; height: 56px; border-radius: 50%; border: 2px solid var(--border); }
-    .profile h4 { font-size: 1.18rem; font-weight: 600; }
-    .profile span { font-size: 0.93rem; color: var(--text-light); }
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+
+    .profile img {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+    }
+
+    .profile h4 { font-size: 1.2rem; font-weight: 600; }
+    .profile span  { font-size: 0.94rem; color: var(--text-light); }
 
     .sidebar-links a {
       display: flex;
       align-items: center;
-      gap: 14px;
-      padding: 14px 18px;
+      gap: 16px;
+      padding: 15px 20px;
       border-radius: 12px;
       color: var(--text);
       text-decoration: none;
-      font-size: 1.02rem;
+      font-size: 1.03rem;
       transition: background 0.2s;
     }
 
-    .sidebar-links a:hover, .sidebar-links a.active { background: rgba(255,255,255,0.09); }
+    .sidebar-links a:hover,
+    .sidebar-links a.active { background: rgba(255,255,255,0.09); }
 
-    /* Footer – slim */
+    /* Hero */
+    .hero {
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 6%;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(3.4rem, 8.5vw, 5.8rem);
+      font-weight: 700;
+      line-height: 1.05;
+      margin-bottom: 1.6rem;
+    }
+
+    .hero .subtitle {
+      font-size: clamp(1.2rem, 3.2vw, 1.45rem);
+      color: var(--text-light);
+      max-width: 720px;
+      margin: 0 auto;
+      line-height: 1.55;
+    }
+
+    /* Footer – slim & compact */
     footer {
       background: rgba(15,23,42,0.92);
       backdrop-filter: blur(10px);
@@ -222,9 +215,17 @@
       text-align: center;
     }
 
-    .footer-brand h2 { font-size: 1.6rem; color: white; margin-bottom: 0.6rem; }
+    .footer-brand h2 {
+      font-size: 1.6rem;
+      color: white;
+      margin-bottom: 0.6rem;
+    }
 
-    .footer-column h3 { color: white; font-size: 1.05rem; margin-bottom: 1rem; }
+    .footer-column h3 {
+      color: white;
+      font-size: 1.05rem;
+      margin-bottom: 1rem;
+    }
 
     .footer-column ul { list-style: none; }
     .footer-column ul li { margin-bottom: 0.6rem; }
@@ -277,44 +278,39 @@
     }
 
     @media (max-width: 768px) {
-      .vertical-bar { left: 14px; width: 60px; }
+      .unified-nav { left: 14px; width: 62px; }
       .bar-item { width: 42px; height: 42px; font-size: 1.2rem; }
-      .slide-sidebar { left: 86px; width: 82vw; max-width: 310px; }
-      #hamburger { left: 14px; top: 14px; width: 48px; height: 48px; font-size: 1.35rem; }
+      .slide-sidebar { left: 88px; width: 82vw; max-width: 310px; }
+      #hamburger { width: 46px; height: 46px; font-size: 1.3rem; }
       footer { padding: 3rem 5% 2.5rem; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .parallax-bg-layer,
-      .section-content h2,
-      .section-content p {
-        transform: none !important;
-      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Hamburger -->
-  <button id="hamburger">
-    <i class="fa-solid fa-bars"></i>
-  </button>
-
-  <!-- Vertical icons -->
-  <nav class="vertical-bar">
-    <div class="bar-item active" data-section="home" title="Home"><i class="fa-solid fa-house"></i></div>
-    <div class="bar-item" data-section="about" title="About"><i class="fa-solid fa-user"></i></div>
-    <div class="bar-item" data-section="education" title="Education"><i class="fa-solid fa-graduation-cap"></i></div>
-    <div class="bar-item" data-section="experience" title="Experience"><i class="fa-solid fa-briefcase"></i></div>
-    <div class="bar-item" data-section="technologies" title="Technologies"><i class="fa-solid fa-microchip"></i></div>
-    <div class="bar-item" data-section="services" title="Services"><i class="fa-solid fa-layer-group"></i></div>
-    <div class="bar-item theme-toggle" id="theme-toggle" title="Toggle theme">
-      <i class="fa-solid fa-moon" id="theme-icon"></i>
+  <!-- Unified navigation bar (hamburger + icons) -->
+  <nav class="unified-nav">
+    <!-- Hamburger at the top -->
+    <div id="hamburger" class="nav-top">
+      <i class="fa-solid fa-bars"></i>
     </div>
-    <div class="bar-item" data-section="contact" title="Contact"><i class="fa-solid fa-envelope"></i></div>
+
+    <!-- Quick access icons -->
+    <div class="nav-icons">
+      <div class="bar-item active" data-section="home" title="Home"><i class="fa-solid fa-house"></i></div>
+      <div class="bar-item" data-section="about" title="About"><i class="fa-solid fa-user"></i></div>
+      <div class="bar-item" data-section="education" title="Education"><i class="fa-solid fa-graduation-cap"></i></div>
+      <div class="bar-item" data-section="experience" title="Experience"><i class="fa-solid fa-briefcase"></i></div>
+      <div class="bar-item" data-section="technologies" title="Technologies"><i class="fa-solid fa-microchip"></i></div>
+      <div class="bar-item" data-section="services" title="Services"><i class="fa-solid fa-layer-group"></i></div>
+      <div class="bar-item theme-toggle" id="theme-toggle" title="Toggle theme">
+        <i class="fa-solid fa-moon" id="theme-icon"></i>
+      </div>
+      <div class="bar-item" data-section="contact" title="Contact"><i class="fa-solid fa-envelope"></i></div>
+    </div>
   </nav>
 
-  <!-- Slide-out sidebar -->
+  <!-- Slide-out detailed sidebar -->
   <aside class="slide-sidebar" id="slide-sidebar">
     <div class="profile">
       <img src="https://i.pravatar.cc/100?u=marc" alt="Marc Wanjeru">
@@ -335,72 +331,16 @@
     </div>
   </aside>
 
-  <!-- Hero section with parallax -->
-  <section id="home" class="parallax-section hero">
-    <div class="parallax-bg-layer"></div>
-    <div class="section-content">
+  <!-- Hero -->
+  <main class="hero">
+    <div class="hero-content">
       <h1>Welcome to My Portfolio</h1>
       <p class="subtitle">
         I'm Marc Wanjeru from Kampala.<br>
         Explore the navigation on the left to learn more about me.
       </p>
     </div>
-  </section>
-
-  <!-- About section with parallax -->
-  <section id="about" class="parallax-section">
-    <div class="parallax-bg-layer"></div>
-    <div class="section-content">
-      <h2>About Me</h2>
-      <p>Creative developer & designer based in Kampala. Passionate about building modern, responsive, and user-centered digital experiences.</p>
-    </div>
-  </section>
-
-  <!-- Education -->
-  <section id="education" class="parallax-section">
-    <div class="parallax-bg-layer"></div>
-    <div class="section-content">
-      <h2>Education</h2>
-      <p>Relevant academic background and continuous self-learning in web technologies, UI/UX principles and modern development practices.</p>
-    </div>
-  </section>
-
-  <!-- Experience -->
-  <section id="experience" class="parallax-section">
-    <div class="parallax-bg-layer"></div>
-    <div class="section-content">
-      <h2>Experience</h2>
-      <p>Professional journey — from early projects to current work in front-end development, design systems and client collaborations.</p>
-    </div>
-  </section>
-
-  <!-- Technologies -->
-  <section id="technologies" class="parallax-section">
-    <div class="parallax-bg-layer"></div>
-    <div class="section-content">
-      <h2>Technologies</h2>
-      <p>HTML • CSS • JavaScript • React • Next.js • Tailwind • Node.js • Git • Figma • Framer Motion...</p>
-    </div>
-  </section>
-
-  <!-- Services -->
-  <section id="services" class="parallax-section">
-    <div class="parallax-bg-layer"></div>
-    <div class="section-content">
-      <h2>Services</h2>
-      <p>Web Development • UI/UX Design • Consulting • Performance Optimization • Mentoring & Training</p>
-    </div>
-  </section>
-
-  <!-- Contact -->
-  <section id="contact" class="parallax-section">
-    <div class="parallax-bg-layer"></div>
-    <div class="section-content">
-      <h2>Contact</h2>
-      <p>Let's build something great together.<br>
-      marc@wanjeru.dev • +256 700 123 456</p>
-    </div>
-  </section>
+  </main>
 
   <!-- Slim footer -->
   <footer>
@@ -413,7 +353,7 @@
       <div class="footer-column">
         <h3>Information</h3>
         <ul>
-          <li><a href="#about">About Me</a></li>
+          <li><a href="#">About Me</a></li>
           <li><a href="#">Blog</a></li>
           <li><a href="#">Testimonials</a></li>
           <li><a href="#">Events</a></li>
@@ -427,7 +367,7 @@
 
         <div class="social-icons">
           <a href="#" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-          <a href="#" title="Teams"><i class="fab fa-microsoft"></i></a>
+          <a href="#" title="Microsoft Teams"><i class="fab fa-microsoft"></i></a>
           <a href="mailto:marc@wanjeru.dev" title="Email"><i class="fa-solid fa-envelope"></i></a>
           <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
           <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
@@ -437,7 +377,7 @@
       <div class="footer-column">
         <h3>Helpful Links</h3>
         <ul>
-          <li><a href="#services">Services</a></li>
+          <li><a href="#">Services</a></li>
           <li><a href="#">Support</a></li>
           <li><a href="#">Terms & Conditions</a></li>
           <li><a href="#">Privacy Policy</a></li>
@@ -447,7 +387,7 @@
       <div class="footer-column">
         <h3>Our Services</h3>
         <ul>
-          <li><a href="#services">Web Development</a></li>
+          <li><a href="#">Web Development</a></li>
           <li><a href="#">UI/UX Design</a></li>
           <li><a href="#">Consulting</a></li>
           <li><a href="#">Training</a></li>
@@ -481,7 +421,7 @@
       setTheme(current === 'dark' ? 'light' : 'dark');
     });
 
-    // Hamburger ↔ sidebar
+    // Hamburger toggle (now inside unified bar)
     const hamburger = document.getElementById('hamburger');
     const sidebar = document.getElementById('slide-sidebar');
 
@@ -489,41 +429,23 @@
       sidebar.classList.toggle('open');
     });
 
+    // Close sidebar on outside click
     document.addEventListener('click', e => {
-      if (!sidebar.contains(e.target) && !hamburger.contains(e.target)) {
+      if (!sidebar.contains(e.target) && !hamburger.contains(e.target) && !e.target.closest('.unified-nav')) {
         sidebar.classList.remove('open');
       }
     });
 
-    document.querySelectorAll('.sidebar-links a').forEach(a => {
-      a.addEventListener('click', () => sidebar.classList.remove('open'));
-    });
-
-    // Parallax effect on scroll
-    window.addEventListener('scroll', () => {
-      const scroll = window.scrollY;
-
-      document.querySelectorAll('.parallax-section').forEach(section => {
-        const rect = section.getBoundingClientRect();
-        const sectionTop = rect.top + scroll;
-        const offset = (scroll - sectionTop) * 0.25; // adjust multiplier for strength
-
-        const bg = section.querySelector('.parallax-bg-layer');
-        if (bg) {
-          bg.style.transform = `translateY(${offset}px) scale(1.08)`;
-        }
-
-        const title = section.querySelector('h2, h1');
-        const text = section.querySelector('p.subtitle, p');
-
-        if (title) title.style.transform = `translateY(${offset * 0.4}px) translateZ(50px)`;
-        if (text)  text.style.transform  = `translateY(${offset * 0.2}px) translateZ(20px)`;
+    // Close after clicking sidebar link
+    document.querySelectorAll('.sidebar-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        sidebar.classList.remove('open');
       });
     });
 
-    // Active link highlighting
+    // Active link highlighting on scroll
     const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.sidebar-links a, .vertical-bar .bar-item[data-section]');
+    const navLinks = document.querySelectorAll('.sidebar-links a, .bar-item[data-section]');
 
     window.addEventListener('scroll', () => {
       let current = '';
