@@ -3,146 +3,223 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
+    <title>Marc's Portfolio</title>
     <style>
-        /* Global Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
         }
 
         body {
-            background: linear-gradient(to bottom, #001f3f, #000000); /* Navy blue to black gradient for a liquid depth feel */
-            color: #ffffff;
+            background: linear-gradient(135deg, #001428, #000814);
+            color: #e0f0ff;
+            min-height: 100vh;
+            font-family: 'Segoe UI', system-ui, sans-serif;
             overflow-x: hidden;
-            position: relative;
         }
 
-        /* Liquid Glass Theme */
-        .glass-container {
-            background: rgba(0, 31, 63, 0.3); /* Semi-transparent navy blue */
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 20px;
-            margin: 20px auto;
-            max-width: 800px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        /* Vertical Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 240px;
+            background: rgba(0, 31, 63, 0.38);
+            backdrop-filter: blur(16px) saturate(180%);
+            border-right: 1px solid rgba(173, 216, 230, 0.12);
+            padding: 2rem 1.5rem;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .sidebar h1 {
+            font-size: 1.6rem;
+            color: #b3e0ff;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .nav-list {
+            list-style: none;
+        }
+
+        .nav-list li {
+            margin: 0.9rem 0;
+        }
+
+        .nav-list a {
+            display: block;
+            padding: 0.9rem 1.2rem;
+            color: #d0e8ff;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-list a:hover,
+        .nav-list a.active {
+            background: rgba(173, 216, 230, 0.15);
+            color: #ffffff;
+            transform: translateX(8px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Main content */
+        .main-content {
+            margin-left: 240px;
+            padding: 3rem 4rem;
+            min-height: 100vh;
+        }
+
+        section {
+            margin-bottom: 6rem;
+            scroll-margin-top: 2rem;
+        }
+
+        .glass-card {
+            background: rgba(0, 31, 63, 0.32);
+            backdrop-filter: blur(14px) saturate(160%);
+            border: 1px solid rgba(173, 216, 230, 0.14);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
             position: relative;
             overflow: hidden;
         }
 
-        /* Add liquid animation effect with subtle waves */
-        .glass-container::before {
+        .glass-card::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
-            animation: liquid-flow 10s infinite linear;
-            z-index: -1;
+            inset: -50%;
+            background: radial-gradient(circle at 30% 20%, rgba(173,216,230,0.08) 0%, transparent 60%);
+            animation: liquid 18s infinite alternate;
+            pointer-events: none;
         }
 
-        @keyframes liquid-flow {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            50% { transform: translate(10%, 10%) rotate(5deg); }
-            100% { transform: translate(0, 0) rotate(0deg); }
+        @keyframes liquid {
+            0%   { transform: translate(10%, 10%) rotate(3deg); }
+            100% { transform: translate(-10%, -5%) rotate(-3deg); }
         }
 
-        /* Navbar */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(0, 31, 63, 0.5);
-            backdrop-filter: blur(10px);
-            padding: 10px 0;
-            z-index: 1000;
+        h2 {
+            color: #b3e0ff;
+            margin-bottom: 1.6rem;
+            font-size: 2.1rem;
+            position: relative;
+            display: inline-block;
         }
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-        }
-
-        nav ul li {
-            margin: 0 15px;
-        }
-
-        nav ul li a {
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-
-        nav ul li a:hover {
-            color: #add8e6; /* Light blue hover */
-        }
-
-        /* Sections */
-        section {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 80px 20px 20px;
-        }
-
-        h1, h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #add8e6;
-        }
-
-        p, ul {
-            line-height: 1.6;
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, #81d4fa, transparent);
+            border-radius: 3px;
         }
 
         ul {
-            list-style-type: disc;
-            padding-left: 20px;
+            list-style: none;
+            padding-left: 0;
         }
 
-        /* Contact Form */
+        ul li {
+            margin: 1.1rem 0;
+            padding-left: 1.6rem;
+            position: relative;
+        }
+
+        ul li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #81d4fa;
+        }
+
+        /* Contact form */
         form {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            display: grid;
+            gap: 1.2rem;
+            max-width: 600px;
         }
 
         input, textarea {
-            padding: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            border-radius: 5px;
+            padding: 1rem;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(173,216,230,0.2);
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #81d4fa;
+            box-shadow: 0 0 0 3px rgba(129, 212, 250, 0.15);
         }
 
         button {
-            padding: 10px;
-            background: #add8e6;
-            color: #001f3f;
+            padding: 1rem;
+            background: linear-gradient(90deg, #81d4fa, #4fc3f7);
+            color: #001428;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
+            font-weight: bold;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all 0.3s;
         }
 
         button:hover {
-            background: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(129, 212, 250, 0.35);
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 220px;
+            }
+            .main-content {
+                margin-left: 220px;
+                padding: 2rem 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 1.5rem;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+            .nav-list {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.8rem;
+            }
+            .nav-list a {
+                padding: 0.7rem 1.2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="#home">Home</a></li>
+
+    <aside class="sidebar">
+        <h1>Marc</h1>
+        <ul class="nav-list">
+            <li><a href="#home" class="active">Home</a></li>
             <li><a href="#about">About Me</a></li>
             <li><a href="#education">Education</a></li>
             <li><a href="#experience">Experience</a></li>
@@ -151,95 +228,116 @@
             <li><a href="#services">Services</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
-    </nav>
+    </aside>
 
-    <section id="home">
-        <div class="glass-container">
-            <h1>Welcome to My Portfolio</h1>
-            <p>Explore my journey, skills, and offerings in this liquid navy blue glass-themed space.</p>
-        </div>
-    </section>
+    <main class="main-content">
 
-    <section id="about">
-        <div class="glass-container">
-            <h2>About Me</h2>
-            <p>I'm a passionate [your profession, e.g., web developer] with a love for creating intuitive and visually appealing digital experiences. Based in [your location], I blend creativity with technical expertise to bring ideas to life.</p>
-        </div>
-    </section>
+        <section id="home">
+            <div class="glass-card">
+                <h2>Welcome</h2>
+                <p>Hi, I'm Marc — a passionate developer & creator based in Kampala. Welcome to my digital space.</p>
+            </div>
+        </section>
 
-    <section id="education">
-        <div class="glass-container">
-            <h2>Education</h2>
-            <ul>
-                <li>[Degree] in [Field], [University], [Year]</li>
-                <li>[Another Degree or Course], [Institution], [Year]</li>
-                <!-- Add more as needed -->
-            </ul>
-        </div>
-    </section>
+        <section id="about">
+            <div class="glass-card">
+                <h2>About Me</h2>
+                <p>[Your bio — who you are, what drives you, your values, interests, etc.]</p>
+            </div>
+        </section>
 
-    <section id="experience">
-        <div class="glass-container">
-            <h2>Professional Experience</h2>
-            <ul>
-                <li>[Job Title] at [Company], [Duration] - [Description]</li>
-                <li>[Another Job Title] at [Company], [Duration] - [Description]</li>
-                <!-- Add more as needed -->
-            </ul>
-        </div>
-    </section>
+        <section id="education">
+            <div class="glass-card">
+                <h2>Education</h2>
+                <ul>
+                    <li>Bachelor of Science in [Field], [University], [Year–Year]</li>
+                    <li>[Other qualification or short course], [Institution], [Year]</li>
+                </ul>
+            </div>
+        </section>
 
-    <section id="technologies">
-        <div class="glass-container">
-            <h2>Technologies I've Used</h2>
-            <ul>
-                <li>HTML, CSS, JavaScript</li>
-                <li>React, Node.js</li>
-                <li>Python, Django</li>
-                <!-- Add more as needed -->
-            </ul>
-        </div>
-    </section>
+        <section id="experience">
+            <div class="glass-card">
+                <h2>Professional Experience</h2>
+                <ul>
+                    <li>[Role] — [Company / Project], [Period]<br>[Key responsibilities & achievements]</li>
+                    <li>[Previous Role] — [Company], [Period]<br>[Description]</li>
+                </ul>
+            </div>
+        </section>
 
-    <section id="certifications">
-        <div class="glass-container">
-            <h2>Certifications Timeline</h2>
-            <ul>
-                <li>[Certification Name], [Issuing Organization], [Year]</li>
-                <li>[Another Certification], [Issuing Organization], [Year]</li>
-                <!-- Add more as needed -->
-            </ul>
-        </div>
-    </section>
+        <section id="technologies">
+            <div class="glass-card">
+                <h2>Technologies & Tools</h2>
+                <ul>
+                    <li>Frontend: HTML • CSS • JavaScript • React • Tailwind • Vue</li>
+                    <li>Backend: Node.js • Express • Python • Django • Firebase</li>
+                    <li>Others: Git • Docker • AWS • Figma • PostgreSQL</li>
+                </ul>
+            </div>
+        </section>
 
-    <section id="services">
-        <div class="glass-container">
-            <h2>Services I Offer</h2>
-            <ul>
-                <li>Web Development</li>
-                <li>UI/UX Design</li>
-                <li>Consulting</li>
-                <!-- Add more as needed -->
-            </ul>
-        </div>
-    </section>
+        <section id="certifications">
+            <div class="glass-card">
+                <h2>Certifications</h2>
+                <ul>
+                    <li>[Certification Name] — [Issuer], [Year]</li>
+                    <li>[Another Cert] — [Issuer], [Year]</li>
+                </ul>
+            </div>
+        </section>
 
-    <section id="contact">
-        <div class="glass-container">
-            <h2>Contact Me</h2>
-            <form action="#" method="post"> <!-- Replace with actual form handler -->
-                <input type="text" placeholder="Your Name" required>
-                <input type="email" placeholder="Your Email" required>
-                <textarea placeholder="Your Message" required></textarea>
-                <button type="submit">Send Message</button>
-            </form>
-        </div>
-    </section>
+        <section id="services">
+            <div class="glass-card">
+                <h2>Services I Offer</h2>
+                <ul>
+                    <li>Custom Web & Mobile Applications</li>
+                    <li>UI/UX Design & Prototyping</li>
+                    <li>Frontend & Full-Stack Development</li>
+                    <li>Consulting & Code Reviews</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="glass-card">
+                <h2>Get in Touch</h2>
+                <form>
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Email Address" required>
+                    <textarea rows="5" placeholder="Your message..." required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+        </section>
+
+    </main>
 
     <script>
-        // Smooth scrolling for navbar links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+        // Highlight active nav link on scroll
+        const sections = document.querySelectorAll('section');
+        const navLinks  = document.querySelectorAll('.nav-list a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('.nav-list a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
                     behavior: 'smooth'
@@ -247,5 +345,6 @@
             });
         });
     </script>
+
 </body>
 </html>
