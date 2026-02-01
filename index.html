@@ -2,56 +2,65 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Glass Sidebar UI</title>
+<title>Glass Sidebar Desktop UI</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
 <style>
-:root{
-  --bg:#0f0f14;
-  --glass:rgba(255,255,255,0.08);
-  --glass-border:rgba(255,255,255,0.15);
-  --text:#eaeaf0;
-  --muted:#a0a0b5;
-  --accent:#3b82f6;
-}
-
+/* ================= RESET ================= */
 *{
+  margin:0;
+  padding:0;
   box-sizing:border-box;
-  font-family:Inter,system-ui,sans-serif;
+  font-family: "Inter", system-ui, sans-serif;
 }
 
+/* ================= DESKTOP ================= */
 body{
-  margin:0;
-  background:linear-gradient(135deg,#f5b7b1,#f7dc6f);
   min-height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
   gap:30px;
+
+  background:url("desktop.jpg") center/cover no-repeat fixed;
+  overflow:hidden;
 }
 
-/* ===== SIDEBAR ===== */
+/* dark overlay for contrast */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.25);
+  z-index:-1;
+}
+
+/* ================= SIDEBAR ================= */
 .sidebar{
   width:280px;
   height:90vh;
-  background:var(--glass);
-  backdrop-filter:blur(25px);
-  border:1px solid var(--glass-border);
-  border-radius:24px;
   padding:20px;
-  color:var(--text);
+
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(24px);
+  border:1px solid rgba(255,255,255,0.15);
+  border-radius:26px;
+
+  color:#f1f1f7;
   display:flex;
   flex-direction:column;
 }
 
+/* mini sidebar */
 .sidebar.mini{
   width:90px;
   padding:20px 12px;
 }
 
-/* ===== HEADER ===== */
+/* ================= PROFILE ================= */
 .profile{
   display:flex;
   align-items:center;
@@ -63,63 +72,65 @@ body{
   width:42px;
   height:42px;
   border-radius:50%;
+  object-fit:cover;
 }
 
 .profile h4{
-  margin:0;
   font-size:14px;
+  line-height:1.2;
 }
 
 .profile span{
-  font-size:12px;
-  color:var(--muted);
+  font-size:11px;
+  color:#b5b5c8;
 }
 
-.mini .profile h4,
-.mini .profile span{
+.sidebar.mini .profile h4,
+.sidebar.mini .profile span{
   display:none;
 }
 
-/* ===== MENU ===== */
+/* ================= SECTIONS ================= */
 .section-title{
   font-size:11px;
   letter-spacing:1px;
-  color:var(--muted);
+  color:#b5b5c8;
   margin-bottom:10px;
 }
 
+/* ================= MENU ================= */
 .menu a{
   display:flex;
   align-items:center;
   gap:14px;
   padding:12px 14px;
-  border-radius:14px;
-  text-decoration:none;
-  color:var(--text);
   margin-bottom:8px;
+
+  border-radius:16px;
+  text-decoration:none;
+  color:#f1f1f7;
   transition:.3s;
+}
+
+.menu a i{
+  min-width:20px;
 }
 
 .menu a:hover,
 .menu a.active{
-  background:rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.12);
 }
 
-.menu i{
-  font-size:16px;
-  min-width:20px;
-}
-
-.mini .menu span{
+.sidebar.mini .menu span{
   display:none;
 }
 
-/* ===== SERVICES ===== */
+/* ================= SERVICES ================= */
 .services{
-  background:rgba(0,0,0,0.25);
+  margin:20px 0;
   padding:14px;
   border-radius:18px;
-  margin:20px 0;
+  background:rgba(0,0,0,0.25);
 }
 
 .service{
@@ -132,58 +143,59 @@ body{
 .service i{
   width:34px;
   height:34px;
-  border-radius:10px;
-  background:rgba(255,255,255,0.12);
+  border-radius:12px;
+  background:rgba(255,255,255,0.15);
+
   display:flex;
   align-items:center;
   justify-content:center;
 }
 
-.mini .services{
-  padding:10px;
-}
-
-.mini .service span{
+.sidebar.mini .service span{
   display:none;
 }
 
-/* ===== SETTINGS ===== */
+/* ================= SETTINGS ================= */
 .settings{
   margin-top:auto;
+  padding:12px;
   display:flex;
   justify-content:space-between;
-  padding:10px;
-  border-radius:16px;
+
   background:rgba(0,0,0,0.25);
+  border-radius:16px;
 }
 
 .settings i{
-  font-size:16px;
   cursor:pointer;
+  opacity:.85;
 }
 
-/* ===== CREATE BUTTON ===== */
+.settings i:hover{
+  opacity:1;
+}
+
+/* ================= CREATE BUTTON ================= */
 .create-btn{
   margin-top:20px;
-  background:var(--accent);
-  color:white;
   padding:16px;
   border-radius:18px;
   text-align:center;
+
+  background:#3b82f6;
   font-weight:600;
   cursor:pointer;
 }
 
-.mini .create-btn span{
+.sidebar.mini .create-btn span{
   display:none;
 }
 
-.mini .create-btn{
+.sidebar.mini .create-btn{
   padding:14px;
 }
 
-/* ===== MINI ICON CENTER ===== */
-.mini .create-btn::before{
+.sidebar.mini .create-btn::before{
   content:"+";
   font-size:22px;
 }
