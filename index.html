@@ -17,69 +17,25 @@
       min-height: 100vh;
       font-family: 'Segoe UI', system-ui, sans-serif;
       overflow-x: hidden;
-      /* Hide scrollbar but allow scrolling */
-      scrollbar-width: none;          /* Firefox */
-      -ms-overflow-style: none;       /* IE + Edge */
+      scrollbar-width: none;
     }
 
     body::-webkit-scrollbar {
-      display: none;                  /* Chrome, Safari, Opera */
+      display: none;
     }
 
-    /* ─── Hamburger + Sidebar ─────────────────────────────────────── */
-    #nav-check {
-      position: fixed;
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .hamburger {
-      position: fixed;
-      top: 1.2rem;
-      left: 1.2rem;
-      z-index: 2000;
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 7px;
-      transition: all 0.4s ease;
-    }
-
-    .hamburger span {
-      width: 100%;
-      height: 4px;
-      background: #b3e0ff;
-      border-radius: 4px;
-      transition: all 0.4s ease;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-    }
-
-    #nav-check:checked ~ .hamburger span:nth-child(1) {
-      transform: rotate(45deg) translate(8px, 8px);
-    }
-    #nav-check:checked ~ .hamburger span:nth-child(2) {
-      opacity: 0;
-      transform: translateX(-20px);
-    }
-    #nav-check:checked ~ .hamburger span:nth-child(3) {
-      transform: rotate(-45deg) translate(7px, -7px);
-    }
-
+    /* Fixed Vertical Sidebar */
     .sidebar {
       position: fixed;
-      left: -280px;
+      left: 0;
       top: 0;
       bottom: 0;
-      width: 260px;
-      background: rgba(0, 31, 63, 0.38);
-      backdrop-filter: blur(16px) saturate(180%);
-      border-right: 1px solid rgba(173, 216, 230, 0.12);
-      padding: 5rem 1.8rem 2rem;
-      transition: left 0.45s cubic-bezier(0.77,0,0.18,1);
-      z-index: 1500;
+      width: 280px;
+      background: rgba(0, 31, 63, 0.42);
+      backdrop-filter: blur(18px) saturate(190%);
+      border-right: 1px solid rgba(173, 216, 230, 0.15);
+      padding: 5rem 2rem 2rem;
+      z-index: 1000;
       overflow-y: auto;
       scrollbar-width: none;
     }
@@ -88,16 +44,12 @@
       display: none;
     }
 
-    #nav-check:checked ~ .sidebar {
-      left: 0;
-    }
-
     .sidebar h1 {
-      font-size: 1.8rem;
+      font-size: 2.2rem;
       color: #b3e0ff;
-      margin-bottom: 2.8rem;
+      margin-bottom: 3.5rem;
       text-align: center;
-      letter-spacing: 1.5px;
+      letter-spacing: 2px;
     }
 
     .nav-list {
@@ -105,64 +57,57 @@
     }
 
     .nav-list li {
-      margin: 1rem 0;
+      margin: 1.4rem 0;
     }
 
     .nav-list a {
-      display: block;
-      padding: 1rem 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 1.1rem 1.4rem;
       color: #d0e8ff;
       text-decoration: none;
-      border-radius: 12px;
+      border-radius: 14px;
       font-weight: 500;
+      font-size: 1.15rem;
       transition: all 0.3s ease;
     }
 
     .nav-list a:hover,
     .nav-list a.active {
-      background: rgba(173, 216, 230, 0.18);
+      background: rgba(173, 216, 230, 0.20);
       color: white;
-      transform: translateX(10px);
-      box-shadow: 0 5px 18px rgba(0,0,0,0.25);
+      transform: translateX(12px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
     }
 
-    /* Desktop: always visible sidebar */
-    @media (min-width: 901px) {
-      .hamburger {
-        display: none;
-      }
-      .sidebar {
-        left: 0;
-        transition: none;
-      }
-      .main-content {
-        margin-left: 260px;
-      }
+    .nav-icon {
+      width: 28px;
+      height: 28px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      flex-shrink: 0;
     }
 
-    /* Mobile: main content full width when menu closed */
+    /* Main Content */
     .main-content {
-      padding: 5.5rem 1.8rem 2rem;
-      transition: margin-left 0.45s cubic-bezier(0.77,0,0.18,1);
+      margin-left: 280px;
+      padding: 4rem 5rem 3rem;
     }
 
-    #nav-check:checked ~ .main-content {
-      margin-left: 260px;
-    }
-
-    /* ─── Content styling ─────────────────────────────────────────── */
     section {
-      margin-bottom: 7rem;
+      margin-bottom: 8rem;
       scroll-margin-top: 3rem;
     }
 
     .glass-card {
-      background: rgba(0, 31, 63, 0.32);
-      backdrop-filter: blur(14px) saturate(160%);
-      border: 1px solid rgba(173, 216, 230, 0.14);
-      border-radius: 18px;
-      padding: 2.8rem;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.28);
+      background: rgba(0, 31, 63, 0.35);
+      backdrop-filter: blur(16px) saturate(170%);
+      border: 1px solid rgba(173, 216, 230, 0.16);
+      border-radius: 20px;
+      padding: 3rem;
+      box-shadow: 0 12px 45px rgba(0,0,0,0.30);
       position: relative;
       overflow: hidden;
     }
@@ -171,20 +116,20 @@
       content: '';
       position: absolute;
       inset: -50%;
-      background: radial-gradient(circle at 30% 20%, rgba(173,216,230,0.09) 0%, transparent 65%);
-      animation: liquid 20s infinite alternate;
+      background: radial-gradient(circle at 30% 20%, rgba(173,216,230,0.10) 0%, transparent 65%);
+      animation: liquid 22s infinite alternate;
       pointer-events: none;
     }
 
     @keyframes liquid {
-      0%   { transform: translate(12%, 8%) rotate(4deg); }
-      100% { transform: translate(-12%, -8%) rotate(-4deg); }
+      0%   { transform: translate(15%, 10%) rotate(5deg); }
+      100% { transform: translate(-15%, -10%) rotate(-5deg); }
     }
 
     h2 {
       color: #b3e0ff;
-      margin-bottom: 1.8rem;
-      font-size: 2.3rem;
+      margin-bottom: 2rem;
+      font-size: 2.6rem;
       position: relative;
       display: inline-block;
     }
@@ -192,9 +137,9 @@
     h2::after {
       content: '';
       position: absolute;
-      bottom: -10px;
+      bottom: -12px;
       left: 0;
-      width: 70px;
+      width: 80px;
       height: 4px;
       background: linear-gradient(to right, #81d4fa, transparent);
       border-radius: 4px;
@@ -206,9 +151,10 @@
     }
 
     ul li {
-      margin: 1.2rem 0;
-      padding-left: 1.8rem;
+      margin: 1.4rem 0;
+      padding-left: 2rem;
       position: relative;
+      font-size: 1.1rem;
     }
 
     ul li::before {
@@ -216,69 +162,85 @@
       position: absolute;
       left: 0;
       color: #81d4fa;
-      font-size: 1.3rem;
+      font-size: 1.4rem;
     }
 
     form {
       display: grid;
-      gap: 1.4rem;
-      max-width: 640px;
+      gap: 1.6rem;
+      max-width: 700px;
     }
 
     input, textarea {
-      padding: 1.1rem;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(173,216,230,0.22);
-      border-radius: 12px;
+      padding: 1.3rem;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(173,216,230,0.25);
+      border-radius: 14px;
       color: white;
-      font-size: 1.05rem;
+      font-size: 1.1rem;
     }
 
     input:focus, textarea:focus {
       outline: none;
       border-color: #81d4fa;
-      box-shadow: 0 0 0 4px rgba(129, 212, 250, 0.18);
+      box-shadow: 0 0 0 4px rgba(129, 212, 250, 0.20);
     }
 
     button {
-      padding: 1.1rem;
+      padding: 1.3rem;
       background: linear-gradient(90deg, #81d4fa, #4fc3f7);
       color: #001428;
       border: none;
-      border-radius: 12px;
+      border-radius: 14px;
       font-weight: bold;
+      font-size: 1.1rem;
       cursor: pointer;
       transition: all 0.3s;
     }
 
     button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(129, 212, 250, 0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 35px rgba(129, 212, 250, 0.45);
     }
   </style>
 </head>
 <body>
 
-  <!-- Hamburger -->
-  <input type="checkbox" id="nav-check" hidden />
-  <label for="nav-check" class="hamburger">
-    <span></span>
-    <span></span>
-    <span></span>
-  </label>
-
-  <!-- Sidebar -->
   <aside class="sidebar">
     <h1>Marc</h1>
     <ul class="nav-list">
-      <li><a href="#home" class="active">Home</a></li>
-      <li><a href="#about">About Me</a></li>
-      <li><a href="#education">Education</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#technologies">Technologies</a></li>
-      <li><a href="#certifications">Certifications</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#home" class="active">
+        <div class="nav-icon" style="background-image: url('https://www.clipartmax.com/png/middle/433-4338423_home-button-image-black-home-icon-png.png');"></div>
+        Home
+      </a></li>
+      <li><a href="#about">
+        <div class="nav-icon" style="background-image: url('https://media.istockphoto.com/id/1469196566/vector/man-and-woman-avatar-profile-male-and-female-face-silhouette-profile-picture-portrait-symbol.jpg?s=612x612&w=0&k=20&c=lJJ5Ew_RDJYFPPRNK8f8No9DUN-srMCIDb3AoXexdrM=');"></div>
+        About Me
+      </a></li>
+      <li><a href="#education">
+        <div class="nav-icon" style="background-image: url('https://www.clipartmax.com/png/middle/94-946040_graduation-cap-icon-png.png');"></div>
+        Education
+      </a></li>
+      <li><a href="#experience">
+        <div class="nav-icon" style="background-image: url('https://www.clipartmax.com/png/middle/33-330391_briefcase-work-job-work-icon-ico.png');"></div>
+        Experience
+      </a></li>
+      <li><a href="#technologies">
+        <div class="nav-icon" style="background-image: url('https://thumbs.dreamstime.com/b/code-brackets-icon-programming-development-vector-design-generative-ai-simple-flat-curly-braces-universally-recognized-407203271.jpg');"></div>
+        Technologies
+      </a></li>
+      <li><a href="#certifications">
+        <div class="nav-icon" style="background-image: url('https://www.clipartmax.com/png/middle/217-2173888_cka%C2%AE-certification-certification-icon-circle.png');"></div>
+        Certifications
+      </a></li>
+      <li><a href="#services">
+        <div class="nav-icon" style="background-image: url('https://thumbs.dreamstime.com/b/tools-box-icon-white-background-tools-box-sign-flat-style-toolbox-symbol-tools-box-icon-white-background-tools-box-sign-106772790.jpg');"></div>
+        Services
+      </a></li>
+      <li><a href="#contact">
+        <div class="nav-icon" style="background-image: url('https://www.clipartmax.com/png/middle/314-3144147_email-icon-clipart-computer-icons-email-clip-art-open-envelope-icon-png.png');"></div>
+        Contact
+      </a></li>
     </ul>
   </aside>
 
@@ -294,7 +256,7 @@
     <section id="about">
       <div class="glass-card">
         <h2>About Me</h2>
-        <p>[Your bio — who you are, what drives you, your values, interests, etc.]</p>
+        <p>[Your detailed bio here — passions, journey, values, interests, etc.]</p>
       </div>
     </section>
 
@@ -303,7 +265,7 @@
         <h2>Education</h2>
         <ul>
           <li>Bachelor of Science in [Field], [University], [Year–Year]</li>
-          <li>[Other qualification or short course], [Institution], [Year]</li>
+          <li>[Other qualification], [Institution], [Year]</li>
         </ul>
       </div>
     </section>
@@ -312,7 +274,7 @@
       <div class="glass-card">
         <h2>Professional Experience</h2>
         <ul>
-          <li>[Role] — [Company / Project], [Period]<br>[Key responsibilities & achievements]</li>
+          <li>[Role] — [Company / Project], [Period]<br>[Key achievements & responsibilities]</li>
           <li>[Previous Role] — [Company], [Period]<br>[Description]</li>
         </ul>
       </div>
@@ -334,7 +296,7 @@
         <h2>Certifications</h2>
         <ul>
           <li>[Certification Name] — [Issuer], [Year]</li>
-          <li>[Another Cert] — [Issuer], [Year]</li>
+          <li>[Another Certification] — [Issuer], [Year]</li>
         </ul>
       </div>
     </section>
@@ -357,7 +319,7 @@
         <form>
           <input type="text" placeholder="Your Name" required>
           <input type="email" placeholder="Email Address" required>
-          <textarea rows="5" placeholder="Your message..." required></textarea>
+          <textarea rows="6" placeholder="Your message..." required></textarea>
           <button type="submit">Send Message</button>
         </form>
       </div>
@@ -366,14 +328,14 @@
   </main>
 
   <script>
-    // Optional: Highlight active link on scroll (still using JS for this)
+    // Active link highlighting on scroll
     const sections = document.querySelectorAll('section');
     const navLinks  = document.querySelectorAll('.nav-list a');
 
     window.addEventListener('scroll', () => {
       let current = '';
       sections.forEach(section => {
-        const sectionTop = section.offsetTop - 140;
+        const sectionTop = section.offsetTop - 160;
         if (scrollY >= sectionTop) current = section.getAttribute('id');
       });
 
@@ -385,15 +347,11 @@
       });
     });
 
-    // Smooth scroll
+    // Smooth scrolling
     document.querySelectorAll('.nav-list a').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
         e.preventDefault();
         document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
-        // Auto-close menu on mobile after click
-        if (window.innerWidth < 901) {
-          document.getElementById('nav-check').checked = false;
-        }
       });
     });
   </script>
