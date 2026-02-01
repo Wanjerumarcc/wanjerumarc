@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark"> <!-- default to dark -->
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Marc Wanjeru | Portfolio</title>
+  <title>Marc Wanjeru | Portfolio Navigation</title>
 
-  <!-- Fonts -->
+  <!-- Inter font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Font Awesome -->
+  <!-- Font Awesome 6.5 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
   <style>
@@ -29,13 +29,13 @@
     [data-theme="light"] {
       --bg-body: #f0f4f8;
       --bg-overlay: rgba(255,255,255,0.25);
-      --bg-glass: rgba(255,255,255,0.75);
-      --bg-glass-sidebar: rgba(255,255,255,0.82);
-      --bg-icon: rgba(0,0,0,0.08);
+      --bg-glass: rgba(255,255,255,0.78);
+      --bg-glass-sidebar: rgba(255,255,255,0.85);
+      --bg-icon: rgba(0,0,0,0.09);
       --bg-hover: #2563eb;
       --text: #1f2937;
       --text-secondary: #6b7280;
-      --border: rgba(0,0,0,0.12);
+      --border: rgba(0,0,0,0.14);
     }
 
     * {
@@ -44,13 +44,18 @@
       box-sizing: border-box;
     }
 
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+
     body {
       min-height: 100dvh;
       font-family: 'Inter', system-ui, sans-serif;
       background: var(--bg-body) url('desktop1.jpg') center / cover no-repeat fixed;
       color: var(--text);
       transition: background-color 0.4s ease, color 0.4s ease;
-      overflow-x: hidden;
     }
 
     body::before {
@@ -62,7 +67,7 @@
       transition: background 0.4s ease;
     }
 
-    /* ================= ICON NAV ================= */
+    /* Icon Nav (vertical bar) */
     .icon-nav {
       position: fixed;
       left: 16px;
@@ -109,7 +114,7 @@
       transform: scale(1.08);
     }
 
-    /* ================= SIDEBAR ================= */
+    /* Sidebar */
     .sidebar {
       position: fixed;
       left: 90px;
@@ -126,14 +131,42 @@
       border-radius: 26px;
       color: var(--text);
       z-index: 90;
-      transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), background 0.4s ease, border-color 0.4s ease;
+      transition: transform 0.38s cubic-bezier(0.32, 0.72, 0.0, 1), opacity 0.38s ease;
       overflow-y: auto;
+      overscroll-behavior: contain;
+      pointer-events: none;
+      opacity: 0;
     }
 
     .sidebar.open {
       transform: translateY(-50%) translateX(0);
+      pointer-events: auto;
+      opacity: 1;
     }
 
+    /* Completely hide scrollbar but keep scrolling */
+    .sidebar::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      background: transparent;
+    }
+    .sidebar {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    /* Extra strong hide on close (prevents 1px artifacts) */
+    .sidebar:not(.open) {
+      visibility: hidden;
+    }
+
+    /* Profile */
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
     .profile img {
       width: 52px;
       height: 52px;
@@ -141,10 +174,22 @@
       object-fit: cover;
       border: 2px solid var(--border);
     }
+    .profile h4 {
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 1.25;
+    }
+    .profile span {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+    }
 
-    .profile h4 { font-size: 15px; font-weight: 500; line-height: 1.25; }
-    .profile span  { font-size: 12.5px; color: var(--text-secondary); }
-
+    /* Menu links */
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
     .menu a {
       display: flex;
       align-items: center;
@@ -156,12 +201,16 @@
       font-size: 15px;
       transition: all 0.22s ease;
     }
-
-    .menu a i { min-width: 20px; font-size: 1.25rem; }
+    .menu a i {
+      min-width: 20px;
+      font-size: 1.25rem;
+    }
     .menu a:hover,
-    .menu a.active { background: rgba(255,255,255,0.14); } /* works ok in both modes */
+    .menu a.active {
+      background: rgba(255,255,255,0.12);
+    }
 
-    /* Overlay for closing sidebar */
+    /* Overlay (for clicking outside to close) */
     .overlay {
       position: fixed;
       inset: 0;
@@ -171,22 +220,30 @@
       transition: opacity 0.4s;
       z-index: 80;
     }
-
-    .overlay.active { opacity: 1; pointer-events: all; }
+    .overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
 
     /* Mobile adjustments */
     @media (max-width: 768px) {
-      .icon-nav { left: 12px; width: 64px; border-radius: 20px; }
+      .icon-nav {
+        left: 12px;
+        width: 64px;
+        border-radius: 20px;
+      }
       .sidebar {
         left: 76px;
         width: 82vw;
         max-width: 320px;
         height: 100dvh;
         top: 0;
-        transform: translateX(-110%);
+        transform: translateX(-115%);
         border-radius: 0 24px 24px 0;
       }
-      .sidebar.open { transform: translateX(0); }
+      .sidebar.open {
+        transform: translateX(0);
+      }
     }
   </style>
 </head>
@@ -194,7 +251,7 @@
 
   <div class="overlay" id="overlay"></div>
 
-  <!-- ICON NAV -->
+  <!-- Vertical Icon Navigation -->
   <nav class="icon-nav">
     <button id="toggle" aria-label="Toggle menu"><i class="fa-solid fa-bars"></i></button>
 
@@ -206,7 +263,7 @@
     <i class="fa-solid fa-microchip" data-section="tech"></i>
     <i class="fa-solid fa-layer-group" data-section="services"></i>
 
-    <!-- Dark mode toggle button -->
+    <!-- Theme toggle -->
     <button id="theme-toggle" aria-label="Toggle dark/light mode">
       <i class="fa-solid fa-moon" id="theme-icon"></i>
     </button>
@@ -214,7 +271,7 @@
     <i class="fa-solid fa-envelope" data-section="contact"></i>
   </nav>
 
-  <!-- SIDEBAR -->
+  <!-- Slide-out Sidebar -->
   <aside class="sidebar" id="sidebar">
     <div class="profile">
       <img src="https://i.pravatar.cc/100?u=marc" alt="Profile">
@@ -237,62 +294,54 @@
   </aside>
 
   <script>
-    // ── Theme handling ───────────────────────────────────────────────
+    // Theme handling
     const themeToggle = document.getElementById('theme-toggle');
-    const themeIcon   = document.getElementById('theme-icon');
-    const html        = document.documentElement;
+    const themeIcon = document.getElementById('theme-icon');
+    const html = document.documentElement;
 
     function setTheme(theme) {
       html.setAttribute('data-theme', theme);
       localStorage.setItem('theme', theme);
-      themeIcon.className = theme === 'light'
-        ? 'fa-solid fa-sun'
-        : 'fa-solid fa-moon';
+      themeIcon.className = theme === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
     }
 
-    // Init theme
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      setTheme(savedTheme);
+    // Load saved or system preference
+    const saved = localStorage.getItem('theme');
+    if (saved) {
+      setTheme(saved);
     } else {
-      // Respect system preference
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setTheme(prefersDark ? 'dark' : 'light');
+      setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     }
 
-    // Toggle listener
     themeToggle.addEventListener('click', () => {
       const current = html.getAttribute('data-theme');
       setTheme(current === 'dark' ? 'light' : 'dark');
     });
 
-    // Listen for system preference change
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-      if (!localStorage.getItem('theme')) { // only if user didn't override
-        setTheme(e.matches ? 'dark' : 'light');
-      }
-    });
+    // Sidebar controls
+    const toggle = document.getElementById('toggle');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
 
-    // ── Sidebar handling ─────────────────────────────────────────────
-    const toggleBtn = document.getElementById('toggle');
-    const sidebar   = document.getElementById('sidebar');
-    const overlay   = document.getElementById('overlay');
+    function open() {
+      sidebar.classList.add('open');
+      overlay.classList.add('active');
+    }
 
-    function openSidebar()  { sidebar.classList.add('open');   overlay.classList.add('active'); }
-    function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('active'); }
+    function close() {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+    }
 
-    toggleBtn.addEventListener('click', () => {
-      sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
-    });
+    toggle.addEventListener('click', () => sidebar.classList.contains('open') ? close() : open());
+    overlay.addEventListener('click', close);
 
-    overlay.addEventListener('click', closeSidebar);
-
-    // Optional: sync active icon (you can expand this later)
+    // Optional: clicking icons on mobile opens sidebar
     document.querySelectorAll('.icon-nav i[data-section]').forEach(icon => {
       icon.addEventListener('click', () => {
         document.querySelectorAll('.icon-nav i').forEach(i => i.classList.remove('active'));
         icon.classList.add('active');
-        if (window.innerWidth <= 768) openSidebar();
+        if (window.innerWidth <= 768) open();
       });
     });
   </script>
