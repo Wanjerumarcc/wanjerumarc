@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Desktop UI with Dual Navigation</title>
+<title>Responsive Glass Sidebar</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
@@ -16,10 +16,11 @@
   font-family:Inter,system-ui,sans-serif;
 }
 
-/* ================= DESKTOP ================= */
+/* ================= DESKTOP BACKGROUND ================= */
 body{
   min-height:100vh;
-  background:url("desktop1.jpg") center/cover no-repeat fixed;
+  background:url("desktop1.jpg") center/contain no-repeat fixed;
+  background-color:#111;
   display:flex;
   align-items:center;
   overflow:hidden;
@@ -29,60 +30,73 @@ body::before{
   content:"";
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.3);
+  background:rgba(0,0,0,.35);
   z-index:-1;
 }
 
-/* ================= ICON NAV (LEFT DOCK) ================= */
+/* ================= ICON BAR ================= */
 .icon-nav{
-  width:80px;
-  height:90vh;
-  margin-left:20px;
+  width:70px;
+  height:92vh;
+  margin-left:16px;
 
-  background:rgba(255,255,255,.08);
-  backdrop-filter:blur(24px);
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:26px;
+  background:rgba(255,255,255,.12);
+  backdrop-filter:blur(20px);
+  border-radius:24px;
 
   display:flex;
   flex-direction:column;
   align-items:center;
-  padding:20px 0;
-  gap:20px;
-  color:#f1f1f7;
+  padding:16px 0;
+  gap:18px;
+  color:white;
+  z-index:3;
 }
 
+.icon-nav button,
 .icon-nav i{
-  width:44px;
-  height:44px;
+  width:42px;
+  height:42px;
   border-radius:14px;
-  background:rgba(255,255,255,.12);
+  border:none;
+  background:rgba(255,255,255,.18);
+  color:white;
+  cursor:pointer;
+
   display:flex;
   align-items:center;
   justify-content:center;
-  cursor:pointer;
-  transition:.3s;
 }
 
-.icon-nav i:hover{
+.icon-nav i:hover,
+.icon-nav button:hover{
   background:#3b82f6;
 }
 
-/* ================= MAIN SIDEBAR ================= */
+/* ================= SLIDE SIDEBAR ================= */
 .sidebar{
+  position:fixed;
+  left:90px;
+  top:50%;
+  transform:translateY(-50%) translateX(-110%);
   width:300px;
-  height:90vh;
-  margin-left:20px;
+  height:92vh;
   padding:24px;
 
-  background:rgba(255,255,255,.08);
+  background:rgba(255,255,255,.14);
   backdrop-filter:blur(24px);
-  border:1px solid rgba(255,255,255,.15);
   border-radius:26px;
 
-  color:#f1f1f7;
+  color:white;
   display:flex;
   flex-direction:column;
+  transition:.4s ease;
+  z-index:2;
+}
+
+/* visible state */
+.sidebar.open{
+  transform:translateY(-50%) translateX(0);
 }
 
 /* ================= PROFILE ================= */
@@ -100,13 +114,12 @@ body::before{
 }
 
 .profile h4{
-  font-size:14px;
-  line-height:1.2;
+  font-size:15px;
 }
 
 .profile span{
-  font-size:11px;
-  color:#b5b5c8;
+  font-size:12px;
+  color:#ddd;
 }
 
 /* ================= MENU ================= */
@@ -115,42 +128,47 @@ body::before{
   align-items:center;
   gap:14px;
   padding:14px 16px;
-  border-radius:16px;
-  text-decoration:none;
-  color:#f1f1f7;
   margin-bottom:10px;
+  border-radius:16px;
+
+  color:white;
+  text-decoration:none;
   transition:.3s;
 }
 
 .menu a:hover,
 .menu a.active{
-  background:rgba(255,255,255,.12);
+  background:rgba(255,255,255,.18);
 }
 
-.menu i{
-  min-width:20px;
-}
+/* ================= MOBILE ================= */
+@media(max-width:768px){
+  body{
+    background-size:cover;
+  }
 
-/* ================= FOOTER ================= */
-.footer{
-  margin-top:auto;
-  display:flex;
-  justify-content:space-between;
-  padding:14px;
-  border-radius:16px;
-  background:rgba(0,0,0,.25);
-}
+  .sidebar{
+    left:0;
+    width:85%;
+    height:100vh;
+    top:0;
+    transform:translateX(-100%);
+    border-radius:0 26px 26px 0;
+  }
 
-.footer i{
-  cursor:pointer;
+  .sidebar.open{
+    transform:translateX(0);
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- ICON NAVIGATION (LEFT) -->
+<!-- ICON NAV (ALWAYS VISIBLE) -->
 <nav class="icon-nav">
+  <button id="toggle"><i class="fa-solid fa-bars"></i></button>
+
   <i class="fa-solid fa-house"></i>
   <i class="fa-solid fa-user"></i>
   <i class="fa-solid fa-graduation-cap"></i>
@@ -161,8 +179,8 @@ body::before{
   <i class="fa-solid fa-envelope"></i>
 </nav>
 
-<!-- MAIN TEXT NAVIGATION -->
-<aside class="sidebar">
+<!-- SLIDE-OUT MENU -->
+<aside class="sidebar" id="sidebar">
   <div class="profile">
     <img src="https://i.pravatar.cc/100" alt="">
     <div>
@@ -181,13 +199,16 @@ body::before{
     <a><i class="fa-solid fa-layer-group"></i>Services</a>
     <a><i class="fa-solid fa-envelope"></i>Contact Us</a>
   </div>
-
-  <div class="footer">
-    <i class="fa-solid fa-gear"></i>
-    <i class="fa-regular fa-moon"></i>
-    <i class="fa-solid fa-arrow-right-from-bracket"></i>
-  </div>
 </aside>
+
+<script>
+const toggle = document.getElementById("toggle");
+const sidebar = document.getElementById("sidebar");
+
+toggle.onclick = () => {
+  sidebar.classList.toggle("open");
+};
+</script>
 
 </body>
 </html>
