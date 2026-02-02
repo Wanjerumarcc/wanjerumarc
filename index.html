@@ -45,15 +45,19 @@
       color: var(--text);
       line-height: 1.6;
       transition: background 0.3s ease, color 0.3s ease;
-      display: flex;
-      flex-direction: column;
+    }
+
+    [data-theme="light"] body {
+      background-image: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url('wllpbk.jpg');
     }
 
     /* Floating bubble */
     .floating-bubble {
       position: fixed;
-      left: 24px; top: 24px;
-      width: 64px; height: 64px;
+      left: 24px;
+      top: 24px;
+      width: 64px;
+      height: 64px;
       border-radius: 50%;
       overflow: hidden;
       border: 3px solid var(--accent);
@@ -68,7 +72,8 @@
     /* Icon menu */
     .icon-menu {
       position: fixed;
-      left: 16px; top: 50%;
+      left: 16px;
+      top: 50%;
       transform: translateY(-50%) translateX(-100px);
       width: 80px;
       background: var(--glass);
@@ -105,7 +110,8 @@
     /* Text menu */
     .text-menu {
       position: fixed;
-      left: 112px; top: 50%;
+      left: 112px;
+      top: 50%;
       transform: translateY(-50%) translateX(-120%);
       width: 320px;
       background: var(--glass);
@@ -130,9 +136,9 @@
     }
     .text-links a:hover, .text-links a.active { background: var(--accent); color: white; }
 
-    /* Home Hero Layout */
-    .hero-wrapper {
-      flex: 1;
+    /* Sections */
+    .parallax-section {
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -147,32 +153,20 @@
       border: 1px solid var(--border);
       max-width: 1000px;
       width: 100%;
-      display: flex;
-      align-items: center;
-      text-align: left;
-      gap: 40px;
+      text-align: center;
     }
 
-    .hero-text { flex: 1; }
-    .hero-image-main {
-      width: 250px;
-      height: 250px;
-      border-radius: 40px;
-      object-fit: cover;
-      border: 2px solid var(--accent);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-    }
-
-    h1 {
+    h1, h2 {
       font-weight: 900;
       background: linear-gradient(45deg, var(--text), var(--accent));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-bottom: 1.5rem;
-      font-size: clamp(2.5rem, 5vw, 4rem);
     }
+    h1 { font-size: clamp(2.5rem, 8vw, 5rem); }
+    h2 { font-size: clamp(2rem, 5vw, 3.5rem); }
 
-    /* Footer - Restored Original Code */
+    /* Footer */
     footer {
       background: var(--glass);
       padding: 4rem 10% 2rem;
@@ -183,7 +177,7 @@
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 40px;
     }
-    .social-icons { display: flex; gap: 15px; margin-top: 20px; }
+    .social-icons { display: flex; gap: 15px; margin-top: 20px; justify-content: center; }
     .social-icons a { 
       width: 40px; height: 40px; border-radius: 50%; 
       background: var(--card-bg); color: var(--text);
@@ -192,18 +186,13 @@
     }
     .social-icons a:hover { background: var(--accent); color: white; }
 
-    @media (max-width: 850px) {
-      .section-content { flex-direction: column-reverse; text-align: center; padding: 2rem; }
-      .hero-image-main { width: 180px; height: 180px; }
-      .social-icons { justify-content: center; }
-    }
-
     @media (max-width: 768px) {
       .icon-menu { left: auto; right: 16px; top: auto; bottom: 20px; transform: translateY(0); flex-direction: row; width: auto; padding: 10px 20px; border-radius: 50px; }
       .icon-menu.visible { transform: translateY(0); }
       .icon-items { flex-direction: row; }
       .text-menu { left: 20px; right: 20px; width: auto; bottom: 100px; top: auto; transform: translateY(20px); }
       .text-menu.open { transform: translateY(0); }
+      .section-content { padding: 2rem; }
     }
   </style>
 </head>
@@ -218,7 +207,7 @@
       <i class="fa-solid fa-bars"></i>
     </div>
     <div class="icon-items">
-      <a href="index.html" class="icon-item active"><i class="fa-solid fa-house"></i></a>
+      <div class="icon-item active" data-section="home"><i class="fa-solid fa-house"></i></div>
       <a href="about.html" class="icon-item"><i class="fa-solid fa-user"></i></a>
       <a href="education.html" class="icon-item"><i class="fa-solid fa-graduation-cap"></i></a>
       <div class="icon-item" id="theme-toggle"><i class="fa-solid fa-moon" id="theme-icon"></i></div>
@@ -234,22 +223,19 @@
       </div>
     </div>
     <div class="text-links">
-      <a href="index.html" class="active"><i class="fa-solid fa-house"></i> Home</a>
-      <a href="about.html"><i class="fa-solid fa-user"></i> About Me</a>
+      <a href="#home" class="active"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="about.html"><i class="fa-solid fa-user"></i> About</a>
       <a href="education.html"><i class="fa-solid fa-graduation-cap"></i> Education</a>
       <a href="#contact"><i class="fa-solid fa-envelope"></i> Contact</a>
     </div>
   </aside>
 
-  <main class="hero-wrapper">
+  <section id="home" class="parallax-section">
     <div class="section-content">
-      <div class="hero-text">
-        <h1>Hi, I'm John Mark</h1>
-        <p>IT Professional & Creative Developer based in Kampala. I bridge the gap between technical infrastructure and creative design through precision and innovation.</p>
-      </div>
-      <img src="nobklogo.png" alt="John Mark Kiritu" class="hero-image-main">
+      <h1>Hi, I'm John Mark</h1>
+      <p>IT Professional & Creative Developer based in Kampala.</p>
     </div>
-  </main>
+  </section>
 
   <footer id="contact">
     <div class="footer-grid">
@@ -280,7 +266,9 @@
     const themeToggle = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
 
-    bubble.addEventListener('click', () => {
+    // Navigation Toggle Logic
+    bubble.addEventListener('click', (e) => {
+      e.stopPropagation();
       bubble.classList.add('hidden');
       iconMenu.classList.add('visible');
     });
@@ -290,6 +278,7 @@
       textMenu.classList.toggle('open');
     });
 
+    // Theme Toggle Logic
     themeToggle.addEventListener('click', (e) => {
       e.stopPropagation();
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
@@ -298,12 +287,43 @@
       themeIcon.className = newTheme === 'dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
     });
 
+    // Section Scrolling Logic
+    document.querySelectorAll('.icon-item[data-section]').forEach(item => {
+      item.addEventListener('click', () => {
+        const id = item.getAttribute('data-section');
+        const element = document.getElementById(id);
+        if(element) element.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // Close menus on outside click
     document.addEventListener('click', (e) => {
-      if (!iconMenu.contains(e.target) && !bubble.contains(e.target)) {
+      if (!iconMenu.contains(e.target) && !bubble.contains(e.target) && !textMenu.contains(e.target)) {
         iconMenu.classList.remove('visible');
         bubble.classList.remove('hidden');
         textMenu.classList.remove('open');
       }
+    });
+
+    // Scroll Spy for Active State (Debugged for current browser standards)
+    window.addEventListener('scroll', () => {
+      let current = "home";
+      const sections = document.querySelectorAll('section');
+      const scrollPos = window.scrollY || window.pageYOffset;
+
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (scrollPos >= sectionTop - 200) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      document.querySelectorAll('.icon-item, .text-links a').forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('data-section') === current || link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
     });
   </script>
 </body>
