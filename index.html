@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>John Mark Kiritu — Home</title>
+  <title>John Mark Kiritu — Digital Dashboard</title>
 
   <link rel="icon" href="nobklogo.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,256 +12,223 @@
 
   <style>
     :root {
-      /* Dark Liquid Glass (Default) */
-      --bg-overlay: rgba(0, 0, 0, 0.4);
-      --glass: rgba(20, 25, 40, 0.6);
-      --glass-border: rgba(255, 255, 255, 0.1);
+      --bg-overlay: rgba(0, 0, 0, 0.5);
+      --glass: rgba(15, 23, 42, 0.7);
+      --glass-bright: rgba(255, 255, 255, 0.05);
+      --border: rgba(255, 255, 255, 0.1);
       --accent: #3b82f6;
-      --text: #ffffff;
+      --text: #f8fafc;
       --text-dim: #94a3b8;
-      --card-inner: rgba(255, 255, 255, 0.05);
     }
 
     [data-theme="light"] {
-      /* Light Liquid Glass */
-      --bg-overlay: rgba(255, 255, 255, 0.3);
-      --glass: rgba(255, 255, 255, 0.5);
-      --glass-border: rgba(255, 255, 255, 0.4);
+      --bg-overlay: rgba(255, 255, 255, 0.4);
+      --glass: rgba(255, 255, 255, 0.6);
+      --glass-bright: rgba(0, 0, 0, 0.02);
+      --border: rgba(0, 0, 0, 0.1);
       --accent: #2563eb;
       --text: #0f172a;
       --text-dim: #475569;
-      --card-inner: rgba(0, 0, 0, 0.03);
     }
 
     * { margin:0; padding:0; box-sizing:border-box; }
     
     body {
-      height: 100vh;
+      min-height: 100vh;
       font-family: 'Inter', sans-serif;
-      /* Wallpaper Underlay */
       background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('desktop.jpg');
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
       color: var(--text);
       display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      transition: all 0.5s ease;
+      flex-direction: column;
+      overflow-x: hidden;
     }
 
-    /* Floating Bubble */
-    .bubble {
-      position: fixed;
-      left: 30px; top: 30px;
-      width: 60px; height: 60px;
-      border-radius: 50%;
-      border: 2px solid var(--accent);
-      cursor: pointer;
-      z-index: 200;
-      transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
+    /* Floating Bubble & Nav */
+    .bubble { position: fixed; left: 30px; top: 30px; width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--accent); cursor: pointer; z-index: 200; transition: 0.4s; }
     .bubble img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
     .bubble.hidden { opacity: 0; transform: scale(0); }
 
-    /* Glass Sidebar */
-    .icon-menu {
-      position: fixed;
-      left: 20px; top: 50%;
-      transform: translateY(-50%) translateX(-120px);
-      background: var(--glass);
-      backdrop-filter: blur(25px) saturate(180%);
-      border: 1px solid var(--glass-border);
-      border-radius: 25px;
-      padding: 15px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      z-index: 150;
-      transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
+    .icon-menu { position: fixed; left: 20px; top: 50%; transform: translateY(-50%) translateX(-120px); background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 25px; padding: 15px; display: flex; flex-direction: column; gap: 15px; z-index: 150; transition: 0.5s; }
     .icon-menu.visible { transform: translateY(-50%) translateX(0); }
+    .nav-btn { width: 50px; height: 50px; border-radius: 15px; background: var(--glass-bright); color: var(--text); display: grid; place-items: center; cursor: pointer; transition: 0.3s; border: 1px solid var(--border); text-decoration: none; }
+    .nav-btn:hover { background: var(--accent); color: white; }
 
-    .nav-btn {
-      width: 50px; height: 50px;
-      border-radius: 15px;
-      background: var(--card-inner);
-      color: var(--text);
-      display: grid; place-items: center;
-      cursor: pointer; transition: 0.3s;
-      border: 1px solid var(--glass-border);
-      text-decoration: none;
-    }
-    .nav-btn:hover { background: var(--accent); color: white; transform: scale(1.1); }
+    /* Main Grid */
+    .dashboard-container { display: grid; grid-template-columns: 1fr 350px; gap: 25px; padding: 100px 5% 50px; flex: 1; }
 
-    /* Expanded Text Menu (Liquid Style) */
-    .text-menu {
-      position: fixed;
-      left: 100px; top: 50%;
-      transform: translateY(-50%) translateX(-150%);
-      width: 280px;
-      background: var(--glass);
-      backdrop-filter: blur(35px);
-      border: 1px solid var(--glass-border);
-      border-radius: 30px;
-      padding: 30px;
-      z-index: 140;
-      transition: 0.5s ease;
-      opacity: 0;
-    }
-    .text-menu.open { transform: translateY(-50%) translateX(0); opacity: 1; }
+    /* Hero Card */
+    .hero-card { background: var(--glass); backdrop-filter: blur(30px); border: 1px solid var(--border); border-radius: 40px; padding: 50px; display: flex; align-items: center; justify-content: space-between; gap: 30px; }
+    .hero-info h1 { font-size: 3.5rem; font-weight: 900; margin-bottom: 10px; }
+    .hero-info p { color: var(--text-dim); margin-bottom: 30px; font-size: 1.1rem; }
+    .hero-btns { display: flex; gap: 15px; flex-wrap: wrap; }
+    .btn { padding: 12px 25px; border-radius: 12px; font-weight: 600; text-decoration: none; transition: 0.3s; display: flex; align-items: center; gap: 8px; border: none; cursor: pointer; }
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-outline { background: var(--glass-bright); color: var(--text); border: 1px solid var(--border); }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
 
-    /* Main Home Card */
-    .home-card {
-      background: var(--glass);
-      backdrop-filter: blur(30px) saturate(150%);
-      border: 1px solid var(--glass-border);
-      border-radius: 40px;
-      padding: 60px;
-      max-width: 1100px;
-      width: 90%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 40px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    }
+    .hero-img { width: 220px; height: 220px; border-radius: 30px; object-fit: cover; border: 1px solid var(--border); }
 
-    .hero-text h1 {
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      font-weight: 900;
-      line-height: 1.1;
-      margin-bottom: 20px;
-    }
-    .hero-text span { color: var(--accent); }
-    .hero-text p { color: var(--text-dim); font-size: 1.2rem; max-width: 500px; }
+    /* AI Card & Calendar */
+    .sidebar-stack { display: flex; flex-direction: column; gap: 25px; }
+    .glass-panel { background: var(--glass); backdrop-filter: blur(30px); border: 1px solid var(--border); border-radius: 30px; padding: 25px; }
+    
+    .ai-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+    .ai-dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; animation: pulse 2s infinite; }
+    
+    /* Calendar Widget */
+    .calendar-widget { text-align: center; }
+    .cal-header { font-weight: 700; color: var(--accent); margin-bottom: 15px; display: flex; justify-content: space-between; }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; font-size: 0.8rem; }
+    .cal-day { padding: 8px; border-radius: 8px; background: var(--glass-bright); }
+    .cal-day.today { background: var(--accent); color: white; }
 
-    .profile-img-main {
-      width: 300px;
-      height: 300px;
-      border-radius: 35px;
-      object-fit: cover;
-      border: 1px solid var(--glass-border);
-      box-shadow: 20px 20px 60px rgba(0,0,0,0.3);
-      transition: transform 0.5s ease;
-    }
-    .profile-img-main:hover { transform: scale(1.02) rotate(2deg); }
+    /* Liquid Footer */
+    .liquid-footer { background: var(--glass); backdrop-filter: blur(40px); border-top: 1px solid var(--border); padding: 60px 5% 30px; margin-top: 50px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 40px; }
+    .footer-logo img { width: 50px; margin-bottom: 15px; }
+    .footer-col h4 { margin-bottom: 20px; color: var(--accent); font-size: 0.9rem; text-transform: uppercase; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a { color: var(--text-dim); text-decoration: none; transition: 0.3s; font-size: 0.9rem; }
+    .footer-col ul li a:hover { color: var(--text); padding-left: 5px; }
+    
+    .social-bar { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 15px; }
+    .social-btn { width: 40px; height: 40px; border-radius: 10px; background: var(--glass-bright); display: grid; place-items: center; color: var(--text); text-decoration: none; transition: 0.3s; border: 1px solid var(--border); }
+    .social-btn:hover { background: var(--accent); color: white; transform: scale(1.1); }
 
-    /* Footer (Restored Original) */
-    footer {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      background: var(--glass);
-      backdrop-filter: blur(15px);
-      padding: 30px 10%;
-      border-top: 1px solid var(--glass-border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .socials { display: flex; gap: 20px; }
-    .socials a { color: var(--text); font-size: 1.2rem; transition: 0.3s; }
-    .socials a:hover { color: var(--accent); }
+    .footer-bottom { border-top: 1px solid var(--border); padding-top: 20px; display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-dim); }
 
-    @media (max-width: 900px) {
-      .home-card { flex-direction: column-reverse; text-align: center; padding: 40px; }
-      .profile-img-main { width: 200px; height: 200px; }
-      footer { flex-direction: column; gap: 15px; text-align: center; }
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+
+    @media (max-width: 1024px) {
+      .dashboard-container { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <div class="bubble" id="bubble">
-    <img src="profilepic.png" alt="John Mark">
-  </div>
-
+  <div class="bubble" id="bubble"><img src="profilepic.png"></div>
   <nav class="icon-menu" id="iconMenu">
     <div class="nav-btn" id="hamburger"><i class="fa-solid fa-bars"></i></div>
-    <div style="height: 1px; background: var(--glass-border); width: 100%;"></div>
     <a href="index.html" class="nav-btn"><i class="fa-solid fa-house"></i></a>
-    <div class="nav-btn" id="theme-toggle"><i class="fa-solid fa-moon" id="theme-icon"></i></div>
+    <div class="nav-btn" id="theme-toggle"><i class="fa-solid fa-moon"></i></div>
   </nav>
 
-  <aside class="text-menu" id="textMenu">
-    <div style="margin-bottom: 25px;">
-        <h4 style="color: var(--accent);">Menu</h4>
-        <div style="height: 2px; width: 30px; background: var(--accent); margin-top: 5px;"></div>
-    </div>
-    <div style="display: flex; flex-direction: column; gap: 15px;">
-      <a href="index.html" style="text-decoration: none; color: var(--text); display: flex; align-items: center; gap: 10px;">
-        <i class="fa-solid fa-house"></i> Home
-      </a>
-      <a href="about.html" style="text-decoration: none; color: var(--text); display: flex; align-items: center; gap: 10px;">
-        <i class="fa-solid fa-user"></i> About
-      </a>
-      <a href="projects.html" style="text-decoration: none; color: var(--text); display: flex; align-items: center; gap: 10px;">
-        <i class="fa-solid fa-code"></i> Projects
-      </a>
-    </div>
-  </aside>
+  <div class="dashboard-container">
+    <main class="hero-card">
+      <div class="hero-info">
+        <h1>Hi, I'm John Mark</h1>
+        <p>IT Infrastructure Specialist & Creative Developer. Bridging technical precision with liquid design.</p>
+        <div class="hero-btns">
+          <button class="btn btn-primary"><i class="fa-solid fa-download"></i> Download CV</button>
+          <button class="btn btn-outline"><i class="fa-solid fa-calendar-check"></i> Book Appointment</button>
+        </div>
+      </div>
+      <img src="profilepic.png" class="hero-img" alt="John Mark">
+    </main>
 
-  <main class="home-card">
-    <div class="hero-text">
-      <h1>Hi, I'm <span>John Mark</span></h1>
-      <p>A Creative Developer and IT Specialist. I design fluid digital interfaces and robust technical infrastructures.</p>
-      <div style="margin-top: 30px;">
-          <a href="about.html" style="text-decoration: none; color: white; background: var(--accent); padding: 12px 30px; border-radius: 15px; font-weight: 600; display: inline-block;">Get Started</a>
+    <div class="sidebar-stack">
+      <aside class="glass-panel">
+        <div class="ai-header">
+          <div class="ai-dot"></div>
+          <strong>Portfolio AI</strong>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-dim); line-height: 1.4;">"I can help you browse projects or schedule a call. What would you like to see?"</p>
+      </aside>
+
+      <div class="glass-panel calendar-widget">
+        <div class="cal-header">
+          <span>February 2026</span>
+          <i class="fa-solid fa-calendar-day"></i>
+        </div>
+        <div class="cal-grid" id="calGrid">
+          </div>
       </div>
     </div>
-    <img src="profilepic.png" alt="John Mark Kiritu" class="profile-img-main">
-  </main>
+  </div>
 
-  <footer>
-    <div>
-      <h3 style="font-size: 1rem;">John Mark Kiritu</h3>
-      <p style="font-size: 0.8rem; opacity: 0.6;">© 2026 Creative Portfolio</p>
+  <footer class="liquid-footer">
+    <div class="footer-grid">
+      <div class="footer-col footer-logo">
+        <img src="nobklogo.png" alt="Logo">
+        <p style="color: var(--text-dim); font-size: 0.9rem;">High-performance IT support and creative digital solutions based in Kampala, Uganda.</p>
+        <div class="social-bar">
+          <a href="#" class="social-btn"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="#" class="social-btn"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="#" class="social-btn"><i class="fa-brands fa-github"></i></a>
+          <a href="#" class="social-btn"><i class="fa-brands fa-google"></i></a>
+          <a href="mailto:marc@wanjeru.dev" class="social-btn"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Me</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="education.html">Education</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Location</h4>
+        <p style="color: var(--text-dim); font-size: 0.9rem;"><i class="fa-solid fa-location-dot" style="color: var(--accent);"></i> Kampala, Central Region<br>Uganda</p>
+        <h4 style="margin-top: 20px;">Collaborate</h4>
+        <a href="#" style="color: var(--text-dim); text-decoration: none; font-size: 0.9rem;"><i class="fa-solid fa-users"></i> Join the Team</a>
+      </div>
     </div>
-    <div class="socials">
-      <a href="#"><i class="fa-brands fa-linkedin"></i></a>
-      <a href="#"><i class="fa-brands fa-github"></i></a>
-      <a href="mailto:marc@wanjeru.dev"><i class="fa-solid fa-envelope"></i></a>
+
+    <div class="footer-bottom">
+      <span>© 2026 John Mark Kiritu. All rights reserved.</span>
+      <span>Designed with Liquid Glass UI</span>
     </div>
   </footer>
 
   <script>
     const bubble = document.getElementById('bubble');
     const iconMenu = document.getElementById('iconMenu');
-    const textMenu = document.getElementById('textMenu');
-    const hamburger = document.getElementById('hamburger');
     const themeToggle = document.getElementById('theme-toggle');
-    const themeIcon = document.getElementById('theme-icon');
+    const calGrid = document.getElementById('calGrid');
 
-    // Menu Logic
+    // Simple Calendar Generator
+    const days = ['S','M','T','W','T','F','S'];
+    days.forEach(d => calGrid.innerHTML += `<div style="font-weight:900; opacity:0.5">${d}</div>`);
+    for(let i=1; i<=28; i++) {
+        const isToday = i === new Date().getDate();
+        calGrid.innerHTML += `<div class="cal-day ${isToday?'today':''}" title="Available">${i}</div>`;
+    }
+
+    // Nav Logic
     bubble.addEventListener('click', (e) => {
       e.stopPropagation();
       bubble.classList.add('hidden');
       iconMenu.classList.add('visible');
     });
 
-    hamburger.addEventListener('click', (e) => {
-      e.stopPropagation();
-      textMenu.classList.toggle('open');
-    });
-
-    // Theme Toggle Logic
-    themeToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      const newTheme = isDark ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', newTheme);
-      themeIcon.className = newTheme === 'dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
-    });
-
-    // Click outside to close
     document.addEventListener('click', (e) => {
-      if (!iconMenu.contains(e.target) && !textMenu.contains(e.target)) {
+      if (!iconMenu.contains(e.target)) {
         iconMenu.classList.remove('visible');
-        textMenu.classList.remove('open');
         bubble.classList.remove('hidden');
       }
+    });
+
+    themeToggle.addEventListener('click', () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
     });
   </script>
 </body>
