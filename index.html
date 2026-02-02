@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>John Mark Kiritu — Creative Developer</title>
+  <title>John Mark Kiritu — Home</title>
 
   <link rel="icon" href="nobklogo.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,8 +12,8 @@
 
   <style>
     :root {
-      --bg: #000000;
-      --glass: rgba(15, 20, 35, 0.85);
+      --bg: #050505;
+      --glass: rgba(15, 20, 35, 0.8);
       --accent: #3b82f6;
       --text: #ffffff;
       --text-light: #94a3b8;
@@ -32,6 +32,7 @@
     }
 
     * { margin:0; padding:0; box-sizing:border-box; }
+    
     body {
       height: 100vh;
       font-family: 'Inter', sans-serif;
@@ -44,133 +45,165 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      transition: background 0.3s ease;
     }
 
-    /* Navigation Logic */
-    .floating-bubble {
+    /* Floating Bubble */
+    .bubble {
       position: fixed;
-      left: 30px; top: 30px;
-      width: 60px; height: 60px;
+      left: 24px; top: 24px;
+      width: 64px; height: 64px;
       border-radius: 50%;
-      border: 2px solid var(--accent);
+      border: 3px solid var(--accent);
       cursor: pointer;
-      z-index: 100;
+      z-index: 200;
       transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-    .floating-bubble img { width: 100%; border-radius: 50%; }
-    .floating-bubble.active { transform: scale(0.8); opacity: 0.5; }
+    .bubble img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+    .bubble.hidden { opacity: 0; transform: scale(0) rotate(-90deg); pointer-events: none; }
 
-    .nav-menu {
+    /* Icon Menu (Vertical Bar) */
+    .icon-menu {
       position: fixed;
-      left: 30px; top: 110px;
+      left: 16px; top: 50%;
+      transform: translateY(-50%) translateX(-120px);
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 32px;
+      padding: 20px 10px;
       display: flex;
       flex-direction: column;
       gap: 15px;
-      opacity: 0;
-      transform: translateY(-20px);
-      pointer-events: none;
-      transition: 0.4s ease;
-      z-index: 90;
+      z-index: 150;
+      transition: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    .nav-menu.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .icon-menu.visible { transform: translateY(-50%) translateX(0); }
 
-    .nav-item {
-      width: 50px; height: 50px;
-      background: var(--glass);
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      display: grid; place-items: center;
-      color: var(--text);
-      text-decoration: none;
-      backdrop-filter: blur(10px);
-      transition: 0.3s;
-    }
-    .nav-item:hover { background: var(--accent); color: white; transform: translateX(5px); }
-
-    /* Hero Content */
-    .hero {
-      text-align: center;
-      padding: 2rem;
-      backdrop-filter: blur(5px);
+    .menu-btn {
+      width: 52px; height: 52px;
+      border-radius: 16px;
       background: var(--card-bg);
+      color: var(--text);
+      display: grid; place-items: center;
+      cursor: pointer; transition: 0.3s;
+      border: none; font-size: 1.2rem;
+    }
+    .menu-btn:hover { background: var(--accent); color: white; transform: scale(1.1); }
+
+    /* Text Menu (Slide Out) */
+    .text-menu {
+      position: fixed;
+      left: 100px; top: 50%;
+      transform: translateY(-50%) translateX(-150%);
+      width: 280px;
+      background: var(--glass);
+      backdrop-filter: blur(30px);
       border: 1px solid var(--border);
-      border-radius: 40px;
-      max-width: 600px;
+      border-radius: 24px;
+      padding: 30px;
+      z-index: 140;
+      transition: 0.5s ease;
+      opacity: 0;
     }
-    h1 {
-      font-size: clamp(2.5rem, 10vw, 4rem);
-      font-weight: 900;
-      background: linear-gradient(45deg, #fff, var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      line-height: 1.1;
-      margin-bottom: 1rem;
-    }
-    p { color: var(--text-light); font-size: 1.1rem; margin-bottom: 2rem; }
+    .text-menu.open { transform: translateY(-50%) translateX(0); opacity: 1; }
 
-    .cta-btns { display: flex; gap: 15px; justify-content: center; }
-    .btn {
-      padding: 12px 25px;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: 0.3s;
-    }
-    .btn-primary { background: var(--accent); color: white; }
-    .btn-secondary { border: 1px solid var(--border); color: var(--text); }
-    .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(59,130,246,0.2); }
+    .profile-mini { display: flex; align-items: center; gap: 12px; margin-bottom: 25px; }
+    .profile-mini img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--accent); }
 
-    #theme-toggle { position: fixed; right: 30px; top: 30px; cursor: pointer; font-size: 1.2rem; }
+    .nav-links a {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px; color: var(--text);
+      text-decoration: none; border-radius: 10px; transition: 0.3s;
+    }
+    .nav-links a:hover { background: var(--accent); color: white; }
+
+    /* Hero */
+    .hero { text-align: center; z-index: 10; padding: 20px; }
+    h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 900; margin-bottom: 1rem; }
+    .accent-text { color: var(--accent); }
+    p { color: var(--text-light); max-width: 500px; margin: 0 auto 2rem; }
+
+    #theme-toggle { margin-top: 10px; }
+
   </style>
 </head>
 <body>
 
-  <div id="theme-toggle"><i class="fa-solid fa-moon"></i></div>
-
-  <div class="floating-bubble" id="bubble" onclick="toggleMenu()">
-    <img src="nobklogo.png" alt="Logo">
+  <div class="bubble" id="bubble">
+    <img src="nobklogo.png" alt="JMK">
   </div>
 
-  <nav class="nav-menu" id="menu">
-    <a href="index.html" class="nav-item" title="Home"><i class="fa-solid fa-house"></i></a>
-    <a href="about.html" class="nav-item" title="About"><i class="fa-solid fa-user"></i></a>
-    <a href="projects.html" class="nav-item" title="Work"><i class="fa-solid fa-briefcase"></i></a>
-    <a href="contact.html" class="nav-item" title="Contact"><i class="fa-solid fa-envelope"></i></a>
+  <nav class="icon-menu" id="iconMenu">
+    <button class="menu-btn" id="hamburger" title="Open Menu">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <div style="height: 1px; background: var(--border); width: 80%; margin: 0 auto;"></div>
+    <a href="index.html" class="menu-btn" title="Home"><i class="fa-solid fa-house"></i></a>
+    <button class="menu-btn" id="theme-toggle" title="Toggle Theme">
+      <i class="fa-solid fa-moon" id="theme-icon"></i>
+    </button>
   </nav>
 
+  <aside class="text-menu" id="textMenu">
+    <div class="profile-mini">
+      <img src="nobklogo.png" alt="JMK">
+      <div>
+        <h4 style="font-size: 0.9rem;">John Mark Kiritu</h4>
+        <small style="color: var(--accent);">Creative Developer</small>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="about.html"><i class="fa-solid fa-user"></i> About Me</a>
+      <a href="projects.html"><i class="fa-solid fa-code"></i> Projects</a>
+      <a href="contact.html"><i class="fa-solid fa-envelope"></i> Contact</a>
+    </div>
+  </aside>
+
   <main class="hero">
-    <h1>John Mark Kiritu</h1>
-    <p>Creative Developer & IT Professional bridging the gap between infrastructure and design.</p>
-    <div class="cta-btns">
-      <a href="projects.html" class="btn btn-primary">View Work</a>
-      <a href="about.html" class="btn btn-secondary">My Story</a>
+    <h1>Hi, I'm <span class="accent-text">John Mark</span></h1>
+    <p>IT Professional & Creative Developer. I design digital systems with technical precision.</p>
+    <div style="display: flex; gap: 15px; justify-content: center;">
+        <a href="projects.html" style="text-decoration: none; background: var(--accent); color: white; padding: 12px 24px; border-radius: 30px; font-weight: 600;">View Work</a>
     </div>
   </main>
 
   <script>
-    const menu = document.getElementById('menu');
     const bubble = document.getElementById('bubble');
+    const iconMenu = document.getElementById('iconMenu');
+    const textMenu = document.getElementById('textMenu');
+    const hamburger = document.getElementById('hamburger');
     const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
 
-    function toggleMenu() {
-      menu.classList.toggle('show');
-      bubble.classList.toggle('active');
-    }
-
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!bubble.contains(e.target) && !menu.contains(e.target)) {
-        menu.classList.remove('show');
-        bubble.classList.remove('active');
-      }
+    // 1. Reveal Sidebar from Bubble
+    bubble.addEventListener('click', (e) => {
+      e.stopPropagation();
+      bubble.classList.add('hidden');
+      iconMenu.classList.add('visible');
     });
 
-    // Simple Theme Toggle
+    // 2. Reveal Text Menu from Hamburger
+    hamburger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      textMenu.classList.toggle('open');
+    });
+
+    // 3. Theme Logic
     themeToggle.addEventListener('click', () => {
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
-      themeToggle.innerHTML = isDark ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+      const newTheme = isDark ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      themeIcon.className = newTheme === 'dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+    });
+
+    // 4. Click Outside to Reset
+    document.addEventListener('click', (e) => {
+      if (!iconMenu.contains(e.target) && !textMenu.contains(e.target)) {
+        textMenu.classList.remove('open');
+        iconMenu.classList.remove('visible');
+        bubble.classList.remove('hidden');
+      }
     });
   </script>
 </body>
