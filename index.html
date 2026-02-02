@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>John Mark Kiritu — Portfolio Dashboard</title>
+  <title>John Mark Kiritu — Home</title>
 
   <link rel="icon" href="nobklogo.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,267 +12,256 @@
 
   <style>
     :root {
-      --bg: #e2e8f0;
-      --panel: #f1f5f9;
-      --glass: rgba(255, 255, 255, 0.7);
-      --accent: #3b82f6; /* Your Blue */
-      --text: #0f172a;
-      --text-light: #64748b;
-      --border: rgba(0, 0, 0, 0.05);
-      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+      /* Dark Liquid Glass (Default) */
+      --bg-overlay: rgba(0, 0, 0, 0.4);
+      --glass: rgba(20, 25, 40, 0.6);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --accent: #3b82f6;
+      --text: #ffffff;
+      --text-dim: #94a3b8;
+      --card-inner: rgba(255, 255, 255, 0.05);
     }
 
-    [data-theme="dark"] {
-      --bg: #0f172a;
-      --panel: #1e293b;
-      --glass: rgba(30, 41, 59, 0.7);
-      --accent: #3b82f6;
-      --text: #f8fafc;
-      --text-light: #94a3b8;
-      --border: rgba(255, 255, 255, 0.05);
-      --shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    [data-theme="light"] {
+      /* Light Liquid Glass */
+      --bg-overlay: rgba(255, 255, 255, 0.3);
+      --glass: rgba(255, 255, 255, 0.5);
+      --glass-border: rgba(255, 255, 255, 0.4);
+      --accent: #2563eb;
+      --text: #0f172a;
+      --text-dim: #475569;
+      --card-inner: rgba(0, 0, 0, 0.03);
     }
 
     * { margin:0; padding:0; box-sizing:border-box; }
+    
     body {
       height: 100vh;
       font-family: 'Inter', sans-serif;
-      background: var(--bg);
+      /* Wallpaper Underlay */
+      background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('desktop.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
       color: var(--text);
       display: flex;
+      align-items: center;
+      justify-content: center;
       overflow: hidden;
-      padding: 20px;
+      transition: all 0.5s ease;
     }
 
-    /* Floating Bubble & Navigation (Same Logic as Requested) */
-    .floating-bubble {
+    /* Floating Bubble */
+    .bubble {
       position: fixed;
-      left: 40px; top: 40px;
-      width: 50px; height: 50px;
+      left: 30px; top: 30px;
+      width: 60px; height: 60px;
       border-radius: 50%;
       border: 2px solid var(--accent);
       cursor: pointer;
-      z-index: 100;
-      transition: 0.4s;
+      z-index: 200;
+      transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-    .floating-bubble img { width: 100%; border-radius: 50%; }
-    .floating-bubble.hidden { opacity: 0; transform: scale(0); }
+    .bubble img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+    .bubble.hidden { opacity: 0; transform: scale(0); }
 
+    /* Glass Sidebar */
     .icon-menu {
       position: fixed;
-      left: 30px; top: 50%;
-      transform: translateY(-50%) translateX(-100px);
+      left: 20px; top: 50%;
+      transform: translateY(-50%) translateX(-120px);
       background: var(--glass);
-      backdrop-filter: blur(15px);
-      border: 1px solid var(--border);
-      border-radius: 20px;
+      backdrop-filter: blur(25px) saturate(180%);
+      border: 1px solid var(--glass-border);
+      border-radius: 25px;
       padding: 15px;
       display: flex;
       flex-direction: column;
       gap: 15px;
-      transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      z-index: 90;
+      z-index: 150;
+      transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .icon-menu.visible { transform: translateY(-50%) translateX(0); }
-    
+
     .nav-btn {
-      width: 45px; height: 45px;
-      border-radius: 12px;
-      background: var(--panel);
+      width: 50px; height: 50px;
+      border-radius: 15px;
+      background: var(--card-inner);
       color: var(--text);
       display: grid; place-items: center;
-      cursor: pointer; text-decoration: none; border: none;
+      cursor: pointer; transition: 0.3s;
+      border: 1px solid var(--glass-border);
+      text-decoration: none;
     }
-    .nav-btn:hover { background: var(--accent); color: white; }
+    .nav-btn:hover { background: var(--accent); color: white; transform: scale(1.1); }
 
-    /* Dashboard Layout */
-    .dashboard {
-      width: 100%;
-      max-width: 1400px;
-      margin: auto;
-      display: grid;
-      grid-template-columns: 1fr 350px;
-      grid-template-rows: 1fr auto;
-      gap: 20px;
-      height: 90vh;
-    }
-
-    /* Left Side: Hero Area */
-    .hero-panel {
-      background: var(--panel);
-      border-radius: 30px;
-      position: relative;
-      padding: 60px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      border: 1px solid var(--border);
-      background-image: radial-gradient(circle at top right, rgba(59, 130, 246, 0.1), transparent);
-    }
-
-    .hero-header { display: flex; align-items: center; gap: 30px; margin-bottom: 20px; }
-    .hero-header h1 { font-size: 4rem; font-weight: 900; line-height: 1; }
-    .hero-header img { width: 120px; height: 120px; border-radius: 30px; border: 4px solid var(--accent); }
-    .hero-panel p { font-size: 1.2rem; color: var(--text-light); max-width: 600px; }
-
-    /* Right Side: AI Assistant Style Panel */
-    .assistant-panel {
+    /* Expanded Text Menu (Liquid Style) */
+    .text-menu {
+      position: fixed;
+      left: 100px; top: 50%;
+      transform: translateY(-50%) translateX(-150%);
+      width: 280px;
       background: var(--glass);
-      backdrop-filter: blur(20px);
+      backdrop-filter: blur(35px);
+      border: 1px solid var(--glass-border);
       border-radius: 30px;
       padding: 30px;
-      border: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+      z-index: 140;
+      transition: 0.5s ease;
+      opacity: 0;
     }
+    .text-menu.open { transform: translateY(-50%) translateX(0); opacity: 1; }
 
-    .assistant-header { display: flex; justify-content: space-between; align-items: center; }
-    .status-pill { padding: 5px 12px; border-radius: 20px; background: rgba(59, 130, 246, 0.2); color: var(--accent); font-size: 0.8rem; font-weight: 600; }
-
-    .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-    .action-card {
-      background: var(--panel);
-      padding: 20px;
-      border-radius: 20px;
-      border: 1px solid var(--border);
-      transition: 0.3s;
-      cursor: pointer;
-      text-decoration: none;
-      color: inherit;
-    }
-    .action-card:hover { border-color: var(--accent); transform: translateY(-5px); }
-    .action-card i { color: var(--accent); font-size: 1.2rem; margin-bottom: 10px; display: block; }
-
-    .command-box {
-      margin-top: auto;
-      background: var(--panel);
-      padding: 15px;
-      border-radius: 20px;
+    /* Main Home Card */
+    .home-card {
+      background: var(--glass);
+      backdrop-filter: blur(30px) saturate(150%);
+      border: 1px solid var(--glass-border);
+      border-radius: 40px;
+      padding: 60px;
+      max-width: 1100px;
+      width: 90%;
       display: flex;
       align-items: center;
-      gap: 10px;
+      justify-content: space-between;
+      gap: 40px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     }
-    .command-box input { background: transparent; border: none; color: var(--text); flex: 1; outline: none; }
-    .send-btn { background: var(--accent); color: white; border: none; padding: 10px 15px; border-radius: 12px; cursor: pointer; }
 
-    /* Bottom Widgets */
-    .footer-widgets {
-      grid-column: 1 / span 2;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1.5fr;
-      gap: 20px;
+    .hero-text h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 20px;
     }
-    .widget { background: var(--panel); border-radius: 24px; padding: 20px; border: 1px solid var(--border); display: flex; align-items: center; gap: 15px; }
-    .widget-icon { width: 45px; height: 45px; border-radius: 12px; background: var(--accent); color: white; display: grid; place-items: center; }
+    .hero-text span { color: var(--accent); }
+    .hero-text p { color: var(--text-dim); font-size: 1.2rem; max-width: 500px; }
 
-    @media (max-width: 1024px) {
-      .dashboard { grid-template-columns: 1fr; overflow-y: auto; height: auto; }
-      .assistant-panel { height: 500px; }
+    .profile-img-main {
+      width: 300px;
+      height: 300px;
+      border-radius: 35px;
+      object-fit: cover;
+      border: 1px solid var(--glass-border);
+      box-shadow: 20px 20px 60px rgba(0,0,0,0.3);
+      transition: transform 0.5s ease;
+    }
+    .profile-img-main:hover { transform: scale(1.02) rotate(2deg); }
+
+    /* Footer (Restored Original) */
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: var(--glass);
+      backdrop-filter: blur(15px);
+      padding: 30px 10%;
+      border-top: 1px solid var(--glass-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .socials { display: flex; gap: 20px; }
+    .socials a { color: var(--text); font-size: 1.2rem; transition: 0.3s; }
+    .socials a:hover { color: var(--accent); }
+
+    @media (max-width: 900px) {
+      .home-card { flex-direction: column-reverse; text-align: center; padding: 40px; }
+      .profile-img-main { width: 200px; height: 200px; }
+      footer { flex-direction: column; gap: 15px; text-align: center; }
     }
   </style>
 </head>
 <body>
 
-  <div class="floating-bubble" id="bubble"><img src="nobklogo.png" alt="Logo"></div>
+  <div class="bubble" id="bubble">
+    <img src="profilepic.png" alt="John Mark">
+  </div>
 
   <nav class="icon-menu" id="iconMenu">
-    <button class="nav-btn" id="hamburger"><i class="fa-solid fa-bars"></i></button>
+    <div class="nav-btn" id="hamburger"><i class="fa-solid fa-bars"></i></div>
+    <div style="height: 1px; background: var(--glass-border); width: 100%;"></div>
     <a href="index.html" class="nav-btn"><i class="fa-solid fa-house"></i></a>
-    <a href="projects.html" class="nav-btn"><i class="fa-solid fa-code"></i></a>
-    <button class="nav-btn" id="theme-toggle"><i class="fa-solid fa-moon"></i></button>
+    <div class="nav-btn" id="theme-toggle"><i class="fa-solid fa-moon" id="theme-icon"></i></div>
   </nav>
 
-  <div class="dashboard">
-    <main class="hero-panel">
-      <div class="hero-header">
-        <div>
-          <small style="color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 2px;">Portfolio 2026</small>
-          <h1>John Mark <br>Kiritu</h1>
-        </div>
-        <img src="nobklogo.png" alt="Profile">
-      </div>
-      <p>Building high-performance technical infrastructure and creative digital experiences. Explore my workspace below.</p>
-    </main>
+  <aside class="text-menu" id="textMenu">
+    <div style="margin-bottom: 25px;">
+        <h4 style="color: var(--accent);">Menu</h4>
+        <div style="height: 2px; width: 30px; background: var(--accent); margin-top: 5px;"></div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 15px;">
+      <a href="index.html" style="text-decoration: none; color: var(--text); display: flex; align-items: center; gap: 10px;">
+        <i class="fa-solid fa-house"></i> Home
+      </a>
+      <a href="about.html" style="text-decoration: none; color: var(--text); display: flex; align-items: center; gap: 10px;">
+        <i class="fa-solid fa-user"></i> About
+      </a>
+      <a href="projects.html" style="text-decoration: none; color: var(--text); display: flex; align-items: center; gap: 10px;">
+        <i class="fa-solid fa-code"></i> Projects
+      </a>
+    </div>
+  </aside>
 
-    <aside class="assistant-panel">
-      <div class="assistant-header">
-        <div>
-          <h3 style="font-size: 1.1rem;">Portfolio AI</h3>
-          <small style="color: var(--text-light);">How can I help you today?</small>
-        </div>
-        <div class="status-pill">Active</div>
-      </div>
-
-      <div class="action-grid">
-        <a href="about.html" class="action-card">
-          <i class="fa-solid fa-user"></i>
-          <strong>Bio</strong>
-          <small style="display:block; font-size: 0.7rem; color: var(--text-light);">Learn about me</small>
-        </a>
-        <a href="education.html" class="action-card">
-          <i class="fa-solid fa-graduation-cap"></i>
-          <strong>Skills</strong>
-          <small style="display:block; font-size: 0.7rem; color: var(--text-light);">Education & tech</small>
-        </a>
-        <div class="action-card" onclick="alert('Opening Resume...')">
-          <i class="fa-solid fa-file-pdf"></i>
-          <strong>Resume</strong>
-          <small style="display:block; font-size: 0.7rem; color: var(--text-light);">Download CV</small>
-        </div>
-        <div class="action-card">
-          <i class="fa-solid fa-envelope"></i>
-          <strong>Contact</strong>
-          <small style="display:block; font-size: 0.7rem; color: var(--text-light);">Get in touch</small>
-        </div>
-      </div>
-
-      <div class="command-box">
-        <i class="fa-solid fa-terminal" style="opacity: 0.5;"></i>
-        <input type="text" placeholder="Ask about my projects...">
-        <button class="send-btn"><i class="fa-solid fa-arrow-up"></i></button>
-      </div>
-    </aside>
-
-    <div class="footer-widgets">
-      <div class="widget">
-        <div class="widget-icon"><i class="fa-solid fa-location-dot"></i></div>
-        <div><small style="color: var(--text-light);">Location</small><br><strong>Kampala, Uganda</strong></div>
-      </div>
-      <div class="widget">
-        <div class="widget-icon"><i class="fa-solid fa-clock"></i></div>
-        <div><small style="color: var(--text-light);">Experience</small><br><strong>2+ Years IT</strong></div>
-      </div>
-      <div class="widget">
-        <div class="widget-icon"><i class="fa-solid fa-envelope"></i></div>
-        <div><small style="color: var(--text-light);">Email</small><br><strong>marc@wanjeru.dev</strong></div>
+  <main class="home-card">
+    <div class="hero-text">
+      <h1>Hi, I'm <span>John Mark</span></h1>
+      <p>A Creative Developer and IT Specialist. I design fluid digital interfaces and robust technical infrastructures.</p>
+      <div style="margin-top: 30px;">
+          <a href="about.html" style="text-decoration: none; color: white; background: var(--accent); padding: 12px 30px; border-radius: 15px; font-weight: 600; display: inline-block;">Get Started</a>
       </div>
     </div>
-  </div>
+    <img src="profilepic.png" alt="John Mark Kiritu" class="profile-img-main">
+  </main>
+
+  <footer>
+    <div>
+      <h3 style="font-size: 1rem;">John Mark Kiritu</h3>
+      <p style="font-size: 0.8rem; opacity: 0.6;">© 2026 Creative Portfolio</p>
+    </div>
+    <div class="socials">
+      <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+      <a href="#"><i class="fa-brands fa-github"></i></a>
+      <a href="mailto:marc@wanjeru.dev"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+  </footer>
 
   <script>
     const bubble = document.getElementById('bubble');
     const iconMenu = document.getElementById('iconMenu');
+    const textMenu = document.getElementById('textMenu');
+    const hamburger = document.getElementById('hamburger');
     const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
 
     // Menu Logic
-    bubble.addEventListener('click', () => {
+    bubble.addEventListener('click', (e) => {
+      e.stopPropagation();
       bubble.classList.add('hidden');
       iconMenu.classList.add('visible');
     });
 
-    document.addEventListener('click', (e) => {
-      if (!iconMenu.contains(e.target) && !bubble.contains(e.target)) {
-        iconMenu.classList.remove('visible');
-        bubble.classList.remove('hidden');
-      }
+    hamburger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      textMenu.classList.toggle('open');
     });
 
-    // Theme Logic
-    themeToggle.addEventListener('click', () => {
+    // Theme Toggle Logic
+    themeToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
-      themeToggle.innerHTML = isDark ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+      const newTheme = isDark ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      themeIcon.className = newTheme === 'dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+    });
+
+    // Click outside to close
+    document.addEventListener('click', (e) => {
+      if (!iconMenu.contains(e.target) && !textMenu.contains(e.target)) {
+        iconMenu.classList.remove('visible');
+        textMenu.classList.remove('open');
+        bubble.classList.remove('hidden');
+      }
     });
   </script>
 </body>
