@@ -1,266 +1,177 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>John Mark Kiritu | Home</title>
-  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>John Mark Kiritu — Creative Developer</title>
+
   <link rel="icon" href="nobklogo.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <style>
-    /* MASTER DESIGN SYSTEM */
     :root {
-      --bg: #020617;
-      --card: rgba(255, 255, 255, 0.04);
-      --glass: rgba(255, 255, 255, 0.06);
-      --border: rgba(255, 255, 255, 0.1);
+      --bg: #000000;
+      --glass: rgba(15, 20, 35, 0.85);
       --accent: #3b82f6;
-      --text: #f8fafc;
-      --text-dim: #94a3b8;
-      --footer-blue: #1e3a8a; /* Your original blue */
+      --text: #ffffff;
+      --text-light: #94a3b8;
+      --border: rgba(255, 255, 255, 0.1);
+      --card-bg: rgba(255, 255, 255, 0.03);
     }
 
     [data-theme="light"] {
       --bg: #f8fafc;
-      --card: rgba(0, 0, 0, 0.03);
-      --glass: rgba(255, 255, 255, 0.8);
-      --border: rgba(0, 0, 0, 0.1);
+      --glass: rgba(255, 255, 255, 0.9);
       --accent: #2563eb;
       --text: #0f172a;
-      --text-dim: #475569;
-      --footer-blue: #2563eb;
+      --text-light: #475569;
+      --border: rgba(0, 0, 0, 0.1);
+      --card-bg: rgba(0, 0, 0, 0.02);
     }
 
     * { margin:0; padding:0; box-sizing:border-box; }
-    html { scroll-behavior: smooth; }
-    body { 
-      font-family: 'Inter', sans-serif; 
-      background: var(--bg); 
-      color: var(--text); 
-      transition: background 0.4s ease;
-      overflow-x: hidden;
-      min-height: 100vh;
+    body {
+      height: 100vh;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('wllpbk.jpg');
+      background-size: cover;
+      background-position: center;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition: background 0.3s ease;
+    }
+
+    /* Navigation Logic */
+    .floating-bubble {
+      position: fixed;
+      left: 30px; top: 30px;
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      cursor: pointer;
+      z-index: 100;
+      transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .floating-bubble img { width: 100%; border-radius: 50%; }
+    .floating-bubble.active { transform: scale(0.8); opacity: 0.5; }
+
+    .nav-menu {
+      position: fixed;
+      left: 30px; top: 110px;
       display: flex;
       flex-direction: column;
+      gap: 15px;
+      opacity: 0;
+      transform: translateY(-20px);
+      pointer-events: none;
+      transition: 0.4s ease;
+      z-index: 90;
     }
+    .nav-menu.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
-    /* BACKGROUND ELEMENT */
-    .bg-image {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: url('wllpbk.jpg') center/cover no-repeat;
-      z-index: -2; opacity: 0.15; filter: grayscale(50%);
-    }
-
-    /* FIXED SIDEBAR NAVIGATION */
-    .side-nav {
-      position: fixed; left: 20px; top: 50%; transform: translateY(-50%);
-      width: 70px; background: var(--glass); backdrop-filter: blur(25px) saturate(180%);
-      border: 1px solid var(--border); border-radius: 40px; padding: 25px 0;
-      display: flex; flex-direction: column; align-items: center; gap: 18px; z-index: 1000;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-    }
-    .nav-icon {
-      width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center;
-      color: var(--text); text-decoration: none; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative;
-    }
-    .nav-icon:hover { background: var(--accent); color: white; transform: scale(1.15); }
-    .nav-icon.active { background: var(--accent); color: white; }
-    
-    /* TOOLTIPS */
-    .nav-icon::after {
-      content: attr(data-tip); position: absolute; left: 65px; background: var(--accent);
-      color: white; padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; 
-      opacity: 0; pointer-events: none; transition: 0.3s; white-space: nowrap; font-weight: 700;
-    }
-    .nav-icon:hover::after { opacity: 1; transform: translateX(5px); }
-
-    /* HERO SECTION */
-    .hero {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      padding: 0 10% 0 130px; /* Space for the sidebar */
-    }
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 4rem;
-      width: 100%;
-      align-items: center;
-    }
-    .hero-text h4 {
-      color: var(--accent);
-      letter-spacing: 6px;
-      font-weight: 900;
-      margin-bottom: 10px;
-      text-transform: uppercase;
-    }
-    .hero-text h1 {
-      font-size: clamp(3.5rem, 8vw, 6.5rem);
-      line-height: 1.1;
-      font-weight: 900;
-      margin-bottom: 25px;
-    }
-    .hero-text p {
-      font-size: 1.25rem;
-      line-height: 1.8;
-      color: var(--text-dim);
-      max-width: 600px;
-      margin-bottom: 40px;
-    }
-
-    /* PROFILE IMAGE WRAP */
-    .profile-wrap {
-      position: relative;
-      width: 100%;
-      max-width: 450px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .profile-img {
-      width: 100%;
-      z-index: 10;
-      position: relative;
-      filter: drop-shadow(0 20px 50px rgba(0,0,0,0.5));
-      transition: 0.5s;
-    }
-    .profile-img:hover { transform: scale(1.02); }
-    .glow-blob {
-      position: absolute; width: 400px; height: 400px;
-      background: var(--accent); filter: blur(100px);
-      opacity: 0.25; border-radius: 50%; z-index: 1;
-      animation: pulse 6s infinite;
-    }
-
-    /* BUTTONS */
-    .btn-group { display: flex; gap: 20px; flex-wrap: wrap; }
-    .btn {
-      padding: 18px 35px;
-      border-radius: 50px;
-      font-weight: 800;
+    .nav-item {
+      width: 50px; height: 50px;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      display: grid; place-items: center;
+      color: var(--text);
       text-decoration: none;
+      backdrop-filter: blur(10px);
       transition: 0.3s;
-      font-size: 0.95rem;
-      border: none;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
     }
-    .btn-primary { background: var(--accent); color: white; box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3); }
-    .btn-secondary { background: var(--glass); color: var(--text); border: 1px solid var(--border); backdrop-filter: blur(10px); }
-    .btn:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
+    .nav-item:hover { background: var(--accent); color: white; transform: translateX(5px); }
 
-    /* FOOTER (ORIGINAL BLUE) */
-    footer {
-      background: var(--footer-blue);
-      color: white;
-      padding: 60px 10% 30px 130px;
-      border-top: 1px solid rgba(255,255,255,0.1);
+    /* Hero Content */
+    .hero {
+      text-align: center;
+      padding: 2rem;
+      backdrop-filter: blur(5px);
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      max-width: 600px;
     }
-    .f-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 50px;
+    h1 {
+      font-size: clamp(2.5rem, 10vw, 4rem);
+      font-weight: 900;
+      background: linear-gradient(45deg, #fff, var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.1;
+      margin-bottom: 1rem;
     }
-    .f-logo { width: 70px; margin-bottom: 20px; }
-    .f-col h3 { margin-bottom: 25px; font-size: 1.2rem; }
-    .socials a { color: white; font-size: 1.5rem; margin-right: 20px; transition: 0.3s; opacity: 0.8; }
-    .socials a:hover { opacity: 1; transform: translateY(-3px); }
+    p { color: var(--text-light); font-size: 1.1rem; margin-bottom: 2rem; }
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 0.25; }
-      50% { transform: scale(1.1); opacity: 0.35; }
+    .cta-btns { display: flex; gap: 15px; justify-content: center; }
+    .btn {
+      padding: 12px 25px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
     }
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-secondary { border: 1px solid var(--border); color: var(--text); }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(59,130,246,0.2); }
 
-    @media (max-width: 1024px) {
-      .hero { padding: 80px 5%; }
-      .side-nav {
-        bottom: 20px; top: auto; left: 50%; transform: translateX(-50%);
-        width: 95%; height: 65px; flex-direction: row; justify-content: space-around;
-        padding: 0 10px; border-radius: 20px;
-      }
-      .hero-grid { grid-template-columns: 1fr; text-align: center; }
-      .hero-text p { margin: 0 auto 40px; }
-      .btn-group { justify-content: center; }
-      .profile-wrap { margin: 40px auto 0; }
-      footer { padding: 60px 5% 100px 5%; }
-    }
+    #theme-toggle { position: fixed; right: 30px; top: 30px; cursor: pointer; font-size: 1.2rem; }
   </style>
 </head>
 <body>
 
-  <div class="bg-image"></div>
+  <div id="theme-toggle"><i class="fa-solid fa-moon"></i></div>
 
-  <nav class="side-nav">
-    <a href="index.html" class="nav-icon active" data-tip="Home"><i class="fa-solid fa-house"></i></a>
-    <a href="about.html" class="nav-icon" data-tip="About Me"><i class="fa-solid fa-user-tie"></i></a>
-    <a href="experience.html" class="nav-icon" data-tip="Journey"><i class="fa-solid fa-briefcase"></i></a>
-    <a href="tech.html" class="nav-icon" data-tip="Technologies"><i class="fa-solid fa-microchip"></i></a>
-    <a href="services.html" class="nav-icon" data-tip="Services"><i class="fa-solid fa-gears"></i></a>
-    <a href="contact.html" class="nav-icon" data-tip="Contact Us"><i class="fa-solid fa-paper-plane"></i></a>
-    <a href="javascript:void(0)" onclick="toggleTheme()" class="nav-icon" data-tip="Theme"><i class="fa-solid fa-circle-half-stroke"></i></a>
+  <div class="floating-bubble" id="bubble" onclick="toggleMenu()">
+    <img src="nobklogo.png" alt="Logo">
+  </div>
+
+  <nav class="nav-menu" id="menu">
+    <a href="index.html" class="nav-item" title="Home"><i class="fa-solid fa-house"></i></a>
+    <a href="about.html" class="nav-item" title="About"><i class="fa-solid fa-user"></i></a>
+    <a href="projects.html" class="nav-item" title="Work"><i class="fa-solid fa-briefcase"></i></a>
+    <a href="contact.html" class="nav-item" title="Contact"><i class="fa-solid fa-envelope"></i></a>
   </nav>
 
   <main class="hero">
-    <div class="hero-grid">
-      <div class="hero-text">
-        <h4>IT Specialist & Admin</h4>
-        <h1>John Mark <br><span style="color:var(--accent)">Kiritu</span></h1>
-        <p>I specialize in building and managing high-performance IT infrastructure, ensuring seamless network operations and robust cybersecurity for modern enterprises.</p>
-        <div class="btn-group">
-          <a href="cv.pdf" download class="btn btn-primary"><i class="fa-solid fa-download"></i> Download CV</a>
-          <a href="contact.html" class="btn btn-secondary">Get In Touch</a>
-        </div>
-      </div>
-      <div class="profile-wrap">
-        <div class="glow-blob"></div>
-        <img src="profilepic.png" alt="John Mark Kiritu" class="profile-img">
-      </div>
+    <h1>John Mark Kiritu</h1>
+    <p>Creative Developer & IT Professional bridging the gap between infrastructure and design.</p>
+    <div class="cta-btns">
+      <a href="projects.html" class="btn btn-primary">View Work</a>
+      <a href="about.html" class="btn btn-secondary">My Story</a>
     </div>
   </main>
 
-  <footer>
-    <div class="f-grid">
-      <div class="f-col">
-        <img src="nobklogo.png" class="f-logo" alt="Logo">
-        <h3>John Mark Kiritu</h3>
-        <p>Empowering organizational growth through technical excellence and infrastructure resilience.</p>
-        <div class="socials" style="margin-top: 25px;">
-          <a href="#"><i class="fa-brands fa-linkedin"></i></a>
-          <a href="#"><i class="fa-brands fa-github"></i></a>
-          <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
-          <a href="#"><i class="fa-brands fa-twitter"></i></a>
-        </div>
-      </div>
-      <div class="f-col">
-        <h3>Quick Navigation</h3>
-        <p style="margin-bottom:10px;"><a href="about.html" style="color:white; text-decoration:none; opacity:0.8;">About My Work</a></p>
-        <p style="margin-bottom:10px;"><a href="experience.html" style="color:white; text-decoration:none; opacity:0.8;">Professional Journey</a></p>
-        <p style="margin-bottom:10px;"><a href="services.html" style="color:white; text-decoration:none; opacity:0.8;">Expert Services</a></p>
-      </div>
-      <div class="f-col">
-        <h3>Contact Details</h3>
-        <p style="margin-bottom:10px; opacity:0.8;"><i class="fa-solid fa-location-dot" style="margin-right:10px;"></i> Kampala, Uganda</p>
-        <p style="margin-bottom:10px; opacity:0.8;"><i class="fa-solid fa-envelope" style="margin-right:10px;"></i> marc@wanjeru.dev</p>
-      </div>
-    </div>
-    <div style="margin-top: 50px; padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; font-size: 0.85rem; opacity: 0.7;">
-      <span>© 2026 John Mark Kiritu | All Rights Reserved</span>
-      <span>Terms & Conditions | Cookies Policy</span>
-    </div>
-  </footer>
-
   <script>
-    function toggleTheme() {
-      const doc = document.documentElement;
-      const current = doc.getAttribute('data-theme');
-      const target = current === 'dark' ? 'light' : 'dark';
-      doc.setAttribute('data-theme', target);
+    const menu = document.getElementById('menu');
+    const bubble = document.getElementById('bubble');
+    const themeToggle = document.getElementById('theme-toggle');
+
+    function toggleMenu() {
+      menu.classList.toggle('show');
+      bubble.classList.toggle('active');
     }
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!bubble.contains(e.target) && !menu.contains(e.target)) {
+        menu.classList.remove('show');
+        bubble.classList.remove('active');
+      }
+    });
+
+    // Simple Theme Toggle
+    themeToggle.addEventListener('click', () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      themeToggle.innerHTML = isDark ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+    });
   </script>
 </body>
 </html>
