@@ -3,327 +3,276 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>John Mark Kiritu — Creative Developer & Designer</title>
+  <title>John Mark Kiritu — Portfolio Dashboard</title>
 
   <link rel="icon" href="nobklogo.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
   <style>
     :root {
-      --bg: #000000;
-      --glass: rgba(15, 20, 35, 0.85);
-      --accent: #3b82f6;
-      --text: #ffffff;
-      --text-light: #94a3b8;
-      --border: rgba(255, 255, 255, 0.1);
-      --card-bg: rgba(255, 255, 255, 0.03);
+      --bg: #e2e8f0;
+      --panel: #f1f5f9;
+      --glass: rgba(255, 255, 255, 0.7);
+      --accent: #3b82f6; /* Your Blue */
+      --text: #0f172a;
+      --text-light: #64748b;
+      --border: rgba(0, 0, 0, 0.05);
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
     }
 
-    [data-theme="light"] {
-      --bg: #f8fafc;
-      --glass: rgba(255, 255, 255, 0.9);
-      --accent: #2563eb;
-      --text: #0f172a;
-      --text-light: #475569;
-      --border: rgba(0, 0, 0, 0.1);
-      --card-bg: rgba(0, 0, 0, 0.02);
+    [data-theme="dark"] {
+      --bg: #0f172a;
+      --panel: #1e293b;
+      --glass: rgba(30, 41, 59, 0.7);
+      --accent: #3b82f6;
+      --text: #f8fafc;
+      --text-light: #94a3b8;
+      --border: rgba(255, 255, 255, 0.05);
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
     }
 
     * { margin:0; padding:0; box-sizing:border-box; }
-    html { scroll-behavior: smooth; }
-
     body {
-      min-height: 100dvh;
+      height: 100vh;
       font-family: 'Inter', sans-serif;
       background: var(--bg);
-      background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('wllpbk.jpg');
-      background-attachment: fixed;
-      background-size: cover;
       color: var(--text);
-      line-height: 1.6;
-      transition: background 0.3s ease, color 0.3s ease;
+      display: flex;
+      overflow: hidden;
+      padding: 20px;
     }
 
-    [data-theme="light"] body {
-      background-image: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url('wllpbk.jpg');
-    }
-
-    /* Floating bubble */
+    /* Floating Bubble & Navigation (Same Logic as Requested) */
     .floating-bubble {
       position: fixed;
-      left: 24px;
-      top: 24px;
-      width: 64px;
-      height: 64px;
+      left: 40px; top: 40px;
+      width: 50px; height: 50px;
       border-radius: 50%;
-      overflow: hidden;
-      border: 3px solid var(--accent);
-      box-shadow: 0 8px 32px rgba(59,130,246,0.3);
+      border: 2px solid var(--accent);
       cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      z-index: 130;
+      z-index: 100;
+      transition: 0.4s;
     }
-    .floating-bubble.hidden { opacity: 0; transform: scale(0.5) translateY(-30px); pointer-events: none; }
-    .floating-bubble img { width: 100%; height: 100%; object-fit: cover; }
+    .floating-bubble img { width: 100%; border-radius: 50%; }
+    .floating-bubble.hidden { opacity: 0; transform: scale(0); }
 
-    /* Icon menu */
     .icon-menu {
       position: fixed;
-      left: 16px;
-      top: 50%;
+      left: 30px; top: 50%;
       transform: translateY(-50%) translateX(-100px);
-      width: 80px;
       background: var(--glass);
-      backdrop-filter: blur(20px);
+      backdrop-filter: blur(15px);
       border: 1px solid var(--border);
-      border-radius: 32px;
-      padding: 20px 0;
+      border-radius: 20px;
+      padding: 15px;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 18px;
-      z-index: 120;
-      opacity: 0;
-      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      gap: 15px;
+      transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 90;
     }
-    .icon-menu.visible { opacity: 1; transform: translateY(-50%) translateX(0); }
-
-    .hamburger-btn {
-      width: 56px; height: 56px; border-radius: 18px;
-      background: var(--card-bg); color: var(--text);
-      display: grid; place-items: center; cursor: pointer; transition: 0.3s;
+    .icon-menu.visible { transform: translateY(-50%) translateX(0); }
+    
+    .nav-btn {
+      width: 45px; height: 45px;
+      border-radius: 12px;
+      background: var(--panel);
+      color: var(--text);
+      display: grid; place-items: center;
+      cursor: pointer; text-decoration: none; border: none;
     }
-    .hamburger-btn:hover { background: var(--accent); color: white; transform: scale(1.1); }
+    .nav-btn:hover { background: var(--accent); color: white; }
 
-    .icon-items { display: flex; flex-direction: column; gap: 16px; }
-    .icon-item {
-      width: 52px; height: 52px; border-radius: 16px;
-      background: var(--card-bg); color: var(--text);
-      display: grid; place-items: center; cursor: pointer; transition: 0.3s;
-      text-decoration: none;
+    /* Dashboard Layout */
+    .dashboard {
+      width: 100%;
+      max-width: 1400px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1fr 350px;
+      grid-template-rows: 1fr auto;
+      gap: 20px;
+      height: 90vh;
     }
-    .icon-item:hover, .icon-item.active { background: var(--accent); color: white; transform: scale(1.1); }
 
-    /* Text menu */
-    .text-menu {
-      position: fixed;
-      left: 112px;
-      top: 50%;
-      transform: translateY(-50%) translateX(-120%);
-      width: 320px;
-      background: var(--glass);
-      backdrop-filter: blur(25px);
+    /* Left Side: Hero Area */
+    .hero-panel {
+      background: var(--panel);
+      border-radius: 30px;
+      position: relative;
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       border: 1px solid var(--border);
-      border-radius: 28px;
-      padding: 40px;
-      z-index: 115;
-      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-      opacity: 0;
-      pointer-events: none;
+      background-image: radial-gradient(circle at top right, rgba(59, 130, 246, 0.1), transparent);
     }
-    .text-menu.open { transform: translateY(-50%) translateX(0); opacity: 1; pointer-events: auto; }
 
-    .profile { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; }
-    .profile img { width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--accent); }
+    .hero-header { display: flex; align-items: center; gap: 30px; margin-bottom: 20px; }
+    .hero-header h1 { font-size: 4rem; font-weight: 900; line-height: 1; }
+    .hero-header img { width: 120px; height: 120px; border-radius: 30px; border: 4px solid var(--accent); }
+    .hero-panel p { font-size: 1.2rem; color: var(--text-light); max-width: 600px; }
 
-    .text-links a {
-      display: flex; align-items: center; gap: 15px;
-      padding: 12px 20px; border-radius: 12px;
-      color: var(--text); text-decoration: none; transition: 0.3s;
+    /* Right Side: AI Assistant Style Panel */
+    .assistant-panel {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border-radius: 30px;
+      padding: 30px;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
-    .text-links a:hover, .text-links a.active { background: var(--accent); color: white; }
 
-    /* Sections */
-    .parallax-section {
-      min-height: 100vh;
+    .assistant-header { display: flex; justify-content: space-between; align-items: center; }
+    .status-pill { padding: 5px 12px; border-radius: 20px; background: rgba(59, 130, 246, 0.2); color: var(--accent); font-size: 0.8rem; font-weight: 600; }
+
+    .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .action-card {
+      background: var(--panel);
+      padding: 20px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      transition: 0.3s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+    .action-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+    .action-card i { color: var(--accent); font-size: 1.2rem; margin-bottom: 10px; display: block; }
+
+    .command-box {
+      margin-top: auto;
+      background: var(--panel);
+      padding: 15px;
+      border-radius: 20px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      padding: 5% 10%;
+      gap: 10px;
     }
+    .command-box input { background: transparent; border: none; color: var(--text); flex: 1; outline: none; }
+    .send-btn { background: var(--accent); color: white; border: none; padding: 10px 15px; border-radius: 12px; cursor: pointer; }
 
-    .section-content {
-      background: var(--card-bg);
-      backdrop-filter: blur(10px);
-      padding: 4rem;
-      border-radius: 40px;
-      border: 1px solid var(--border);
-      max-width: 1000px;
-      width: 100%;
-      text-align: center;
-    }
-
-    h1, h2 {
-      font-weight: 900;
-      background: linear-gradient(45deg, var(--text), var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 1.5rem;
-    }
-    h1 { font-size: clamp(2.5rem, 8vw, 5rem); }
-    h2 { font-size: clamp(2rem, 5vw, 3.5rem); }
-
-    /* Footer */
-    footer {
-      background: var(--glass);
-      padding: 4rem 10% 2rem;
-      border-top: 1px solid var(--border);
-    }
-    .footer-grid {
+    /* Bottom Widgets */
+    .footer-widgets {
+      grid-column: 1 / span 2;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 40px;
+      grid-template-columns: 1fr 1fr 1.5fr;
+      gap: 20px;
     }
-    .social-icons { display: flex; gap: 15px; margin-top: 20px; justify-content: center; }
-    .social-icons a { 
-      width: 40px; height: 40px; border-radius: 50%; 
-      background: var(--card-bg); color: var(--text);
-      display: grid; place-items: center; transition: 0.3s;
-      text-decoration: none;
-    }
-    .social-icons a:hover { background: var(--accent); color: white; }
+    .widget { background: var(--panel); border-radius: 24px; padding: 20px; border: 1px solid var(--border); display: flex; align-items: center; gap: 15px; }
+    .widget-icon { width: 45px; height: 45px; border-radius: 12px; background: var(--accent); color: white; display: grid; place-items: center; }
 
-    @media (max-width: 768px) {
-      .icon-menu { left: auto; right: 16px; top: auto; bottom: 20px; transform: translateY(0); flex-direction: row; width: auto; padding: 10px 20px; border-radius: 50px; }
-      .icon-menu.visible { transform: translateY(0); }
-      .icon-items { flex-direction: row; }
-      .text-menu { left: 20px; right: 20px; width: auto; bottom: 100px; top: auto; transform: translateY(20px); }
-      .text-menu.open { transform: translateY(0); }
-      .section-content { padding: 2rem; }
+    @media (max-width: 1024px) {
+      .dashboard { grid-template-columns: 1fr; overflow-y: auto; height: auto; }
+      .assistant-panel { height: 500px; }
     }
   </style>
 </head>
 <body>
 
-  <div class="floating-bubble" id="floating-bubble">
-    <img src="nobklogo.png" alt="John Mark Kiritu">
-  </div>
+  <div class="floating-bubble" id="bubble"><img src="nobklogo.png" alt="Logo"></div>
 
-  <nav class="icon-menu" id="icon-menu">
-    <div id="hamburger" class="hamburger-btn" title="Menu">
-      <i class="fa-solid fa-bars"></i>
-    </div>
-    <div class="icon-items">
-      <div class="icon-item active" data-section="home"><i class="fa-solid fa-house"></i></div>
-      <a href="about.html" class="icon-item"><i class="fa-solid fa-user"></i></a>
-      <a href="education.html" class="icon-item"><i class="fa-solid fa-graduation-cap"></i></a>
-      <div class="icon-item" id="theme-toggle"><i class="fa-solid fa-moon" id="theme-icon"></i></div>
-    </div>
+  <nav class="icon-menu" id="iconMenu">
+    <button class="nav-btn" id="hamburger"><i class="fa-solid fa-bars"></i></button>
+    <a href="index.html" class="nav-btn"><i class="fa-solid fa-house"></i></a>
+    <a href="projects.html" class="nav-btn"><i class="fa-solid fa-code"></i></a>
+    <button class="nav-btn" id="theme-toggle"><i class="fa-solid fa-moon"></i></button>
   </nav>
 
-  <aside class="text-menu" id="text-menu">
-    <div class="profile">
-      <img src="nobklogo.png" alt="JMK">
-      <div>
-        <strong>John Mark Kiritu</strong><br>
-        <small>Creative Developer</small>
+  <div class="dashboard">
+    <main class="hero-panel">
+      <div class="hero-header">
+        <div>
+          <small style="color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 2px;">Portfolio 2026</small>
+          <h1>John Mark <br>Kiritu</h1>
+        </div>
+        <img src="nobklogo.png" alt="Profile">
       </div>
-    </div>
-    <div class="text-links">
-      <a href="#home" class="active"><i class="fa-solid fa-house"></i> Home</a>
-      <a href="about.html"><i class="fa-solid fa-user"></i> About</a>
-      <a href="education.html"><i class="fa-solid fa-graduation-cap"></i> Education</a>
-      <a href="#contact"><i class="fa-solid fa-envelope"></i> Contact</a>
-    </div>
-  </aside>
+      <p>Building high-performance technical infrastructure and creative digital experiences. Explore my workspace below.</p>
+    </main>
 
-  <section id="home" class="parallax-section">
-    <div class="section-content">
-      <h1>Hi, I'm John Mark</h1>
-      <p>IT Professional & Creative Developer based in Kampala.</p>
-    </div>
-  </section>
-
-  <footer id="contact">
-    <div class="footer-grid">
-      <div>
-        <h3>John Mark Kiritu</h3>
-        <p>Building digital experiences with precision.</p>
+    <aside class="assistant-panel">
+      <div class="assistant-header">
+        <div>
+          <h3 style="font-size: 1.1rem;">Portfolio AI</h3>
+          <small style="color: var(--text-light);">How can I help you today?</small>
+        </div>
+        <div class="status-pill">Active</div>
       </div>
-      <div>
-        <h3>Contact</h3>
-        <p>marc@wanjeru.dev</p>
-        <div class="social-icons">
-          <a href="#"><i class="fab fa-linkedin"></i></a>
-          <a href="#"><i class="fab fa-github"></i></a>
-          <a href="#"><i class="fa-solid fa-envelope"></i></a>
+
+      <div class="action-grid">
+        <a href="about.html" class="action-card">
+          <i class="fa-solid fa-user"></i>
+          <strong>Bio</strong>
+          <small style="display:block; font-size: 0.7rem; color: var(--text-light);">Learn about me</small>
+        </a>
+        <a href="education.html" class="action-card">
+          <i class="fa-solid fa-graduation-cap"></i>
+          <strong>Skills</strong>
+          <small style="display:block; font-size: 0.7rem; color: var(--text-light);">Education & tech</small>
+        </a>
+        <div class="action-card" onclick="alert('Opening Resume...')">
+          <i class="fa-solid fa-file-pdf"></i>
+          <strong>Resume</strong>
+          <small style="display:block; font-size: 0.7rem; color: var(--text-light);">Download CV</small>
+        </div>
+        <div class="action-card">
+          <i class="fa-solid fa-envelope"></i>
+          <strong>Contact</strong>
+          <small style="display:block; font-size: 0.7rem; color: var(--text-light);">Get in touch</small>
         </div>
       </div>
+
+      <div class="command-box">
+        <i class="fa-solid fa-terminal" style="opacity: 0.5;"></i>
+        <input type="text" placeholder="Ask about my projects...">
+        <button class="send-btn"><i class="fa-solid fa-arrow-up"></i></button>
+      </div>
+    </aside>
+
+    <div class="footer-widgets">
+      <div class="widget">
+        <div class="widget-icon"><i class="fa-solid fa-location-dot"></i></div>
+        <div><small style="color: var(--text-light);">Location</small><br><strong>Kampala, Uganda</strong></div>
+      </div>
+      <div class="widget">
+        <div class="widget-icon"><i class="fa-solid fa-clock"></i></div>
+        <div><small style="color: var(--text-light);">Experience</small><br><strong>2+ Years IT</strong></div>
+      </div>
+      <div class="widget">
+        <div class="widget-icon"><i class="fa-solid fa-envelope"></i></div>
+        <div><small style="color: var(--text-light);">Email</small><br><strong>marc@wanjeru.dev</strong></div>
+      </div>
     </div>
-    <div style="text-align: center; margin-top: 40px; opacity: 0.5;">
-      © 2026 John Mark Kiritu
-    </div>
-  </footer>
+  </div>
 
   <script>
-    const bubble = document.getElementById('floating-bubble');
-    const iconMenu = document.getElementById('icon-menu');
-    const textMenu = document.getElementById('text-menu');
-    const hamburger = document.getElementById('hamburger');
+    const bubble = document.getElementById('bubble');
+    const iconMenu = document.getElementById('iconMenu');
     const themeToggle = document.getElementById('theme-toggle');
-    const themeIcon = document.getElementById('theme-icon');
 
-    // Navigation Toggle Logic
-    bubble.addEventListener('click', (e) => {
-      e.stopPropagation();
+    // Menu Logic
+    bubble.addEventListener('click', () => {
       bubble.classList.add('hidden');
       iconMenu.classList.add('visible');
     });
 
-    hamburger.addEventListener('click', (e) => {
-      e.stopPropagation();
-      textMenu.classList.toggle('open');
-    });
-
-    // Theme Toggle Logic
-    themeToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      const newTheme = isDark ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', newTheme);
-      themeIcon.className = newTheme === 'dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
-    });
-
-    // Section Scrolling Logic
-    document.querySelectorAll('.icon-item[data-section]').forEach(item => {
-      item.addEventListener('click', () => {
-        const id = item.getAttribute('data-section');
-        const element = document.getElementById(id);
-        if(element) element.scrollIntoView({ behavior: 'smooth' });
-      });
-    });
-
-    // Close menus on outside click
     document.addEventListener('click', (e) => {
-      if (!iconMenu.contains(e.target) && !bubble.contains(e.target) && !textMenu.contains(e.target)) {
+      if (!iconMenu.contains(e.target) && !bubble.contains(e.target)) {
         iconMenu.classList.remove('visible');
         bubble.classList.remove('hidden');
-        textMenu.classList.remove('open');
       }
     });
 
-    // Scroll Spy for Active State (Debugged for current browser standards)
-    window.addEventListener('scroll', () => {
-      let current = "home";
-      const sections = document.querySelectorAll('section');
-      const scrollPos = window.scrollY || window.pageYOffset;
-
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        if (scrollPos >= sectionTop - 200) {
-          current = section.getAttribute('id');
-        }
-      });
-
-      document.querySelectorAll('.icon-item, .text-links a').forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('data-section') === current || link.getAttribute('href') === `#${current}`) {
-          link.classList.add('active');
-        }
-      });
+    // Theme Logic
+    themeToggle.addEventListener('click', () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      themeToggle.innerHTML = isDark ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
     });
   </script>
 </body>
