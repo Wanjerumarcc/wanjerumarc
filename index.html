@@ -59,8 +59,8 @@
       border: 3px solid var(--accent);
       box-shadow: 0 8px 32px rgba(59,130,246,0.3);
       cursor: pointer;
-      z-index: 130;
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 130;
     }
     .floating-bubble.hidden { opacity: 0; transform: scale(0.5) translateY(-30px); pointer-events: none; }
     .floating-bubble img { width: 100%; height: 100%; object-fit: cover; }
@@ -130,13 +130,13 @@
     }
     .text-links a:hover, .text-links a.active { background: var(--accent); color: white; }
 
-    /* Hero Section Content */
-    .hero-container {
+    /* Home Hero Layout */
+    .hero-wrapper {
       flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 2rem;
+      padding: 5% 10%;
     }
 
     .section-content {
@@ -145,24 +145,58 @@
       padding: 4rem;
       border-radius: 40px;
       border: 1px solid var(--border);
-      max-width: 800px;
+      max-width: 1000px;
       width: 100%;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      text-align: left;
+      gap: 40px;
     }
 
-    h1 { font-weight: 900; background: linear-gradient(45deg, var(--text), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1.5rem; font-size: clamp(2.5rem, 8vw, 5rem); }
+    .hero-text { flex: 1; }
+    .hero-image-main {
+      width: 250px;
+      height: 250px;
+      border-radius: 40px;
+      object-fit: cover;
+      border: 2px solid var(--accent);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
 
-    /* Footer */
+    h1 {
+      font-weight: 900;
+      background: linear-gradient(45deg, var(--text), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1.5rem;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+    }
+
+    /* Footer - Restored Original Code */
     footer {
       background: var(--glass);
       padding: 4rem 10% 2rem;
       border-top: 1px solid var(--border);
-      width: 100%;
     }
-    .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; }
-    .social-icons { display: flex; gap: 15px; margin-top: 20px; justify-content: center; }
-    .social-icons a { width: 40px; height: 40px; border-radius: 50%; background: var(--card-bg); color: var(--text); display: grid; place-items: center; transition: 0.3s; text-decoration: none; }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+    }
+    .social-icons { display: flex; gap: 15px; margin-top: 20px; }
+    .social-icons a { 
+      width: 40px; height: 40px; border-radius: 50%; 
+      background: var(--card-bg); color: var(--text);
+      display: grid; place-items: center; transition: 0.3s;
+      text-decoration: none;
+    }
     .social-icons a:hover { background: var(--accent); color: white; }
+
+    @media (max-width: 850px) {
+      .section-content { flex-direction: column-reverse; text-align: center; padding: 2rem; }
+      .hero-image-main { width: 180px; height: 180px; }
+      .social-icons { justify-content: center; }
+    }
 
     @media (max-width: 768px) {
       .icon-menu { left: auto; right: 16px; top: auto; bottom: 20px; transform: translateY(0); flex-direction: row; width: auto; padding: 10px 20px; border-radius: 50px; }
@@ -207,13 +241,13 @@
     </div>
   </aside>
 
-  <main class="hero-container">
+  <main class="hero-wrapper">
     <div class="section-content">
-      <h1>Hi, I'm John Mark</h1>
-      <p>IT Professional & Creative Developer based in Kampala. I bridge the gap between technical infrastructure and creative design.</p>
-      <div style="margin-top: 2rem;">
-        <a href="about.html" style="text-decoration: none; color: var(--accent); font-weight: 600;">Learn more about me &rarr;</a>
+      <div class="hero-text">
+        <h1>Hi, I'm John Mark</h1>
+        <p>IT Professional & Creative Developer based in Kampala. I bridge the gap between technical infrastructure and creative design through precision and innovation.</p>
       </div>
+      <img src="nobklogo.png" alt="John Mark Kiritu" class="hero-image-main">
     </div>
   </main>
 
@@ -246,9 +280,7 @@
     const themeToggle = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
 
-    // Navigation Toggle Logic
-    bubble.addEventListener('click', (e) => {
-      e.stopPropagation();
+    bubble.addEventListener('click', () => {
       bubble.classList.add('hidden');
       iconMenu.classList.add('visible');
     });
@@ -258,7 +290,6 @@
       textMenu.classList.toggle('open');
     });
 
-    // Theme Toggle Logic
     themeToggle.addEventListener('click', (e) => {
       e.stopPropagation();
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
@@ -267,12 +298,11 @@
       themeIcon.className = newTheme === 'dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
     });
 
-    // Close menus on outside click - Debugged to reset bubble
     document.addEventListener('click', (e) => {
-      if (!iconMenu.contains(e.target) && !textMenu.contains(e.target)) {
+      if (!iconMenu.contains(e.target) && !bubble.contains(e.target)) {
         iconMenu.classList.remove('visible');
-        textMenu.classList.remove('open');
         bubble.classList.remove('hidden');
+        textMenu.classList.remove('open');
       }
     });
   </script>
