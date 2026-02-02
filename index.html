@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>John Mark Kiritu | Master Portfolio</title>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>John Mark Kiritu | Home</title>
+  
   <link rel="icon" href="nobklogo.png" type="image/png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <style>
+    /* MASTER DESIGN SYSTEM */
     :root {
       --bg: #020617;
       --card: rgba(255, 255, 255, 0.04);
@@ -18,7 +19,7 @@
       --accent: #3b82f6;
       --text: #f8fafc;
       --text-dim: #94a3b8;
-      --footer-blue: #1e3a8a;
+      --footer-blue: #1e3a8a; /* Your original blue */
     }
 
     [data-theme="light"] {
@@ -34,21 +35,40 @@
 
     * { margin:0; padding:0; box-sizing:border-box; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); transition: 0.3s; overflow-x: hidden; }
+    body { 
+      font-family: 'Inter', sans-serif; 
+      background: var(--bg); 
+      color: var(--text); 
+      transition: background 0.4s ease;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-    /* FIXED SIDEBAR MENU */
+    /* BACKGROUND ELEMENT */
+    .bg-image {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: url('wllpbk.jpg') center/cover no-repeat;
+      z-index: -2; opacity: 0.15; filter: grayscale(50%);
+    }
+
+    /* FIXED SIDEBAR NAVIGATION */
     .side-nav {
       position: fixed; left: 20px; top: 50%; transform: translateY(-50%);
       width: 70px; background: var(--glass); backdrop-filter: blur(25px) saturate(180%);
       border: 1px solid var(--border); border-radius: 40px; padding: 25px 0;
       display: flex; flex-direction: column; align-items: center; gap: 18px; z-index: 1000;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
     }
     .nav-icon {
       width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center;
       color: var(--text); text-decoration: none; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative;
     }
     .nav-icon:hover { background: var(--accent); color: white; transform: scale(1.15); }
+    .nav-icon.active { background: var(--accent); color: white; }
+    
+    /* TOOLTIPS */
     .nav-icon::after {
       content: attr(data-tip); position: absolute; left: 65px; background: var(--accent);
       color: white; padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; 
@@ -56,235 +76,190 @@
     }
     .nav-icon:hover::after { opacity: 1; transform: translateX(5px); }
 
-    /* SECTIONS */
-    section { min-height: 100vh; padding: 80px 8% 80px 120px; display: flex; flex-direction: column; justify-content: center; position: relative; }
-    .section-title { font-size: 3.5rem; font-weight: 900; margin-bottom: 50px; color: var(--accent); letter-spacing: -1px; }
-
-    /* HERO STYLING */
-    .hero-content { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4rem; align-items: center; }
-    .profile-wrap { position: relative; width: 340px; height: 340px; }
-    .profile-img { width: 100%; z-index: 10; position: relative; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5)); }
-    .glow-blob { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 380px; height: 380px; background: var(--accent); filter: blur(70px); opacity: 0.3; border-radius: 50%; z-index: 1; }
-
-    /* CARDS */
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-    .card { background: var(--card); border: 1px solid var(--border); border-radius: 28px; padding: 35px; transition: 0.4s; position: relative; }
-    .card:hover { transform: translateY(-12px); border-color: var(--accent); background: rgba(59, 130, 246, 0.05); }
-
-    /* EDUCATION TIMELINE */
-    .timeline { border-left: 3px solid var(--border); padding-left: 40px; margin-left: 20px; }
-    .time-item { margin-bottom: 50px; position: relative; }
-    .time-item::before {
-      content: ""; position: absolute; left: -54px; top: 0; width: 24px; height: 24px;
-      background: var(--accent); border-radius: 50%; border: 4px solid var(--bg);
+    /* HERO SECTION */
+    .hero {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 0 10% 0 130px; /* Space for the sidebar */
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 4rem;
+      width: 100%;
+      align-items: center;
+    }
+    .hero-text h4 {
+      color: var(--accent);
+      letter-spacing: 6px;
+      font-weight: 900;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+    .hero-text h1 {
+      font-size: clamp(3.5rem, 8vw, 6.5rem);
+      line-height: 1.1;
+      font-weight: 900;
+      margin-bottom: 25px;
+    }
+    .hero-text p {
+      font-size: 1.25rem;
+      line-height: 1.8;
+      color: var(--text-dim);
+      max-width: 600px;
+      margin-bottom: 40px;
     }
 
-    /* PROJECT SLIDER */
-    .project-scroll { display: flex; gap: 25px; overflow-x: auto; padding: 20px 0; scrollbar-width: none; }
-    .p-card { min-width: 400px; height: 500px; border-radius: 30px; position: relative; overflow: hidden; }
-    .p-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }
-    .p-info { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 20%, transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 40px; opacity: 0; transition: 0.4s; }
-    .p-card:hover .p-info { opacity: 1; }
-    .p-card:hover img { transform: scale(1.1); }
+    /* PROFILE IMAGE WRAP */
+    .profile-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 450px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .profile-img {
+      width: 100%;
+      z-index: 10;
+      position: relative;
+      filter: drop-shadow(0 20px 50px rgba(0,0,0,0.5));
+      transition: 0.5s;
+    }
+    .profile-img:hover { transform: scale(1.02); }
+    .glow-blob {
+      position: absolute; width: 400px; height: 400px;
+      background: var(--accent); filter: blur(100px);
+      opacity: 0.25; border-radius: 50%; z-index: 1;
+      animation: pulse 6s infinite;
+    }
 
-    /* FOOTER */
-    footer { background: var(--footer-blue); color: white; padding: 80px 8% 40px 120px; position: relative; }
-    .f-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 60px; }
-    .socials a { color: white; font-size: 1.6rem; margin-right: 20px; transition: 0.3s; }
-    .socials a:hover { transform: translateY(-5px); color: #93c5fd; }
+    /* BUTTONS */
+    .btn-group { display: flex; gap: 20px; flex-wrap: wrap; }
+    .btn {
+      padding: 18px 35px;
+      border-radius: 50px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: 0.3s;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-primary { background: var(--accent); color: white; box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3); }
+    .btn-secondary { background: var(--glass); color: var(--text); border: 1px solid var(--border); backdrop-filter: blur(10px); }
+    .btn:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
 
-    /* FORM */
-    input, textarea { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: white; margin-bottom: 15px; }
+    /* FOOTER (ORIGINAL BLUE) */
+    footer {
+      background: var(--footer-blue);
+      color: white;
+      padding: 60px 10% 30px 130px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .f-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 50px;
+    }
+    .f-logo { width: 70px; margin-bottom: 20px; }
+    .f-col h3 { margin-bottom: 25px; font-size: 1.2rem; }
+    .socials a { color: white; font-size: 1.5rem; margin-right: 20px; transition: 0.3s; opacity: 0.8; }
+    .socials a:hover { opacity: 1; transform: translateY(-3px); }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.25; }
+      50% { transform: scale(1.1); opacity: 0.35; }
+    }
 
     @media (max-width: 1024px) {
-      section { padding: 60px 5%; }
-      .side-nav { bottom: 20px; top: auto; left: 50%; transform: translateX(-50%); width: 95%; height: 65px; flex-direction: row; justify-content: space-around; border-radius: 20px; }
-      .hero-content { grid-template-columns: 1fr; text-align: center; }
-      .profile-wrap { margin: auto; }
-      footer { padding: 60px 5%; }
+      .hero { padding: 80px 5%; }
+      .side-nav {
+        bottom: 20px; top: auto; left: 50%; transform: translateX(-50%);
+        width: 95%; height: 65px; flex-direction: row; justify-content: space-around;
+        padding: 0 10px; border-radius: 20px;
+      }
+      .hero-grid { grid-template-columns: 1fr; text-align: center; }
+      .hero-text p { margin: 0 auto 40px; }
+      .btn-group { justify-content: center; }
+      .profile-wrap { margin: 40px auto 0; }
+      footer { padding: 60px 5% 100px 5%; }
     }
   </style>
 </head>
 <body>
 
+  <div class="bg-image"></div>
+
   <nav class="side-nav">
-    <a href="#home" class="nav-icon" data-tip="Home"><i class="fa-solid fa-house"></i></a>
-    <a href="#about" class="nav-icon" data-tip="About"><i class="fa-solid fa-user-tie"></i></a>
-    <a href="#prof" class="nav-icon" data-tip="Career"><i class="fa-solid fa-briefcase"></i></a>
-    <a href="#edu" class="nav-icon" data-tip="Education"><i class="fa-solid fa-graduation-cap"></i></a>
-    <a href="#tech" class="nav-icon" data-tip="Stack"><i class="fa-solid fa-layer-group"></i></a>
-    <a href="#projects" class="nav-icon" data-tip="Portfolio"><i class="fa-solid fa-diagram-project"></i></a>
-    <a href="#services" class="nav-icon" data-tip="Expertise"><i class="fa-solid fa-microchip"></i></a>
-    <a href="#certs" class="nav-icon" data-tip="Certs"><i class="fa-solid fa-award"></i></a>
-    <a href="#gallery" class="nav-icon" data-tip="Media"><i class="fa-solid fa-images"></i></a>
-    <a href="#contact" class="nav-icon" data-tip="Contact"><i class="fa-solid fa-paper-plane"></i></a>
-    <a href="javascript:void(0)" onclick="toggleTheme()" class="nav-icon" data-tip="Appearance"><i class="fa-solid fa-moon"></i></a>
+    <a href="index.html" class="nav-icon active" data-tip="Home"><i class="fa-solid fa-house"></i></a>
+    <a href="about.html" class="nav-icon" data-tip="About Me"><i class="fa-solid fa-user-tie"></i></a>
+    <a href="experience.html" class="nav-icon" data-tip="Journey"><i class="fa-solid fa-briefcase"></i></a>
+    <a href="tech.html" class="nav-icon" data-tip="Technologies"><i class="fa-solid fa-microchip"></i></a>
+    <a href="services.html" class="nav-icon" data-tip="Services"><i class="fa-solid fa-gears"></i></a>
+    <a href="contact.html" class="nav-icon" data-tip="Contact Us"><i class="fa-solid fa-paper-plane"></i></a>
+    <a href="javascript:void(0)" onclick="toggleTheme()" class="nav-icon" data-tip="Theme"><i class="fa-solid fa-circle-half-stroke"></i></a>
   </nav>
 
-  <section id="home">
-    <div class="hero-content">
-        <div class="hero-text">
-            <h4 style="color:var(--accent); font-weight:900; letter-spacing:5px;">IT INFRASTRUCTURE SPECIALIST</h4>
-            <h1 style="font-size: clamp(3rem, 7vw, 6rem); line-height: 1.1; margin: 20px 0;">John Mark <br><span style="color:var(--accent)">Kiritu</span></h1>
-            <p style="font-size: 1.3rem; opacity: 0.8; max-width: 600px; margin-bottom: 30px;">Strategic IT leader focused on network resilience, cloud integration, and enterprise-grade technical support.</p>
-            <div style="display:flex; gap:15px">
-                <a href="cv.pdf" download class="btn" style="padding:15px 35px; background:var(--accent); color:white; border-radius:50px; text-decoration:none; font-weight:700;">Download CV</a>
-                <a href="#contact" style="padding:15px 35px; border:2px solid var(--accent); color:var(--text); border-radius:50px; text-decoration:none; font-weight:700;">Hire Me</a>
-            </div>
+  <main class="hero">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <h4>IT Specialist & Admin</h4>
+        <h1>John Mark <br><span style="color:var(--accent)">Kiritu</span></h1>
+        <p>I specialize in building and managing high-performance IT infrastructure, ensuring seamless network operations and robust cybersecurity for modern enterprises.</p>
+        <div class="btn-group">
+          <a href="cv.pdf" download class="btn btn-primary"><i class="fa-solid fa-download"></i> Download CV</a>
+          <a href="contact.html" class="btn btn-secondary">Get In Touch</a>
         </div>
-        <div class="profile-wrap">
-            <div class="glow-blob"></div>
-            <img src="profilepic.png" class="profile-img" alt="John Mark Kiritu">
-        </div>
+      </div>
+      <div class="profile-wrap">
+        <div class="glow-blob"></div>
+        <img src="profilepic.png" alt="John Mark Kiritu" class="profile-img">
+      </div>
     </div>
-  </section>
-
-  <section id="about">
-    <h2 class="section-title">About Me</h2>
-    <div class="card" style="max-width: 900px;">
-        <p style="font-size: 1.25rem; line-height: 1.9; opacity: 0.9;">
-            Self-motivated IT professional with over 2 years of experience in IT support, networking, and Microsoft 365 administration. Proven expertise in optimizing system performance and enforcing cybersecurity protocols across complex enterprise environments.
-        </p>
-    </div>
-  </section>
-
-  <section id="prof">
-    <h2 class="section-title">Professional Journey</h2>
-    <div class="grid">
-        <div class="card">
-            <img src="doubleq_logo.png" style="height:45px; margin-bottom:20px" alt="Double Q">
-            <h3 style="color:var(--accent)">Double Q (C4 Logistics)</h3>
-            <p style="font-weight:700; margin:5px 0;">System Administrator</p>
-            <p style="font-size:0.9rem; opacity:0.7;">Maintaining high availability security, PABX systems, and Power Apps infrastructure.</p>
-            <a href="https://doubleq.com" target="_blank" style="display:inline-block; margin-top:15px; color:var(--accent); text-decoration:none; font-weight:700;">Visit Site →</a>
-        </div>
-        <div class="card">
-            <img src="oxfam_logo.png" style="height:45px; margin-bottom:20px" alt="Oxfam">
-            <h3 style="color:var(--accent)">Oxfam in Uganda</h3>
-            <p style="font-weight:700; margin:5px 0;">IT Support Officer</p>
-            <p style="font-size:0.9rem; opacity:0.7;">Network monitoring via Cisco Meraki and enterprise M365 administration.</p>
-            <a href="https://uganda.oxfam.org" target="_blank" style="display:inline-block; margin-top:15px; color:var(--accent); text-decoration:none; font-weight:700;">Visit Site →</a>
-        </div>
-        <div class="card">
-            <img src="oxfam_logo.png" style="height:45px; margin-bottom:20px" alt="Oxfam">
-            <h3 style="color:var(--accent)">Oxfam in Uganda</h3>
-            <p style="font-weight:700; margin:5px 0;">Graduate Trainee / Intern</p>
-            <p style="font-size:0.9rem; opacity:0.7;">Technical support orchestration and hardware lifecycle management.</p>
-        </div>
-    </div>
-  </section>
-
-  <section id="edu">
-    <h2 class="section-title">Education Journey</h2>
-    <div class="timeline">
-        <div class="time-item">
-            <span style="color:var(--accent); font-weight:900;">20XX - 20XX</span>
-            <h3>Bachelor of Science in IT</h3>
-            <p style="opacity:0.7;">Makerere University (Example)</p>
-            <p style="font-size:0.85rem; color:var(--accent)">Degree Awarded</p>
-        </div>
-        <div class="time-item">
-            <span style="color:var(--accent); font-weight:900;">20XX - 20XX</span>
-            <h3>Uganda Advanced Certificate of Education</h3>
-            <p style="opacity:0.7;">School Name Here</p>
-            <p style="font-size:0.85rem; color:var(--accent)">A-Level Certificate</p>
-        </div>
-        <div class="time-item">
-            <span style="color:var(--accent); font-weight:900;">20XX - 20XX</span>
-            <h3>Uganda Certificate of Education</h3>
-            <p style="opacity:0.7;">School Name Here</p>
-            <p style="font-size:0.85rem; color:var(--accent)">O-Level Certificate</p>
-        </div>
-    </div>
-  </section>
-
-  <section id="tech">
-    <h2 class="section-title">Technologies</h2>
-    <div class="grid">
-        <a href="https://microsoft.com" class="card" style="text-align:center; text-decoration:none; color:inherit;">
-            <i class="fa-brands fa-microsoft" style="font-size:3rem; color:#00a4ef"></i>
-            <h4 style="margin-top:15px">Microsoft 365</h4>
-        </a>
-        <a href="https://cisco.com" class="card" style="text-align:center; text-decoration:none; color:inherit;">
-            <i class="fa-solid fa-network-wired" style="font-size:3rem; color:#00bceb"></i>
-            <h4 style="margin-top:15px">Cisco Meraki</h4>
-        </a>
-        <a href="https://kaspersky.com" class="card" style="text-align:center; text-decoration:none; color:inherit;">
-            <i class="fa-solid fa-shield-virus" style="font-size:3rem; color:#006d5d"></i>
-            <h4 style="margin-top:15px">Kaspersky Endpoint</h4>
-        </a>
-    </div>
-  </section>
-
-  <section id="projects">
-    <h2 class="section-title">Projects</h2>
-    <div class="project-scroll">
-        <div class="p-card">
-            <img src="project1.jpg" alt="Network">
-            <div class="p-info">
-                <h3>Global VPN Setup</h3>
-                <p>Designed a secure site-to-site VPN tunnel for remote logistics tracking.</p>
-            </div>
-        </div>
-        <div class="p-card">
-            <img src="project2.jpg" alt="Security">
-            <div class="p-info">
-                <h3>Endpoint Overhaul</h3>
-                <p>Centralized security management for 150+ corporate devices.</p>
-            </div>
-        </div>
-    </div>
-  </section>
-
-  <section id="contact">
-    <h2 class="section-title">Contact Us</h2>
-    <div class="card" style="max-width: 600px;">
-        <form>
-            <input type="text" placeholder="Name">
-            <input type="email" placeholder="Email">
-            <textarea rows="5" placeholder="Message"></textarea>
-            <button class="btn" style="width:100%; padding:15px; background:var(--accent); color:white; border:none; border-radius:12px; font-weight:700;">Send Message</button>
-        </form>
-    </div>
-  </section>
+  </main>
 
   <footer>
     <div class="f-grid">
-        <div>
-            <img src="nobklogo.png" style="width:70px; margin-bottom:20px;">
-            <h3>John Mark Kiritu</h3>
-            <p>Empowering organizations through digital infrastructure excellence.</p>
-            <div class="socials" style="margin-top:25px;">
-                <a href="#"><i class="fa-brands fa-linkedin"></i></a>
-                <a href="#"><i class="fa-brands fa-github"></i></a>
-                <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
-                <a href="#"><i class="fa-brands fa-twitter"></i></a>
-            </div>
+      <div class="f-col">
+        <img src="nobklogo.png" class="f-logo" alt="Logo">
+        <h3>John Mark Kiritu</h3>
+        <p>Empowering organizational growth through technical excellence and infrastructure resilience.</p>
+        <div class="socials" style="margin-top: 25px;">
+          <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="#"><i class="fa-brands fa-github"></i></a>
+          <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="#"><i class="fa-brands fa-twitter"></i></a>
         </div>
-        <div>
-            <h3>Helpful Links</h3>
-            <p><a href="cv.pdf" download style="color:white; text-decoration:none;">Download CV</a></p>
-            <p><a href="https://microsoft.com" target="_blank" style="color:white; text-decoration:none;">Microsoft Tools</a></p>
-            <p><a href="#services" style="color:white; text-decoration:none;">Services</a></p>
-        </div>
-        <div>
-            <h3>Contact</h3>
-            <p>Kampala, Uganda</p>
-            <p>marc@wanjeru.dev</p>
-            <p>+256 7XX XXX XXX</p>
-        </div>
+      </div>
+      <div class="f-col">
+        <h3>Quick Navigation</h3>
+        <p style="margin-bottom:10px;"><a href="about.html" style="color:white; text-decoration:none; opacity:0.8;">About My Work</a></p>
+        <p style="margin-bottom:10px;"><a href="experience.html" style="color:white; text-decoration:none; opacity:0.8;">Professional Journey</a></p>
+        <p style="margin-bottom:10px;"><a href="services.html" style="color:white; text-decoration:none; opacity:0.8;">Expert Services</a></p>
+      </div>
+      <div class="f-col">
+        <h3>Contact Details</h3>
+        <p style="margin-bottom:10px; opacity:0.8;"><i class="fa-solid fa-location-dot" style="margin-right:10px;"></i> Kampala, Uganda</p>
+        <p style="margin-bottom:10px; opacity:0.8;"><i class="fa-solid fa-envelope" style="margin-right:10px;"></i> marc@wanjeru.dev</p>
+      </div>
     </div>
-    <div style="margin-top:50px; padding-top:25px; border-top:1px solid rgba(255,255,255,0.1); display:flex; justify-content:space-between; font-size:0.8rem; opacity:0.8;">
-        <span>© 2026 John Mark Kiritu | All Rights Reserved</span>
-        <span>Terms & Conditions | Cookies Policy</span>
+    <div style="margin-top: 50px; padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; font-size: 0.85rem; opacity: 0.7;">
+      <span>© 2026 John Mark Kiritu | All Rights Reserved</span>
+      <span>Terms & Conditions | Cookies Policy</span>
     </div>
   </footer>
 
   <script>
     function toggleTheme() {
-        const doc = document.documentElement;
-        const current = doc.getAttribute('data-theme');
-        doc.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+      const doc = document.documentElement;
+      const current = doc.getAttribute('data-theme');
+      const target = current === 'dark' ? 'light' : 'dark';
+      doc.setAttribute('data-theme', target);
     }
   </script>
 </body>
