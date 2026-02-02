@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Me — John Mark Kiritu</title>
+
+  <link rel="icon" href="nobklogo.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg-overlay: rgba(0, 0, 0, 0.5);
+      --glass: rgba(15, 23, 42, 0.7);
+      --glass-bright: rgba(255, 255, 255, 0.05);
+      --border: rgba(255, 255, 255, 0.1);
+      --accent: #3b82f6;
+      --text: #f8fafc;
+      --text-dim: #94a3b8;
+    }
+
+    [data-theme="light"] {
+      --bg-overlay: rgba(255, 255, 255, 0.4);
+      --glass: rgba(255, 255, 255, 0.6);
+      --glass-bright: rgba(0, 0, 0, 0.02);
+      --border: rgba(0, 0, 0, 0.1);
+      --accent: #2563eb;
+      --text: #0f172a;
+      --text-dim: #475569;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    
+    body {
+      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('desktop.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Shared Navigation Elements */
+    .bubble { position: fixed; left: 30px; top: 30px; width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--accent); cursor: pointer; z-index: 200; transition: 0.4s; }
+    .bubble img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+    .bubble.hidden { opacity: 0; transform: scale(0); }
+
+    .icon-menu { position: fixed; left: 20px; top: 50%; transform: translateY(-50%) translateX(-120px); background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 25px; padding: 15px; display: flex; flex-direction: column; gap: 15px; z-index: 150; transition: 0.5s; }
+    .icon-menu.visible { transform: translateY(-50%) translateX(0); }
+    .nav-btn { width: 50px; height: 50px; border-radius: 15px; background: var(--glass-bright); color: var(--text); display: grid; place-items: center; cursor: pointer; transition: 0.3s; border: 1px solid var(--border); text-decoration: none; }
+    .nav-btn:hover { background: var(--accent); color: white; }
+
+    /* Layout */
+    .content-container { display: grid; grid-template-columns: 1fr 380px; gap: 25px; padding: 100px 5% 50px; flex: 1; }
+
+    .glass-card { background: var(--glass); backdrop-filter: blur(30px); border: 1px solid var(--border); border-radius: 40px; padding: 50px; }
+
+    /* About Content Styling */
+    .about-header { margin-bottom: 40px; }
+    .about-header h1 { font-size: 3rem; font-weight: 900; margin-bottom: 10px; }
+    .accent-line { width: 60px; height: 4px; background: var(--accent); border-radius: 2px; }
+
+    .bio-text { font-size: 1.1rem; line-height: 1.8; color: var(--text-dim); }
+    .bio-text p { margin-bottom: 20px; }
+    .highlight { color: var(--text); font-weight: 600; }
+
+    /* Skills Grid */
+    .skills-section { margin-top: 40px; }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; margin-top: 20px; }
+    .skill-tag { background: var(--glass-bright); padding: 15px; border-radius: 15px; border: 1px solid var(--border); text-align: center; transition: 0.3s; }
+    .skill-tag i { display: block; font-size: 1.5rem; color: var(--accent); margin-bottom: 8px; }
+    .skill-tag:hover { background: var(--accent); color: white; transform: translateY(-5px); }
+    .skill-tag:hover i { color: white; }
+
+    /* Sidebar Panels */
+    .sidebar { display: flex; flex-direction: column; gap: 25px; }
+    .mini-card { background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 30px; padding: 25px; }
+    .mini-card h3 { font-size: 1rem; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+    .mini-card h3 i { color: var(--accent); }
+
+    .info-list { list-style: none; }
+    .info-list li { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.9rem; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .info-list li span:first-child { color: var(--text-dim); }
+
+    /* Footer (Consistent with Home) */
+    .liquid-footer { background: var(--glass); backdrop-filter: blur(40px); border-top: 1px solid var(--border); padding: 60px 5% 30px; margin-top: 50px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 40px; }
+    .footer-logo img { width: 50px; margin-bottom: 15px; }
+    .footer-col h4 { margin-bottom: 20px; color: var(--accent); font-size: 0.9rem; text-transform: uppercase; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a { color: var(--text-dim); text-decoration: none; transition: 0.3s; font-size: 0.9rem; }
+    .footer-col ul li a:hover { color: var(--text); padding-left: 5px; }
+    
+    .social-bar { display: flex; gap: 12px; margin-top: 15px; }
+    .social-btn { width: 40px; height: 40px; border-radius: 10px; background: var(--glass-bright); display: grid; place-items: center; color: var(--text); transition: 0.3s; border: 1px solid var(--border); text-decoration: none; }
+    .social-btn:hover { background: var(--accent); color: white; }
+
+    @media (max-width: 1024px) {
+      .content-container { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bubble" id="bubble"><img src="profilepic.png"></div>
+  <nav class="icon-menu" id="iconMenu">
+    <div class="nav-btn" id="hamburger"><i class="fa-solid fa-bars"></i></div>
+    <a href="index.html" class="nav-btn"><i class="fa-solid fa-house"></i></a>
+    <div class="nav-btn" id="theme-toggle"><i class="fa-solid fa-moon"></i></div>
+  </nav>
+
+  <div class="content-container">
+    <main class="glass-card">
+      <div class="about-header">
+        <h1>About <span style="color:var(--accent)">Me</span></h1>
+        <div class="accent-line"></div>
+      </div>
+
+      <div class="bio-text">
+        <p>I am a <span class="highlight">Creative Developer</span> and <span class="highlight">IT Professional</span> based in Kampala, Uganda. With over 2 years of experience in the tech industry, I specialize in bridging the gap between complex backend infrastructure and elegant, liquid-smooth user interfaces.</p>
+        
+        <p>My journey started with a deep fascination for how systems communicate. Today, I manage Microsoft 365 environments and network architectures by day, while crafting immersive digital experiences by night. I believe that technical precision doesn't have to be cold—it can be as fluid and intuitive as glass.</p>
+        
+        <p>Whether I am troubleshooting a server or designing a high-end dashboard like this one, my goal is always the same: <span class="highlight">Efficiency through Innovation.</span></p>
+      </div>
+
+      <div class="skills-section">
+        <h3 style="margin-bottom: 20px;">Core Expertise</h3>
+        <div class="skills-grid">
+          <div class="skill-tag"><i class="fa-solid fa-server"></i>IT Support</div>
+          <div class="skill-tag"><i class="fa-solid fa-network-wired"></i>Networking</div>
+          <div class="skill-tag"><i class="fa-solid fa-cloud"></i>Azure / M365</div>
+          <div class="skill-tag"><i class="fa-solid fa-code"></i>Frontend Dev</div>
+          <div class="skill-tag"><i class="fa-solid fa-pen-nib"></i>UI/UX Design</div>
+        </div>
+      </div>
+    </main>
+
+    <div class="sidebar">
+      <div class="mini-card">
+        <h3><i class="fa-solid fa-circle-info"></i> Personal Details</h3>
+        <ul class="info-list">
+          <li><span>Location</span> <span>Kampala, Uganda</span></li>
+          <li><span>Role</span> <span>IT Specialist</span></li>
+          <li><span>Experience</span> <span>2+ Years</span></li>
+          <li><span>Availability</span> <span>Freelance / Full-time</span></li>
+        </ul>
+      </div>
+
+      <div class="mini-card">
+        <h3><i class="fa-solid fa-language"></i> Languages</h3>
+        <ul class="info-list">
+          <li><span>English</span> <span>Native / Proficient</span></li>
+          <li><span>Swahili</span> <span>Intermediate</span></li>
+          <li><span>Luganda</span> <span>Conversational</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <footer class="liquid-footer">
+    <div class="footer-grid">
+      <div class="footer-col footer-logo">
+        <img src="nobklogo.png" alt="Logo">
+        <p style="color: var(--text-dim); font-size: 0.9rem;">Empowering brands through technical precision and creative design.</p>
+        <div class="social-bar">
+          <a href="#" class="social-btn"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="#" class="social-btn"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="#" class="social-btn"><i class="fa-brands fa-github"></i></a>
+          <a href="mailto:marc@wanjeru.dev" class="social-btn"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Me</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="education.html">Education</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Use</a></li>
+          <li><a href="#">Contact Support</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>HQ</h4>
+        <p style="color: var(--text-dim); font-size: 0.9rem;">
+          Kampala, Central Region<br>Uganda
+        </p>
+        <div style="margin-top: 15px;">
+           <a href="mailto:marc@wanjeru.dev" style="color: var(--accent); text-decoration: none; font-weight: 600;">Hire Me →</a>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align: center; border-top: 1px solid var(--border); padding-top: 20px; font-size: 0.8rem; color: var(--text-dim);">
+      © 2026 John Mark Kiritu. Crafted with Liquid Glass.
+    </div>
+  </footer>
+
+  <script>
+    const bubble = document.getElementById('bubble');
+    const iconMenu = document.getElementById('iconMenu');
+    const themeToggle = document.getElementById('theme-toggle');
+
+    bubble.addEventListener('click', (e) => {
+      e.stopPropagation();
+      bubble.classList.add('hidden');
+      iconMenu.classList.add('visible');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!iconMenu.contains(e.target)) {
+        iconMenu.classList.remove('visible');
+        bubble.classList.remove('hidden');
+      }
+    });
+
+    themeToggle.addEventListener('click', () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    });
+  </script>
+</body>
+</html>
