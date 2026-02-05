@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>John Mark Kiritu | Full Professional Portfolio</title>
+  <title>John Mark Kiritu | Master Portfolio</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
   <style>
-    /* --- THEME VARIABLES --- */
     :root {
       --bg-gradient: radial-gradient(circle at top, #064e3b 0%, #022c22 100%);
       --glass: rgba(255, 255, 255, 0.08);
@@ -19,54 +18,53 @@
       --accent-green: #4ade80;
       --text: #f8fafc;
       --text-dim: #94a3b8;
-      --footer-bg: rgba(0, 0, 0, 0.3);
     }
 
     * { margin:0; padding:0; box-sizing:border-box; scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background: var(--bg-gradient); background-attachment: fixed; color: var(--text); overflow-x: hidden; line-height: 1.6; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg-gradient); background-attachment: fixed; color: var(--text); line-height: 1.6; }
 
     /* --- NAVIGATION --- */
-    .nav-container { position: fixed; top: 25px; left: 50%; transform: translateX(-50%); z-index: 1000; }
+    .nav-container { position: fixed; top: 25px; left: 50%; transform: translateX(-50%); z-index: 1000; width: max-content; }
     .icon-menu { background: var(--glass); backdrop-filter: blur(25px); border: 1px solid var(--border); border-radius: 100px; padding: 6px; display: flex; gap: 5px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
     .nav-btn { display: flex; align-items: center; gap: 10px; padding: 10px 18px; border-radius: 100px; color: var(--text); text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: 0.4s; }
     .nav-btn.active { background: #fff; color: #064e3b; }
 
-    /* --- SECTIONS --- */
+    /* --- LAYOUT --- */
     section { min-height: 100vh; padding: 120px 8% 80px; }
-    .glass-card { background: var(--glass); backdrop-filter: blur(30px); border: 1px solid var(--border); border-radius: 40px; padding: 50px; width: 100%; max-width: 1200px; margin: 0 auto; }
+    .glass-card { background: var(--glass); backdrop-filter: blur(30px); border: 1px solid var(--border); border-radius: 40px; padding: 50px; width: 100%; max-width: 1200px; margin: 0 auto; position: relative; }
     h2 { font-size: 2.5rem; margin-bottom: 40px; color: var(--accent-green); text-align: center; }
 
-    /* --- CONTACT FORM (SIDEBAR STYLE) --- */
-    .contact-container { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; align-items: start; }
-    .contact-sidebar { background: var(--glass-bright); border-radius: 30px; padding: 30px; border: 1px solid var(--border); }
-    .contact-item { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; }
-    .contact-item i { width: 45px; height: 45px; background: var(--glass); border-radius: 12px; display: grid; place-items: center; color: var(--accent-green); }
+    /* --- DOWNLOAD CV BUTTON --- */
+    .cv-btn { background: var(--accent-green); color: #022c22; padding: 12px 25px; border-radius: 50px; font-weight: 800; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; transition: 0.3s; border: none; cursor: pointer; }
+    .cv-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(74, 222, 128, 0.3); }
 
-    .form-group { margin-bottom: 20px; }
-    .form-group label { display: block; font-size: 0.8rem; margin-bottom: 8px; color: var(--text-dim); }
-    .form-control { width: 100%; background: var(--glass); border: 1px solid var(--border); padding: 15px; border-radius: 15px; color: #fff; font-family: inherit; transition: 0.3s; }
-    .form-control:focus { outline: none; border-color: var(--accent-green); background: var(--glass-bright); }
-    .submit-btn { width: 100%; background: var(--accent-green); color: #022c22; padding: 15px; border-radius: 15px; border: none; font-weight: 800; cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; }
-    .submit-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(74, 222, 128, 0.2); }
+    /* --- DASHBOARD PROJECTS --- */
+    .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    .db-widget { background: var(--glass-bright); border: 1px solid var(--border); border-radius: 25px; padding: 25px; transition: 0.3s; }
+    .db-widget:hover { border-color: var(--accent-green); transform: translateY(-5px); }
+    .progress-track { height: 6px; background: var(--glass); border-radius: 10px; margin-top: 15px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--accent-green); }
+
+    /* --- SERVICES --- */
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    .service-tile { background: var(--glass-bright); padding: 30px; border-radius: 25px; border: 1px solid var(--border); transition: 0.4s; }
+    .service-tile:hover { background: rgba(74, 222, 128, 0.1); border-color: var(--accent-green); }
+    .service-icon { font-size: 2rem; color: var(--accent-green); margin-bottom: 15px; }
 
     /* --- FOOTER --- */
-    footer { background: var(--footer-bg); backdrop-filter: blur(20px); border-top: 1px solid var(--border); padding: 80px 8% 30px; margin-top: 100px; }
-    .footer-grid { display: grid; grid-template-columns: 1.5fr repeat(4, 1fr); gap: 40px; margin-bottom: 60px; }
-    .footer-col h4 { color: #fff; margin-bottom: 25px; font-size: 1.1rem; }
+    footer { background: rgba(0,0,0,0.3); padding: 80px 8% 30px; border-top: 1px solid var(--border); }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr repeat(3, 1fr) 1.5fr; gap: 30px; }
+    .footer-col h4 { margin-bottom: 20px; color: #fff; }
     .footer-col ul { list-style: none; }
-    .footer-col ul li { margin-bottom: 12px; }
-    .footer-col ul li a { color: var(--text-dim); text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a { color: var(--text-dim); text-decoration: none; font-size: 0.9rem; }
     .footer-col ul li a:hover { color: var(--accent-green); }
-    
-    .social-links { display: flex; gap: 15px; margin-top: 20px; }
-    .social-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--glass); display: grid; place-items: center; color: #fff; text-decoration: none; transition: 0.3s; }
-    .social-btn:hover { background: var(--accent-green); color: #022c22; }
 
-    .footer-bottom { border-top: 1px solid var(--border); padding-top: 30px; display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-dim); }
+    /* --- MODALS --- */
+    .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); }
+    .modal-content { background: var(--bg-gradient); margin: 5% auto; padding: 40px; border: 1px solid var(--border); width: 90%; max-width: 800px; border-radius: 30px; }
 
-    /* --- RESPONSIVE --- */
-    @media (max-width: 1024px) { .footer-grid { grid-template-columns: repeat(2, 1fr); } .contact-container { grid-template-columns: 1fr; } }
-    @media (max-width: 600px) { .footer-grid { grid-template-columns: 1fr; } .nav-btn span { display: none; } }
+    @media (max-width: 1024px) { .footer-grid { grid-template-columns: repeat(2, 1fr); } }
   </style>
 </head>
 <body>
@@ -74,68 +72,78 @@
   <div class="nav-container">
     <nav class="icon-menu">
       <a href="#home" class="nav-btn active"><i class="fa-solid fa-house"></i><span>Home</span></a>
-      <a href="#stack" class="nav-btn"><i class="fa-solid fa-layer-group"></i><span>Stack</span></a>
-      <a href="#services" class="nav-btn"><i class="fa-solid fa-screwdriver-wrench"></i><span>Services</span></a>
+      <a href="#services" class="nav-btn"><i class="fa-solid fa-gears"></i><span>Services</span></a>
+      <a href="#projects" class="nav-btn"><i class="fa-solid fa-chart-line"></i><span>Projects</span></a>
       <a href="#journey" class="nav-btn"><i class="fa-solid fa-briefcase"></i><span>Journey</span></a>
-      <a href="#contact" class="nav-btn"><i class="fa-solid fa-paper-plane"></i><span>Contact</span></a>
+      <a href="#contact" class="nav-btn"><i class="fa-solid fa-envelope"></i><span>Contact</span></a>
     </nav>
   </div>
 
-  <section id="home">
-    <div class="glass-card">
-      <h1>John Mark Kiritu</h1>
-      <p style="color: var(--accent-green); font-weight: 600;">IT Infrastructure & Digital Solutions Expert</p>
+  <section id="home" style="display: flex; align-items: center;">
+    <div class="glass-card" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <div style="flex: 1;">
+        <h1 style="font-size: 4.5rem; line-height: 1;">Digital<br><span style="color:var(--accent-green)">Architecture.</span></h1>
+        <p style="margin: 25px 0; font-size: 1.2rem; color: var(--text-dim); max-width: 600px;">
+          I'm John Mark Kiritu. I build resilient IT infrastructures and seamless digital workflows for enterprise-level efficiency.
+        </p>
+        <a href="path-to-your-cv.pdf" class="cv-btn" download>
+          <i class="fa-solid fa-file-arrow-down"></i> Download CV
+        </a>
+      </div>
+      <div style="width: 350px; height: 350px; background: var(--glass-bright); border-radius: 50%; border: 2px solid var(--accent-green); display: grid; place-items: center;">
+        <i class="fa-solid fa-microchip" style="font-size: 7rem; opacity: 0.2;"></i>
+      </div>
     </div>
   </section>
 
-  <section id="contact">
+  <section id="services">
     <div class="glass-card">
-      <h2>Get In Touch</h2>
-      <div class="contact-container">
-        <div class="contact-sidebar">
-          <div class="contact-item">
-            <i class="fa-solid fa-phone"></i>
-            <div>
-              <div style="font-size: 0.7rem; color: var(--text-dim);">Phone Number</div>
-              <div style="font-weight: 600;">+256 [Your Number]</div>
-            </div>
-          </div>
-          <div class="contact-item">
-            <i class="fa-solid fa-envelope"></i>
-            <div>
-              <div style="font-size: 0.7rem; color: var(--text-dim);">Email Address</div>
-              <div style="font-weight: 600;">johnmark@example.com</div>
-            </div>
-          </div>
-          <div class="social-links">
-            <a href="#" class="social-btn"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="#" class="social-btn"><i class="fa-brands fa-linkedin-in"></i></a>
-            <a href="#" class="social-btn"><i class="fa-brands fa-twitter"></i></a>
-            <a href="#" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
-          </div>
-        </div>
+      <h2>Core IT Services</h2>
+      <div class="services-grid">
+        <div class="service-tile"><i class="fa-solid fa-headset service-icon"></i><h3>Help Desk</h3><p>Tier 2 technical support and hardware maintenance.</p></div>
+        <div class="service-tile"><i class="fa-solid fa-network-wired service-icon"></i><h3>Networking</h3><p>Structured cabling, LAN/WAN optimization and port management.</p></div>
+        <div class="service-tile"><i class="fa-solid fa-shield-halved service-icon"></i><h3>Cybersecurity</h3><p>Kaspersky Endpoint deployment and threat remediation.</p></div>
+        <div class="service-tile"><i class="fa-solid fa-code service-icon"></i><h3>UI Design</h3><p>Crafting liquid glass interfaces and bespoke user portfolios.</p></div>
+      </div>
+    </div>
+  </section>
 
-        <form id="contact-form">
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-            <div class="form-group">
-              <label>Full Name</label>
-              <input type="text" class="form-control" placeholder="Enter your name">
-            </div>
-            <div class="form-group">
-              <label>Email Address</label>
-              <input type="email" class="form-control" placeholder="Enter your email">
-            </div>
+  <section id="projects">
+    <div class="glass-card">
+      <h2>Projects Dashboard</h2>
+      <div class="dashboard-grid">
+        <div class="db-widget">
+          <div style="display: flex; justify-content: space-between;"><h3>Logistics Automation</h3><span style="color:var(--accent-green); font-size: 0.7rem;">COMPLETED</span></div>
+          <p style="font-size: 0.85rem; color: var(--text-dim); margin: 10px 0;">Digital procurement workflow for Oxfam Uganda.</p>
+          <div class="progress-track"><div class="progress-fill" style="width: 100%;"></div></div>
+        </div>
+        <div class="db-widget" style="opacity: 0.7;">
+          <div style="display: flex; justify-content: space-between;"><h3>Game Store Web</h3><span style="color:#fbbf24; font-size: 0.7rem;">IN PIPELINE</span></div>
+          <p style="font-size: 0.85rem; color: var(--text-dim); margin: 10px 0;">Upcoming e-commerce marketplace for digital gaming assets.</p>
+          <div class="progress-track"><div class="progress-fill" style="width: 30%; background:#fbbf24;"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="journey">
+    <div class="glass-card">
+      <h2>Professional Journey</h2>
+      <div style="display: grid; gap: 15px;">
+        <div style="background:var(--glass-bright); padding: 25px; border-radius: 20px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h3>System Administrator</h3>
+            <p style="color:var(--accent-green)">Double Q (C4 Logistics) | 2024</p>
           </div>
-          <div class="form-group">
-            <label>Subject</label>
-            <input type="text" class="form-control" placeholder="Service required">
+          <button class="cv-btn" style="background:transparent; border:1px solid var(--accent-green); color:var(--accent-green)" onclick="openModal('modal-dq')">View Roles</button>
+        </div>
+        <div style="background:var(--glass-bright); padding: 25px; border-radius: 20px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h3>IT Support Officer</h3>
+            <p style="color:var(--accent-green)">Oxfam In Uganda | 2022 - 2024</p>
           </div>
-          <div class="form-group">
-            <label>Message</label>
-            <textarea class="form-control" rows="5" placeholder="How can I help you?"></textarea>
-          </div>
-          <button type="submit" class="submit-btn">Send Message</button>
-        </form>
+          <button class="cv-btn" style="background:transparent; border:1px solid var(--accent-green); color:var(--accent-green)" onclick="openModal('modal-ox')">View Roles</button>
+        </div>
       </div>
     </div>
   </section>
@@ -143,74 +151,69 @@
   <footer>
     <div class="footer-grid">
       <div class="footer-col">
-        <h4 style="font-size: 1.5rem; font-weight: 900;">JMK<span style="color:var(--accent-green)">.</span></h4>
-        <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 20px;">Delivering enterprise-grade IT infrastructure and bespoke digital solutions for the modern world.</p>
-        <div class="form-group" style="margin-bottom: 10px;">
-          <input type="text" class="form-control" placeholder="Enter your Email" style="padding: 10px;">
-        </div>
-        <button class="submit-btn" style="padding: 10px; font-size: 0.7rem;">Subscribe Now</button>
+        <h4 style="font-size: 1.5rem;">JMK<span style="color:var(--accent-green)">.</span></h4>
+        <p style="font-size: 0.8rem; color:var(--text-dim)">Excellence in IT Service Delivery and Infrastructure management.</p>
       </div>
-
       <div class="footer-col">
         <h4>Information</h4>
         <ul>
-          <li><a href="#about">About Us</a></li>
+          <li><a href="#home">About</a></li>
           <li><a href="#journey">Journey</a></li>
-          <li><a href="#">Blog</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#education">Education</a></li>
+          <li><a href="#projects">Dashboard</a></li>
         </ul>
       </div>
-
       <div class="footer-col">
-        <h4>Helpful Links</h4>
+        <h4>Services</h4>
         <ul>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#contact">Supports</a></li>
-          <li><a href="#">Terms & Conditions</a></li>
-          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#services">Help Desk</a></li>
+          <li><a href="#services">Security</a></li>
+          <li><a href="#services">Networking</a></li>
         </ul>
       </div>
-
       <div class="footer-col">
-        <h4>Our Services</h4>
-        <ul>
-          <li><a href="#">Help Desk</a></li>
-          <li><a href="#">Networking</a></li>
-          <li><a href="#">Surveillance</a></li>
-          <li><a href="#">UI Design</a></li>
-          <li><a href="#">Procurement</a></li>
-        </ul>
+        <h4>Contact</h4>
+        <p style="font-size: 0.8rem; color:var(--text-dim)">+256 7xx xxx xxx<br>johnmark@example.com</p>
       </div>
-
       <div class="footer-col">
-        <h4>Contact Us</h4>
-        <div style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 10px;">
-          <i class="fa-solid fa-phone" style="margin-right: 10px;"></i> +256 700 000 000
-        </div>
-        <div style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 20px;">
-          <i class="fa-solid fa-envelope" style="margin-right: 10px;"></i> support@jmk.com
-        </div>
-        <div class="social-links">
-          <a href="#" class="social-btn"><i class="fa-brands fa-facebook-f"></i></a>
-          <a href="#" class="social-btn"><i class="fa-brands fa-twitter"></i></a>
-          <a href="#" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
-        </div>
+        <h4>Newsletter</h4>
+        <input type="text" placeholder="Email Address" style="width:100%; background:var(--glass); border:1px solid var(--border); padding: 8px; border-radius: 5px; color:#fff; margin-bottom: 10px;">
+        <button class="cv-btn" style="width:100%; font-size: 0.7rem;">Subscribe</button>
       </div>
     </div>
-
-    <div class="footer-bottom">
-      <div>2026 © JMK IT Solutions | All Rights Reserved</div>
-      <div style="display: flex; gap: 20px;">
-        <span>FAQ</span>
-        <span>Privacy</span>
-        <span>Terms & Condition</span>
-      </div>
+    <div style="border-top: 1px solid var(--border); margin-top: 50px; padding-top: 20px; text-align: center; font-size: 0.8rem; color:var(--text-dim);">
+      2026 © John Mark Kiritu | All Rights Reserved
     </div>
   </footer>
 
+  <div id="modal-dq" class="modal">
+    <div class="modal-content">
+      <h2>System Administrator Roles</h2>
+      <ul style="padding: 20px; color: var(--text-dim);">
+        <li>Administer switches, PABX, and Microsoft Power Apps.</li>
+        <li>Implement Kaspersky Endpoint Protection and Firewalls.</li>
+        <li>Manage L2 Support via AnyDesk and TeamViewer.</li>
+      </ul>
+      <button class="cv-btn" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <div id="modal-ox" class="modal">
+    <div class="modal-content">
+      <h2>IT Support Officer Roles</h2>
+      <ul style="padding: 20px; color: var(--text-dim);">
+        <li>Cisco Meraki and M365 Administration.</li>
+        <li>Service Management via ServiceNow and Jira.</li>
+        <li>Digital Transformation via Power BI and Power Apps.</li>
+      </ul>
+      <button class="cv-btn" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
   <script>
-    // Smooth Active Link Switching
+    function openModal(id) { document.getElementById(id).style.display = "block"; }
+    function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = "none"); }
+    window.onclick = (e) => { if(e.target.className === 'modal') closeModal(); }
+
     const sections = document.querySelectorAll('section');
     const navLinks = document.querySelectorAll('.nav-btn');
     window.onscroll = () => {
