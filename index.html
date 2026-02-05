@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>John Mark Kiritu | IT Professional</title>
+  <title>John Mark Kiritu | Professional Portfolio</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
@@ -55,7 +55,6 @@
     .icon-menu {
       background: var(--glass);
       backdrop-filter: blur(25px) saturate(150%);
-      -webkit-backdrop-filter: blur(25px) saturate(150%);
       border: 1px solid var(--border);
       border-radius: 100px;
       padding: 6px;
@@ -87,9 +86,6 @@
     section {
       min-height: 100vh;
       padding: 120px 8% 80px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
     }
 
     .glass-card {
@@ -97,74 +93,130 @@
       backdrop-filter: blur(30px);
       border: 1px solid var(--border);
       border-radius: 40px;
-      padding: 60px;
+      padding: 40px;
       width: 100%;
       max-width: 1100px;
       margin: 0 auto;
     }
 
     h1 { font-size: 4rem; font-weight: 900; line-height: 1; margin-bottom: 20px; }
-    h2 { font-size: 2.5rem; margin-bottom: 30px; color: var(--accent-green); }
+    h2 { font-size: 2.5rem; margin-bottom: 30px; color: var(--accent-green); text-align: center; }
 
-    .status-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--glass-bright);
-      padding: 8px 16px;
-      border-radius: 50px;
-      font-size: 0.8rem;
-      margin-bottom: 20px;
-      border: 1px solid var(--border);
-    }
-
-    .dot { width: 8px; height: 8px; background: #4ade80; border-radius: 50%; box-shadow: 0 0 10px #4ade80; }
-
-    /* --- EDUCATION TIMELINE --- */
-    .timeline {
+    /* --- EXPERIENCE TILES --- */
+    .experience-grid {
       display: flex;
       flex-direction: column;
-      gap: 30px;
-      position: relative;
+      gap: 20px;
     }
 
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 15px;
-      top: 10px;
-      bottom: 10px;
-      width: 2px;
-      background: var(--border);
-    }
-
-    .timeline-item {
-      padding-left: 50px;
-      position: relative;
-    }
-
-    .timeline-dot {
-      position: absolute;
-      left: 0;
-      top: 5px;
-      width: 32px;
-      height: 32px;
+    .job-tile {
+      display: grid;
+      grid-template-columns: 100px 1fr auto;
+      align-items: center;
+      gap: 25px;
       background: var(--glass-bright);
-      border: 2px solid var(--accent-green);
-      border-radius: 50%;
+      border: 1px solid var(--border);
+      border-radius: 25px;
+      padding: 25px;
+      transition: transform 0.3s ease;
+    }
+
+    .job-tile:hover {
+      transform: scale(1.01);
+      background: rgba(255,255,255,0.12);
+    }
+
+    .comp-logo {
+      width: 80px;
+      height: 80px;
+      background: var(--glass);
+      border-radius: 15px;
       display: grid;
       place-items: center;
-      z-index: 1;
+      font-weight: 900;
+      color: var(--accent-green);
     }
 
-    .edu-year { font-weight: 900; color: var(--accent-green); font-size: 0.9rem; }
-    .edu-school { font-size: 1.2rem; font-weight: 600; margin: 4px 0; }
-    .edu-degree { color: var(--text-dim); font-size: 0.95rem; }
+    .job-info h3 { font-size: 1.4rem; margin-bottom: 5px; }
+    .job-info a { color: var(--accent-green); text-decoration: none; font-size: 1rem; }
+    .job-year { color: var(--text-dim); font-size: 0.85rem; margin-top: 5px; }
+    
+    .skills-preview {
+        margin-top: 10px;
+        font-size: 0.85rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .skill-tag { 
+        background: var(--glass); 
+        padding: 4px 10px; 
+        border-radius: 5px; 
+        border: 1px solid var(--border);
+    }
+
+    .view-btn {
+      padding: 12px 20px;
+      border-radius: 12px;
+      border: 1px solid var(--accent-green);
+      background: transparent;
+      color: var(--accent-green);
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .view-btn:hover {
+      background: var(--accent-green);
+      color: #022c22;
+    }
+
+    /* --- MODAL SYSTEM --- */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(10px);
+    }
+
+    .modal-content {
+      background: var(--bg-gradient);
+      margin: 5% auto;
+      padding: 40px;
+      border: 1px solid var(--border);
+      width: 80%;
+      max-width: 800px;
+      border-radius: 30px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .tech-link { color: var(--accent-green); text-decoration: underline; }
+    .roles-list { margin: 20px 0; line-height: 1.6; }
+    .roles-list li { margin-bottom: 12px; list-style-type: square; }
+    
+    .manager-ref {
+        background: var(--glass-bright);
+        padding: 20px;
+        border-radius: 15px;
+        margin-top: 25px;
+        border-left: 4px solid var(--accent-green);
+    }
+
+    /* --- TIMELINE STYLES (PREVIOUS) --- */
+    .timeline-item { padding-left: 50px; position: relative; margin-bottom: 30px; }
+    .timeline::before { content: ''; position: absolute; left: 15px; top: 10px; bottom: 10px; width: 2px; background: var(--border); }
+    .timeline-dot { position: absolute; left: 0; top: 5px; width: 32px; height: 32px; background: var(--glass-bright); border: 2px solid var(--accent-green); border-radius: 50%; display: grid; place-items: center; z-index: 1; }
 
     @media (max-width: 900px) {
+      .job-tile { grid-template-columns: 1fr; text-align: center; }
+      .comp-logo { margin: 0 auto; }
       .nav-btn span { display: none; }
-      h1 { font-size: 2.5rem; }
-      .glass-card { padding: 30px; }
     }
   </style>
 </head>
@@ -174,108 +226,180 @@
     <nav class="icon-menu">
       <a href="#home" class="nav-btn active"><i class="fa-solid fa-house"></i><span>Home</span></a>
       <a href="#about" class="nav-btn"><i class="fa-solid fa-user"></i><span>About</span></a>
+      <a href="#journey" class="nav-btn"><i class="fa-solid fa-briefcase"></i><span>Journey</span></a>
       <a href="#education" class="nav-btn"><i class="fa-solid fa-graduation-cap"></i><span>Education</span></a>
       <div class="nav-btn" id="theme-toggle" style="cursor:pointer"><i class="fa-solid fa-circle-half-stroke"></i></div>
     </nav>
   </div>
 
-  <section id="home">
+  <section id="home" style="display:flex; align-items:center;">
     <div class="glass-card" style="display: flex; align-items: center; justify-content: space-between; gap: 40px;">
       <div>
-        <div class="status-badge"><div class="dot"></div> Available for IT Consultation</div>
         <h1>Digital<br>Precision.</h1>
         <p style="color: var(--text-dim); font-size: 1.2rem; max-width: 500px; margin-bottom: 30px;">
           I'm John Mark, an IT Infrastructure Specialist bridging technical precision with creative digital solutions.
         </p>
-        <a href="#about" class="nav-btn active" style="display: inline-flex; width: auto;">Learn More</a>
       </div>
-      <div style="width: 300px; height: 300px; background: linear-gradient(45deg, var(--glass-bright), transparent); border-radius: 40px; border: 1px solid var(--border); display: grid; place-items: center;">
-         <i class="fa-solid fa-server" style="font-size: 5rem; opacity: 0.2;"></i>
+      <div style="width: 250px; height: 250px; background: var(--glass-bright); border-radius: 40px; border: 1px solid var(--border); display: grid; place-items: center;">
+         <i class="fa-solid fa-microchip" style="font-size: 4rem; opacity: 0.2;"></i>
       </div>
     </div>
   </section>
 
   <section id="about">
     <div class="glass-card">
-      <h2>Professional Profile</h2>
-      <p style="font-size: 1.25rem; line-height: 1.7; color: var(--text);">
-        I am a <strong>self-motivated, results-driven and highly skilled IT professional</strong> with over 2 years experience in IT support, networking and IT service management. 
+      <h2>About Me</h2>
+      <p style="font-size: 1.2rem; line-height: 1.7;">
+        I am a <strong>self-motivated, results-driven and highly skilled IT professional</strong> with over 2 years experience in IT support, networking and IT service management. I have experience in managing enterprise-level environments, including Active Directory, Microsoft 365, endpoint security solutions, and cloud-based services.
       </p>
-      <br>
-      <p style="font-size: 1.1rem; line-height: 1.6; color: var(--text-dim);">
-        I have experience in managing enterprise-level environments, including Active Directory, Microsoft 365, endpoint security solutions, and cloud-based services. Recognized for problem-solving, strong analytical skills, and the ability to deliver innovative IT solutions that enhance productivity.
-      </p>
+    </div>
+  </section>
+
+  <section id="journey">
+    <div class="glass-card">
+      <h2>Professional Journey</h2>
+      <div class="experience-grid">
+        
+        <div class="job-tile">
+          <div class="comp-logo">DQ</div>
+          <div class="job-info">
+            <h3>System Administrator</h3>
+            <a href="https://doubleq.co.ug" target="_blank">Double Q (C4 Logistics Ltd) <i class="fa-solid fa-link"></i></a>
+            <div class="job-year">September 2024 – November 2024</div>
+            <div class="skills-preview">
+                <span class="skill-tag">Infrastructure Admin</span>
+                <span class="skill-tag">Cybersecurity</span>
+                <span class="skill-tag">TMS Reporting</span>
+            </div>
+          </div>
+          <button class="view-btn" onclick="openModal('modal-dq')">View Roles</button>
+        </div>
+
+        <div class="job-tile">
+          <div class="comp-logo">OX</div>
+          <div class="job-info">
+            <h3>IT Support Officer</h3>
+            <a href="https://uganda.oxfam.org" target="_blank">Oxfam in Uganda <i class="fa-solid fa-link"></i></a>
+            <div class="job-year">Nov 2022 - May 2024</div>
+            <div class="skills-preview">
+                <span class="skill-tag">Network Uptime</span>
+                <span class="skill-tag">ITIL Asset Management</span>
+                <span class="skill-tag">Digital Transformation</span>
+            </div>
+          </div>
+          <button class="view-btn" onclick="openModal('modal-ox-support')">View Roles</button>
+        </div>
+
+        <div class="job-tile">
+          <div class="comp-logo">OX</div>
+          <div class="job-info">
+            <h3>Graduate Trainee</h3>
+            <a href="https://uganda.oxfam.org" target="_blank">Oxfam in Uganda <i class="fa-solid fa-link"></i></a>
+            <div class="job-year">Jul 2022 - Nov 2022</div>
+            <div class="skills-preview">
+                <span class="skill-tag">Helpdesk Ticketing</span>
+                <span class="skill-tag">AV Systems Deployment</span>
+                <span class="skill-tag">End-user Support</span>
+            </div>
+          </div>
+          <button class="view-btn" onclick="openModal('modal-ox-trainee')">View Roles</button>
+        </div>
+
+        <div class="job-tile">
+          <div class="comp-logo">OX</div>
+          <div class="job-info">
+            <h3>IT Intern</h3>
+            <a href="https://uganda.oxfam.org" target="_blank">Oxfam in Uganda <i class="fa-solid fa-link"></i></a>
+            <div class="job-year">Feb 2022 - Jul 2022</div>
+            <div class="skills-preview">
+                <span class="skill-tag">Cloud Collaboration</span>
+                <span class="skill-tag">LAN/WAN Configuration</span>
+                <span class="skill-tag">Endpoint Protection</span>
+            </div>
+          </div>
+          <button class="view-btn" onclick="openModal('modal-ox-intern')">View Roles</button>
+        </div>
+
+      </div>
     </div>
   </section>
 
   <section id="education">
     <div class="glass-card">
-      <h2>Education History</h2>
-      
+      <h2>Education</h2>
       <div class="timeline">
         <div class="timeline-item">
-          <div class="timeline-dot"><i class="fa-solid fa-university" style="font-size: 0.7rem;"></i></div>
+          <div class="timeline-dot"><i class="fa-solid fa-university"></i></div>
           <div class="edu-year">2018 — 2021</div>
           <div class="edu-school">Uganda Christian University</div>
-          <div class="edu-degree">Bachelor of Science in Information Technology</div>
+          <div class="edu-degree">BSc. Information Technology</div>
         </div>
-
         <div class="timeline-item">
-          <div class="timeline-dot"><i class="fa-solid fa-book" style="font-size: 0.7rem;"></i></div>
-          <div class="edu-year">2016 — 2017</div>
-          <div class="edu-school">St. Lawrence Schools and Colleges</div>
-          <div class="edu-degree">Uganda Advanced Certificate of Education (UACE)</div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-dot"><i class="fa-solid fa-pen-nib" style="font-size: 0.7rem;"></i></div>
-          <div class="edu-year">2012 — 2015</div>
-          <div class="edu-school">Mbarara High School</div>
-          <div class="edu-degree">Uganda Certificate of Education (UCE)</div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-dot"><i class="fa-solid fa-pencil" style="font-size: 0.7rem;"></i></div>
-          <div class="edu-year">2005 — 2011</div>
-          <div class="edu-school">Mbarara Preparatory School</div>
-          <div class="edu-degree">Primary Leaving Examination (PLE) Certificate</div>
-        </div>
+            <div class="timeline-dot"><i class="fa-solid fa-school"></i></div>
+            <div class="edu-year">2016 — 2017</div>
+            <div class="edu-school">St. Lawrence Schools and Colleges</div>
+            <div class="edu-degree">UACE Certificate</div>
+          </div>
       </div>
     </div>
   </section>
 
-  <footer style="padding: 40px; text-align: center; color: var(--text-dim); font-size: 0.8rem;">
-    © 2026 John Mark Kiritu • Designed with Liquid Glass
-  </footer>
+  <div id="modal-dq" class="modal">
+    <div class="modal-content">
+      <h2>Roles & Technologies</h2>
+      <ul class="roles-list">
+        <li>Administer infrastructure including <a class="tech-link" href="https://www.microsoft.com/en-us/power-platform/products/power-apps">Microsoft Power Apps</a>, PABX, and surveillance.</li>
+        <li>Cybersecurity enforcement using <a class="tech-link" href="https://www.kaspersky.com/">Kaspersky Endpoint Protection</a> and Firewalls.</li>
+        <li>L2 Technical Support for <a class="tech-link" href="https://www.anydesk.com">AnyDesk</a> and <a class="tech-link" href="https://www.teamviewer.com">TeamViewer</a>.</li>
+      </ul>
+      <div class="manager-ref">
+        <strong>Reference: Direct Manager</strong><br>
+        Name: [Name Required] | Position: IT Manager<br>
+        Email: [Email] | Work: [Work Email]
+      </div>
+      <button class="view-btn" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <div id="modal-ox-support" class="modal">
+    <div class="modal-content">
+      <h2>Oxfam IT Support Roles</h2>
+      <ul class="roles-list">
+        <li>Proactive monitoring using <a class="tech-link" href="https://meraki.cisco.com/">Cisco Meraki</a> and <a class="tech-link" href="https://www.microsoft.com/en-us/microsoft-365">M365 Admin Center</a>.</li>
+        <li>IT Asset management via <a class="tech-link" href="https://www.atlassian.com/software/jira/service-management">Jira Service Management</a> and <a class="tech-link" href="https://www.servicenow.com/">ServiceNow</a>.</li>
+        <li>Digital transformation with <a class="tech-link" href="https://powerbi.microsoft.com/">Power BI</a> and <a class="tech-link" href="https://www.box.com/">Box Drive</a>.</li>
+      </ul>
+      <button class="view-btn" onclick="closeModal()">Close</button>
+    </div>
+  </div>
 
   <script>
-    // Theme Toggle Logic
+    // Theme Toggle
     const themeToggle = document.getElementById('theme-toggle');
     themeToggle.addEventListener('click', () => {
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
       document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
     });
 
-    // Scroll Observer: Highlights the nav based on where you are
+    // Modal Logic
+    function openModal(id) { document.getElementById(id).style.display = "block"; }
+    function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = "none"); }
+    window.onclick = function(event) { if (event.target.className === 'modal') closeModal(); }
+
+    // Scroll Highlighter
     const sections = document.querySelectorAll('section');
     const navLinks = document.querySelectorAll('.nav-btn');
-
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(section => {
+    window.onscroll = () => {
+      let current = "";
+      sections.forEach((section) => {
         const sectionTop = section.offsetTop;
-        if (pageYOffset >= sectionTop - 150) {
-          current = section.getAttribute('id');
-        }
+        if (pageYOffset >= sectionTop - 150) { current = section.getAttribute("id"); }
       });
-
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-          link.classList.add('active');
-        }
+      navLinks.forEach((link) => {
+        link.classList.remove("active");
+        if (link.getAttribute("href").includes(current)) { link.classList.add("active"); }
       });
-    });
+    };
   </script>
 </body>
 </html>
