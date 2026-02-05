@@ -3,7 +3,262 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>John Mark Kiritu | Master Portfolio</title>
+  <title>John Mark Kiritu — Digital Dashboard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+  <style>
+    :root {
+      /* Palette based on image: Deep Forest Green & Glass */
+      --bg-gradient: radial-gradient(circle at top, #064e3b 0%, #022c22 100%);
+      --glass: rgba(255, 255, 255, 0.08);
+      --glass-bright: rgba(255, 255, 255, 0.15);
+      --border: rgba(255, 255, 255, 0.12);
+      --accent-white: #ffffff;
+      --text: #f8fafc;
+      --text-dim: #94a3b8;
+    }
+
+    [data-theme="light"] {
+      --bg-gradient: radial-gradient(circle at top, #f0fdf4 0%, #dcfce7 100%);
+      --glass: rgba(0, 0, 0, 0.05);
+      --glass-bright: rgba(0, 0, 0, 0.1);
+      --border: rgba(0, 0, 0, 0.1);
+      --accent-white: #166534;
+      --text: #0f172a;
+      --text-dim: #475569;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    
+    body {
+      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* --- HORIZONTAL GLASS NAV --- */
+    .nav-container {
+      position: fixed;
+      top: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .icon-menu {
+      background: var(--glass);
+      backdrop-filter: blur(25px) saturate(150%);
+      -webkit-backdrop-filter: blur(25px) saturate(150%);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 100px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    /* The "Leaf" Logo */
+    .nav-logo {
+      font-size: 1.2rem;
+      color: #4ade80;
+      padding: 10px;
+    }
+
+    /* Active State (White Pill from reference) */
+    .nav-btn.active {
+      background: var(--accent-white);
+      color: #064e3b; /* Contrast color for dark mode */
+      box-shadow: 0 4px 15px rgba(255,255,255,0.2);
+    }
+    
+    [data-theme="light"] .nav-btn.active {
+        color: white;
+        background: #166534;
+    }
+
+    .nav-btn:hover:not(.active) {
+      background: var(--glass-bright);
+    }
+
+    /* --- DASHBOARD CONTENT --- */
+    .dashboard-container { 
+      display: grid; 
+      grid-template-columns: 1fr 350px; 
+      gap: 25px; 
+      padding: 140px 8% 50px; 
+      flex: 1; 
+    }
+
+    .hero-card { 
+      background: var(--glass); 
+      backdrop-filter: blur(30px); 
+      border: 1px solid var(--border); 
+      border-radius: 40px; 
+      padding: 50px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      gap: 30px; 
+    }
+
+    .hero-info h1 { font-size: 3rem; font-weight: 900; margin-bottom: 10px; letter-spacing: -1px; }
+    .hero-info p { color: var(--text-dim); margin-bottom: 30px; font-size: 1.1rem; max-width: 500px; line-height: 1.6; }
+    
+    .btn { padding: 12px 25px; border-radius: 15px; font-weight: 600; text-decoration: none; transition: 0.3s; display: inline-flex; align-items: center; gap: 8px; border: none; cursor: pointer; }
+    .btn-primary { background: var(--accent-white); color: #064e3b; }
+    .btn-outline { background: var(--glass-bright); color: var(--text); border: 1px solid var(--border); }
+
+    .sidebar-stack { display: flex; flex-direction: column; gap: 25px; }
+    .glass-panel { background: var(--glass); backdrop-filter: blur(30px); border: 1px solid var(--border); border-radius: 30px; padding: 25px; }
+
+    /* Calendar Widget */
+    .cal-header { font-weight: 700; margin-bottom: 15px; display: flex; justify-content: space-between; color: #4ade80;}
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; font-size: 0.75rem; text-align: center; }
+    .cal-day { padding: 8px 0; border-radius: 10px; background: var(--glass-bright); }
+    .cal-day.today { background: var(--accent-white); color: #064e3b; font-weight: bold; }
+
+    /* Footer */
+    .liquid-footer { background: var(--glass); backdrop-filter: blur(40px); border-top: 1px solid var(--border); padding: 40px 8%; margin-top: 50px; }
+    .footer-bottom { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-dim); }
+
+    @media (max-width: 1024px) {
+      .dashboard-container { grid-template-columns: 1fr; padding-top: 120px; }
+      .nav-btn span { display: none; } /* Show only icons on small screens */
+      .hero-card { flex-direction: column; text-align: center; padding: 30px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav-container">
+    <nav class="icon-menu" id="iconMenu">
+      <a href="#" class="nav-logo"><i class="fa-solid fa-leaf"></i></a>
+      
+      <a href="#" class="nav-btn">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+      </a>
+      
+      <a href="#" class="nav-btn">
+        <i class="fa-solid fa-compass"></i>
+        <span>Measure</span>
+      </a>
+      
+      <a href="#" class="nav-btn active">
+        <i class="fa-solid fa-chart-simple"></i>
+        <span>Reduce</span>
+      </a>
+      
+      <a href="#" class="nav-btn">
+        <i class="fa-solid fa-file-lines"></i>
+        <span>Report</span>
+      </a>
+
+      <div class="nav-btn" id="theme-toggle" style="cursor: pointer;">
+        <i class="fa-solid fa-circle-half-stroke"></i>
+      </div>
+    </nav>
+  </div>
+
+  <div class="dashboard-container">
+    <main class="hero-card">
+      <div class="hero-info">
+        <h1>Hi, I'm John Mark</h1>
+        <p>IT Infrastructure Specialist & Creative Developer. Bridging technical precision with liquid glass design.</p>
+        <div style="display: flex; gap: 15px;">
+          <button class="btn btn-primary">Download CV</button>
+          <button class="btn btn-outline">Book Call</button>
+        </div>
+      </div>
+      <div style="width: 200px; height: 200px; background: var(--glass-bright); border-radius: 30px; border: 1px solid var(--border);"></div>
+    </main>
+
+    <div class="sidebar-stack">
+      <aside class="glass-panel">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+          <div style="width:8px; height:8px; background:#4ade80; border-radius:50%;"></div>
+          <strong>Portfolio AI</strong>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-dim);">How can I assist your infrastructure needs today?</p>
+      </aside>
+
+      <div class="glass-panel">
+        <div class="cal-header">
+          <span>February 2026</span>
+          <i class="fa-solid fa-calendar-day"></i>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="liquid-footer">
+    <div class="footer-bottom">
+      <span>© 2026 John Mark Kiritu. All rights reserved.</span>
+      <span>Liquid Glass UI v2.0</span>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const calGrid = document.getElementById('calGrid');
+
+    // Calendar Generation
+    const days = ['S','M','T','W','T','F','S'];
+    days.forEach(d => calGrid.innerHTML += `<div style="font-weight:900; opacity:0.3; margin-bottom:5px;">${d}</div>`);
+    for(let i=1; i<=28; i++) {
+        const isToday = i === 5; // Static mark for example
+        calGrid.innerHTML += `<div class="cal-day ${isToday?'today':''}">${i}</div>`;
+    }
+
+    // Theme Toggle
+    themeToggle.addEventListener('click', () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    });
+
+    // Simple Active State Switcher
+    const navBtns = document.querySelectorAll('.nav-btn');
+    navBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        if(this.id === 'theme-toggle') return;
+        navBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>John Mark Kiritu | IT & Creative</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
@@ -15,63 +270,1982 @@
       --glass: rgba(255, 255, 255, 0.08);
       --glass-bright: rgba(255, 255, 255, 0.15);
       --border: rgba(255, 255, 255, 0.12);
+      --accent-white: #ffffff;
+      --text: #f8fafc;
+      --text-dim: #94a3b8;
+    }
+
+    [data-theme="light"] {
+      --bg-gradient: radial-gradient(circle at top, #f0fdf4 0%, #dcfce7 100%);
+      --glass: rgba(0, 0, 0, 0.05);
+      --glass-bright: rgba(0, 0, 0, 0.1);
+      --border: rgba(0, 0, 0, 0.1);
+      --accent-white: #166534;
+      --text: #0f172a;
+      --text-dim: #475569;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; scroll-behavior: smooth; }
+    
+    body {
+      min-height: 200vh; /* Ensuring enough height to test scrolling */
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* --- HORIZONTAL NAV --- */
+    .nav-container {
+      position: fixed;
+      top: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: max-content;
+    }
+
+    .icon-menu {
+      background: var(--glass);
+      backdrop-filter: blur(25px) saturate(150%);
+      -webkit-backdrop-filter: blur(25px) saturate(150%);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      border-radius: 100px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .nav-btn.active {
+      background: var(--accent-white);
+      color: #064e3b;
+    }
+
+    /* --- SECTION STYLING --- */
+    section {
+      min-height: 100vh;
+      padding: 140px 8% 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .glass-card {
+      background: var(--glass);
+      backdrop-filter: blur(30px);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: 60px;
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    .hero-content { display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+    h1 { font-size: 4rem; font-weight: 900; line-height: 1; margin-bottom: 20px; }
+    
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--glass-bright);
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+    }
+
+    .dot { width: 8px; height: 8px; background: #4ade80; border-radius: 50%; box-shadow: 0 0 10px #4ade80; }
+
+    @media (max-width: 900px) {
+      .nav-btn span { display: none; }
+      .hero-content { flex-direction: column; text-align: center; }
+      h1 { font-size: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav-container">
+    <nav class="icon-menu">
+      <a href="#home" class="nav-btn active"><i class="fa-solid fa-house"></i><span>Home</span></a>
+      <a href="#measure" class="nav-btn"><i class="fa-solid fa-compass"></i><span>Measure</span></a>
+      <a href="#analyze" class="nav-btn"><i class="fa-solid fa-chart-pie"></i><span>Analyze</span></a>
+      <a href="#reduce" class="nav-btn"><i class="fa-solid fa-leaf"></i><span>Reduce</span></a>
+      <div class="nav-btn" id="theme-toggle" style="cursor:pointer"><i class="fa-solid fa-circle-half-stroke"></i></div>
+    </nav>
+  </div>
+
+  <section id="home">
+    <div class="glass-card hero-content">
+      <div>
+        <div class="status-badge"><div class="dot"></div> Available for Projects</div>
+        <h1>Digital<br>Precision.</h1>
+        <p style="color: var(--text-dim); font-size: 1.2rem; max-width: 500px; margin-bottom: 30px;">
+          I'm John Mark, an IT Specialist crafting high-performance infrastructure and liquid glass interfaces.
+        </p>
+        <button style="padding: 15px 30px; border-radius: 15px; border: none; background: white; color: #064e3b; font-weight: 700; cursor: pointer;">View My Work</button>
+      </div>
+      <div style="width: 300px; height: 300px; background: linear-gradient(45deg, var(--glass-bright), transparent); border-radius: 40px; border: 1px solid var(--border);"></div>
+    </div>
+  </section>
+
+  <section id="measure">
+    <div class="glass-card">
+      <h2>Measurement & Metrics</h2>
+      <p style="color: var(--text-dim); margin-top: 20px;">Detailed infrastructure audits and creative data tracking.</p>
+    </div>
+  </section>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    });
+
+    // Scroll Observer: Highlights the nav based on where you are on the page
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-btn');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (pageYOffset >= sectionTop - 150) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>John Mark Kiritu | IT Professional</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg-gradient: radial-gradient(circle at top, #064e3b 0%, #022c22 100%);
+      --glass: rgba(255, 255, 255, 0.08);
+      --glass-bright: rgba(255, 255, 255, 0.15);
+      --border: rgba(255, 255, 255, 0.12);
+      --accent-white: #ffffff;
       --accent-green: #4ade80;
       --text: #f8fafc;
       --text-dim: #94a3b8;
     }
 
+    [data-theme="light"] {
+      --bg-gradient: radial-gradient(circle at top, #f0fdf4 0%, #dcfce7 100%);
+      --glass: rgba(0, 0, 0, 0.05);
+      --glass-bright: rgba(0, 0, 0, 0.1);
+      --border: rgba(0, 0, 0, 0.1);
+      --accent-white: #166534;
+      --accent-green: #15803d;
+      --text: #0f172a;
+      --text-dim: #475569;
+    }
+
     * { margin:0; padding:0; box-sizing:border-box; scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background: var(--bg-gradient); background-attachment: fixed; color: var(--text); line-height: 1.6; }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text);
+      overflow-x: hidden;
+    }
 
     /* --- NAVIGATION --- */
-    .nav-container { position: fixed; top: 25px; left: 50%; transform: translateX(-50%); z-index: 1000; width: max-content; }
-    .icon-menu { background: var(--glass); backdrop-filter: blur(25px); border: 1px solid var(--border); border-radius: 100px; padding: 6px; display: flex; gap: 5px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-    .nav-btn { display: flex; align-items: center; gap: 10px; padding: 10px 18px; border-radius: 100px; color: var(--text); text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: 0.4s; }
-    .nav-btn.active { background: #fff; color: #064e3b; }
+    .nav-container {
+      position: fixed;
+      top: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: max-content;
+    }
+
+    .icon-menu {
+      background: var(--glass);
+      backdrop-filter: blur(25px) saturate(150%);
+      -webkit-backdrop-filter: blur(25px) saturate(150%);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      border-radius: 100px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .nav-btn.active {
+      background: var(--accent-white);
+      color: #064e3b;
+    }
+
+    /* --- LAYOUT SECTIONS --- */
+    section {
+      min-height: 100vh;
+      padding: 120px 8% 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .glass-card {
+      background: var(--glass);
+      backdrop-filter: blur(30px);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: 60px;
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    h1 { font-size: 4rem; font-weight: 900; line-height: 1; margin-bottom: 20px; }
+    h2 { font-size: 2.5rem; margin-bottom: 30px; color: var(--accent-green); }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--glass-bright);
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+    }
+
+    .dot { width: 8px; height: 8px; background: #4ade80; border-radius: 50%; box-shadow: 0 0 10px #4ade80; }
+
+    /* --- EDUCATION TIMELINE --- */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 10px;
+      bottom: 10px;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .timeline-item {
+      padding-left: 50px;
+      position: relative;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 0;
+      top: 5px;
+      width: 32px;
+      height: 32px;
+      background: var(--glass-bright);
+      border: 2px solid var(--accent-green);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      z-index: 1;
+    }
+
+    .edu-year { font-weight: 900; color: var(--accent-green); font-size: 0.9rem; }
+    .edu-school { font-size: 1.2rem; font-weight: 600; margin: 4px 0; }
+    .edu-degree { color: var(--text-dim); font-size: 0.95rem; }
+
+    @media (max-width: 900px) {
+      .nav-btn span { display: none; }
+      h1 { font-size: 2.5rem; }
+      .glass-card { padding: 30px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav-container">
+    <nav class="icon-menu">
+      <a href="#home" class="nav-btn active"><i class="fa-solid fa-house"></i><span>Home</span></a>
+      <a href="#about" class="nav-btn"><i class="fa-solid fa-user"></i><span>About</span></a>
+      <a href="#education" class="nav-btn"><i class="fa-solid fa-graduation-cap"></i><span>Education</span></a>
+      <div class="nav-btn" id="theme-toggle" style="cursor:pointer"><i class="fa-solid fa-circle-half-stroke"></i></div>
+    </nav>
+  </div>
+
+  <section id="home">
+    <div class="glass-card" style="display: flex; align-items: center; justify-content: space-between; gap: 40px;">
+      <div>
+        <div class="status-badge"><div class="dot"></div> Available for IT Consultation</div>
+        <h1>Digital<br>Precision.</h1>
+        <p style="color: var(--text-dim); font-size: 1.2rem; max-width: 500px; margin-bottom: 30px;">
+          I'm John Mark, an IT Infrastructure Specialist bridging technical precision with creative digital solutions.
+        </p>
+        <a href="#about" class="nav-btn active" style="display: inline-flex; width: auto;">Learn More</a>
+      </div>
+      <div style="width: 300px; height: 300px; background: linear-gradient(45deg, var(--glass-bright), transparent); border-radius: 40px; border: 1px solid var(--border); display: grid; place-items: center;">
+         <i class="fa-solid fa-server" style="font-size: 5rem; opacity: 0.2;"></i>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="glass-card">
+      <h2>Professional Profile</h2>
+      <p style="font-size: 1.25rem; line-height: 1.7; color: var(--text);">
+        I am a <strong>self-motivated, results-driven and highly skilled IT professional</strong> with over 2 years experience in IT support, networking and IT service management. 
+      </p>
+      <br>
+      <p style="font-size: 1.1rem; line-height: 1.6; color: var(--text-dim);">
+        I have experience in managing enterprise-level environments, including Active Directory, Microsoft 365, endpoint security solutions, and cloud-based services. Recognized for problem-solving, strong analytical skills, and the ability to deliver innovative IT solutions that enhance productivity.
+      </p>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="glass-card">
+      <h2>Education History</h2>
+      
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"><i class="fa-solid fa-university" style="font-size: 0.7rem;"></i></div>
+          <div class="edu-year">2018 — 2021</div>
+          <div class="edu-school">Uganda Christian University</div>
+          <div class="edu-degree">Bachelor of Science in Information Technology</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"><i class="fa-solid fa-book" style="font-size: 0.7rem;"></i></div>
+          <div class="edu-year">2016 — 2017</div>
+          <div class="edu-school">St. Lawrence Schools and Colleges</div>
+          <div class="edu-degree">Uganda Advanced Certificate of Education (UACE)</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"><i class="fa-solid fa-pen-nib" style="font-size: 0.7rem;"></i></div>
+          <div class="edu-year">2012 — 2015</div>
+          <div class="edu-school">Mbarara High School</div>
+          <div class="edu-degree">Uganda Certificate of Education (UCE)</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"><i class="fa-solid fa-pencil" style="font-size: 0.7rem;"></i></div>
+          <div class="edu-year">2005 — 2011</div>
+          <div class="edu-school">Mbarara Preparatory School</div>
+          <div class="edu-degree">Primary Leaving Examination (PLE) Certificate</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="padding: 40px; text-align: center; color: var(--text-dim); font-size: 0.8rem;">
+    © 2026 John Mark Kiritu • Designed with Liquid Glass
+  </footer>
+
+  <script>
+    // Theme Toggle Logic
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    });
+
+    // Scroll Observer: Highlights the nav based on where you are
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-btn');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (pageYOffset >= sectionTop - 150) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>John Mark Kiritu | Professional Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg-gradient: radial-gradient(circle at top, #064e3b 0%, #022c22 100%);
+      --glass: rgba(255, 255, 255, 0.08);
+      --glass-bright: rgba(255, 255, 255, 0.15);
+      --border: rgba(255, 255, 255, 0.12);
+      --accent-white: #ffffff;
+      --accent-green: #4ade80;
+      --text: #f8fafc;
+      --text-dim: #94a3b8;
+    }
+
+    [data-theme="light"] {
+      --bg-gradient: radial-gradient(circle at top, #f0fdf4 0%, #dcfce7 100%);
+      --glass: rgba(0, 0, 0, 0.05);
+      --glass-bright: rgba(0, 0, 0, 0.1);
+      --border: rgba(0, 0, 0, 0.1);
+      --accent-white: #166534;
+      --accent-green: #15803d;
+      --text: #0f172a;
+      --text-dim: #475569;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; scroll-behavior: smooth; }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* --- NAVIGATION --- */
+    .nav-container {
+      position: fixed;
+      top: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: max-content;
+    }
+
+    .icon-menu {
+      background: var(--glass);
+      backdrop-filter: blur(25px) saturate(150%);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      border-radius: 100px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .nav-btn.active {
+      background: var(--accent-white);
+      color: #064e3b;
+    }
+
+    /* --- LAYOUT SECTIONS --- */
+    section {
+      min-height: 100vh;
+      padding: 120px 8% 80px;
+    }
+
+    .glass-card {
+      background: var(--glass);
+      backdrop-filter: blur(30px);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: 40px;
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    h1 { font-size: 4rem; font-weight: 900; line-height: 1; margin-bottom: 20px; }
+    h2 { font-size: 2.5rem; margin-bottom: 30px; color: var(--accent-green); text-align: center; }
+
+    /* --- EXPERIENCE TILES --- */
+    .experience-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .job-tile {
+      display: grid;
+      grid-template-columns: 100px 1fr auto;
+      align-items: center;
+      gap: 25px;
+      background: var(--glass-bright);
+      border: 1px solid var(--border);
+      border-radius: 25px;
+      padding: 25px;
+      transition: transform 0.3s ease;
+    }
+
+    .job-tile:hover {
+      transform: scale(1.01);
+      background: rgba(255,255,255,0.12);
+    }
+
+    .comp-logo {
+      width: 80px;
+      height: 80px;
+      background: var(--glass);
+      border-radius: 15px;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      color: var(--accent-green);
+    }
+
+    .job-info h3 { font-size: 1.4rem; margin-bottom: 5px; }
+    .job-info a { color: var(--accent-green); text-decoration: none; font-size: 1rem; }
+    .job-year { color: var(--text-dim); font-size: 0.85rem; margin-top: 5px; }
+    
+    .skills-preview {
+        margin-top: 10px;
+        font-size: 0.85rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .skill-tag { 
+        background: var(--glass); 
+        padding: 4px 10px; 
+        border-radius: 5px; 
+        border: 1px solid var(--border);
+    }
+
+    .view-btn {
+      padding: 12px 20px;
+      border-radius: 12px;
+      border: 1px solid var(--accent-green);
+      background: transparent;
+      color: var(--accent-green);
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .view-btn:hover {
+      background: var(--accent-green);
+      color: #022c22;
+    }
+
+    /* --- MODAL SYSTEM --- */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(10px);
+    }
+
+    .modal-content {
+      background: var(--bg-gradient);
+      margin: 5% auto;
+      padding: 40px;
+      border: 1px solid var(--border);
+      width: 80%;
+      max-width: 800px;
+      border-radius: 30px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .tech-link { color: var(--accent-green); text-decoration: underline; }
+    .roles-list { margin: 20px 0; line-height: 1.6; }
+    .roles-list li { margin-bottom: 12px; list-style-type: square; }
+    
+    .manager-ref {
+        background: var(--glass-bright);
+        padding: 20px;
+        border-radius: 15px;
+        margin-top: 25px;
+        border-left: 4px solid var(--accent-green);
+    }
+
+    /* --- TIMELINE STYLES (PREVIOUS) --- */
+    .timeline-item { padding-left: 50px; position: relative; margin-bottom: 30px; }
+    .timeline::before { content: ''; position: absolute; left: 15px; top: 10px; bottom: 10px; width: 2px; background: var(--border); }
+    .timeline-dot { position: absolute; left: 0; top: 5px; width: 32px; height: 32px; background: var(--glass-bright); border: 2px solid var(--accent-green); border-radius: 50%; display: grid; place-items: center; z-index: 1; }
+
+    @media (max-width: 900px) {
+      .job-tile { grid-template-columns: 1fr; text-align: center; }
+      .comp-logo { margin: 0 auto; }
+      .nav-btn span { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav-container">
+    <nav class="icon-menu">
+      <a href="#home" class="nav-btn active"><i class="fa-solid fa-house"></i><span>Home</span></a>
+      <a href="#about" class="nav-btn"><i class="fa-solid fa-user"></i><span>About</span></a>
+      <a href="#journey" class="nav-btn"><i class="fa-solid fa-briefcase"></i><span>Journey</span></a>
+      <a href="#education" class="nav-btn"><i class="fa-solid fa-graduation-cap"></i><span>Education</span></a>
+      <div class="nav-btn" id="theme-toggle" style="cursor:pointer"><i class="fa-solid fa-circle-half-stroke"></i></div>
+    </nav>
+  </div>
+
+  <section id="home" style="display:flex; align-items:center;">
+    <div class="glass-card" style="display: flex; align-items: center; justify-content: space-between; gap: 40px;">
+      <div>
+        <h1>Digital<br>Precision.</h1>
+        <p style="color: var(--text-dim); font-size: 1.2rem; max-width: 500px; margin-bottom: 30px;">
+          I'm John Mark, an IT Infrastructure Specialist bridging technical precision with creative digital solutions.
+        </p>
+      </div>
+      <div style="width: 250px; height: 250px; background: var(--glass-bright); border-radius: 40px; border: 1px solid var(--border); display: grid; place-items: center;">
+         <i class="fa-solid fa-microchip" style="font-size: 4rem; opacity: 0.2;"></i>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="glass-card">
+      <h2>About Me</h2>
+      <p style="font-size: 1.2rem; line-height: 1.7;">
+        I am a <strong>self-motivated, results-driven and highly skilled IT professional</strong> with over 2 years experience in IT support, networking and IT service management. I have experience in managing enterprise-level environments, including Active Directory, Microsoft 365, endpoint security solutions, and cloud-based services.
+      </p>
+    </div>
+  </section>
+
+  <section id="journey">
+    <div class="glass-card">
+      <h2>Professional Journey</h2>
+      <div class="experience-grid">
+        
+        <div class="job-tile">
+          <div class="comp-logo">DQ</div>
+          <div class="job-info">
+            <h3>System Administrator</h3>
+            <a href="https://doubleq.co.ug" target="_blank">Double Q (C4 Logistics Ltd) <i class="fa-solid fa-link"></i></a>
+            <div class="job-year">September 2024 – November 2024</div>
+            <div class="skills-preview">
+                <span class="skill-tag">Infrastructure Admin</span>
+                <span class="skill-tag">Cybersecurity</span>
+                <span class="skill-tag">TMS Reporting</span>
+            </div>
+          </div>
+          <button class="view-btn" onclick="openModal('modal-dq')">View Roles</button>
+        </div>
+
+        <div class="job-tile">
+          <div class="comp-logo">OX</div>
+          <div class="job-info">
+            <h3>IT Support Officer</h3>
+            <a href="https://uganda.oxfam.org" target="_blank">Oxfam in Uganda <i class="fa-solid fa-link"></i></a>
+            <div class="job-year">Nov 2022 - May 2024</div>
+            <div class="skills-preview">
+                <span class="skill-tag">Network Uptime</span>
+                <span class="skill-tag">ITIL Asset Management</span>
+                <span class="skill-tag">Digital Transformation</span>
+            </div>
+          </div>
+          <button class="view-btn" onclick="openModal('modal-ox-support')">View Roles</button>
+        </div>
+
+        <div class="job-tile">
+          <div class="comp-logo">OX</div>
+          <div class="job-info">
+            <h3>Graduate Trainee</h3>
+            <a href="https://uganda.oxfam.org" target="_blank">Oxfam in Uganda <i class="fa-solid fa-link"></i></a>
+            <div class="job-year">Jul 2022 - Nov 2022</div>
+            <div class="skills-preview">
+                <span class="skill-tag">Helpdesk Ticketing</span>
+                <span class="skill-tag">AV Systems Deployment</span>
+                <span class="skill-tag">End-user Support</span>
+            </div>
+          </div>
+          <button class="view-btn" onclick="openModal('modal-ox-trainee')">View Roles</button>
+        </div>
+
+        <div class="job-tile">
+          <div class="comp-logo">OX</div>
+          <div class="job-info">
+            <h3>IT Intern</h3>
+            <a href="https://uganda.oxfam.org" target="_blank">Oxfam in Uganda <i class="fa-solid fa-link"></i></a>
+            <div class="job-year">Feb 2022 - Jul 2022</div>
+            <div class="skills-preview">
+                <span class="skill-tag">Cloud Collaboration</span>
+                <span class="skill-tag">LAN/WAN Configuration</span>
+                <span class="skill-tag">Endpoint Protection</span>
+            </div>
+          </div>
+          <button class="view-btn" onclick="openModal('modal-ox-intern')">View Roles</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="glass-card">
+      <h2>Education</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"><i class="fa-solid fa-university"></i></div>
+          <div class="edu-year">2018 — 2021</div>
+          <div class="edu-school">Uganda Christian University</div>
+          <div class="edu-degree">BSc. Information Technology</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-dot"><i class="fa-solid fa-school"></i></div>
+            <div class="edu-year">2016 — 2017</div>
+            <div class="edu-school">St. Lawrence Schools and Colleges</div>
+            <div class="edu-degree">UACE Certificate</div>
+          </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="modal-dq" class="modal">
+    <div class="modal-content">
+      <h2>Roles & Technologies</h2>
+      <ul class="roles-list">
+        <li>Administer infrastructure including <a class="tech-link" href="https://www.microsoft.com/en-us/power-platform/products/power-apps">Microsoft Power Apps</a>, PABX, and surveillance.</li>
+        <li>Cybersecurity enforcement using <a class="tech-link" href="https://www.kaspersky.com/">Kaspersky Endpoint Protection</a> and Firewalls.</li>
+        <li>L2 Technical Support for <a class="tech-link" href="https://www.anydesk.com">AnyDesk</a> and <a class="tech-link" href="https://www.teamviewer.com">TeamViewer</a>.</li>
+      </ul>
+      <div class="manager-ref">
+        <strong>Reference: Direct Manager</strong><br>
+        Name: [Name Required] | Position: IT Manager<br>
+        Email: [Email] | Work: [Work Email]
+      </div>
+      <button class="view-btn" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <div id="modal-ox-support" class="modal">
+    <div class="modal-content">
+      <h2>Oxfam IT Support Roles</h2>
+      <ul class="roles-list">
+        <li>Proactive monitoring using <a class="tech-link" href="https://meraki.cisco.com/">Cisco Meraki</a> and <a class="tech-link" href="https://www.microsoft.com/en-us/microsoft-365">M365 Admin Center</a>.</li>
+        <li>IT Asset management via <a class="tech-link" href="https://www.atlassian.com/software/jira/service-management">Jira Service Management</a> and <a class="tech-link" href="https://www.servicenow.com/">ServiceNow</a>.</li>
+        <li>Digital transformation with <a class="tech-link" href="https://powerbi.microsoft.com/">Power BI</a> and <a class="tech-link" href="https://www.box.com/">Box Drive</a>.</li>
+      </ul>
+      <button class="view-btn" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    });
+
+    // Modal Logic
+    function openModal(id) { document.getElementById(id).style.display = "block"; }
+    function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = "none"); }
+    window.onclick = function(event) { if (event.target.className === 'modal') closeModal(); }
+
+    // Scroll Highlighter
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-btn');
+    window.onscroll = () => {
+      let current = "";
+      sections.forEach((section) => {
+        const sectionTop = section.offsetTop;
+        if (pageYOffset >= sectionTop - 150) { current = section.getAttribute("id"); }
+      });
+      navLinks.forEach((link) => {
+        link.classList.remove("active");
+        if (link.getAttribute("href").includes(current)) { link.classList.add("active"); }
+      });
+    };
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>John Mark Kiritu | Portfolio Dashboard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg-gradient: radial-gradient(circle at top, #064e3b 0%, #022c22 100%);
+      --glass: rgba(255, 255, 255, 0.08);
+      --glass-bright: rgba(255, 255, 255, 0.15);
+      --border: rgba(255, 255, 255, 0.12);
+      --accent-white: #ffffff;
+      --accent-green: #4ade80;
+      --text: #f8fafc;
+      --text-dim: #94a3b8;
+    }
+
+    [data-theme="light"] {
+      --bg-gradient: radial-gradient(circle at top, #f0fdf4 0%, #dcfce7 100%);
+      --glass: rgba(0, 0, 0, 0.05);
+      --glass-bright: rgba(0, 0, 0, 0.1);
+      --border: rgba(0, 0, 0, 0.1);
+      --accent-white: #166534;
+      --accent-green: #15803d;
+      --text: #0f172a;
+      --text-dim: #475569;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; scroll-behavior: smooth; }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* --- NAVIGATION --- */
+    .nav-container {
+      position: fixed;
+      top: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: max-content;
+    }
+
+    .icon-menu {
+      background: var(--glass);
+      backdrop-filter: blur(25px) saturate(150%);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      border-radius: 100px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .nav-btn.active { background: var(--accent-white); color: #064e3b; }
 
     /* --- LAYOUT --- */
     section { min-height: 100vh; padding: 120px 8% 80px; }
-    .glass-card { background: var(--glass); backdrop-filter: blur(30px); border: 1px solid var(--border); border-radius: 40px; padding: 50px; width: 100%; max-width: 1200px; margin: 0 auto; position: relative; }
+    .glass-card {
+      background: var(--glass);
+      backdrop-filter: blur(30px);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: 40px;
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    h2 { font-size: 2.5rem; margin-bottom: 30px; color: var(--accent-green); text-align: center; }
+
+    /* --- PROJECTS DASHBOARD --- */
+    .project-scroll-container {
+      max-height: 600px;
+      overflow-y: auto;
+      padding-right: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Custom Scrollbar */
+    .project-scroll-container::-webkit-scrollbar { width: 6px; }
+    .project-scroll-container::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+    .project-tile {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      background: var(--glass-bright);
+      border: 1px solid var(--border);
+      border-radius: 25px;
+      overflow: hidden;
+      transition: 0.4s;
+    }
+
+    .project-tile:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent-green);
+      background: rgba(255,255,255,0.1);
+    }
+
+    .project-img {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      min-height: 180px;
+      display: flex;
+      align-items: flex-end;
+      padding: 15px;
+    }
+
+    .status-pill {
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(10px);
+      color: var(--accent-green);
+      padding: 5px 12px;
+      border-radius: 50px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      border: 1px solid var(--accent-green);
+    }
+
+    .upcoming-pill {
+      color: #fbbf24;
+      border-color: #fbbf24;
+      animation: pulse 2s infinite;
+    }
+
+    .project-content { padding: 25px; }
+    .project-content h3 { margin-bottom: 10px; color: var(--accent-white); }
+    .project-content p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.5; margin-bottom: 15px; }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    /* Reuse from previous: Journey tiles, Modals etc. (Omitted for brevity but maintained in your file) */
+  </style>
+</head>
+<body>
+
+  <div class="nav-container">
+    <nav class="icon-menu">
+      <a href="#home" class="nav-btn active"><i class="fa-solid fa-house"></i><span>Home</span></a>
+      <a href="#journey" class="nav-btn"><i class="fa-solid fa-briefcase"></i><span>Journey</span></a>
+      <a href="#projects" class="nav-btn"><i class="fa-solid fa-diagram-project"></i><span>Projects</span></a>
+      <a href="#education" class="nav-btn"><i class="fa-solid fa-graduation-cap"></i><span>Education</span></a>
+      <div class="nav-btn" id="theme-toggle" style="cursor:pointer"><i class="fa-solid fa-circle-half-stroke"></i></div>
+    </nav>
+  </div>
+
+  <section id="projects">
+    <div class="glass-card">
+      <h2>Project Dashboard</h2>
+      <div class="project-scroll-container">
+        
+        <div class="project-tile">
+          <div class="project-img" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), transparent), url('https://images.unsplash.com/photo-1586762522674-594dcd12137d?auto=format&fit=crop&w=400');">
+            <span class="status-pill">Completed 100%</span>
+          </div>
+          <div class="project-content">
+            <h3>Digital Logistics & Procurement – Oxfam</h3>
+            <p>Developed a fully digital workflow using <strong style="color:var(--accent-green)">Power Apps & SharePoint</strong>. Automated approvals and reporting, eliminating paper waste for sustainable operations.</p>
+            <div style="font-size: 0.8rem; opacity: 0.6;"><i class="fa-solid fa-microchip"></i> Power Platform | Automation</div>
+          </div>
+        </div>
+
+        <div class="project-tile">
+          <div class="project-img" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), transparent), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=400');">
+            <span class="status-pill">Active Security</span>
+          </div>
+          <div class="project-content">
+            <h3>Kaspersky Security Center Deployment</h3>
+            <p>Managed endpoint security for Uganda Micro Foundation. Configured antivirus policies and threat remediation across an enterprise network of multiple devices.</p>
+            <div style="font-size: 0.8rem; opacity: 0.6;"><i class="fa-solid fa-shield-halved"></i> Cybersecurity | Endpoint Defense</div>
+          </div>
+        </div>
+
+        <div class="project-tile">
+          <div class="project-img" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), transparent), url('https://images.unsplash.com/photo-1558494949-ef010cbdcc48?auto=format&fit=crop&w=400');">
+            <span class="status-pill">Optimized</span>
+          </div>
+          <div class="project-content">
+            <h3>Networking Upgrade – Kyagalanyi Coffee</h3>
+            <p>Full overhaul of LAN infrastructure. Laid Cat6 cabling, replaced ports, and scaled network capacity for office expansion with structured testing.</p>
+            <div style="font-size: 0.8rem; opacity: 0.6;"><i class="fa-solid fa-network-wired"></i> Infrastructure | Cat6 Installation</div>
+          </div>
+        </div>
+
+        <div class="project-tile" style="opacity: 0.7;">
+          <div class="project-img" style="background-image: linear-gradient(to top, rgba(0,0,0,0.9), transparent), url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=400');">
+            <span class="status-pill upcoming-pill">Coming Soon</span>
+          </div>
+          <div class="project-content">
+            <h3>Game Store E-Commerce</h3>
+            <p>A specialized digital marketplace for gamers. Featuring secure checkout and digital asset delivery.</p>
+            <div style="font-size: 0.8rem; opacity: 0.6;"><i class="fa-solid fa-code"></i> Web Dev | Node.js / React</div>
+          </div>
+        </div>
+
+        <div class="project-tile" style="opacity: 0.7;">
+          <div class="project-img" style="background-image: linear-gradient(to top, rgba(0,0,0,0.9), transparent), url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=400');">
+            <span class="status-pill upcoming-pill">In Design</span>
+          </div>
+          <div class="project-content">
+            <h3>Dual Portfolio Ecosystem</h3>
+            <p>Building two custom-tailored professional portfolios for high-profile users using modern web frameworks.</p>
+            <div style="font-size: 0.8rem; opacity: 0.6;"><i class="fa-solid fa-palette"></i> UI/UX | Portfolio Design</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    });
+
+    // Scroll Highlighter
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-btn');
+    window.onscroll = () => {
+      let current = "";
+      sections.forEach((section) => {
+        const sectionTop = section.offsetTop;
+        if (pageYOffset >= sectionTop - 150) { current = section.getAttribute("id"); }
+      });
+      navLinks.forEach((link) => {
+        link.classList.remove("active");
+        if (link.getAttribute("href").includes(current)) { link.classList.add("active"); }
+      });
+    };
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>John Mark Kiritu | IT Professional Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg-gradient: radial-gradient(circle at top, #064e3b 0%, #022c22 100%);
+      --glass: rgba(255, 255, 255, 0.08);
+      --glass-bright: rgba(255, 255, 255, 0.15);
+      --border: rgba(255, 255, 255, 0.12);
+      --accent-white: #ffffff;
+      --accent-green: #4ade80;
+      --text: #f8fafc;
+      --text-dim: #94a3b8;
+    }
+
+    [data-theme="light"] {
+      --bg-gradient: radial-gradient(circle at top, #f0fdf4 0%, #dcfce7 100%);
+      --glass: rgba(0, 0, 0, 0.05);
+      --glass-bright: rgba(0, 0, 0, 0.1);
+      --border: rgba(0, 0, 0, 0.1);
+      --accent-white: #166534;
+      --accent-green: #15803d;
+      --text: #0f172a;
+      --text-dim: #475569;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; scroll-behavior: smooth; }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* --- NAVIGATION --- */
+    .nav-container {
+      position: fixed;
+      top: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: max-content;
+    }
+
+    .icon-menu {
+      background: var(--glass);
+      backdrop-filter: blur(25px) saturate(150%);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      border-radius: 100px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .nav-btn.active {
+      background: var(--accent-white);
+      color: #064e3b;
+    }
+
+    /* --- LAYOUT --- */
+    section {
+      min-height: 100vh;
+      padding: 120px 8% 80px;
+    }
+
+    .glass-card {
+      background: var(--glass);
+      backdrop-filter: blur(30px);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: 50px;
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    h1 { font-size: 4rem; font-weight: 900; line-height: 1; margin-bottom: 20px; }
+    h2 { font-size: 2.5rem; margin-bottom: 30px; color: var(--accent-green); }
+
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 8px; background: var(--glass-bright);
+      padding: 8px 16px; border-radius: 50px; font-size: 0.8rem; margin-bottom: 20px; border: 1px solid var(--border);
+    }
+    .dot { width: 8px; height: 8px; background: #4ade80; border-radius: 50%; box-shadow: 0 0 10px #4ade80; }
+
+    /* --- EXPERIENCE & PROJECTS DASHBOARD --- */
+    .experience-grid, .project-scroll-container {
+      display: flex; flex-direction: column; gap: 20px;
+    }
+
+    .job-tile, .project-tile {
+      display: grid; grid-template-columns: 100px 1fr auto; align-items: center; gap: 25px;
+      background: var(--glass-bright); border: 1px solid var(--border); border-radius: 25px;
+      padding: 25px; transition: transform 0.3s ease;
+    }
+
+    .project-tile { grid-template-columns: 200px 1fr; padding: 0; overflow: hidden; }
+
+    .job-tile:hover, .project-tile:hover {
+      transform: translateY(-5px); background: rgba(255,255,255,0.12); border-color: var(--accent-green);
+    }
+
+    .comp-logo {
+      width: 70px; height: 70px; background: var(--glass); border-radius: 15px;
+      display: grid; place-items: center; font-weight: 900; color: var(--accent-green);
+    }
+
+    .view-btn {
+      padding: 10px 20px; border-radius: 12px; border: 1px solid var(--accent-green);
+      background: transparent; color: var(--accent-green); cursor: pointer; font-weight: 600;
+    }
+    .view-btn:hover { background: var(--accent-green); color: #022c22; }
+
+    /* --- PROJECT SPECIFIC --- */
+    .project-scroll-container { max-height: 700px; overflow-y: auto; padding-right: 15px; }
+    .project-img { width: 100%; height: 100%; background-size: cover; background-position: center; min-height: 200px; display: flex; align-items: flex-end; padding: 15px; }
+    .status-pill { background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); color: var(--accent-green); padding: 5px 12px; border-radius: 50px; font-size: 0.7rem; font-weight: 800; border: 1px solid var(--accent-green); }
+    .upcoming-pill { color: #fbbf24; border-color: #fbbf24; animation: pulse 2s infinite; }
+
+    /* --- EDUCATION TIMELINE --- */
+    .timeline { position: relative; padding-left: 50px; }
+    .timeline::before { content: ''; position: absolute; left: 15px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+    .timeline-item { position: relative; margin-bottom: 40px; }
+    .timeline-dot { position: absolute; left: -50px; width: 32px; height: 32px; background: var(--glass-bright); border: 2px solid var(--accent-green); border-radius: 50%; display: grid; place-items: center; }
+
+    /* --- MODALS --- */
+    .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); }
+    .modal-content { background: var(--bg-gradient); margin: 5% auto; padding: 40px; border: 1px solid var(--border); width: 90%; max-width: 850px; border-radius: 30px; max-height: 85vh; overflow-y: auto; }
+    .tech-link { color: var(--accent-green); text-decoration: underline; font-weight: 600; }
+    .roles-list { margin: 25px 0; }
+    .roles-list li { margin-bottom: 15px; list-style-position: inside; color: var(--text-dim); }
+    .ref-box { background: var(--glass-bright); padding: 25px; border-radius: 20px; border-left: 5px solid var(--accent-green); margin-top: 30px; }
+
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+
+    @media (max-width: 900px) {
+      .nav-btn span { display: none; }
+      .job-tile, .project-tile { grid-template-columns: 1fr; text-align: center; }
+      .comp-logo { margin: 0 auto; }
+      h1 { font-size: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav-container">
+    <nav class="icon-menu">
+      <a href="#home" class="nav-btn active"><i class="fa-solid fa-house"></i><span>Home</span></a>
+      <a href="#about" class="nav-btn"><i class="fa-solid fa-user"></i><span>About</span></a>
+      <a href="#journey" class="nav-btn"><i class="fa-solid fa-briefcase"></i><span>Journey</span></a>
+      <a href="#projects" class="nav-btn"><i class="fa-solid fa-diagram-project"></i><span>Projects</span></a>
+      <a href="#education" class="nav-btn"><i class="fa-solid fa-graduation-cap"></i><span>Education</span></a>
+      <div class="nav-btn" id="theme-toggle" style="cursor:pointer"><i class="fa-solid fa-circle-half-stroke"></i></div>
+    </nav>
+  </div>
+
+  <section id="home" style="display: flex; align-items: center;">
+    <div class="glass-card" style="display: flex; align-items: center; justify-content: space-between; gap: 40px;">
+      <div style="flex: 1;">
+        <div class="status-badge"><div class="dot"></div> Active IT Infrastructure Specialist</div>
+        <h1>Digital<br>Precision.</h1>
+        <p style="color: var(--text-dim); font-size: 1.2rem; max-width: 600px; margin-bottom: 30px;">
+          I'm John Mark Kiritu, bridging enterprise-level technical precision with innovative digital solutions.
+        </p>
+        <div style="display: flex; gap: 15px;">
+           <a href="#journey" class="nav-btn active" style="width: auto;">View Experience</a>
+           <a href="#projects" class="nav-btn" style="width: auto; border: 1px solid var(--border);">See Projects</a>
+        </div>
+      </div>
+      <div style="width: 300px; height: 300px; background: linear-gradient(45deg, var(--glass-bright), transparent); border-radius: 40px; border: 1px solid var(--border); display: grid; place-items: center;">
+         <i class="fa-solid fa-server" style="font-size: 6rem; opacity: 0.15;"></i>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="glass-card">
+      <h2>Professional Profile</h2>
+      <p style="font-size: 1.3rem; margin-bottom: 25px;">
+        I am a <strong>self-motivated, results-driven and highly skilled IT professional</strong> with over 2 years experience in IT support, networking and IT service management. 
+      </p>
+      <p style="color: var(--text-dim); font-size: 1.1rem;">
+        I have experience in managing enterprise-level environments, including Active Directory, Microsoft 365, endpoint security solutions, and cloud-based services. Recognized for problem-solving, strong analytical skills, and the ability to deliver innovative IT solutions that enhance productivity.
+      </p>
+    </div>
+  </section>
+
+  <section id="journey">
+    <div class="glass-card">
+      <h2 style="text-align: center;">Professional Journey</h2>
+      <div class="experience-grid">
+        
+        <div class="job-tile">
+          <div class="comp-logo">DQ</div>
+          <div class="job-info">
+            <h3>System Administrator</h3>
+            <a href="https://doubleq.co.ug" target="_blank">Double Q (C4 Logistics Ltd)</a>
+            <div style="font-size: 0.9rem; color: var(--accent-green); margin-top: 5px;">Sept 2024 – Nov 2024</div>
+          </div>
+          <button class="view-btn" onclick="openModal('modal-dq')">View Roles</button>
+        </div>
+
+        <div class="job-tile">
+          <div class="comp-logo">OX</div>
+          <div class="job-info">
+            <h3>IT Support Officer</h3>
+            <a href="https://uganda.oxfam.org" target="_blank">Oxfam In Uganda</a>
+            <div style="font-size: 0.9rem; color: var(--accent-green); margin-top: 5px;">Nov 2022 – May 2024</div>
+          </div>
+          <button class="view-btn" onclick="openModal('modal-ox-support')">View Roles</button>
+        </div>
+
+        <div class="job-tile">
+          <div class="comp-logo">OX</div>
+          <div class="job-info">
+            <h3>Graduate Trainee</h3>
+            <a href="https://uganda.oxfam.org" target="_blank">Oxfam In Uganda</a>
+            <div style="font-size: 0.9rem; color: var(--accent-green); margin-top: 5px;">July 2022 – Nov 2022</div>
+          </div>
+          <button class="view-btn" onclick="openModal('modal-ox-trainee')">View Roles</button>
+        </div>
+
+        <div class="job-tile">
+          <div class="comp-logo">OX</div>
+          <div class="job-info">
+            <h3>IT Intern</h3>
+            <a href="https://uganda.oxfam.org" target="_blank">Oxfam In Uganda</a>
+            <div style="font-size: 0.9rem; color: var(--accent-green); margin-top: 5px;">Feb 2022 – July 2022</div>
+          </div>
+          <button class="view-btn" onclick="openModal('modal-ox-intern')">View Roles</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="glass-card">
+      <h2 style="text-align: center;">Project Dashboard</h2>
+      <div class="project-scroll-container">
+        
+        <div class="project-tile">
+          <div class="project-img" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), transparent), url('https://images.unsplash.com/photo-1586762522674-594dcd12137d?auto=format&fit=crop&w=400');">
+            <span class="status-pill">Completed</span>
+          </div>
+          <div style="padding: 25px;">
+            <h3>Digital Logistics & Procurement System</h3>
+            <p>Developed digital workflow using <span style="color:var(--accent-green)">Microsoft Power Apps</span> & SharePoint to replace manual processes and automate approvals.</p>
+          </div>
+        </div>
+
+        <div class="project-tile">
+          <div class="project-img" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), transparent), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=400');">
+            <span class="status-pill">Active</span>
+          </div>
+          <div style="padding: 25px;">
+            <h3>Kaspersky Security Center Deployment</h3>
+            <p>Implemented endpoint security across Uganda Micro Foundation. Configured policies and threat remediation for enterprise security.</p>
+          </div>
+        </div>
+
+        <div class="project-tile">
+          <div class="project-img" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), transparent), url('https://images.unsplash.com/photo-1558494949-ef010cbdcc48?auto=format&fit=crop&w=400');">
+            <span class="status-pill">Infrastructure</span>
+          </div>
+          <div style="padding: 25px;">
+            <h3>Networking Upgrade – Kyagalanyi Coffee</h3>
+            <p>Laid fresh Cat6 cabling and replaced ports to improve LAN performance and support office expansion.</p>
+          </div>
+        </div>
+
+        <div class="project-tile" style="opacity: 0.7;">
+          <div class="project-img" style="background-image: linear-gradient(to top, rgba(0,0,0,0.9), transparent), url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=400');">
+            <span class="status-pill upcoming-pill">Upcoming</span>
+          </div>
+          <div style="padding: 25px;">
+            <h3>Game Store E-Commerce & Portfolios</h3>
+            <p>Designing a game marketplace and two bespoke user portfolios as part of a new creative development initiative.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="glass-card">
+      <h2 style="text-align: center;">Academic Background</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"><i class="fa-solid fa-graduation-cap" style="font-size: 0.8rem;"></i></div>
+          <div style="font-weight: 800; color: var(--accent-green);">2018 – 2021</div>
+          <div style="font-size: 1.2rem; font-weight: 700;">Uganda Christian University</div>
+          <div style="color: var(--text-dim);">Bachelor of Science in Information Technology</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"><i class="fa-solid fa-school" style="font-size: 0.8rem;"></i></div>
+          <div style="font-weight: 800; color: var(--accent-green);">2016 – 2017</div>
+          <div style="font-size: 1.2rem; font-weight: 700;">St. Lawrence Schools and Colleges</div>
+          <div style="color: var(--text-dim);">Uganda Advanced Certificate of Education (A-Level)</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"><i class="fa-solid fa-book" style="font-size: 0.8rem;"></i></div>
+          <div style="font-weight: 800; color: var(--accent-green);">2012 – 2015</div>
+          <div style="font-size: 1.2rem; font-weight: 700;">Mbarara High School</div>
+          <div style="color: var(--text-dim);">Uganda Certificate of Education (O-Level)</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"><i class="fa-solid fa-pencil" style="font-size: 0.8rem;"></i></div>
+          <div style="font-weight: 800; color: var(--accent-green);">2005 – 2011</div>
+          <div style="font-size: 1.2rem; font-weight: 700;">Mbarara Preparatory School</div>
+          <div style="color: var(--text-dim);">Primary Leaving Examination Certificate</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="modal-dq" class="modal">
+    <div class="modal-content">
+      <h2>Double Q System Admin Roles</h2>
+      <ul class="roles-list">
+        <li>Administer infrastructure including switches, PABX, <a class="tech-link" href="https://powerapps.microsoft.com/">Microsoft Power Apps</a>, and surveillance.</li>
+        <li>Implement <a class="tech-link" href="https://www.kaspersky.com/">Kaspersky Endpoint Protection</a> and configure firewalls.</li>
+        <li>Level 2 Support for Windows/O365 using <a class="tech-link" href="https://anydesk.com/">AnyDesk</a> and <a class="tech-link" href="https://teamviewer.com/">TeamViewer</a>.</li>
+      </ul>
+      <div class="ref-box">
+        <strong>Direct Manager Reference:</strong><br>
+        Name: [Pending] | Email: [Pending] | Position: IT Manager
+      </div>
+      <button class="view-btn" style="margin-top:20px;" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <div id="modal-ox-support" class="modal">
+    <div class="modal-content">
+      <h2>Oxfam IT Support Officer Roles</h2>
+      <ul class="roles-list">
+        <li>Monitor systems via <a class="tech-link" href="https://meraki.cisco.com/">Cisco Meraki</a> and M365 Admin Center.</li>
+        <li>Service management through <a class="tech-link" href="https://www.servicenow.com/">ServiceNow</a> and Jira.</li>
+        <li>Digital Transformation using <a class="tech-link" href="https://powerbi.microsoft.com/">Power BI</a> and <a class="tech-link" href="https://box.com/">Box Drive</a>.</li>
+      </ul>
+      <button class="view-btn" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <div id="modal-ox-trainee" class="modal"><div class="modal-content"><h2>Graduate Trainee Roles</h2><ul class="roles-list"><li>Resolved 80+ daily tickets via Jira.</li><li>Deployed <a class="tech-link" href="https://www.logitech.com/">Logitech Rally</a> & Zoom Rooms.</li></ul><button class="view-btn" onclick="closeModal()">Close</button></div></div>
+  <div id="modal-ox-intern" class="modal"><div class="modal-content"><h2>IT Intern Roles</h2><ul class="roles-list"><li>Configured LAN using Cisco Meraki switches.</li><li>Deployed OS using <a class="tech-link" href="https://rufus.ie/">Rufus</a> and Ventoy.</li></ul><button class="view-btn" onclick="closeModal()">Close</button></div></div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    });
+
+    function openModal(id) { document.getElementById(id).style.display = "block"; }
+    function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = "none"); }
+    window.onclick = (e) => { if(e.target.className === 'modal') closeModal(); }
+
+    // Scroll Spy
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-btn');
+    window.onscroll = () => {
+      let current = "";
+      sections.forEach(s => { if(pageYOffset >= s.offsetTop - 150) current = s.getAttribute("id"); });
+      navLinks.forEach(l => {
+        l.classList.remove("active");
+        if(l.getAttribute("href").includes(current)) l.classList.add("active");
+      });
+    };
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>John Mark Kiritu | IT Dashboard Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg-gradient: radial-gradient(circle at top, #064e3b 0%, #022c22 100%);
+      --glass: rgba(255, 255, 255, 0.08);
+      --glass-bright: rgba(255, 255, 255, 0.15);
+      --border: rgba(255, 255, 255, 0.12);
+      --accent-white: #ffffff;
+      --accent-green: #4ade80;
+      --text: #f8fafc;
+      --text-dim: #94a3b8;
+    }
+
+    [data-theme="light"] {
+      --bg-gradient: radial-gradient(circle at top, #f0fdf4 0%, #dcfce7 100%);
+      --glass: rgba(0, 0, 0, 0.05);
+      --glass-bright: rgba(0, 0, 0, 0.1);
+      --border: rgba(0, 0, 0, 0.1);
+      --accent-white: #166534;
+      --accent-green: #15803d;
+      --text: #0f172a;
+      --text-dim: #475569;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; scroll-behavior: smooth; }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* --- NAVIGATION --- */
+    .nav-container {
+      position: fixed;
+      top: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: max-content;
+    }
+
+    .icon-menu {
+      background: var(--glass);
+      backdrop-filter: blur(25px) saturate(150%);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      border-radius: 100px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .nav-btn.active { background: var(--accent-white); color: #064e3b; }
+
+    /* --- LAYOUT --- */
+    section { min-height: 100vh; padding: 120px 8% 80px; }
+    .glass-card {
+      background: var(--glass);
+      backdrop-filter: blur(30px);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: 40px;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h2 { font-size: 2.5rem; margin-bottom: 30px; color: var(--accent-green); text-align: center; }
+
+    /* --- DASHBOARD PROJECTS DESIGN --- */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .db-widget {
+      background: var(--glass-bright);
+      border: 1px solid var(--border);
+      border-radius: 25px;
+      padding: 25px;
+      position: relative;
+      transition: 0.3s;
+    }
+
+    .db-widget:hover { border-color: var(--accent-green); transform: scale(1.02); }
+
+    .db-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+    .db-icon { width: 45px; height: 45px; background: var(--glass); border-radius: 12px; display: grid; place-items: center; color: var(--accent-green); }
+    
+    .db-status { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; padding: 4px 10px; border-radius: 50px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); }
+    .status-done { color: var(--accent-green); border-color: var(--accent-green); }
+    .status-wait { color: #fbbf24; border-color: #fbbf24; }
+
+    .db-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; color: var(--accent-white); }
+    .db-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 20px; }
+
+    /* Progress Bar */
+    .progress-track { height: 6px; background: var(--glass); border-radius: 10px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--accent-green); border-radius: 10px; }
+
+    /* Upcoming Project Style */
+    .upcoming { opacity: 0.7; border-style: dashed; }
+    .pulse-dot { width: 8px; height: 8px; background: #fbbf24; border-radius: 50%; display: inline-block; margin-right: 5px; animation: pulse 2s infinite; }
+
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
+    /* --- EXPERIENCE JOURNEY TILES --- */
+    .job-tile {
+      display: grid; grid-template-columns: 80px 1fr auto; align-items: center; gap: 20px;
+      background: var(--glass-bright); border: 1px solid var(--border); border-radius: 20px;
+      padding: 20px; margin-bottom: 15px; transition: 0.3s;
+    }
+    .comp-logo { width: 60px; height: 60px; background: var(--glass); border-radius: 12px; display: grid; place-items: center; font-weight: 900; }
+    .view-btn { padding: 10px 15px; border-radius: 10px; border: 1px solid var(--accent-green); background: transparent; color: var(--accent-green); cursor: pointer; font-weight: 600; }
+
+    /* --- MODALS --- */
+    .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); }
+    .modal-content { background: var(--bg-gradient); margin: 5% auto; padding: 40px; border: 1px solid var(--border); width: 90%; max-width: 800px; border-radius: 30px; max-height: 85vh; overflow-y: auto; }
+
+    @media (max-width: 800px) { .nav-btn span { display: none; } .job-tile { grid-template-columns: 1fr; text-align: center; } .comp-logo { margin: 0 auto; } }
+  </style>
+</head>
+<body>
+
+  <div class="nav-container">
+    <nav class="icon-menu">
+      <a href="#home" class="nav-btn active"><i class="fa-solid fa-house"></i><span>Home</span></a>
+      <a href="#about" class="nav-btn"><i class="fa-solid fa-user"></i><span>About</span></a>
+      <a href="#journey" class="nav-btn"><i class="fa-solid fa-briefcase"></i><span>Journey</span></a>
+      <a href="#projects" class="nav-btn"><i class="fa-solid fa-chart-line"></i><span>Projects</span></a>
+      <a href="#education" class="nav-btn"><i class="fa-solid fa-graduation-cap"></i><span>Education</span></a>
+      <div class="nav-btn" id="theme-toggle" style="cursor:pointer"><i class="fa-solid fa-circle-half-stroke"></i></div>
+    </nav>
+  </div>
+
+  <section id="home">
+    <div class="glass-card">
+        <h1>John Mark Kiritu</h1>
+        <p style="color: var(--text-dim); font-size: 1.2rem; margin-top: 10px;">IT Infrastructure Specialist & Digital Innovator</p>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="glass-card">
+      <h2>About Me</h2>
+      <p style="font-size: 1.1rem; line-height: 1.8;">
+        I am a <strong>self-motivated, results-driven and highly skilled IT professional</strong> with over 2 years experience in IT support, networking and IT service management. I have experience in managing enterprise-level environments, including Active Directory, Microsoft 365, endpoint security solutions, and cloud-based services.
+      </p>
+    </div>
+  </section>
+
+  <section id="journey">
+    <div class="glass-card">
+      <h2>Professional Journey</h2>
+      <div class="job-tile">
+        <div class="comp-logo">DQ</div>
+        <div class="job-info">
+          <h3>System Administrator</h3>
+          <a href="https://doubleq.co.ug" target="_blank" style="color:var(--accent-green); text-decoration:none;">Double Q (C4 Logistics)</a>
+          <div style="font-size: 0.8rem; opacity: 0.6;">Sept 2024 – Nov 2024</div>
+        </div>
+        <button class="view-btn" onclick="openModal('modal-dq')">View Roles</button>
+      </div>
+      <div class="job-tile">
+        <div class="comp-logo">OX</div>
+        <div class="job-info">
+          <h3>IT Support Officer</h3>
+          <a href="https://uganda.oxfam.org" target="_blank" style="color:var(--accent-green); text-decoration:none;">Oxfam in Uganda</a>
+          <div style="font-size: 0.8rem; opacity: 0.6;">Nov 2022 – May 2024</div>
+        </div>
+        <button class="view-btn" onclick="openModal('modal-ox-support')">View Roles</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="glass-card">
+      <h2>Projects Dashboard</h2>
+      <div class="dashboard-grid">
+        
+        <div class="db-widget">
+          <div class="db-header">
+            <div class="db-icon"><i class="fa-solid fa-truck-fast"></i></div>
+            <span class="db-status status-done">Completed</span>
+          </div>
+          <div class="db-title">Digital Logistics System</div>
+          <div class="db-desc">Automated procurement workflow for Oxfam Uganda using Power Apps & SharePoint. Saved thousands of sheets of paper.</div>
+          <div style="font-size: 0.7rem; margin-bottom: 5px;">DEPLOYMENT SUCCESS</div>
+          <div class="progress-track"><div class="progress-fill" style="width: 100%;"></div></div>
+        </div>
+
+        <div class="db-widget">
+          <div class="db-header">
+            <div class="db-icon"><i class="fa-solid fa-shield-virus"></i></div>
+            <span class="db-status status-done">Active</span>
+          </div>
+          <div class="db-title">Kaspersky Security Hub</div>
+          <div class="db-desc">Implemented central endpoint management for Uganda Micro Foundation. Remediated 100% of detected threats.</div>
+          <div style="font-size: 0.7rem; margin-bottom: 5px;">SECURITY COVERAGE</div>
+          <div class="progress-track"><div class="progress-fill" style="width: 100%;"></div></div>
+        </div>
+
+        <div class="db-widget">
+          <div class="db-header">
+            <div class="db-icon"><i class="fa-solid fa-network-wired"></i></div>
+            <span class="db-status status-done">Optimized</span>
+          </div>
+          <div class="db-title">Network Overhaul</div>
+          <div class="db-desc">Re-cabling and RJ45 port replacement at Kyagalanyi Coffee. Enhanced LAN speed and reliability.</div>
+          <div style="font-size: 0.7rem; margin-bottom: 5px;">LAN PERFORMANCE</div>
+          <div class="progress-track"><div class="progress-fill" style="width: 100%;"></div></div>
+        </div>
+
+        <div class="db-widget upcoming">
+          <div class="db-header">
+            <div class="db-icon"><i class="fa-solid fa-gamepad"></i></div>
+            <span class="db-status status-wait"><span class="pulse-dot"></span>In Pipeline</span>
+          </div>
+          <div class="db-title">Game Store E-Commerce</div>
+          <div class="db-desc">Upcoming marketplace for digital assets and games. Focusing on secure payment gateways.</div>
+          <div style="font-size: 0.7rem; margin-bottom: 5px;">DEVELOPMENT PROGRESS</div>
+          <div class="progress-track"><div class="progress-fill" style="width: 15%; background: #fbbf24;"></div></div>
+        </div>
+
+        <div class="db-widget upcoming">
+          <div class="db-header">
+            <div class="db-icon"><i class="fa-solid fa-palette"></i></div>
+            <span class="db-status status-wait"><span class="pulse-dot"></span>Concept</span>
+          </div>
+          <div class="db-title">Dual Portfolio Build</div>
+          <div class="db-desc">Building two high-performance bespoke portfolios for creative clients.</div>
+          <div style="font-size: 0.7rem; margin-bottom: 5px;">PLANNING STAGE</div>
+          <div class="progress-track"><div class="progress-fill" style="width: 5%; background: #fbbf24;"></div></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="glass-card">
+      <h2>Education</h2>
+      <p><strong>Uganda Christian University</strong> - BSc. IT (2018-2021)</p>
+      <p><strong>St. Lawrence Schools</strong> - A-Level (2016-2017)</p>
+      <p><strong>Mbarara High School</strong> - O-Level (2012-2015)</p>
+    </div>
+  </section>
+
+  <div id="modal-dq" class="modal">
+    <div class="modal-content">
+      <h2>Double Q Roles</h2>
+      <ul style="padding: 20px; color: var(--text-dim);">
+        <li>Administer IT infrastructure (PABX, Power Apps, WAPs).</li>
+        <li>Implement Kaspersky Endpoint Protection.</li>
+        <li>L2 Tech Support for Win 10/11 & O365.</li>
+      </ul>
+      <button class="view-btn" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <div id="modal-ox-support" class="modal">
+    <div class="modal-content">
+      <h2>Oxfam IT Support Roles</h2>
+      <ul style="padding: 20px; color: var(--text-dim);">
+        <li>Network uptime via Cisco Meraki & M365 Admin Center.</li>
+        <li>ITIL Asset management via SharePoint.</li>
+        <li>Digital transformation (Power BI & Power Apps).</li>
+      </ul>
+      <button class="view-btn" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    });
+
+    function openModal(id) { document.getElementById(id).style.display = "block"; }
+    function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = "none"); }
+    window.onclick = (e) => { if(e.target.className === 'modal') closeModal(); }
+
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-btn');
+    window.onscroll = () => {
+      let current = "";
+      sections.forEach(s => { if(pageYOffset >= s.offsetTop - 150) current = s.getAttribute("id"); });
+      navLinks.forEach(l => {
+        l.classList.remove("active");
+        if(l.getAttribute("href").includes(current)) l.classList.add("active");
+      });
+    };
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>John Mark Kiritu | IT Solutions & Services</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg-gradient: radial-gradient(circle at top, #064e3b 0%, #022c22 100%);
+      --glass: rgba(255, 255, 255, 0.08);
+      --glass-bright: rgba(255, 255, 255, 0.15);
+      --border: rgba(255, 255, 255, 0.12);
+      --accent-white: #ffffff;
+      --accent-green: #4ade80;
+      --text: #f8fafc;
+      --text-dim: #94a3b8;
+    }
+
+    [data-theme="light"] {
+      --bg-gradient: radial-gradient(circle at top, #f0fdf4 0%, #dcfce7 100%);
+      --glass: rgba(0, 0, 0, 0.05);
+      --glass-bright: rgba(0, 0, 0, 0.1);
+      --border: rgba(0, 0, 0, 0.1);
+      --accent-white: #166534;
+      --accent-green: #15803d;
+      --text: #0f172a;
+      --text-dim: #475569;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; scroll-behavior: smooth; }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* --- NAVIGATION --- */
+    .nav-container {
+      position: fixed;
+      top: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: max-content;
+    }
+
+    .icon-menu {
+      background: var(--glass);
+      backdrop-filter: blur(25px) saturate(150%);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px;
+      display: flex;
+      gap: 5px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .nav-btn {
+      display: flex; align-items: center; gap: 10px; padding: 10px 18px;
+      border-radius: 100px; color: var(--text); text-decoration: none;
+      font-size: 0.85rem; font-weight: 600; transition: 0.4s;
+    }
+
+    .nav-btn.active { background: var(--accent-white); color: #064e3b; }
+
+    /* --- LAYOUT SECTIONS --- */
+    section { min-height: 100vh; padding: 120px 8% 80px; }
+    .glass-card {
+      background: var(--glass); backdrop-filter: blur(30px);
+      border: 1px solid var(--border); border-radius: 40px;
+      padding: 50px; width: 100%; max-width: 1200px; margin: 0 auto;
+    }
     h2 { font-size: 2.5rem; margin-bottom: 40px; color: var(--accent-green); text-align: center; }
 
-    /* --- HERO & CV BUTTON --- */
-    .hero-content { display: flex; justify-content: space-between; align-items: center; gap: 40px; }
-    .cv-btn { background: var(--accent-green); color: #022c22; padding: 12px 25px; border-radius: 50px; font-weight: 800; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; transition: 0.3s; border: none; cursor: pointer; }
-    .cv-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(74, 222, 128, 0.3); }
-
     /* --- SERVICES GRID --- */
-    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-    .service-tile { background: var(--glass-bright); border: 1px solid var(--border); border-radius: 25px; padding: 30px; transition: 0.4s; }
-    .service-tile:hover { border-color: var(--accent-green); transform: translateY(-5px); }
-    .service-icon { font-size: 2rem; color: var(--accent-green); margin-bottom: 15px; }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;
+    }
 
-    /* --- DASHBOARD PROJECTS --- */
-    .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
-    .db-widget { background: var(--glass-bright); border: 1px solid var(--border); border-radius: 25px; padding: 25px; transition: 0.3s; }
-    .progress-track { height: 6px; background: var(--glass); border-radius: 10px; overflow: hidden; margin-top: 15px; }
-    .progress-fill { height: 100%; background: var(--accent-green); }
+    .service-tile {
+      background: var(--glass-bright); border: 1px solid var(--border);
+      border-radius: 25px; padding: 30px; transition: 0.4s; text-align: left;
+    }
 
-    /* --- JOURNEY --- */
-    .job-tile { display: grid; grid-template-columns: 80px 1fr auto; align-items: center; gap: 20px; background: var(--glass-bright); border: 1px solid var(--border); border-radius: 20px; padding: 20px; margin-bottom: 15px; }
+    .service-tile:hover {
+      background: rgba(74, 222, 128, 0.1);
+      border-color: var(--accent-green);
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+
+    .service-icon {
+      font-size: 2.5rem; color: var(--accent-green); margin-bottom: 20px;
+    }
+
+    .service-tile h3 { font-size: 1.25rem; margin-bottom: 12px; color: var(--accent-white); }
+    .service-tile p { font-size: 0.9rem; color: var(--text-dim); }
+
+    /* --- DASHBOARD ELEMENTS (PROJECTS) --- */
+    .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    .db-widget { background: var(--glass-bright); border: 1px solid var(--border); border-radius: 25px; padding: 25px; }
+    .progress-track { height: 6px; background: var(--glass); border-radius: 10px; margin-top: 15px; }
+    .progress-fill { height: 100%; background: var(--accent-green); border-radius: 10px; }
+
+    /* --- EXPERIENCE & EDUCATION --- */
+    .job-tile {
+      display: grid; grid-template-columns: 80px 1fr auto; align-items: center; gap: 20px;
+      background: var(--glass-bright); border: 1px solid var(--border); border-radius: 20px;
+      padding: 20px; margin-bottom: 15px;
+    }
     .comp-logo { width: 60px; height: 60px; background: var(--glass); border-radius: 12px; display: grid; place-items: center; font-weight: 900; }
-
-    /* --- CONTACT FORM --- */
-    .contact-container { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; }
-    .form-control { width: 100%; background: var(--glass); border: 1px solid var(--border); padding: 15px; border-radius: 15px; color: #fff; margin-bottom: 15px; }
-
-    /* --- FOOTER --- */
-    footer { background: rgba(0, 0, 0, 0.4); border-top: 1px solid var(--border); padding: 80px 8% 30px; }
-    .footer-grid { display: grid; grid-template-columns: 1.5fr repeat(3, 1fr) 1.5fr; gap: 40px; }
-    .footer-col h4 { color: #fff; margin-bottom: 25px; }
-    .footer-col ul { list-style: none; }
-    .footer-col ul li { margin-bottom: 12px; }
-    .footer-col ul li a { color: var(--text-dim); text-decoration: none; font-size: 0.9rem; }
-
+    
     /* --- MODALS --- */
     .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); }
     .modal-content { background: var(--bg-gradient); margin: 5% auto; padding: 40px; border: 1px solid var(--border); width: 90%; max-width: 800px; border-radius: 30px; }
 
-    @media (max-width: 900px) { .hero-content, .contact-container, .footer-grid { grid-template-columns: 1fr; } .nav-btn span { display: none; } }
+    @media (max-width: 800px) { .nav-btn span { display: none; } .job-tile { grid-template-columns: 1fr; text-align: center; } .comp-logo { margin: 0 auto; } }
   </style>
 </head>
 <body>
@@ -80,58 +2254,79 @@
     <nav class="icon-menu">
       <a href="#home" class="nav-btn active"><i class="fa-solid fa-house"></i><span>Home</span></a>
       <a href="#services" class="nav-btn"><i class="fa-solid fa-gears"></i><span>Services</span></a>
-      <a href="#projects" class="nav-btn"><i class="fa-solid fa-chart-line"></i><span>Dashboard</span></a>
-      <a href="#journey" class="nav-btn"><i class="fa-solid fa-briefcase"></i><span>Experience</span></a>
-      <a href="#contact" class="nav-btn"><i class="fa-solid fa-envelope"></i><span>Contact</span></a>
+      <a href="#journey" class="nav-btn"><i class="fa-solid fa-briefcase"></i><span>Journey</span></a>
+      <a href="#projects" class="nav-btn"><i class="fa-solid fa-chart-pie"></i><span>Projects</span></a>
+      <a href="#education" class="nav-btn"><i class="fa-solid fa-graduation-cap"></i><span>Education</span></a>
     </nav>
   </div>
 
-  <section id="home">
-    <div class="glass-card hero-content">
+  <section id="home" style="display:flex; align-items:center;">
+    <div class="glass-card" style="display: flex; justify-content: space-between; align-items: center; gap: 40px;">
       <div>
-        <h1 style="font-size: 4rem; font-weight: 900;">John Mark <span style="color:var(--accent-green)">Kiritu</span></h1>
-        <p style="font-size: 1.2rem; color: var(--text-dim); margin: 20px 0;">IT Infrastructure Specialist & Digital Solutions Innovator with 2+ years of enterprise experience.</p>
-        <a href="#" class="cv-btn"><i class="fa-solid fa-file-pdf"></i> Download CV</a>
+        <h1 style="font-size: 3.5rem;">John Mark<br><span style="color:var(--accent-green)">Kiritu</span></h1>
+        <p style="font-size: 1.2rem; color: var(--text-dim); max-width: 550px; margin-top: 20px;">
+          Self-motivated IT professional with 2+ years experience in managing enterprise environments, infrastructure, and innovative IT solutions.
+        </p>
       </div>
-      <div style="width:300px; height:300px; background:var(--glass-bright); border-radius:50%; border:2px solid var(--accent-green); display:grid; place-items:center;">
-        <i class="fa-solid fa-user-shield" style="font-size: 6rem; opacity: 0.2;"></i>
+      <div style="width: 280px; height: 280px; border-radius: 50%; border: 2px solid var(--accent-green); background: var(--glass-bright); display: grid; place-items: center;">
+         <i class="fa-solid fa-user-gear" style="font-size: 5rem; opacity: 0.3;"></i>
       </div>
     </div>
   </section>
 
   <section id="services">
     <div class="glass-card">
-      <h2>Professional Services</h2>
+      <h2>Professional IT Services</h2>
       <div class="services-grid">
-        <div class="service-tile"><i class="fa-solid fa-headset service-icon"></i><h3>IT Help Desk</h3><p>Support for hardware, software, and enterprise network issues.</p></div>
-        <div class="service-tile"><i class="fa-solid fa-screwdriver-wrench service-icon"></i><h3>Maintenance</h3><p>Repairs for computers and phones; hardware and software installations.</p></div>
-        <div class="service-tile"><i class="fa-solid fa-video service-icon"></i><h3>Surveillance</h3><p>CCTV installation and smart security monitoring systems.</p></div>
-        <div class="service-tile"><i class="fa-solid fa-network-wired service-icon"></i><h3>Networking</h3><p>Structured cabling, LAN/WAN setup, and Meraki management.</p></div>
-        <div class="service-tile"><i class="fa-solid fa-cart-flatbed service-icon"></i><h3>Procurement</h3><p>Sourcing and advising on IT equipment and software licenses.</p></div>
-        <div class="service-tile"><i class="fa-solid fa-pen-nib service-icon"></i><h3>UI Design</h3><p>Designing modern, glass-morphic interfaces and tech guides.</p></div>
-      </div>
-    </div>
-  </section>
+        
+        <div class="service-tile">
+          <i class="fa-solid fa-headset service-icon"></i>
+          <h3>IT Help Desk</h3>
+          <p>Tier 1 & 2 technical support for hardware, software, and network-related issues with SLA-driven resolution.</p>
+        </div>
 
-  <section id="projects">
-    <div class="glass-card">
-      <h2>Project Analytics</h2>
-      <div class="dashboard-grid">
-        <div class="db-widget">
-          <div style="display:flex; justify-content:space-between;"><h3>Digital Logistics</h3><span style="color:var(--accent-green); font-size: 0.7rem;">100%</span></div>
-          <p style="font-size:0.85rem; color:var(--text-dim); margin-top:10px;">Oxfam Procurement automation via Power Apps.</p>
-          <div class="progress-track"><div class="progress-fill" style="width: 100%;"></div></div>
+        <div class="service-tile">
+          <i class="fa-solid fa-screwdriver-wrench service-icon"></i>
+          <h3>Maintenance & Repair</h3>
+          <p>Comprehensive repairs for computers, laptops, and mobile phones. Routine system health checks and hardware cleaning.</p>
         </div>
-        <div class="db-widget">
-          <div style="display:flex; justify-content:space-between;"><h3>Security Hub</h3><span style="color:var(--accent-green); font-size: 0.7rem;">100%</span></div>
-          <p style="font-size:0.85rem; color:var(--text-dim); margin-top:10px;">Kaspersky Endpoint rollout for Uganda Micro Foundation.</p>
-          <div class="progress-track"><div class="progress-fill" style="width: 100%;"></div></div>
+
+        <div class="service-tile">
+          <i class="fa-solid fa-download service-icon"></i>
+          <h3>Installation & Setup</h3>
+          <p>OS deployments (Windows/Linux/macOS), software configurations, and internal peripheral installations.</p>
         </div>
-        <div class="db-widget" style="opacity:0.6;">
-          <div style="display:flex; justify-content:space-between;"><h3>Game Store</h3><span style="color:#fbbf24; font-size: 0.7rem;">25%</span></div>
-          <p style="font-size:0.85rem; color:var(--text-dim); margin-top:10px;">Upcoming digital assets marketplace development.</p>
-          <div class="progress-track"><div class="progress-fill" style="width: 25%; background:#fbbf24;"></div></div>
+
+        <div class="service-tile">
+          <i class="fa-solid fa-video service-icon"></i>
+          <h3>CCTV & Surveillance</h3>
+          <p>Installation and configuration of IP cameras, NVRs, and surveillance monitoring systems for security.</p>
         </div>
+
+        <div class="service-tile">
+          <i class="fa-solid fa-network-wired service-icon"></i>
+          <h3>Network Infrastructure</h3>
+          <p>Structured Cat6 cabling, LAN/WAN setup, and configuration of switches, routers, and access points.</p>
+        </div>
+
+        <div class="service-tile">
+          <i class="fa-solid fa-cart-shopping service-icon"></i>
+          <h3>IT Procurement</h3>
+          <p>Assistance in sourcing high-quality hardware, software licenses, and IT equipment via trusted vendors.</p>
+        </div>
+
+        <div class="service-tile">
+          <i class="fa-solid fa-compass-drafting service-icon"></i>
+          <h3>UI Design</h3>
+          <p>Crafting liquid glass interfaces and user-centric designs for digital systems and professional portfolios.</p>
+        </div>
+
+        <div class="service-tile">
+          <i class="fa-solid fa-book-open service-icon"></i>
+          <h3>Tech Guides</h3>
+          <p>Creating detailed technical manuals and documentation to empower end-users and streamline support.</p>
+        </div>
+
       </div>
     </div>
   </section>
@@ -141,102 +2336,72 @@
       <h2>Professional Journey</h2>
       <div class="job-tile">
         <div class="comp-logo">DQ</div>
-        <div><h3>System Administrator</h3><p>Double Q (C4 Logistics) | 2024</p></div>
-        <button class="cv-btn" style="padding:8px 15px; font-size:0.8rem;" onclick="openModal('modal-dq')">View Roles</button>
+        <div class="job-info">
+          <h3>System Administrator</h3>
+          <p>Double Q (C4 Logistics) | 2024</p>
+        </div>
+        <button class="view-btn" onclick="openModal('modal-dq')">View Roles</button>
       </div>
       <div class="job-tile">
         <div class="comp-logo">OX</div>
-        <div><h3>IT Support Officer</h3><p>Oxfam in Uganda | 2022 - 2024</p></div>
-        <button class="cv-btn" style="padding:8px 15px; font-size:0.8rem;" onclick="openModal('modal-ox')">View Roles</button>
+        <div class="job-info">
+          <h3>IT Support Officer</h3>
+          <p>Oxfam in Uganda | 2022 - 2024</p>
+        </div>
+        <button class="view-btn" onclick="openModal('modal-ox-support')">View Roles</button>
       </div>
     </div>
   </section>
 
-  <section id="contact">
+  <section id="projects">
     <div class="glass-card">
-      <h2>Get In Touch</h2>
-      <div class="contact-container">
-        <div style="background:var(--glass-bright); padding:30px; border-radius:20px;">
-          <p><i class="fa-solid fa-phone" style="color:var(--accent-green)"></i> +256 7xx xxx xxx</p><br>
-          <p><i class="fa-solid fa-envelope" style="color:var(--accent-green)"></i> johnmark@example.com</p>
+      <h2>Projects Dashboard</h2>
+      <div class="dashboard-grid">
+        <div class="db-widget">
+          <h3>Digital Logistics - Oxfam</h3>
+          <p>Automated procurement via Power Apps.</p>
+          <div class="progress-track"><div class="progress-fill" style="width: 100%;"></div></div>
         </div>
-        <form>
-          <input type="text" class="form-control" placeholder="Full Name">
-          <input type="email" class="form-control" placeholder="Email Address">
-          <textarea class="form-control" rows="5" placeholder="Your Message"></textarea>
-          <button type="submit" class="cv-btn" style="width:100%;">Send Message</button>
-        </form>
+        <div class="db-widget">
+          <h3>Kaspersky Security Hub</h3>
+          <p>Managed endpoint security.</p>
+          <div class="progress-track"><div class="progress-fill" style="width: 100%;"></div></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <footer>
-    <div class="footer-grid">
-      <div class="footer-col">
-        <h4 style="font-size: 1.5rem;">JMK<span style="color:var(--accent-green)">.</span></h4>
-        <p style="font-size: 0.8rem; color: var(--text-dim);">Excellence in IT Infrastructure & Digital Transformation.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Information</h4>
-        <ul>
-          <li><a href="#home">About Us</a></li>
-          <li><a href="#journey">Journey</a></li>
-          <li><a href="#projects">Dashboard</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Helpful Links</h4>
-        <ul>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#contact">Supports</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Our Services</h4>
-        <ul>
-          <li><a href="#">Networking</a></li>
-          <li><a href="#">CCTV Setup</a></li>
-          <li><a href="#">UI Design</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Contact Us</h4>
-        <p style="font-size:0.8rem;">+256 7xx xxx xxx</p>
-        <p style="font-size:0.8rem;">support@jmk.com</p>
-        <div style="display:flex; gap:10px; margin-top:15px;">
-          <a href="#" style="color:#fff;"><i class="fa-brands fa-facebook"></i></a>
-          <a href="#" style="color:#fff;"><i class="fa-brands fa-linkedin"></i></a>
-          <a href="#" style="color:#fff;"><i class="fa-brands fa-twitter"></i></a>
-        </div>
-      </div>
+  <section id="education">
+    <div class="glass-card">
+      <h2>Education History</h2>
+      <p style="margin-bottom: 10px;"><strong>Uganda Christian University:</strong> BSc. IT (2018-2021)</p>
+      <p style="margin-bottom: 10px;"><strong>St. Lawrence Schools:</strong> UACE (2016-2017)</p>
+      <p style="margin-bottom: 10px;"><strong>Mbarara High School:</strong> UCE (2012-2015)</p>
+      <p><strong>Mbarara Preparatory School:</strong> PLE (2005-2011)</p>
     </div>
-    <div style="border-top: 1px solid var(--border); margin-top: 50px; padding-top: 20px; text-align: center; font-size: 0.8rem; color: var(--text-dim);">
-      2026 © John Mark Kiritu | All Rights Reserved
-    </div>
-  </footer>
+  </section>
 
   <div id="modal-dq" class="modal">
     <div class="modal-content">
-      <h2 style="color:var(--accent-green)">Double Q Roles</h2>
+      <h2 style="color:var(--accent-green)">System Administrator Roles</h2>
       <ul style="padding: 20px; color: var(--text-dim);">
-        <li>Administer infrastructure (PABX, Power Apps, WAPs).</li>
-        <li>Implement Kaspersky Endpoint Protection.</li>
-        <li>L2 Tech Support for Win 10/11 & O365.</li>
+        <li>Administer infrastructure (Switches, PABX, Microsoft Power Apps).</li>
+        <li>Implement Kaspersky Endpoint Protection & Firewall rules.</li>
+        <li>Generate performance reports via TMS tools.</li>
       </ul>
-      <button class="cv-btn" onclick="closeModal()">Close</button>
+      <button class="view-btn" onclick="closeModal()">Close</button>
     </div>
   </div>
 
-  <div id="modal-ox" class="modal">
+  <div id="modal-ox-support" class="modal">
     <div class="modal-content">
-      <h2 style="color:var(--accent-green)">Oxfam Roles</h2>
+      <h2 style="color:var(--accent-green)">IT Support Officer Roles</h2>
       <ul style="padding: 20px; color: var(--text-dim);">
-        <li>Network uptime via Cisco Meraki & M365.</li>
-        <li>ITIL Asset management via SharePoint.</li>
-        <li>Digital transformation (Power BI & Power Apps).</li>
+        <li>Manage Network uptime via Cisco Meraki & M365.</li>
+        <li>Asset Lifecycle management & ServiceNow Ticketing.</li>
+        <li>Power BI Dashboard Development.</li>
       </ul>
-      <button class="cv-btn" onclick="closeModal()">Close</button>
+      <button class="view-btn" onclick="closeModal()">Close</button>
     </div>
   </div>
 
@@ -245,6 +2410,513 @@
     function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = "none"); }
     window.onclick = (e) => { if(e.target.className === 'modal') closeModal(); }
 
+    // Scroll Logic for Nav
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-btn');
+    window.onscroll = () => {
+      let current = "";
+      sections.forEach(s => { if(pageYOffset >= s.offsetTop - 150) current = s.getAttribute("id"); });
+      navLinks.forEach(l => {
+        l.classList.remove("active");
+        if(l.getAttribute("href").includes(current)) l.classList.add("active");
+      });
+    };
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>John Mark Kiritu | IT Professional Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg-gradient: radial-gradient(circle at top, #064e3b 0%, #022c22 100%);
+      --glass: rgba(255, 255, 255, 0.08);
+      --glass-bright: rgba(255, 255, 255, 0.15);
+      --border: rgba(255, 255, 255, 0.12);
+      --accent-white: #ffffff;
+      --accent-green: #4ade80;
+      --text: #f8fafc;
+      --text-dim: #94a3b8;
+    }
+
+    [data-theme="light"] {
+      --bg-gradient: radial-gradient(circle at top, #f0fdf4 0%, #dcfce7 100%);
+      --glass: rgba(0, 0, 0, 0.05);
+      --glass-bright: rgba(0, 0, 0, 0.1);
+      --border: rgba(0, 0, 0, 0.1);
+      --accent-white: #166534;
+      --accent-green: #15803d;
+      --text: #0f172a;
+      --text-dim: #475569;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; scroll-behavior: smooth; }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* --- NAVIGATION --- */
+    .nav-container {
+      position: fixed; top: 25px; left: 50%; transform: translateX(-50%);
+      z-index: 1000; width: max-content;
+    }
+    .icon-menu {
+      background: var(--glass); backdrop-filter: blur(25px);
+      border: 1px solid var(--border); border-radius: 100px;
+      padding: 6px; display: flex; gap: 5px;
+    }
+    .nav-btn {
+      display: flex; align-items: center; gap: 10px; padding: 10px 18px;
+      border-radius: 100px; color: var(--text); text-decoration: none;
+      font-size: 0.85rem; font-weight: 600; transition: 0.4s;
+    }
+    .nav-btn.active { background: var(--accent-white); color: #064e3b; }
+
+    /* --- COMMON LAYOUT --- */
+    section { min-height: 100vh; padding: 120px 8% 80px; }
+    .glass-card {
+      background: var(--glass); backdrop-filter: blur(30px);
+      border: 1px solid var(--border); border-radius: 40px;
+      padding: 50px; width: 100%; max-width: 1200px; margin: 0 auto;
+    }
+    h2 { font-size: 2.5rem; margin-bottom: 40px; color: var(--accent-green); text-align: center; }
+
+    /* --- NEW: TECH & CERTIFICATIONS SECTION --- */
+    .stack-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+    }
+    .tech-category { margin-bottom: 30px; }
+    .tech-category h3 { font-size: 1rem; color: var(--accent-green); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
+    
+    .tech-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+    .tag {
+      background: var(--glass-bright); border: 1px solid var(--border);
+      padding: 8px 16px; border-radius: 12px; font-size: 0.85rem;
+      display: flex; align-items: center; gap: 8px; transition: 0.3s;
+    }
+    .tag:hover { border-color: var(--accent-green); background: rgba(74, 222, 128, 0.15); }
+
+    .cert-vault { display: flex; flex-direction: column; gap: 15px; }
+    .cert-card {
+      background: linear-gradient(135deg, var(--glass-bright), transparent);
+      border: 1px solid var(--border); border-radius: 20px; padding: 20px;
+      display: flex; align-items: center; gap: 20px;
+    }
+    .cert-icon { font-size: 2rem; color: #fbbf24; }
+
+    /* --- SERVICES GRID --- */
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .service-tile { background: var(--glass-bright); border: 1px solid var(--border); border-radius: 25px; padding: 30px; transition: 0.4s; }
+    .service-tile:hover { border-color: var(--accent-green); transform: translateY(-5px); }
+    .service-icon { font-size: 2rem; color: var(--accent-green); margin-bottom: 15px; }
+
+    /* --- DASHBOARD & JOURNEY --- */
+    .job-tile { display: grid; grid-template-columns: 80px 1fr auto; align-items: center; gap: 20px; background: var(--glass-bright); border: 1px solid var(--border); border-radius: 20px; padding: 20px; margin-bottom: 15px; }
+    .db-widget { background: var(--glass-bright); border: 1px solid var(--border); border-radius: 20px; padding: 20px; margin-bottom: 10px; }
+    .view-btn { padding: 10px 15px; border-radius: 10px; border: 1px solid var(--accent-green); background: transparent; color: var(--accent-green); cursor: pointer; }
+
+    @media (max-width: 900px) { .stack-grid { grid-template-columns: 1fr; } .nav-btn span { display: none; } }
+  </style>
+</head>
+<body>
+
+  <div class="nav-container">
+    <nav class="icon-menu">
+      <a href="#home" class="nav-btn active"><i class="fa-solid fa-house"></i><span>Home</span></a>
+      <a href="#about" class="nav-btn"><i class="fa-solid fa-user"></i><span>About</span></a>
+      <a href="#stack" class="nav-btn"><i class="fa-solid fa-layer-group"></i><span>Stack</span></a>
+      <a href="#services" class="nav-btn"><i class="fa-solid fa-screwdriver-wrench"></i><span>Services</span></a>
+      <a href="#journey" class="nav-btn"><i class="fa-solid fa-briefcase"></i><span>Journey</span></a>
+    </nav>
+  </div>
+
+  <section id="home">
+    <div class="glass-card" style="display: flex; align-items: center; justify-content: space-between;">
+      <div>
+        <h1 style="font-size: 4rem;">John Mark<br><span style="color:var(--accent-green)">Kiritu</span></h1>
+        <p style="font-size: 1.2rem; color: var(--text-dim); max-width: 600px;">Self-motivated, results-driven IT Professional specializing in Infrastructure, Networking, and Digital Solutions.</p>
+      </div>
+      <i class="fa-solid fa-terminal" style="font-size: 8rem; opacity: 0.1;"></i>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="glass-card">
+      <h2>Professional Bio</h2>
+      <p style="font-size: 1.2rem; line-height: 1.8;">
+        I am a highly skilled IT professional with over 2 years of experience in IT support, networking, and IT service management. My expertise covers managing enterprise-level environments including <strong>Active Directory, Microsoft 365, and Cloud-based services.</strong>
+      </p>
+    </div>
+  </section>
+
+  <section id="stack">
+    <div class="glass-card">
+      <h2>Technical Arsenal & Credentials</h2>
+      <div class="stack-grid">
+        
+        <div>
+          <div class="tech-category">
+            <h3>Infrastructure & Cloud</h3>
+            <div class="tech-tags">
+              <div class="tag"><i class="fa-brands fa-windows"></i> Active Directory</div>
+              <div class="tag"><i class="fa-brands fa-microsoft"></i> Microsoft 365</div>
+              <div class="tag"><i class="fa-solid fa-cloud"></i> Azure Cloud</div>
+              <div class="tag"><i class="fa-solid fa-server"></i> SCCM/MECM</div>
+            </div>
+          </div>
+          <div class="tech-category">
+            <h3>Networking & Security</h3>
+            <div class="tech-tags">
+              <div class="tag"><i class="fa-solid fa-shield-halved"></i> Kaspersky EP</div>
+              <div class="tag"><i class="fa-solid fa-circle-nodes"></i> Cisco Meraki</div>
+              <div class="tag"><i class="fa-solid fa-network-wired"></i> LAN/WAN/VPN</div>
+              <div class="tag"><i class="fa-solid fa-wall-tower"></i> Firewalls</div>
+            </div>
+          </div>
+          <div class="tech-category">
+            <h3>Dev & Automation</h3>
+            <div class="tech-tags">
+              <div class="tag"><i class="fa-solid fa-bolt"></i> Power Apps</div>
+              <div class="tag"><i class="fa-solid fa-chart-simple"></i> Power BI</div>
+              <div class="tag"><i class="fa-solid fa-code"></i> UI/UX Design</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h3>Professional Certifications</h3>
+          <div class="cert-vault">
+            <div class="cert-card">
+              <i class="fa-solid fa-certificate cert-icon"></i>
+              <div>
+                <div style="font-weight: 700;">BSc. Information Technology</div>
+                <div style="font-size: 0.8rem; color: var(--text-dim);">Uganda Christian University</div>
+              </div>
+            </div>
+            <div class="cert-card">
+              <i class="fa-solid fa-award cert-icon" style="color: #4ade80;"></i>
+              <div>
+                <div style="font-weight: 700;">Kaspersky Certified Specialist</div>
+                <div style="font-size: 0.8rem; color: var(--text-dim);">Endpoint Security Management</div>
+              </div>
+            </div>
+            <div class="cert-card">
+              <i class="fa-solid fa-medal cert-icon" style="color: #60a5fa;"></i>
+              <div>
+                <div style="font-weight: 700;">Microsoft 365 Certified</div>
+                <div style="font-size: 0.8rem; color: var(--text-dim);">Enterprise Administrator Expert</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="glass-card">
+      <h2>My Services</h2>
+      <div class="services-grid">
+        <div class="service-tile"><i class="fa-solid fa-headset service-icon"></i><h3>IT Help Desk</h3><p>Remote and on-site technical support for software and hardware.</p></div>
+        <div class="service-tile"><i class="fa-solid fa-microchip service-icon"></i><h3>Hardware Repair</h3><p>Maintenance and repairs for computers, phones, and peripherals.</p></div>
+        <div class="service-tile"><i class="fa-solid fa-network-wired service-icon"></i><h3>Networking</h3><p>Cat6 cabling, VLAN configuration, and Wi-Fi optimization.</p></div>
+        <div class="service-tile"><i class="fa-solid fa-video service-icon"></i><h3>Surveillance</h3><p>Smart CCTV and security system installations.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="journey">
+    <div class="glass-card">
+      <h2>Professional Journey</h2>
+      <div class="job-tile">
+        <div style="background:var(--glass); width:60px; height:60px; border-radius:10px; display:grid; place-items:center;">DQ</div>
+        <div>
+          <h3>System Administrator</h3>
+          <p>Double Q (C4 Logistics) | 2024</p>
+        </div>
+        <button class="view-btn" onclick="openModal('modal-dq')">View Roles</button>
+      </div>
+      <div class="job-tile">
+        <div style="background:var(--glass); width:60px; height:60px; border-radius:10px; display:grid; place-items:center;">OX</div>
+        <div>
+          <h3>IT Support Officer</h3>
+          <p>Oxfam In Uganda | 2022 - 2024</p>
+        </div>
+        <button class="view-btn" onclick="openModal('modal-ox-support')">View Roles</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="modal-dq" class="modal">
+    <div class="modal-content">
+      <h2>Double Q Roles</h2>
+      <ul style="padding: 20px; color: var(--text-dim);">
+        <li>Administer infrastructure (PABX, Power Apps, WAPs).</li>
+        <li>Implement Kaspersky Endpoint Protection.</li>
+        <li>L2 Tech Support via AnyDesk/TeamViewer.</li>
+      </ul>
+      <button class="view-btn" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <div id="modal-ox-support" class="modal">
+    <div class="modal-content">
+      <h2>Oxfam Roles</h2>
+      <ul style="padding: 20px; color: var(--text-dim);">
+        <li>Monitor systems via Cisco Meraki & M365.</li>
+        <li>Digital transformation (Power BI & Box Drive).</li>
+        <li>Active Directory & GPO Management.</li>
+      </ul>
+      <button class="view-btn" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <script>
+    function openModal(id) { document.getElementById(id).style.display = "block"; }
+    function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = "none"); }
+    window.onclick = (e) => { if(e.target.className === 'modal') closeModal(); }
+
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-btn');
+    window.onscroll = () => {
+      let current = "";
+      sections.forEach(s => { if(pageYOffset >= s.offsetTop - 150) current = s.getAttribute("id"); });
+      navLinks.forEach(l => {
+        l.classList.remove("active");
+        if(l.getAttribute("href").includes(current)) l.classList.add("active");
+      });
+    };
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>John Mark Kiritu | Full Professional Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+  <style>
+    /* --- THEME VARIABLES --- */
+    :root {
+      --bg-gradient: radial-gradient(circle at top, #064e3b 0%, #022c22 100%);
+      --glass: rgba(255, 255, 255, 0.08);
+      --glass-bright: rgba(255, 255, 255, 0.15);
+      --border: rgba(255, 255, 255, 0.12);
+      --accent-green: #4ade80;
+      --text: #f8fafc;
+      --text-dim: #94a3b8;
+      --footer-bg: rgba(0, 0, 0, 0.3);
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg-gradient); background-attachment: fixed; color: var(--text); overflow-x: hidden; line-height: 1.6; }
+
+    /* --- NAVIGATION --- */
+    .nav-container { position: fixed; top: 25px; left: 50%; transform: translateX(-50%); z-index: 1000; }
+    .icon-menu { background: var(--glass); backdrop-filter: blur(25px); border: 1px solid var(--border); border-radius: 100px; padding: 6px; display: flex; gap: 5px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+    .nav-btn { display: flex; align-items: center; gap: 10px; padding: 10px 18px; border-radius: 100px; color: var(--text); text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: 0.4s; }
+    .nav-btn.active { background: #fff; color: #064e3b; }
+
+    /* --- SECTIONS --- */
+    section { min-height: 100vh; padding: 120px 8% 80px; }
+    .glass-card { background: var(--glass); backdrop-filter: blur(30px); border: 1px solid var(--border); border-radius: 40px; padding: 50px; width: 100%; max-width: 1200px; margin: 0 auto; }
+    h2 { font-size: 2.5rem; margin-bottom: 40px; color: var(--accent-green); text-align: center; }
+
+    /* --- CONTACT FORM (SIDEBAR STYLE) --- */
+    .contact-container { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; align-items: start; }
+    .contact-sidebar { background: var(--glass-bright); border-radius: 30px; padding: 30px; border: 1px solid var(--border); }
+    .contact-item { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; }
+    .contact-item i { width: 45px; height: 45px; background: var(--glass); border-radius: 12px; display: grid; place-items: center; color: var(--accent-green); }
+
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-size: 0.8rem; margin-bottom: 8px; color: var(--text-dim); }
+    .form-control { width: 100%; background: var(--glass); border: 1px solid var(--border); padding: 15px; border-radius: 15px; color: #fff; font-family: inherit; transition: 0.3s; }
+    .form-control:focus { outline: none; border-color: var(--accent-green); background: var(--glass-bright); }
+    .submit-btn { width: 100%; background: var(--accent-green); color: #022c22; padding: 15px; border-radius: 15px; border: none; font-weight: 800; cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; }
+    .submit-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(74, 222, 128, 0.2); }
+
+    /* --- FOOTER --- */
+    footer { background: var(--footer-bg); backdrop-filter: blur(20px); border-top: 1px solid var(--border); padding: 80px 8% 30px; margin-top: 100px; }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr repeat(4, 1fr); gap: 40px; margin-bottom: 60px; }
+    .footer-col h4 { color: #fff; margin-bottom: 25px; font-size: 1.1rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 12px; }
+    .footer-col ul li a { color: var(--text-dim); text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
+    .footer-col ul li a:hover { color: var(--accent-green); }
+    
+    .social-links { display: flex; gap: 15px; margin-top: 20px; }
+    .social-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--glass); display: grid; place-items: center; color: #fff; text-decoration: none; transition: 0.3s; }
+    .social-btn:hover { background: var(--accent-green); color: #022c22; }
+
+    .footer-bottom { border-top: 1px solid var(--border); padding-top: 30px; display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-dim); }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 1024px) { .footer-grid { grid-template-columns: repeat(2, 1fr); } .contact-container { grid-template-columns: 1fr; } }
+    @media (max-width: 600px) { .footer-grid { grid-template-columns: 1fr; } .nav-btn span { display: none; } }
+  </style>
+</head>
+<body>
+
+  <div class="nav-container">
+    <nav class="icon-menu">
+      <a href="#home" class="nav-btn active"><i class="fa-solid fa-house"></i><span>Home</span></a>
+      <a href="#stack" class="nav-btn"><i class="fa-solid fa-layer-group"></i><span>Stack</span></a>
+      <a href="#services" class="nav-btn"><i class="fa-solid fa-screwdriver-wrench"></i><span>Services</span></a>
+      <a href="#journey" class="nav-btn"><i class="fa-solid fa-briefcase"></i><span>Journey</span></a>
+      <a href="#contact" class="nav-btn"><i class="fa-solid fa-paper-plane"></i><span>Contact</span></a>
+    </nav>
+  </div>
+
+  <section id="home">
+    <div class="glass-card">
+      <h1>John Mark Kiritu</h1>
+      <p style="color: var(--accent-green); font-weight: 600;">IT Infrastructure & Digital Solutions Expert</p>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="glass-card">
+      <h2>Get In Touch</h2>
+      <div class="contact-container">
+        <div class="contact-sidebar">
+          <div class="contact-item">
+            <i class="fa-solid fa-phone"></i>
+            <div>
+              <div style="font-size: 0.7rem; color: var(--text-dim);">Phone Number</div>
+              <div style="font-weight: 600;">+256 [Your Number]</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <i class="fa-solid fa-envelope"></i>
+            <div>
+              <div style="font-size: 0.7rem; color: var(--text-dim);">Email Address</div>
+              <div style="font-weight: 600;">johnmark@example.com</div>
+            </div>
+          </div>
+          <div class="social-links">
+            <a href="#" class="social-btn"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="social-btn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="#" class="social-btn"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
+          </div>
+        </div>
+
+        <form id="contact-form">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" class="form-control" placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" class="form-control" placeholder="Enter your email">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Subject</label>
+            <input type="text" class="form-control" placeholder="Service required">
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea class="form-control" rows="5" placeholder="How can I help you?"></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4 style="font-size: 1.5rem; font-weight: 900;">JMK<span style="color:var(--accent-green)">.</span></h4>
+        <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 20px;">Delivering enterprise-grade IT infrastructure and bespoke digital solutions for the modern world.</p>
+        <div class="form-group" style="margin-bottom: 10px;">
+          <input type="text" class="form-control" placeholder="Enter your Email" style="padding: 10px;">
+        </div>
+        <button class="submit-btn" style="padding: 10px; font-size: 0.7rem;">Subscribe Now</button>
+      </div>
+
+      <div class="footer-col">
+        <h4>Information</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#journey">Journey</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#education">Education</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Helpful Links</h4>
+        <ul>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#contact">Supports</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Our Services</h4>
+        <ul>
+          <li><a href="#">Help Desk</a></li>
+          <li><a href="#">Networking</a></li>
+          <li><a href="#">Surveillance</a></li>
+          <li><a href="#">UI Design</a></li>
+          <li><a href="#">Procurement</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <div style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 10px;">
+          <i class="fa-solid fa-phone" style="margin-right: 10px;"></i> +256 700 000 000
+        </div>
+        <div style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 20px;">
+          <i class="fa-solid fa-envelope" style="margin-right: 10px;"></i> support@jmk.com
+        </div>
+        <div class="social-links">
+          <a href="#" class="social-btn"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="social-btn"><i class="fa-brands fa-twitter"></i></a>
+          <a href="#" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>2026 © JMK IT Solutions | All Rights Reserved</div>
+      <div style="display: flex; gap: 20px;">
+        <span>FAQ</span>
+        <span>Privacy</span>
+        <span>Terms & Condition</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth Active Link Switching
     const sections = document.querySelectorAll('section');
     const navLinks = document.querySelectorAll('.nav-btn');
     window.onscroll = () => {
