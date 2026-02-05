@@ -3,232 +3,188 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>John Mark Kiritu — Digital Dashboard</title>
+  <title>John Mark Kiritu | IT & Creative</title>
 
-  <link rel="icon" href="favicon-32x32.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
   <style>
     :root {
-      --bg-overlay: rgba(0, 0, 0, 0.5);
-      --glass: rgba(15, 23, 42, 0.7);
-      --glass-bright: rgba(255, 255, 255, 0.05);
-      --border: rgba(255, 255, 255, 0.1);
-      --accent: #3b82f6;
+      --bg-gradient: radial-gradient(circle at top, #064e3b 0%, #022c22 100%);
+      --glass: rgba(255, 255, 255, 0.08);
+      --glass-bright: rgba(255, 255, 255, 0.15);
+      --border: rgba(255, 255, 255, 0.12);
+      --accent-white: #ffffff;
       --text: #f8fafc;
       --text-dim: #94a3b8;
     }
 
     [data-theme="light"] {
-      --bg-overlay: rgba(255, 255, 255, 0.4);
-      --glass: rgba(255, 255, 255, 0.6);
-      --glass-bright: rgba(0, 0, 0, 0.02);
+      --bg-gradient: radial-gradient(circle at top, #f0fdf4 0%, #dcfce7 100%);
+      --glass: rgba(0, 0, 0, 0.05);
+      --glass-bright: rgba(0, 0, 0, 0.1);
       --border: rgba(0, 0, 0, 0.1);
-      --accent: #2563eb;
+      --accent-white: #166534;
       --text: #0f172a;
       --text-dim: #475569;
     }
 
-    * { margin:0; padding:0; box-sizing:border-box; }
+    * { margin:0; padding:0; box-sizing:border-box; scroll-behavior: smooth; }
     
     body {
-      min-height: 100vh;
+      min-height: 200vh; /* Ensuring enough height to test scrolling */
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('desktop.jpg');
-      background-size: cover;
-      background-position: center;
+      background: var(--bg-gradient);
       background-attachment: fixed;
       color: var(--text);
-      display: flex;
-      flex-direction: column;
       overflow-x: hidden;
     }
 
-    /* Floating Bubble & Nav */
-    .bubble { position: fixed; left: 30px; top: 30px; width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--accent); cursor: pointer; z-index: 200; transition: 0.4s; }
-    .bubble img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
-    .bubble.hidden { opacity: 0; transform: scale(0); }
+    /* --- HORIZONTAL NAV --- */
+    .nav-container {
+      position: fixed;
+      top: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: max-content;
+    }
 
-    .icon-menu { position: fixed; left: 20px; top: 50%; transform: translateY(-50%) translateX(-120px); background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 25px; padding: 15px; display: flex; flex-direction: column; gap: 15px; z-index: 150; transition: 0.5s; }
-    .icon-menu.visible { transform: translateY(-50%) translateX(0); }
-    .nav-btn { width: 50px; height: 50px; border-radius: 15px; background: var(--glass-bright); color: var(--text); display: grid; place-items: center; cursor: pointer; transition: 0.3s; border: 1px solid var(--border); text-decoration: none; }
-    .nav-btn:hover { background: var(--accent); color: white; }
+    .icon-menu {
+      background: var(--glass);
+      backdrop-filter: blur(25px) saturate(150%);
+      -webkit-backdrop-filter: blur(25px) saturate(150%);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
 
-    /* Main Grid */
-    .dashboard-container { display: grid; grid-template-columns: 1fr 350px; gap: 25px; padding: 100px 5% 50px; flex: 1; }
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      border-radius: 100px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
 
-    /* Hero Card */
-    .hero-card { background: var(--glass); backdrop-filter: blur(30px); border: 1px solid var(--border); border-radius: 40px; padding: 50px; display: flex; align-items: center; justify-content: space-between; gap: 30px; }
-    .hero-info h1 { font-size: 3.5rem; font-weight: 900; margin-bottom: 10px; }
-    .hero-info p { color: var(--text-dim); margin-bottom: 30px; font-size: 1.1rem; }
-    .hero-btns { display: flex; gap: 15px; flex-wrap: wrap; }
-    .btn { padding: 12px 25px; border-radius: 12px; font-weight: 600; text-decoration: none; transition: 0.3s; display: flex; align-items: center; gap: 8px; border: none; cursor: pointer; }
-    .btn-primary { background: var(--accent); color: white; }
-    .btn-outline { background: var(--glass-bright); color: var(--text); border: 1px solid var(--border); }
-    .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+    .nav-btn.active {
+      background: var(--accent-white);
+      color: #064e3b;
+    }
 
-    .hero-img { width: 220px; height: 220px; border-radius: 30px; object-fit: cover; border: 1px solid var(--border); }
+    /* --- SECTION STYLING --- */
+    section {
+      min-height: 100vh;
+      padding: 140px 8% 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-    /* AI Card & Calendar */
-    .sidebar-stack { display: flex; flex-direction: column; gap: 25px; }
-    .glass-panel { background: var(--glass); backdrop-filter: blur(30px); border: 1px solid var(--border); border-radius: 30px; padding: 25px; }
+    .glass-card {
+      background: var(--glass);
+      backdrop-filter: blur(30px);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: 60px;
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    .hero-content { display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+    h1 { font-size: 4rem; font-weight: 900; line-height: 1; margin-bottom: 20px; }
     
-    .ai-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
-    .ai-dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; animation: pulse 2s infinite; }
-    
-    /* Calendar Widget */
-    .calendar-widget { text-align: center; }
-    .cal-header { font-weight: 700; color: var(--accent); margin-bottom: 15px; display: flex; justify-content: space-between; }
-    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; font-size: 0.8rem; }
-    .cal-day { padding: 8px; border-radius: 8px; background: var(--glass-bright); }
-    .cal-day.today { background: var(--accent); color: white; }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--glass-bright);
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+    }
 
-    /* Liquid Footer */
-    .liquid-footer { background: var(--glass); backdrop-filter: blur(40px); border-top: 1px solid var(--border); padding: 60px 5% 30px; margin-top: 50px; }
-    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 40px; }
-    .footer-logo img { width: 50px; margin-bottom: 15px; }
-    .footer-col h4 { margin-bottom: 20px; color: var(--accent); font-size: 0.9rem; text-transform: uppercase; }
-    .footer-col ul { list-style: none; }
-    .footer-col ul li { margin-bottom: 10px; }
-    .footer-col ul li a { color: var(--text-dim); text-decoration: none; transition: 0.3s; font-size: 0.9rem; }
-    .footer-col ul li a:hover { color: var(--text); padding-left: 5px; }
-    
-    .social-bar { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 15px; }
-    .social-btn { width: 40px; height: 40px; border-radius: 10px; background: var(--glass-bright); display: grid; place-items: center; color: var(--text); text-decoration: none; transition: 0.3s; border: 1px solid var(--border); }
-    .social-btn:hover { background: var(--accent); color: white; transform: scale(1.1); }
+    .dot { width: 8px; height: 8px; background: #4ade80; border-radius: 50%; box-shadow: 0 0 10px #4ade80; }
 
-    .footer-bottom { border-top: 1px solid var(--border); padding-top: 20px; display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-dim); }
-
-    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
-
-    @media (max-width: 1024px) {
-      .dashboard-container { grid-template-columns: 1fr; }
-      .footer-grid { grid-template-columns: 1fr 1fr; }
+    @media (max-width: 900px) {
+      .nav-btn span { display: none; }
+      .hero-content { flex-direction: column; text-align: center; }
+      h1 { font-size: 2.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <div class="bubble" id="bubble"><img src="profilepic.png"></div>
-  <nav class="icon-menu" id="iconMenu">
-    <div class="nav-btn" id="hamburger"><i class="fa-solid fa-bars"></i></div>
-    <a href="index.html" class="nav-btn"><i class="fa-solid fa-house"></i></a>
-    <div class="nav-btn" id="theme-toggle"><i class="fa-solid fa-moon"></i></div>
-  </nav>
-
-  <div class="dashboard-container">
-    <main class="hero-card">
-      <div class="hero-info">
-        <h1>Hi, I'm John Mark</h1>
-        <p>IT Infrastructure Specialist & Creative Developer. Bridging technical precision with liquid design.</p>
-        <div class="hero-btns">
-          <button class="btn btn-primary"><i class="fa-solid fa-download"></i> Download CV</button>
-          <button class="btn btn-outline"><i class="fa-solid fa-calendar-check"></i> Book Appointment</button>
-        </div>
-      </div>
-      <img src="profilepic.png" class="hero-img" alt="John Mark">
-    </main>
-
-    <div class="sidebar-stack">
-      <aside class="glass-panel">
-        <div class="ai-header">
-          <div class="ai-dot"></div>
-          <strong>Portfolio AI</strong>
-        </div>
-        <p style="font-size: 0.85rem; color: var(--text-dim); line-height: 1.4;">"I can help you browse projects or schedule a call. What would you like to see?"</p>
-      </aside>
-
-      <div class="glass-panel calendar-widget">
-        <div class="cal-header">
-          <span>February 2026</span>
-          <i class="fa-solid fa-calendar-day"></i>
-        </div>
-        <div class="cal-grid" id="calGrid">
-          </div>
-      </div>
-    </div>
+  <div class="nav-container">
+    <nav class="icon-menu">
+      <a href="#home" class="nav-btn active"><i class="fa-solid fa-house"></i><span>Home</span></a>
+      <a href="#measure" class="nav-btn"><i class="fa-solid fa-compass"></i><span>Measure</span></a>
+      <a href="#analyze" class="nav-btn"><i class="fa-solid fa-chart-pie"></i><span>Analyze</span></a>
+      <a href="#reduce" class="nav-btn"><i class="fa-solid fa-leaf"></i><span>Reduce</span></a>
+      <div class="nav-btn" id="theme-toggle" style="cursor:pointer"><i class="fa-solid fa-circle-half-stroke"></i></div>
+    </nav>
   </div>
 
-  <footer class="liquid-footer">
-    <div class="footer-grid">
-      <div class="footer-col footer-logo">
-        <img src="nobklogo.png" alt="Logo">
-        <p style="color: var(--text-dim); font-size: 0.9rem;">High-performance IT support and creative digital solutions based in Kampala, Uganda.</p>
-        <div class="social-bar">
-          <a href="#" class="social-btn"><i class="fa-brands fa-whatsapp"></i></a>
-          <a href="#" class="social-btn"><i class="fa-brands fa-linkedin"></i></a>
-          <a href="#" class="social-btn"><i class="fa-brands fa-github"></i></a>
-          <a href="#" class="social-btn"><i class="fa-brands fa-google"></i></a>
-          <a href="mailto:marc@wanjeru.dev" class="social-btn"><i class="fa-solid fa-envelope"></i></a>
-        </div>
+  <section id="home">
+    <div class="glass-card hero-content">
+      <div>
+        <div class="status-badge"><div class="dot"></div> Available for Projects</div>
+        <h1>Digital<br>Precision.</h1>
+        <p style="color: var(--text-dim); font-size: 1.2rem; max-width: 500px; margin-bottom: 30px;">
+          I'm John Mark, an IT Specialist crafting high-performance infrastructure and liquid glass interfaces.
+        </p>
+        <button style="padding: 15px 30px; border-radius: 15px; border: none; background: white; color: #064e3b; font-weight: 700; cursor: pointer;">View My Work</button>
       </div>
-
-      <div class="footer-col">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About Me</a></li>
-          <li><a href="projects.html">Projects</a></li>
-          <li><a href="education.html">Education</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Legal</h4>
-        <ul>
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Terms & Conditions</a></li>
-          <li><a href="#">Cookie Policy</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Location</h4>
-        <p style="color: var(--text-dim); font-size: 0.9rem;"><i class="fa-solid fa-location-dot" style="color: var(--accent);"></i> Kampala, Central Region<br>Uganda</p>
-        <h4 style="margin-top: 20px;">Collaborate</h4>
-        <a href="#" style="color: var(--text-dim); text-decoration: none; font-size: 0.9rem;"><i class="fa-solid fa-users"></i> Join the Team</a>
-      </div>
+      <div style="width: 300px; height: 300px; background: linear-gradient(45deg, var(--glass-bright), transparent); border-radius: 40px; border: 1px solid var(--border);"></div>
     </div>
+  </section>
 
-    <div class="footer-bottom">
-      <span>© 2026 John Mark Kiritu. All rights reserved.</span>
-      <span>Designed with Liquid Glass UI</span>
+  <section id="measure">
+    <div class="glass-card">
+      <h2>Measurement & Metrics</h2>
+      <p style="color: var(--text-dim); margin-top: 20px;">Detailed infrastructure audits and creative data tracking.</p>
     </div>
-  </footer>
+  </section>
 
   <script>
-    const bubble = document.getElementById('bubble');
-    const iconMenu = document.getElementById('iconMenu');
+    // Theme Toggle
     const themeToggle = document.getElementById('theme-toggle');
-    const calGrid = document.getElementById('calGrid');
-
-    // Simple Calendar Generator
-    const days = ['S','M','T','W','T','F','S'];
-    days.forEach(d => calGrid.innerHTML += `<div style="font-weight:900; opacity:0.5">${d}</div>`);
-    for(let i=1; i<=28; i++) {
-        const isToday = i === new Date().getDate();
-        calGrid.innerHTML += `<div class="cal-day ${isToday?'today':''}" title="Available">${i}</div>`;
-    }
-
-    // Nav Logic
-    bubble.addEventListener('click', (e) => {
-      e.stopPropagation();
-      bubble.classList.add('hidden');
-      iconMenu.classList.add('visible');
-    });
-
-    document.addEventListener('click', (e) => {
-      if (!iconMenu.contains(e.target)) {
-        iconMenu.classList.remove('visible');
-        bubble.classList.remove('hidden');
-      }
-    });
-
     themeToggle.addEventListener('click', () => {
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
       document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    });
+
+    // Scroll Observer: Highlights the nav based on where you are on the page
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-btn');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (pageYOffset >= sectionTop - 150) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
     });
   </script>
 </body>
