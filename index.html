@@ -9,6 +9,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
+  <!-- Favicons -->
+  <link rel="icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="manifest" href="site.webmanifest">
+
   <style>
     :root {
       --bg-gradient: radial-gradient(circle at top, #064e3b 0%, #022c22 100%);
@@ -54,6 +60,18 @@
       transform: translateX(-50%);
       z-index: 1000;
       width: max-content;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-logo {
+      margin-right: 20px;
+    }
+
+    .nav-logo img {
+      height: 48px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
     }
 
     .icon-menu {
@@ -95,7 +113,17 @@
       background: var(--glass-bright);
     }
 
-    /* --- SECTION STYLING --- */
+    /* --- HERO PROFILE IMAGE --- */
+    .profile-img {
+      width: 320px;
+      height: 320px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid var(--accent-green);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    }
+
+    /* --- GENERAL SECTIONS --- */
     section {
       min-height: 100vh;
       padding: 140px 8% 50px;
@@ -114,7 +142,13 @@
       max-width: 1100px;
     }
 
-    .hero-content { display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+    .hero-content { 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      gap: 60px; 
+    }
+
     h1 { font-size: 4rem; font-weight: 900; line-height: 1; margin-bottom: 20px; }
     h2 { font-size: 2.5rem; margin-bottom: 30px; color: var(--accent-green); text-align: center; }
 
@@ -131,6 +165,34 @@
     }
 
     .dot { width: 8px; height: 8px; background: #4ade80; border-radius: 50%; box-shadow: 0 0 10px #4ade80; }
+
+    .btn {
+      padding: 15px 32px;
+      border-radius: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: 0.3s;
+      margin-right: 15px;
+    }
+
+    .btn-primary {
+      background: var(--accent-white);
+      color: #064e3b;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
 
     /* --- TIMELINE --- */
     .timeline {
@@ -169,10 +231,6 @@
       z-index: 1;
     }
 
-    .edu-year { font-weight: 900; color: var(--accent-green); font-size: 0.9rem; }
-    .edu-school { font-size: 1.2rem; font-weight: 600; margin: 4px 0; }
-    .edu-degree { color: var(--text-dim); font-size: 0.95rem; }
-
     /* --- EXPERIENCE TILES --- */
     .experience-grid {
       display: flex;
@@ -194,7 +252,6 @@
 
     .job-tile:hover {
       transform: scale(1.01);
-      background: rgba(255,255,255,0.12);
     }
 
     .comp-logo {
@@ -266,14 +323,9 @@
     .db-icon { font-size: 1.5rem; color: var(--accent-green); }
     .db-status { padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
     .status-done { background: rgba(74, 222, 128, 0.2); color: var(--accent-green); }
-    .status-wait { background: rgba(251, 191, 36, 0.2); color: #fbbf24; display: flex; align-items: center; gap: 5px; }
-    .pulse-dot { width: 6px; height: 6px; background: #fbbf24; border-radius: 50%; animation: pulse 1.5s infinite; }
-    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
 
     .db-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 10px; }
     .db-desc { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 15px; }
-    .progress-track { height: 6px; background: var(--glass); border-radius: 10px; }
-    .progress-fill { height: 100%; border-radius: 10px; transition: width 0.5s ease; }
 
     /* --- STACK & CERTIFICATIONS --- */
     .stack-grid {
@@ -296,6 +348,11 @@
       align-items: center;
       gap: 8px;
       transition: 0.3s;
+    }
+
+    .tag img {
+      width: 20px;
+      height: 20px;
     }
 
     .tag:hover { border-color: var(--accent-green); background: rgba(74, 222, 128, 0.15); }
@@ -383,20 +440,9 @@
       overflow-y: auto;
     }
 
-    .tech-link { color: var(--accent-green); text-decoration: underline; }
-    .roles-list { margin: 20px 0; line-height: 1.6; }
-    .roles-list li { margin-bottom: 12px; list-style-type: square; }
-    
-    .manager-ref {
-      background: var(--glass-bright);
-      padding: 20px;
-      border-radius: 15px;
-      margin-top: 25px;
-      border-left: 4px solid var(--accent-green);
-    }
-
     /* --- FOOTER --- */
     footer { background: var(--footer-bg); backdrop-filter: blur(20px); border-top: 1px solid var(--border); padding: 80px 8% 30px; margin-top: 100px; }
+    .footer-logo { height: 60px; margin-bottom: 30px; }
     .footer-grid { display: grid; grid-template-columns: 1.5fr repeat(4, 1fr); gap: 40px; margin-bottom: 60px; }
     .footer-col h4 { color: #fff; margin-bottom: 25px; font-size: 1.1rem; }
     .footer-col ul { list-style: none; }
@@ -410,28 +456,33 @@
 
     .footer-bottom { border-top: 1px solid var(--border); padding-top: 30px; display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-dim); }
 
+    /* --- RESPONSIVE --- */
     @media (max-width: 1024px) {
-      .dashboard-container { grid-template-columns: 1fr; padding-top: 120px; }
       .nav-btn span { display: none; }
-      .hero-card { flex-direction: column; text-align: center; padding: 30px; }
       .hero-content { flex-direction: column; text-align: center; }
+      .profile-img { width: 280px; height: 280px; }
+      .nav-logo img { height: 40px; }
       .stack-grid { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: repeat(2, 1fr); }
       .contact-container { grid-template-columns: 1fr; }
       .job-tile { grid-template-columns: 1fr; text-align: center; }
-      .comp-logo { margin: 0 auto; }
     }
 
     @media (max-width: 600px) {
       .footer-grid { grid-template-columns: 1fr; }
-      h1 { font-size: 2.5rem; }
-      .glass-card { padding: 30px; }
+      h1 { font-size: 2.8rem; }
+      .glass-card { padding: 40px; }
     }
   </style>
 </head>
 <body>
 
   <div class="nav-container">
+    <!-- Site logo top-left -->
+    <a href="#home" class="nav-logo">
+      <img src="nobklogo.png" alt="JMK Logo">
+    </a>
+
     <nav class="icon-menu">
       <a href="#home" class="nav-btn active"><i class="fa-solid fa-house"></i><span>Home</span></a>
       <a href="#about" class="nav-btn"><i class="fa-solid fa-user"></i><span>About</span></a>
@@ -453,9 +504,12 @@
         <p style="color: var(--text-dim); font-size: 1.2rem; max-width: 500px; margin-bottom: 30px;">
           I'm John Mark, an IT Infrastructure Specialist bridging technical precision with creative digital solutions.
         </p>
-        <button style="padding: 15px 30px; border-radius: 15px; border: none; background: var(--accent-white); color: #064e3b; font-weight: 700; cursor: pointer;">View My Work</button>
+        <div>
+          <a href="resume.pdf" download class="btn btn-primary"><i class="fa-solid fa-download"></i> Download Resume</a>
+          <a href="#contact" class="btn btn-outline"><i class="fa-solid fa-envelope"></i> Contact Me</a>
+        </div>
       </div>
-      <div style="width: 300px; height: 300px; background: linear-gradient(45deg, var(--glass-bright), transparent); border-radius: 40px; border: 1px solid var(--border);"></div>
+      <img src="profilepic.png" alt="John Mark Kiritu" class="profile-img">
     </div>
   </section>
 
@@ -480,17 +534,17 @@
           <div class="tech-category">
             <h3>Infrastructure & Cloud</h3>
             <div class="tech-tags">
-              <div class="tag"><i class="fa-brands fa-microsoft"></i> Microsoft 365</div>
-              <div class="tag"><i class="fa-solid fa-cloud"></i> Azure</div>
-              <div class="tag"><i class="fa-solid fa-server"></i> Active Directory</div>
-              <div class="tag"><i class="fa-solid fa-database"></i> SCCM</div>
+              <div class="tag"><img src="microsoft.png" alt="Microsoft"> Microsoft 365</div>
+              <div class="tag"><img src="microsoft.png" alt="Microsoft"> Azure</div>
+              <div class="tag"><img src="microsoft.png" alt="Microsoft"> Active Directory</div>
+              <div class="tag"><img src="microsoft.png" alt="Microsoft"> SCCM/MECM</div>
             </div>
           </div>
           <div class="tech-category">
             <h3>Networking & Security</h3>
             <div class="tech-tags">
-              <div class="tag"><i class="fa-solid fa-shield-halved"></i> Kaspersky</div>
-              <div class="tag"><i class="fa-solid fa-circle-nodes"></i> Cisco Meraki</div>
+              <div class="tag"><img src="kaspersky.png" alt="Kaspersky"> Kaspersky</div>
+              <div class="tag"><img src="cisco.png" alt="Cisco"> Cisco Meraki</div>
               <div class="tag"><i class="fa-solid fa-network-wired"></i> LAN/WAN</div>
               <div class="tag"><i class="fa-solid fa-fire-flame-curved"></i> Firewalls</div>
             </div>
@@ -498,10 +552,10 @@
           <div class="tech-category">
             <h3>Tools & Automation</h3>
             <div class="tech-tags">
-              <div class="tag"><i class="fa-solid fa-bolt"></i> Power Apps</div>
-              <div class="tag"><i class="fa-solid fa-chart-line"></i> Power BI</div>
+              <div class="tag"><img src="microsoft.png" alt="Microsoft"> Power Apps</div>
+              <div class="tag"><img src="microsoft.png" alt="Microsoft"> Power BI</div>
+              <div class="tag"><img src="jira.png" alt="Jira"> Jira</div>
               <div class="tag"><i class="fa-solid fa-code"></i> HTML/CSS/JS</div>
-              <div class="tag"><i class="fa-solid fa-robot"></i> Automation</div>
             </div>
           </div>
         </div>
@@ -547,7 +601,7 @@
         <div class="service-tile">
           <i class="fa-solid fa-screwdriver-wrench service-icon"></i>
           <h3>Maintenance & Repair</h3>
-          <p>Comprehensive repairs for computers, laptops, and mobile phones. Routine system health checks and hardware cleaning.</p>
+          <p>Comprehensive repairs for computers, laptops, and mobile phones. Routine system health checks.</p>
         </div>
         <div class="service-tile">
           <i class="fa-solid fa-download service-icon"></i>
@@ -557,27 +611,27 @@
         <div class="service-tile">
           <i class="fa-solid fa-video service-icon"></i>
           <h3>CCTV & Surveillance</h3>
-          <p>Installation and configuration of IP cameras, NVRs, and surveillance monitoring systems for security.</p>
+          <p>Installation and configuration of IP cameras, NVRs, and surveillance monitoring systems.</p>
         </div>
         <div class="service-tile">
           <i class="fa-solid fa-network-wired service-icon"></i>
           <h3>Network Infrastructure</h3>
-          <p>Structured Cat6 cabling, LAN/WAN setup, and configuration of switches, routers, and access points.</p>
+          <p>Structured Cat6 cabling, LAN/WAN setup, switches, routers, and access points.</p>
         </div>
         <div class="service-tile">
           <i class="fa-solid fa-cart-shopping service-icon"></i>
           <h3>IT Procurement</h3>
-          <p>Assistance in sourcing high-quality hardware, software licenses, and IT equipment via trusted vendors.</p>
+          <p>Sourcing high-quality hardware, software licenses, and IT equipment via trusted vendors.</p>
         </div>
         <div class="service-tile">
           <i class="fa-solid fa-compass-drafting service-icon"></i>
           <h3>UI Design</h3>
-          <p>Crafting liquid glass interfaces and user-centric designs for digital systems and professional portfolios.</p>
+          <p>Crafting liquid glass interfaces and user-centric designs for digital systems.</p>
         </div>
         <div class="service-tile">
           <i class="fa-solid fa-book-open service-icon"></i>
           <h3>Tech Guides</h3>
-          <p>Creating detailed technical manuals and documentation to empower end-users and streamline support.</p>
+          <p>Creating detailed technical manuals and documentation to empower end-users.</p>
         </div>
       </div>
     </div>
@@ -591,57 +645,47 @@
           <div class="comp-logo">DQ</div>
           <div class="job-info">
             <h3>System Administrator</h3>
-            <a href="https://doubleq.co.ug" target="_blank">Double Q (C4 Logistics Ltd) <i class="fa-solid fa-link"></i></a>
+            <a href="https://doubleq.co.ug" target="_blank">Double Q (C4 Logistics Ltd)</a>
             <div class="job-year">September 2024 – November 2024</div>
             <div class="skills-preview">
-              <span class="skill-tag">Infrastructure Admin</span>
+              <span class="skill-tag">Infrastructure</span>
               <span class="skill-tag">Cybersecurity</span>
-              <span class="skill-tag">TMS Reporting</span>
+              <span class="skill-tag">Reporting</span>
             </div>
           </div>
-          <button class="view-btn" onclick="openModal('modal-dq')">View Roles</button>
+          <button class="view-btn" onclick="openModal('modal-dq')">View Details</button>
         </div>
         <div class="job-tile">
           <div class="comp-logo">OX</div>
           <div class="job-info">
             <h3>IT Support Officer</h3>
-            <a href="https://uganda.oxfam.org" target="_blank">Oxfam in Uganda <i class="fa-solid fa-link"></i></a>
+            <a href="https://uganda.oxfam.org" target="_blank">Oxfam in Uganda</a>
             <div class="job-year">Nov 2022 - May 2024</div>
             <div class="skills-preview">
               <span class="skill-tag">Network Uptime</span>
-              <span class="skill-tag">ITIL Asset Management</span>
+              <span class="skill-tag">Asset Management</span>
               <span class="skill-tag">Digital Transformation</span>
             </div>
           </div>
-          <button class="view-btn" onclick="openModal('modal-ox-support')">View Roles</button>
+          <button class="view-btn" onclick="openModal('modal-ox-support')">View Details</button>
         </div>
         <div class="job-tile">
           <div class="comp-logo">OX</div>
           <div class="job-info">
             <h3>Graduate Trainee</h3>
-            <a href="https://uganda.oxfam.org" target="_blank">Oxfam in Uganda <i class="fa-solid fa-link"></i></a>
+            <a href="https://uganda.oxfam.org" target="_blank">Oxfam in Uganda</a>
             <div class="job-year">Jul 2022 - Nov 2022</div>
-            <div class="skills-preview">
-              <span class="skill-tag">Helpdesk Ticketing</span>
-              <span class="skill-tag">AV Systems Deployment</span>
-              <span class="skill-tag">End-user Support</span>
-            </div>
           </div>
-          <button class="view-btn" onclick="openModal('modal-ox-trainee')">View Roles</button>
+          <button class="view-btn" onclick="openModal('modal-ox-trainee')">View Details</button>
         </div>
         <div class="job-tile">
           <div class="comp-logo">OX</div>
           <div class="job-info">
             <h3>IT Intern</h3>
-            <a href="https://uganda.oxfam.org" target="_blank">Oxfam in Uganda <i class="fa-solid fa-link"></i></a>
+            <a href="https://uganda.oxfam.org" target="_blank">Oxfam in Uganda</a>
             <div class="job-year">Feb 2022 - Jul 2022</div>
-            <div class="skills-preview">
-              <span class="skill-tag">Cloud Collaboration</span>
-              <span class="skill-tag">LAN/WAN Configuration</span>
-              <span class="skill-tag">Endpoint Protection</span>
-            </div>
           </div>
-          <button class="view-btn" onclick="openModal('modal-ox-intern')">View Roles</button>
+          <button class="view-btn" onclick="openModal('modal-ox-intern')">View Details</button>
         </div>
       </div>
     </div>
@@ -657,9 +701,7 @@
             <span class="db-status status-done">Completed</span>
           </div>
           <div class="db-title">Digital Logistics System</div>
-          <div class="db-desc">Automated procurement workflow for Oxfam Uganda using Power Apps & SharePoint. Saved thousands of sheets of paper.</div>
-          <div style="font-size: 0.7rem; margin-bottom: 5px;">DEPLOYMENT SUCCESS</div>
-          <div class="progress-track"><div class="progress-fill" style="width: 100%; background: var(--accent-green);"></div></div>
+          <div class="db-desc">Automated procurement workflow for Oxfam Uganda using Power Apps & SharePoint.</div>
         </div>
         <div class="db-widget">
           <div class="db-header">
@@ -667,9 +709,7 @@
             <span class="db-status status-done">Active</span>
           </div>
           <div class="db-title">Kaspersky Security Hub</div>
-          <div class="db-desc">Implemented central endpoint management for Uganda Micro Foundation. Remediated 100% of detected threats.</div>
-          <div style="font-size: 0.7rem; margin-bottom: 5px;">SECURITY COVERAGE</div>
-          <div class="progress-track"><div class="progress-fill" style="width: 100%; background: var(--accent-green);"></div></div>
+          <div class="db-desc">Central endpoint management for Uganda Micro Foundation.</div>
         </div>
         <div class="db-widget">
           <div class="db-header">
@@ -677,29 +717,7 @@
             <span class="db-status status-done">Optimized</span>
           </div>
           <div class="db-title">Network Overhaul</div>
-          <div class="db-desc">Re-cabling and RJ45 port replacement at Kyagalanyi Coffee. Enhanced LAN speed and reliability.</div>
-          <div style="font-size: 0.7rem; margin-bottom: 5px;">LAN PERFORMANCE</div>
-          <div class="progress-track"><div class="progress-fill" style="width: 100%; background: var(--accent-green);"></div></div>
-        </div>
-        <div class="db-widget upcoming">
-          <div class="db-header">
-            <div class="db-icon"><i class="fa-solid fa-gamepad"></i></div>
-            <span class="db-status status-wait"><span class="pulse-dot"></span>In Pipeline</span>
-          </div>
-          <div class="db-title">Game Store E-Commerce</div>
-          <div class="db-desc">Upcoming marketplace for digital assets and games. Focusing on secure payment gateways.</div>
-          <div style="font-size: 0.7rem; margin-bottom: 5px;">DEVELOPMENT PROGRESS</div>
-          <div class="progress-track"><div class="progress-fill" style="width: 15%; background: #fbbf24;"></div></div>
-        </div>
-        <div class="db-widget upcoming">
-          <div class="db-header">
-            <div class="db-icon"><i class="fa-solid fa-palette"></i></div>
-            <span class="db-status status-wait"><span class="pulse-dot"></span>Concept</span>
-          </div>
-          <div class="db-title">Dual Portfolio Build</div>
-          <div class="db-desc">Building two high-performance bespoke portfolios for creative clients.</div>
-          <div style="font-size: 0.7rem; margin-bottom: 5px;">PLANNING STAGE</div>
-          <div class="progress-track"><div class="progress-fill" style="width: 5%; background: #fbbf24;"></div></div>
+          <div class="db-desc">Re-cabling and port replacement at Kyagalanyi Coffee.</div>
         </div>
       </div>
     </div>
@@ -710,28 +728,16 @@
       <h2>Education History</h2>
       <div class="timeline">
         <div class="timeline-item">
-          <div class="timeline-dot"><i class="fa-solid fa-university" style="font-size: 0.7rem;"></i></div>
+          <div class="timeline-dot"><i class="fa-solid fa-university"></i></div>
           <div class="edu-year">2018 — 2021</div>
           <div class="edu-school">Uganda Christian University</div>
           <div class="edu-degree">Bachelor of Science in Information Technology</div>
         </div>
         <div class="timeline-item">
-          <div class="timeline-dot"><i class="fa-solid fa-book" style="font-size: 0.7rem;"></i></div>
+          <div class="timeline-dot"><i class="fa-solid fa-book"></i></div>
           <div class="edu-year">2016 — 2017</div>
           <div class="edu-school">St. Lawrence Schools and Colleges</div>
           <div class="edu-degree">Uganda Advanced Certificate of Education (UACE)</div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-dot"><i class="fa-solid fa-pen-nib" style="font-size: 0.7rem;"></i></div>
-          <div class="edu-year">2012 — 2015</div>
-          <div class="edu-school">Mbarara High School</div>
-          <div class="edu-degree">Uganda Certificate of Education (UCE)</div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-dot"><i class="fa-solid fa-pencil" style="font-size: 0.7rem;"></i></div>
-          <div class="edu-year">2005 — 2011</div>
-          <div class="edu-school">Mbarara Preparatory School</div>
-          <div class="edu-degree">Primary Leaving Examination (PLE) Certificate</div>
         </div>
       </div>
     </div>
@@ -745,22 +751,21 @@
           <div class="contact-item">
             <i class="fa-solid fa-phone"></i>
             <div>
-              <div style="font-size: 0.7rem; color: var(--text-dim);">Phone Number</div>
-              <div style="font-weight: 600;">+256 [Your Number]</div>
+              <div style="font-size: 0.7rem; color: var(--text-dim);">Phone</div>
+              <div style="font-weight: 600;">+256 XXX XXX XXX</div>
             </div>
           </div>
           <div class="contact-item">
             <i class="fa-solid fa-envelope"></i>
             <div>
-              <div style="font-size: 0.7rem; color: var(--text-dim);">Email Address</div>
+              <div style="font-size: 0.7rem; color: var(--text-dim);">Email</div>
               <div style="font-weight: 600;">johnmark@example.com</div>
             </div>
           </div>
           <div class="social-links">
-            <a href="#" class="social-btn"><i class="fa-brands fa-facebook-f"></i></a>
             <a href="#" class="social-btn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="#" class="social-btn"><i class="fa-brands fa-github"></i></a>
             <a href="#" class="social-btn"><i class="fa-brands fa-twitter"></i></a>
-            <a href="#" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
           </div>
         </div>
 
@@ -768,11 +773,11 @@
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
             <div class="form-group">
               <label>Full Name</label>
-              <input type="text" class="form-control" placeholder="Enter your name">
+              <input type="text" class="form-control" placeholder="Your name">
             </div>
             <div class="form-group">
-              <label>Email Address</label>
-              <input type="email" class="form-control" placeholder="Enter your email">
+              <label>Email</label>
+              <input type="email" class="form-control" placeholder="Your email">
             </div>
           </div>
           <div class="form-group">
@@ -781,7 +786,7 @@
           </div>
           <div class="form-group">
             <label>Message</label>
-            <textarea class="form-control" rows="5" placeholder="How can I help you?"></textarea>
+            <textarea class="form-control" rows="5" placeholder="How can I help?"></textarea>
           </div>
           <button type="submit" class="submit-btn">Send Message</button>
         </form>
@@ -789,31 +794,26 @@
     </div>
   </section>
 
-  <!-- Modals for Journey Details -->
+  <!-- Modals -->
   <div id="modal-dq" class="modal">
     <div class="modal-content">
-      <h2>Roles & Technologies</h2>
-      <ul class="roles-list">
-        <li>Administer infrastructure including <a class="tech-link" href="https://www.microsoft.com/en-us/power-platform/products/power-apps">Microsoft Power Apps</a>, PABX, and surveillance.</li>
-        <li>Cybersecurity enforcement using <a class="tech-link" href="https://www.kaspersky.com/">Kaspersky Endpoint Protection</a> and Firewalls.</li>
-        <li>L2 Technical Support for <a class="tech-link" href="https://www.anydesk.com">AnyDesk</a> and <a class="tech-link" href="https://www.teamviewer.com">TeamViewer</a>.</li>
+      <h2>System Administrator – Double Q</h2>
+      <ul style="margin: 20px 0; line-height: 1.8;">
+        <li>Infrastructure administration (Power Apps, PABX, surveillance)</li>
+        <li>Kaspersky Endpoint Protection implementation</li>
+        <li>L2 support via AnyDesk/TeamViewer</li>
       </ul>
-      <div class="manager-ref">
-        <strong>Reference: Direct Manager</strong><br>
-        Name: [Name Required] | Position: IT Manager<br>
-        Email: [Email] | Work: [Work Email]
-      </div>
       <button class="view-btn" onclick="closeModal()">Close</button>
     </div>
   </div>
 
   <div id="modal-ox-support" class="modal">
     <div class="modal-content">
-      <h2>Oxfam IT Support Roles</h2>
-      <ul class="roles-list">
-        <li>Proactive monitoring using <a class="tech-link" href="https://meraki.cisco.com/">Cisco Meraki</a> and <a class="tech-link" href="https://www.microsoft.com/en-us/microsoft-365">M365 Admin Center</a>.</li>
-        <li>IT Asset management via <a class="tech-link" href="https://www.atlassian.com/software/jira/service-management">Jira Service Management</a> and <a class="tech-link" href="https://www.servicenow.com/">ServiceNow</a>.</li>
-        <li>Digital transformation with <a class="tech-link" href="https://powerbi.microsoft.com/">Power BI</a> and <a class="tech-link" href="https://www.box.com/">Box Drive</a>.</li>
+      <h2>IT Support Officer – Oxfam</h2>
+      <ul style="margin: 20px 0; line-height: 1.8;">
+        <li>Monitoring via Cisco Meraki & M365</li>
+        <li>Digital transformation (Power BI, Box Drive)</li>
+        <li>Active Directory & GPO management</li>
       </ul>
       <button class="view-btn" onclick="closeModal()">Close</button>
     </div>
@@ -821,11 +821,11 @@
 
   <div id="modal-ox-trainee" class="modal">
     <div class="modal-content">
-      <h2>Oxfam Graduate Trainee Roles</h2>
-      <ul class="roles-list">
-        <li>Handled helpdesk ticketing and user support.</li>
-        <li>Deployed AV systems for conferences.</li>
-        <li>Assisted in end-user training and troubleshooting.</li>
+      <h2>Graduate Trainee – Oxfam</h2>
+      <ul style="margin: 20px 0; line-height: 1.8;">
+        <li>Helpdesk ticketing and user support</li>
+        <li>AV system deployment</li>
+        <li>End-user training</li>
       </ul>
       <button class="view-btn" onclick="closeModal()">Close</button>
     </div>
@@ -833,71 +833,48 @@
 
   <div id="modal-ox-intern" class="modal">
     <div class="modal-content">
-      <h2>Oxfam IT Intern Roles</h2>
-      <ul class="roles-list">
-        <li>Collaborated on cloud-based projects using Microsoft 365.</li>
-        <li>Configured LAN/WAN networks.</li>
-        <li>Implemented endpoint protection measures.</li>
+      <h2>IT Intern – Oxfam</h2>
+      <ul style="margin: 20px 0; line-height: 1.8;">
+        <li>Cloud collaboration projects</li>
+        <li>LAN/WAN configuration</li>
+        <li>Endpoint protection</li>
       </ul>
       <button class="view-btn" onclick="closeModal()">Close</button>
     </div>
   </div>
 
   <footer>
+    <div style="text-align: center;">
+      <img src="nobklogo.png" alt="JMK Logo" class="footer-logo">
+    </div>
     <div class="footer-grid">
       <div class="footer-col">
-        <h4 style="font-size: 1.5rem; font-weight: 900;">JMK<span style="color:var(--accent-green)">.</span></h4>
-        <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 20px;">Delivering enterprise-grade IT infrastructure and bespoke digital solutions for the modern world.</p>
-        <div class="form-group" style="margin-bottom: 10px;">
-          <input type="text" class="form-control" placeholder="Enter your Email" style="padding: 10px;">
-        </div>
-        <button class="submit-btn" style="padding: 10px; font-size: 0.7rem;">Subscribe Now</button>
+        <h4>JMK<span style="color:var(--accent-green)">.</span></h4>
+        <p style="font-size: 0.85rem; color: var(--text-dim);">Enterprise-grade IT infrastructure and bespoke digital solutions.</p>
       </div>
-
       <div class="footer-col">
-        <h4>Information</h4>
+        <h4>Quick Links</h4>
         <ul>
-          <li><a href="#about">About Us</a></li>
+          <li><a href="#about">About</a></li>
           <li><a href="#journey">Journey</a></li>
-          <li><a href="#">Blog</a></li>
           <li><a href="#projects">Projects</a></li>
-          <li><a href="#education">Education</a></li>
         </ul>
       </div>
-
       <div class="footer-col">
-        <h4>Helpful Links</h4>
+        <h4>Services</h4>
         <ul>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#contact">Supports</a></li>
-          <li><a href="#">Terms & Conditions</a></li>
-          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#services">All Services</a></li>
+          <li><a href="#contact">Contact</a></li>
         </ul>
       </div>
-
       <div class="footer-col">
-        <h4>Our Services</h4>
-        <ul>
-          <li><a href="#">Help Desk</a></li>
-          <li><a href="#">Networking</a></li>
-          <li><a href="#">Surveillance</a></li>
-          <li><a href="#">UI Design</a></li>
-          <li><a href="#">Procurement</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Contact Us</h4>
-        <div style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 10px;">
-          <i class="fa-solid fa-phone" style="margin-right: 10px;"></i> +256 700 000 000
-        </div>
-        <div style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 20px;">
-          <i class="fa-solid fa-envelope" style="margin-right: 10px;"></i> support@jmk.com
+        <h4>Contact</h4>
+        <div style="font-size: 0.85rem; color: var(--text-dim);">
+          <i class="fa-solid fa-envelope"></i> johnmark@example.com
         </div>
         <div class="social-links">
-          <a href="#" class="social-btn"><i class="fa-brands fa-facebook-f"></i></a>
-          <a href="#" class="social-btn"><i class="fa-brands fa-twitter"></i></a>
-          <a href="#" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="social-btn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="#" class="social-btn"><i class="fa-brands fa-github"></i></a>
         </div>
       </div>
     </div>
@@ -905,9 +882,8 @@
     <div class="footer-bottom">
       <div>© 2026 John Mark Kiritu. All rights reserved.</div>
       <div style="display: flex; gap: 20px;">
-        <span>FAQ</span>
         <span>Privacy</span>
-        <span>Terms & Condition</span>
+        <span>Terms</span>
       </div>
     </div>
   </footer>
@@ -925,7 +901,7 @@
     function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = "none"); }
     window.onclick = function(event) { if (event.target.className === 'modal') closeModal(); }
 
-    // Scroll Observer for Nav Active State
+    // Nav Active State on Scroll
     const sections = document.querySelectorAll('section');
     const navLinks = document.querySelectorAll('.nav-btn');
     window.addEventListener('scroll', () => {
