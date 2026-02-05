@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>John Mark Kiritu | Portfolio Dashboard</title>
+  <title>John Mark Kiritu | IT Professional Portfolio</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
@@ -40,6 +40,7 @@
       background-attachment: fixed;
       color: var(--text);
       overflow-x: hidden;
+      line-height: 1.6;
     }
 
     /* --- NAVIGATION --- */
@@ -77,92 +78,93 @@
       transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     }
 
-    .nav-btn.active { background: var(--accent-white); color: #064e3b; }
+    .nav-btn.active {
+      background: var(--accent-white);
+      color: #064e3b;
+    }
 
     /* --- LAYOUT --- */
-    section { min-height: 100vh; padding: 120px 8% 80px; }
+    section {
+      min-height: 100vh;
+      padding: 120px 8% 80px;
+    }
+
     .glass-card {
       background: var(--glass);
       backdrop-filter: blur(30px);
       border: 1px solid var(--border);
       border-radius: 40px;
-      padding: 40px;
+      padding: 50px;
       width: 100%;
       max-width: 1100px;
       margin: 0 auto;
     }
-    h2 { font-size: 2.5rem; margin-bottom: 30px; color: var(--accent-green); text-align: center; }
 
-    /* --- PROJECTS DASHBOARD --- */
-    .project-scroll-container {
-      max-height: 600px;
-      overflow-y: auto;
-      padding-right: 15px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+    h1 { font-size: 4rem; font-weight: 900; line-height: 1; margin-bottom: 20px; }
+    h2 { font-size: 2.5rem; margin-bottom: 30px; color: var(--accent-green); }
+
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 8px; background: var(--glass-bright);
+      padding: 8px 16px; border-radius: 50px; font-size: 0.8rem; margin-bottom: 20px; border: 1px solid var(--border);
+    }
+    .dot { width: 8px; height: 8px; background: #4ade80; border-radius: 50%; box-shadow: 0 0 10px #4ade80; }
+
+    /* --- EXPERIENCE & PROJECTS DASHBOARD --- */
+    .experience-grid, .project-scroll-container {
+      display: flex; flex-direction: column; gap: 20px;
     }
 
-    /* Custom Scrollbar */
-    .project-scroll-container::-webkit-scrollbar { width: 6px; }
-    .project-scroll-container::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
-
-    .project-tile {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      background: var(--glass-bright);
-      border: 1px solid var(--border);
-      border-radius: 25px;
-      overflow: hidden;
-      transition: 0.4s;
+    .job-tile, .project-tile {
+      display: grid; grid-template-columns: 100px 1fr auto; align-items: center; gap: 25px;
+      background: var(--glass-bright); border: 1px solid var(--border); border-radius: 25px;
+      padding: 25px; transition: transform 0.3s ease;
     }
 
-    .project-tile:hover {
-      transform: translateY(-5px);
-      border-color: var(--accent-green);
-      background: rgba(255,255,255,0.1);
+    .project-tile { grid-template-columns: 200px 1fr; padding: 0; overflow: hidden; }
+
+    .job-tile:hover, .project-tile:hover {
+      transform: translateY(-5px); background: rgba(255,255,255,0.12); border-color: var(--accent-green);
     }
 
-    .project-img {
-      width: 100%;
-      height: 100%;
-      background-size: cover;
-      background-position: center;
-      min-height: 180px;
-      display: flex;
-      align-items: flex-end;
-      padding: 15px;
+    .comp-logo {
+      width: 70px; height: 70px; background: var(--glass); border-radius: 15px;
+      display: grid; place-items: center; font-weight: 900; color: var(--accent-green);
     }
 
-    .status-pill {
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(10px);
-      color: var(--accent-green);
-      padding: 5px 12px;
-      border-radius: 50px;
-      font-size: 0.7rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      border: 1px solid var(--accent-green);
+    .view-btn {
+      padding: 10px 20px; border-radius: 12px; border: 1px solid var(--accent-green);
+      background: transparent; color: var(--accent-green); cursor: pointer; font-weight: 600;
     }
+    .view-btn:hover { background: var(--accent-green); color: #022c22; }
 
-    .upcoming-pill {
-      color: #fbbf24;
-      border-color: #fbbf24;
-      animation: pulse 2s infinite;
+    /* --- PROJECT SPECIFIC --- */
+    .project-scroll-container { max-height: 700px; overflow-y: auto; padding-right: 15px; }
+    .project-img { width: 100%; height: 100%; background-size: cover; background-position: center; min-height: 200px; display: flex; align-items: flex-end; padding: 15px; }
+    .status-pill { background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); color: var(--accent-green); padding: 5px 12px; border-radius: 50px; font-size: 0.7rem; font-weight: 800; border: 1px solid var(--accent-green); }
+    .upcoming-pill { color: #fbbf24; border-color: #fbbf24; animation: pulse 2s infinite; }
+
+    /* --- EDUCATION TIMELINE --- */
+    .timeline { position: relative; padding-left: 50px; }
+    .timeline::before { content: ''; position: absolute; left: 15px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+    .timeline-item { position: relative; margin-bottom: 40px; }
+    .timeline-dot { position: absolute; left: -50px; width: 32px; height: 32px; background: var(--glass-bright); border: 2px solid var(--accent-green); border-radius: 50%; display: grid; place-items: center; }
+
+    /* --- MODALS --- */
+    .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); }
+    .modal-content { background: var(--bg-gradient); margin: 5% auto; padding: 40px; border: 1px solid var(--border); width: 90%; max-width: 850px; border-radius: 30px; max-height: 85vh; overflow-y: auto; }
+    .tech-link { color: var(--accent-green); text-decoration: underline; font-weight: 600; }
+    .roles-list { margin: 25px 0; }
+    .roles-list li { margin-bottom: 15px; list-style-position: inside; color: var(--text-dim); }
+    .ref-box { background: var(--glass-bright); padding: 25px; border-radius: 20px; border-left: 5px solid var(--accent-green); margin-top: 30px; }
+
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+
+    @media (max-width: 900px) {
+      .nav-btn span { display: none; }
+      .job-tile, .project-tile { grid-template-columns: 1fr; text-align: center; }
+      .comp-logo { margin: 0 auto; }
+      h1 { font-size: 2.5rem; }
     }
-
-    .project-content { padding: 25px; }
-    .project-content h3 { margin-bottom: 10px; color: var(--accent-white); }
-    .project-content p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.5; margin-bottom: 15px; }
-
-    @keyframes pulse {
-      0% { opacity: 1; }
-      50% { opacity: 0.5; }
-      100% { opacity: 1; }
-    }
-
-    /* Reuse from previous: Journey tiles, Modals etc. (Omitted for brevity but maintained in your file) */
   </style>
 </head>
 <body>
@@ -170,6 +172,7 @@
   <div class="nav-container">
     <nav class="icon-menu">
       <a href="#home" class="nav-btn active"><i class="fa-solid fa-house"></i><span>Home</span></a>
+      <a href="#about" class="nav-btn"><i class="fa-solid fa-user"></i><span>About</span></a>
       <a href="#journey" class="nav-btn"><i class="fa-solid fa-briefcase"></i><span>Journey</span></a>
       <a href="#projects" class="nav-btn"><i class="fa-solid fa-diagram-project"></i><span>Projects</span></a>
       <a href="#education" class="nav-btn"><i class="fa-solid fa-graduation-cap"></i><span>Education</span></a>
@@ -177,63 +180,128 @@
     </nav>
   </div>
 
+  <section id="home" style="display: flex; align-items: center;">
+    <div class="glass-card" style="display: flex; align-items: center; justify-content: space-between; gap: 40px;">
+      <div style="flex: 1;">
+        <div class="status-badge"><div class="dot"></div> Active IT Infrastructure Specialist</div>
+        <h1>Digital<br>Precision.</h1>
+        <p style="color: var(--text-dim); font-size: 1.2rem; max-width: 600px; margin-bottom: 30px;">
+          I'm John Mark Kiritu, bridging enterprise-level technical precision with innovative digital solutions.
+        </p>
+        <div style="display: flex; gap: 15px;">
+           <a href="#journey" class="nav-btn active" style="width: auto;">View Experience</a>
+           <a href="#projects" class="nav-btn" style="width: auto; border: 1px solid var(--border);">See Projects</a>
+        </div>
+      </div>
+      <div style="width: 300px; height: 300px; background: linear-gradient(45deg, var(--glass-bright), transparent); border-radius: 40px; border: 1px solid var(--border); display: grid; place-items: center;">
+         <i class="fa-solid fa-server" style="font-size: 6rem; opacity: 0.15;"></i>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="glass-card">
+      <h2>Professional Profile</h2>
+      <p style="font-size: 1.3rem; margin-bottom: 25px;">
+        I am a <strong>self-motivated, results-driven and highly skilled IT professional</strong> with over 2 years experience in IT support, networking and IT service management. 
+      </p>
+      <p style="color: var(--text-dim); font-size: 1.1rem;">
+        I have experience in managing enterprise-level environments, including Active Directory, Microsoft 365, endpoint security solutions, and cloud-based services. Recognized for problem-solving, strong analytical skills, and the ability to deliver innovative IT solutions that enhance productivity.
+      </p>
+    </div>
+  </section>
+
+  <section id="journey">
+    <div class="glass-card">
+      <h2 style="text-align: center;">Professional Journey</h2>
+      <div class="experience-grid">
+        
+        <div class="job-tile">
+          <div class="comp-logo">DQ</div>
+          <div class="job-info">
+            <h3>System Administrator</h3>
+            <a href="https://doubleq.co.ug" target="_blank">Double Q (C4 Logistics Ltd)</a>
+            <div style="font-size: 0.9rem; color: var(--accent-green); margin-top: 5px;">Sept 2024 – Nov 2024</div>
+          </div>
+          <button class="view-btn" onclick="openModal('modal-dq')">View Roles</button>
+        </div>
+
+        <div class="job-tile">
+          <div class="comp-logo">OX</div>
+          <div class="job-info">
+            <h3>IT Support Officer</h3>
+            <a href="https://uganda.oxfam.org" target="_blank">Oxfam In Uganda</a>
+            <div style="font-size: 0.9rem; color: var(--accent-green); margin-top: 5px;">Nov 2022 – May 2024</div>
+          </div>
+          <button class="view-btn" onclick="openModal('modal-ox-support')">View Roles</button>
+        </div>
+
+        <div class="job-tile">
+          <div class="comp-logo">OX</div>
+          <div class="job-info">
+            <h3>Graduate Trainee</h3>
+            <a href="https://uganda.oxfam.org" target="_blank">Oxfam In Uganda</a>
+            <div style="font-size: 0.9rem; color: var(--accent-green); margin-top: 5px;">July 2022 – Nov 2022</div>
+          </div>
+          <button class="view-btn" onclick="openModal('modal-ox-trainee')">View Roles</button>
+        </div>
+
+        <div class="job-tile">
+          <div class="comp-logo">OX</div>
+          <div class="job-info">
+            <h3>IT Intern</h3>
+            <a href="https://uganda.oxfam.org" target="_blank">Oxfam In Uganda</a>
+            <div style="font-size: 0.9rem; color: var(--accent-green); margin-top: 5px;">Feb 2022 – July 2022</div>
+          </div>
+          <button class="view-btn" onclick="openModal('modal-ox-intern')">View Roles</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <section id="projects">
     <div class="glass-card">
-      <h2>Project Dashboard</h2>
+      <h2 style="text-align: center;">Project Dashboard</h2>
       <div class="project-scroll-container">
         
         <div class="project-tile">
           <div class="project-img" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), transparent), url('https://images.unsplash.com/photo-1586762522674-594dcd12137d?auto=format&fit=crop&w=400');">
-            <span class="status-pill">Completed 100%</span>
+            <span class="status-pill">Completed</span>
           </div>
-          <div class="project-content">
-            <h3>Digital Logistics & Procurement – Oxfam</h3>
-            <p>Developed a fully digital workflow using <strong style="color:var(--accent-green)">Power Apps & SharePoint</strong>. Automated approvals and reporting, eliminating paper waste for sustainable operations.</p>
-            <div style="font-size: 0.8rem; opacity: 0.6;"><i class="fa-solid fa-microchip"></i> Power Platform | Automation</div>
+          <div style="padding: 25px;">
+            <h3>Digital Logistics & Procurement System</h3>
+            <p>Developed digital workflow using <span style="color:var(--accent-green)">Microsoft Power Apps</span> & SharePoint to replace manual processes and automate approvals.</p>
           </div>
         </div>
 
         <div class="project-tile">
           <div class="project-img" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), transparent), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=400');">
-            <span class="status-pill">Active Security</span>
+            <span class="status-pill">Active</span>
           </div>
-          <div class="project-content">
+          <div style="padding: 25px;">
             <h3>Kaspersky Security Center Deployment</h3>
-            <p>Managed endpoint security for Uganda Micro Foundation. Configured antivirus policies and threat remediation across an enterprise network of multiple devices.</p>
-            <div style="font-size: 0.8rem; opacity: 0.6;"><i class="fa-solid fa-shield-halved"></i> Cybersecurity | Endpoint Defense</div>
+            <p>Implemented endpoint security across Uganda Micro Foundation. Configured policies and threat remediation for enterprise security.</p>
           </div>
         </div>
 
         <div class="project-tile">
           <div class="project-img" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), transparent), url('https://images.unsplash.com/photo-1558494949-ef010cbdcc48?auto=format&fit=crop&w=400');">
-            <span class="status-pill">Optimized</span>
+            <span class="status-pill">Infrastructure</span>
           </div>
-          <div class="project-content">
+          <div style="padding: 25px;">
             <h3>Networking Upgrade – Kyagalanyi Coffee</h3>
-            <p>Full overhaul of LAN infrastructure. Laid Cat6 cabling, replaced ports, and scaled network capacity for office expansion with structured testing.</p>
-            <div style="font-size: 0.8rem; opacity: 0.6;"><i class="fa-solid fa-network-wired"></i> Infrastructure | Cat6 Installation</div>
+            <p>Laid fresh Cat6 cabling and replaced ports to improve LAN performance and support office expansion.</p>
           </div>
         </div>
 
         <div class="project-tile" style="opacity: 0.7;">
           <div class="project-img" style="background-image: linear-gradient(to top, rgba(0,0,0,0.9), transparent), url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=400');">
-            <span class="status-pill upcoming-pill">Coming Soon</span>
+            <span class="status-pill upcoming-pill">Upcoming</span>
           </div>
-          <div class="project-content">
-            <h3>Game Store E-Commerce</h3>
-            <p>A specialized digital marketplace for gamers. Featuring secure checkout and digital asset delivery.</p>
-            <div style="font-size: 0.8rem; opacity: 0.6;"><i class="fa-solid fa-code"></i> Web Dev | Node.js / React</div>
-          </div>
-        </div>
-
-        <div class="project-tile" style="opacity: 0.7;">
-          <div class="project-img" style="background-image: linear-gradient(to top, rgba(0,0,0,0.9), transparent), url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=400');">
-            <span class="status-pill upcoming-pill">In Design</span>
-          </div>
-          <div class="project-content">
-            <h3>Dual Portfolio Ecosystem</h3>
-            <p>Building two custom-tailored professional portfolios for high-profile users using modern web frameworks.</p>
-            <div style="font-size: 0.8rem; opacity: 0.6;"><i class="fa-solid fa-palette"></i> UI/UX | Portfolio Design</div>
+          <div style="padding: 25px;">
+            <h3>Game Store E-Commerce & Portfolios</h3>
+            <p>Designing a game marketplace and two bespoke user portfolios as part of a new creative development initiative.</p>
           </div>
         </div>
 
@@ -241,26 +309,89 @@
     </div>
   </section>
 
+  <section id="education">
+    <div class="glass-card">
+      <h2 style="text-align: center;">Academic Background</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"><i class="fa-solid fa-graduation-cap" style="font-size: 0.8rem;"></i></div>
+          <div style="font-weight: 800; color: var(--accent-green);">2018 – 2021</div>
+          <div style="font-size: 1.2rem; font-weight: 700;">Uganda Christian University</div>
+          <div style="color: var(--text-dim);">Bachelor of Science in Information Technology</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"><i class="fa-solid fa-school" style="font-size: 0.8rem;"></i></div>
+          <div style="font-weight: 800; color: var(--accent-green);">2016 – 2017</div>
+          <div style="font-size: 1.2rem; font-weight: 700;">St. Lawrence Schools and Colleges</div>
+          <div style="color: var(--text-dim);">Uganda Advanced Certificate of Education (A-Level)</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"><i class="fa-solid fa-book" style="font-size: 0.8rem;"></i></div>
+          <div style="font-weight: 800; color: var(--accent-green);">2012 – 2015</div>
+          <div style="font-size: 1.2rem; font-weight: 700;">Mbarara High School</div>
+          <div style="color: var(--text-dim);">Uganda Certificate of Education (O-Level)</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"><i class="fa-solid fa-pencil" style="font-size: 0.8rem;"></i></div>
+          <div style="font-weight: 800; color: var(--accent-green);">2005 – 2011</div>
+          <div style="font-size: 1.2rem; font-weight: 700;">Mbarara Preparatory School</div>
+          <div style="color: var(--text-dim);">Primary Leaving Examination Certificate</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="modal-dq" class="modal">
+    <div class="modal-content">
+      <h2>Double Q System Admin Roles</h2>
+      <ul class="roles-list">
+        <li>Administer infrastructure including switches, PABX, <a class="tech-link" href="https://powerapps.microsoft.com/">Microsoft Power Apps</a>, and surveillance.</li>
+        <li>Implement <a class="tech-link" href="https://www.kaspersky.com/">Kaspersky Endpoint Protection</a> and configure firewalls.</li>
+        <li>Level 2 Support for Windows/O365 using <a class="tech-link" href="https://anydesk.com/">AnyDesk</a> and <a class="tech-link" href="https://teamviewer.com/">TeamViewer</a>.</li>
+      </ul>
+      <div class="ref-box">
+        <strong>Direct Manager Reference:</strong><br>
+        Name: [Pending] | Email: [Pending] | Position: IT Manager
+      </div>
+      <button class="view-btn" style="margin-top:20px;" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <div id="modal-ox-support" class="modal">
+    <div class="modal-content">
+      <h2>Oxfam IT Support Officer Roles</h2>
+      <ul class="roles-list">
+        <li>Monitor systems via <a class="tech-link" href="https://meraki.cisco.com/">Cisco Meraki</a> and M365 Admin Center.</li>
+        <li>Service management through <a class="tech-link" href="https://www.servicenow.com/">ServiceNow</a> and Jira.</li>
+        <li>Digital Transformation using <a class="tech-link" href="https://powerbi.microsoft.com/">Power BI</a> and <a class="tech-link" href="https://box.com/">Box Drive</a>.</li>
+      </ul>
+      <button class="view-btn" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <div id="modal-ox-trainee" class="modal"><div class="modal-content"><h2>Graduate Trainee Roles</h2><ul class="roles-list"><li>Resolved 80+ daily tickets via Jira.</li><li>Deployed <a class="tech-link" href="https://www.logitech.com/">Logitech Rally</a> & Zoom Rooms.</li></ul><button class="view-btn" onclick="closeModal()">Close</button></div></div>
+  <div id="modal-ox-intern" class="modal"><div class="modal-content"><h2>IT Intern Roles</h2><ul class="roles-list"><li>Configured LAN using Cisco Meraki switches.</li><li>Deployed OS using <a class="tech-link" href="https://rufus.ie/">Rufus</a> and Ventoy.</li></ul><button class="view-btn" onclick="closeModal()">Close</button></div></div>
+
   <script>
-    // Theme Toggle
     const themeToggle = document.getElementById('theme-toggle');
     themeToggle.addEventListener('click', () => {
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
       document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
     });
 
-    // Scroll Highlighter
+    function openModal(id) { document.getElementById(id).style.display = "block"; }
+    function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = "none"); }
+    window.onclick = (e) => { if(e.target.className === 'modal') closeModal(); }
+
+    // Scroll Spy
     const sections = document.querySelectorAll('section');
     const navLinks = document.querySelectorAll('.nav-btn');
     window.onscroll = () => {
       let current = "";
-      sections.forEach((section) => {
-        const sectionTop = section.offsetTop;
-        if (pageYOffset >= sectionTop - 150) { current = section.getAttribute("id"); }
-      });
-      navLinks.forEach((link) => {
-        link.classList.remove("active");
-        if (link.getAttribute("href").includes(current)) { link.classList.add("active"); }
+      sections.forEach(s => { if(pageYOffset >= s.offsetTop - 150) current = s.getAttribute("id"); });
+      navLinks.forEach(l => {
+        l.classList.remove("active");
+        if(l.getAttribute("href").includes(current)) l.classList.add("active");
       });
     };
   </script>
