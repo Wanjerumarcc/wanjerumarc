@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>John Mark Kiritu | Master Portfolio</title>
+  <title>John Mark Kiritu | IT Infrastructure Specialist</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
@@ -23,7 +23,7 @@
     * { margin:0; padding:0; box-sizing:border-box; scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; background: var(--bg-gradient); background-attachment: fixed; color: var(--text); line-height: 1.6; }
 
-    /* --- NAVIGATION --- */
+    /* --- NAVIGATION (Liquid Glass Inspired) --- */
     .nav-container { position: fixed; top: 25px; left: 50%; transform: translateX(-50%); z-index: 1000; width: max-content; }
     .icon-menu { background: var(--glass); backdrop-filter: blur(25px); border: 1px solid var(--border); border-radius: 100px; padding: 6px; display: flex; gap: 5px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
     .nav-btn { display: flex; align-items: center; gap: 10px; padding: 10px 18px; border-radius: 100px; color: var(--text); text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: 0.4s; }
@@ -34,37 +34,49 @@
     .glass-card { background: var(--glass); backdrop-filter: blur(30px); border: 1px solid var(--border); border-radius: 40px; padding: 50px; width: 100%; max-width: 1200px; margin: 0 auto; position: relative; }
     h2 { font-size: 2.5rem; margin-bottom: 40px; color: var(--accent-green); text-align: center; }
 
-    /* --- DOWNLOAD CV BUTTON --- */
-    .cv-btn { background: var(--accent-green); color: #022c22; padding: 12px 25px; border-radius: 50px; font-weight: 800; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; transition: 0.3s; border: none; cursor: pointer; }
+    /* --- HERO & CV BUTTON --- */
+    .hero-flex { display: flex; justify-content: space-between; align-items: center; gap: 40px; }
+    .cv-btn { background: var(--accent-green); color: #022c22; padding: 12px 25px; border-radius: 50px; font-weight: 800; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; transition: 0.3s; border: none; cursor: pointer; margin-top: 20px; }
     .cv-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(74, 222, 128, 0.3); }
 
-    /* --- DASHBOARD PROJECTS --- */
-    .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-    .db-widget { background: var(--glass-bright); border: 1px solid var(--border); border-radius: 25px; padding: 25px; transition: 0.3s; }
-    .db-widget:hover { border-color: var(--accent-green); transform: translateY(-5px); }
-    .progress-track { height: 6px; background: var(--glass); border-radius: 10px; margin-top: 15px; overflow: hidden; }
-    .progress-fill { height: 100%; background: var(--accent-green); }
+    /* --- SERVICES GRID --- */
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .service-tile { background: var(--glass-bright); border: 1px solid var(--border); border-radius: 25px; padding: 30px; transition: 0.4s; }
+    .service-tile:hover { border-color: var(--accent-green); transform: translateY(-10px); background: rgba(74, 222, 128, 0.1); }
+    .service-icon { font-size: 2.5rem; color: var(--accent-green); margin-bottom: 20px; }
 
-    /* --- SERVICES --- */
-    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-    .service-tile { background: var(--glass-bright); padding: 30px; border-radius: 25px; border: 1px solid var(--border); transition: 0.4s; }
-    .service-tile:hover { background: rgba(74, 222, 128, 0.1); border-color: var(--accent-green); }
-    .service-icon { font-size: 2rem; color: var(--accent-green); margin-bottom: 15px; }
+    /* --- TECH STACK TAGS --- */
+    .stack-container { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .tech-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+    .tag { background: var(--glass-bright); border: 1px solid var(--border); padding: 8px 16px; border-radius: 12px; font-size: 0.85rem; transition: 0.3s; }
+    .tag:hover { border-color: var(--accent-green); }
 
-    /* --- FOOTER --- */
-    footer { background: rgba(0,0,0,0.3); padding: 80px 8% 30px; border-top: 1px solid var(--border); }
-    .footer-grid { display: grid; grid-template-columns: 1.5fr repeat(3, 1fr) 1.5fr; gap: 30px; }
-    .footer-col h4 { margin-bottom: 20px; color: #fff; }
+    /* --- PROJECT DASHBOARD --- */
+    .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+    .db-widget { background: var(--glass-bright); border: 1px solid var(--border); border-radius: 25px; padding: 25px; position: relative; }
+    .progress-track { height: 6px; background: var(--glass); border-radius: 10px; overflow: hidden; margin-top: 15px; }
+    .progress-fill { height: 100%; background: var(--accent-green); border-radius: 10px; }
+
+    /* --- JOURNEY & EDUCATION --- */
+    .journey-tile { display: grid; grid-template-columns: 80px 1fr auto; align-items: center; gap: 20px; background: var(--glass-bright); border: 1px solid var(--border); border-radius: 20px; padding: 20px; margin-bottom: 15px; }
+    .timeline { border-left: 2px solid var(--border); padding-left: 30px; margin-left: 15px; }
+    .timeline-item { margin-bottom: 30px; position: relative; }
+    .timeline-item::before { content: ''; position: absolute; left: -39px; top: 5px; width: 16px; height: 16px; background: var(--accent-green); border-radius: 50%; }
+
+    /* --- FOOTER (Based on UI Sample) --- */
+    footer { background: rgba(0, 0, 0, 0.4); border-top: 1px solid var(--border); padding: 80px 8% 30px; }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr repeat(3, 1fr) 1.5fr; gap: 40px; margin-bottom: 60px; }
+    .footer-col h4 { color: #fff; margin-bottom: 25px; }
     .footer-col ul { list-style: none; }
-    .footer-col ul li { margin-bottom: 10px; }
-    .footer-col ul li a { color: var(--text-dim); text-decoration: none; font-size: 0.9rem; }
+    .footer-col ul li { margin-bottom: 12px; }
+    .footer-col ul li a { color: var(--text-dim); text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
     .footer-col ul li a:hover { color: var(--accent-green); }
 
     /* --- MODALS --- */
     .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); }
-    .modal-content { background: var(--bg-gradient); margin: 5% auto; padding: 40px; border: 1px solid var(--border); width: 90%; max-width: 800px; border-radius: 30px; }
+    .modal-content { background: var(--bg-gradient); margin: 5% auto; padding: 40px; border: 1px solid var(--border); width: 90%; max-width: 800px; border-radius: 30px; max-height: 80vh; overflow-y: auto; }
 
-    @media (max-width: 1024px) { .footer-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 900px) { .stack-container, .hero-flex, .footer-grid { grid-template-columns: 1fr; } .nav-btn span { display: none; } }
   </style>
 </head>
 <body>
@@ -73,37 +85,79 @@
     <nav class="icon-menu">
       <a href="#home" class="nav-btn active"><i class="fa-solid fa-house"></i><span>Home</span></a>
       <a href="#services" class="nav-btn"><i class="fa-solid fa-gears"></i><span>Services</span></a>
-      <a href="#projects" class="nav-btn"><i class="fa-solid fa-chart-line"></i><span>Projects</span></a>
-      <a href="#journey" class="nav-btn"><i class="fa-solid fa-briefcase"></i><span>Journey</span></a>
-      <a href="#contact" class="nav-btn"><i class="fa-solid fa-envelope"></i><span>Contact</span></a>
+      <a href="#projects" class="nav-btn"><i class="fa-solid fa-chart-line"></i><span>Dashboard</span></a>
+      <a href="#journey" class="nav-btn"><i class="fa-solid fa-briefcase"></i><span>Experience</span></a>
+      <a href="#education" class="nav-btn"><i class="fa-solid fa-graduation-cap"></i><span>Education</span></a>
     </nav>
   </div>
 
-  <section id="home" style="display: flex; align-items: center;">
-    <div class="glass-card" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-      <div style="flex: 1;">
-        <h1 style="font-size: 4.5rem; line-height: 1;">Digital<br><span style="color:var(--accent-green)">Architecture.</span></h1>
-        <p style="margin: 25px 0; font-size: 1.2rem; color: var(--text-dim); max-width: 600px;">
-          I'm John Mark Kiritu. I build resilient IT infrastructures and seamless digital workflows for enterprise-level efficiency.
+  <section id="home">
+    <div class="glass-card hero-flex">
+      <div>
+        <h1 style="font-size: 4rem; font-weight: 900; line-height: 1;">Digital<br><span style="color: var(--accent-green);">Precision.</span></h1>
+        <p style="font-size: 1.2rem; color: var(--text-dim); margin: 20px 0; max-width: 600px;">
+          I'm John Mark Kiritu, an IT Professional with over 2 years of experience managing enterprise infrastructure, Active Directory, and M365 ecosystems.
         </p>
-        <a href="path-to-your-cv.pdf" class="cv-btn" download>
-          <i class="fa-solid fa-file-arrow-down"></i> Download CV
-        </a>
+        <div style="display: flex; gap: 15px; align-items: center;">
+            <a href="path-to-your-cv.pdf" class="cv-btn" download><i class="fa-solid fa-download"></i> Download CV</a>
+            <a href="#contact" class="nav-btn" style="border: 1px solid var(--border);">Get in Touch</a>
+        </div>
       </div>
-      <div style="width: 350px; height: 350px; background: var(--glass-bright); border-radius: 50%; border: 2px solid var(--accent-green); display: grid; place-items: center;">
-        <i class="fa-solid fa-microchip" style="font-size: 7rem; opacity: 0.2;"></i>
+      <div style="width: 320px; height: 320px; background: var(--glass-bright); border: 2px solid var(--accent-green); border-radius: 40px; display: grid; place-items: center;">
+         <i class="fa-solid fa-server" style="font-size: 8rem; opacity: 0.15;"></i>
       </div>
     </div>
   </section>
 
   <section id="services">
     <div class="glass-card">
-      <h2>Core IT Services</h2>
+      <h2>Professional IT Services</h2>
       <div class="services-grid">
-        <div class="service-tile"><i class="fa-solid fa-headset service-icon"></i><h3>Help Desk</h3><p>Tier 2 technical support and hardware maintenance.</p></div>
-        <div class="service-tile"><i class="fa-solid fa-network-wired service-icon"></i><h3>Networking</h3><p>Structured cabling, LAN/WAN optimization and port management.</p></div>
-        <div class="service-tile"><i class="fa-solid fa-shield-halved service-icon"></i><h3>Cybersecurity</h3><p>Kaspersky Endpoint deployment and threat remediation.</p></div>
-        <div class="service-tile"><i class="fa-solid fa-code service-icon"></i><h3>UI Design</h3><p>Crafting liquid glass interfaces and bespoke user portfolios.</p></div>
+        <div class="service-tile">
+          <i class="fa-solid fa-headset service-icon"></i>
+          <h3>IT Help Desk</h3>
+          <p>Tier 1 & 2 support for hardware, software, and enterprise network issues.</p>
+        </div>
+        <div class="service-tile">
+          <i class="fa-solid fa-screwdriver-wrench service-icon"></i>
+          <h3>Maintenance & Repairs</h3>
+          <p>Expert repair for computers, laptops, and mobile devices, including hardware upgrades.</p>
+        </div>
+        <div class="service-tile">
+          <i class="fa-solid fa-network-wired service-icon"></i>
+          <h3>Networking</h3>
+          <p>LAN/WAN setup, structured Cat6 cabling, and Cisco Meraki configuration.</p>
+        </div>
+        <div class="service-tile">
+          <i class="fa-solid fa-video service-icon"></i>
+          <h3>Surveillance</h3>
+          <p>Installation and management of IP-based CCTV and physical security infrastructure.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="stack">
+    <div class="glass-card">
+      <h2>Technical Arsenal</h2>
+      <div class="stack-container">
+        <div>
+          <h3 style="margin-bottom: 20px;">Technologies</h3>
+          <div class="tech-tags">
+            <span class="tag">Active Directory</span><span class="tag">Microsoft 365</span>
+            <span class="tag">Azure Cloud</span><span class="tag">Cisco Meraki</span>
+            <span class="tag">Kaspersky Security</span><span class="tag">Power Apps</span>
+            <span class="tag">ServiceNow</span><span class="tag">Power BI</span>
+          </div>
+        </div>
+        <div>
+          <h3 style="margin-bottom: 20px;">Credentials</h3>
+          <div style="display: flex; flex-direction: column; gap: 15px;">
+            <div class="tag" style="display: block;"><strong>BSc. Information Technology</strong><br><small>Uganda Christian University</small></div>
+            <div class="tag" style="display: block;"><strong>Kaspersky Certified</strong><br><small>Endpoint Security Specialist</small></div>
+            <div class="tag" style="display: block;"><strong>M365 Certified</strong><br><small>Enterprise Administrator</small></div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -113,14 +167,19 @@
       <h2>Projects Dashboard</h2>
       <div class="dashboard-grid">
         <div class="db-widget">
-          <div style="display: flex; justify-content: space-between;"><h3>Logistics Automation</h3><span style="color:var(--accent-green); font-size: 0.7rem;">COMPLETED</span></div>
-          <p style="font-size: 0.85rem; color: var(--text-dim); margin: 10px 0;">Digital procurement workflow for Oxfam Uganda.</p>
+          <div style="display: flex; justify-content: space-between;"><h3>Digital Logistics System</h3><span style="color:var(--accent-green); font-size: 0.7rem;">COMPLETED</span></div>
+          <p style="margin: 10px 0; font-size: 0.85rem; color: var(--text-dim);">Automated procurement workflow for Oxfam using Power Apps.</p>
+          <div class="progress-track"><div class="progress-fill" style="width: 100%;"></div></div>
+        </div>
+        <div class="db-widget">
+          <div style="display: flex; justify-content: space-between;"><h3>Security Center Rollout</h3><span style="color:var(--accent-green); font-size: 0.7rem;">ACTIVE</span></div>
+          <p style="margin: 10px 0; font-size: 0.85rem; color: var(--text-dim);">Centralized endpoint security for Uganda Micro Foundation.</p>
           <div class="progress-track"><div class="progress-fill" style="width: 100%;"></div></div>
         </div>
         <div class="db-widget" style="opacity: 0.7;">
           <div style="display: flex; justify-content: space-between;"><h3>Game Store Web</h3><span style="color:#fbbf24; font-size: 0.7rem;">IN PIPELINE</span></div>
-          <p style="font-size: 0.85rem; color: var(--text-dim); margin: 10px 0;">Upcoming e-commerce marketplace for digital gaming assets.</p>
-          <div class="progress-track"><div class="progress-fill" style="width: 30%; background:#fbbf24;"></div></div>
+          <p style="margin: 10px 0; font-size: 0.85rem; color: var(--text-dim);">Upcoming e-commerce marketplace for digital gaming assets.</p>
+          <div class="progress-track"><div class="progress-fill" style="width: 25%; background: #fbbf24;"></div></div>
         </div>
       </div>
     </div>
@@ -129,20 +188,40 @@
   <section id="journey">
     <div class="glass-card">
       <h2>Professional Journey</h2>
-      <div style="display: grid; gap: 15px;">
-        <div style="background:var(--glass-bright); padding: 25px; border-radius: 20px; display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <h3>System Administrator</h3>
-            <p style="color:var(--accent-green)">Double Q (C4 Logistics) | 2024</p>
-          </div>
-          <button class="cv-btn" style="background:transparent; border:1px solid var(--accent-green); color:var(--accent-green)" onclick="openModal('modal-dq')">View Roles</button>
+      <div class="journey-tile">
+        <div style="font-weight: 900; color: var(--accent-green);">DQ</div>
+        <div>
+          <h3>System Administrator</h3>
+          <p>Double Q (C4 Logistics) | 2024</p>
         </div>
-        <div style="background:var(--glass-bright); padding: 25px; border-radius: 20px; display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <h3>IT Support Officer</h3>
-            <p style="color:var(--accent-green)">Oxfam In Uganda | 2022 - 2024</p>
-          </div>
-          <button class="cv-btn" style="background:transparent; border:1px solid var(--accent-green); color:var(--accent-green)" onclick="openModal('modal-ox')">View Roles</button>
+        <button class="nav-btn active" style="padding: 8px 15px;" onclick="openModal('modal-dq')">Details</button>
+      </div>
+      <div class="journey-tile">
+        <div style="font-weight: 900; color: var(--accent-green);">OX</div>
+        <div>
+          <h3>IT Support Officer</h3>
+          <p>Oxfam In Uganda | 2022 - 2024</p>
+        </div>
+        <button class="nav-btn active" style="padding: 8px 15px;" onclick="openModal('modal-ox')">Details</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="glass-card">
+      <h2>Academic Background</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <h4>Uganda Christian University</h4>
+          <p>BSc. Information Technology | 2018 - 2021</p>
+        </div>
+        <div class="timeline-item">
+          <h4>St. Lawrence Schools</h4>
+          <p>UACE (A-Level) | 2016 - 2017</p>
+        </div>
+        <div class="timeline-item">
+          <h4>Mbarara High School</h4>
+          <p>UCE (O-Level) | 2012 - 2015</p>
         </div>
       </div>
     </div>
@@ -151,47 +230,58 @@
   <footer>
     <div class="footer-grid">
       <div class="footer-col">
-        <h4 style="font-size: 1.5rem;">JMK<span style="color:var(--accent-green)">.</span></h4>
-        <p style="font-size: 0.8rem; color:var(--text-dim)">Excellence in IT Service Delivery and Infrastructure management.</p>
+        <h3 style="font-size: 1.5rem; font-weight: 900;">JMK<span style="color:var(--accent-green)">.</span></h3>
+        <p style="font-size: 0.8rem; color: var(--text-dim); margin: 15px 0;">Digital infrastructure and professional IT solutions expert based in Uganda.</p>
+        <div style="display: flex; gap: 10px;">
+          <input type="email" placeholder="Subscribe" style="background: var(--glass); border: 1px solid var(--border); padding: 8px; border-radius: 5px; color: #fff; width: 100%;">
+          <button style="background: var(--accent-green); border: none; padding: 5px 15px; border-radius: 5px; cursor: pointer;"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
       </div>
       <div class="footer-col">
         <h4>Information</h4>
         <ul>
           <li><a href="#home">About</a></li>
-          <li><a href="#journey">Journey</a></li>
-          <li><a href="#projects">Dashboard</a></li>
+          <li><a href="#journey">Experience</a></li>
+          <li><a href="#education">Education</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Helpful Links</h4>
+        <ul>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#">Privacy Policy</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Services</h4>
         <ul>
-          <li><a href="#services">Help Desk</a></li>
-          <li><a href="#services">Security</a></li>
-          <li><a href="#services">Networking</a></li>
+          <li><a href="#">Help Desk</a></li>
+          <li><a href="#">Networking</a></li>
+          <li><a href="#">Security</a></li>
         </ul>
       </div>
-      <div class="footer-col">
-        <h4>Contact</h4>
-        <p style="font-size: 0.8rem; color:var(--text-dim)">+256 7xx xxx xxx<br>johnmark@example.com</p>
-      </div>
-      <div class="footer-col">
-        <h4>Newsletter</h4>
-        <input type="text" placeholder="Email Address" style="width:100%; background:var(--glass); border:1px solid var(--border); padding: 8px; border-radius: 5px; color:#fff; margin-bottom: 10px;">
-        <button class="cv-btn" style="width:100%; font-size: 0.7rem;">Subscribe</button>
+      <div class="footer-col" id="contact">
+        <h4>Contact Us</h4>
+        <p style="font-size: 0.85rem; color: var(--text-dim);">+256 7xx xxx xxx<br>johnmark@example.com</p>
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+          <a href="#" class="tag" style="padding: 10px;"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="#" class="tag" style="padding: 10px;"><i class="fa-brands fa-github"></i></a>
+        </div>
       </div>
     </div>
-    <div style="border-top: 1px solid var(--border); margin-top: 50px; padding-top: 20px; text-align: center; font-size: 0.8rem; color:var(--text-dim);">
+    <div style="border-top: 1px solid var(--border); padding-top: 30px; text-align: center; font-size: 0.8rem; color: var(--text-dim);">
       2026 © John Mark Kiritu | All Rights Reserved
     </div>
   </footer>
 
   <div id="modal-dq" class="modal">
     <div class="modal-content">
-      <h2>System Administrator Roles</h2>
+      <h2 style="color:var(--accent-green)">System Administrator Roles</h2>
       <ul style="padding: 20px; color: var(--text-dim);">
-        <li>Administer switches, PABX, and Microsoft Power Apps.</li>
-        <li>Implement Kaspersky Endpoint Protection and Firewalls.</li>
-        <li>Manage L2 Support via AnyDesk and TeamViewer.</li>
+        <li>Infrastructure management (PABX, WAPs, Power Apps).</li>
+        <li>Endpoint protection rollout (Kaspersky).</li>
+        <li>L2 Technical Support for enterprise systems.</li>
       </ul>
       <button class="cv-btn" onclick="closeModal()">Close</button>
     </div>
@@ -199,11 +289,11 @@
 
   <div id="modal-ox" class="modal">
     <div class="modal-content">
-      <h2>IT Support Officer Roles</h2>
+      <h2 style="color:var(--accent-green)">IT Support Officer Roles</h2>
       <ul style="padding: 20px; color: var(--text-dim);">
-        <li>Cisco Meraki and M365 Administration.</li>
-        <li>Service Management via ServiceNow and Jira.</li>
-        <li>Digital Transformation via Power BI and Power Apps.</li>
+        <li>Cisco Meraki and M365 Admin management.</li>
+        <li>Service management via ServiceNow and Jira.</li>
+        <li>Digital transformation and Power BI development.</li>
       </ul>
       <button class="cv-btn" onclick="closeModal()">Close</button>
     </div>
