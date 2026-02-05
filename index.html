@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>John Mark Kiritu | IT & Creative</title>
+  <title>John Mark Kiritu | IT Professional</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
@@ -16,6 +16,7 @@
       --glass-bright: rgba(255, 255, 255, 0.15);
       --border: rgba(255, 255, 255, 0.12);
       --accent-white: #ffffff;
+      --accent-green: #4ade80;
       --text: #f8fafc;
       --text-dim: #94a3b8;
     }
@@ -26,6 +27,7 @@
       --glass-bright: rgba(0, 0, 0, 0.1);
       --border: rgba(0, 0, 0, 0.1);
       --accent-white: #166534;
+      --accent-green: #15803d;
       --text: #0f172a;
       --text-dim: #475569;
     }
@@ -33,7 +35,6 @@
     * { margin:0; padding:0; box-sizing:border-box; scroll-behavior: smooth; }
     
     body {
-      min-height: 200vh; /* Ensuring enough height to test scrolling */
       font-family: 'Inter', sans-serif;
       background: var(--bg-gradient);
       background-attachment: fixed;
@@ -41,7 +42,7 @@
       overflow-x: hidden;
     }
 
-    /* --- HORIZONTAL NAV --- */
+    /* --- NAVIGATION --- */
     .nav-container {
       position: fixed;
       top: 25px;
@@ -82,12 +83,12 @@
       color: #064e3b;
     }
 
-    /* --- SECTION STYLING --- */
+    /* --- LAYOUT SECTIONS --- */
     section {
       min-height: 100vh;
-      padding: 140px 8% 50px;
+      padding: 120px 8% 80px;
       display: flex;
-      align-items: center;
+      flex-direction: column;
       justify-content: center;
     }
 
@@ -99,11 +100,12 @@
       padding: 60px;
       width: 100%;
       max-width: 1100px;
+      margin: 0 auto;
     }
 
-    .hero-content { display: flex; align-items: center; justify-content: space-between; gap: 40px; }
     h1 { font-size: 4rem; font-weight: 900; line-height: 1; margin-bottom: 20px; }
-    
+    h2 { font-size: 2.5rem; margin-bottom: 30px; color: var(--accent-green); }
+
     .status-badge {
       display: inline-flex;
       align-items: center;
@@ -118,10 +120,51 @@
 
     .dot { width: 8px; height: 8px; background: #4ade80; border-radius: 50%; box-shadow: 0 0 10px #4ade80; }
 
+    /* --- EDUCATION TIMELINE --- */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 10px;
+      bottom: 10px;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .timeline-item {
+      padding-left: 50px;
+      position: relative;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 0;
+      top: 5px;
+      width: 32px;
+      height: 32px;
+      background: var(--glass-bright);
+      border: 2px solid var(--accent-green);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      z-index: 1;
+    }
+
+    .edu-year { font-weight: 900; color: var(--accent-green); font-size: 0.9rem; }
+    .edu-school { font-size: 1.2rem; font-weight: 600; margin: 4px 0; }
+    .edu-degree { color: var(--text-dim); font-size: 0.95rem; }
+
     @media (max-width: 900px) {
       .nav-btn span { display: none; }
-      .hero-content { flex-direction: column; text-align: center; }
       h1 { font-size: 2.5rem; }
+      .glass-card { padding: 30px; }
     }
   </style>
 </head>
@@ -130,43 +173,90 @@
   <div class="nav-container">
     <nav class="icon-menu">
       <a href="#home" class="nav-btn active"><i class="fa-solid fa-house"></i><span>Home</span></a>
-      <a href="#measure" class="nav-btn"><i class="fa-solid fa-compass"></i><span>Measure</span></a>
-      <a href="#analyze" class="nav-btn"><i class="fa-solid fa-chart-pie"></i><span>Analyze</span></a>
-      <a href="#reduce" class="nav-btn"><i class="fa-solid fa-leaf"></i><span>Reduce</span></a>
+      <a href="#about" class="nav-btn"><i class="fa-solid fa-user"></i><span>About</span></a>
+      <a href="#education" class="nav-btn"><i class="fa-solid fa-graduation-cap"></i><span>Education</span></a>
       <div class="nav-btn" id="theme-toggle" style="cursor:pointer"><i class="fa-solid fa-circle-half-stroke"></i></div>
     </nav>
   </div>
 
   <section id="home">
-    <div class="glass-card hero-content">
+    <div class="glass-card" style="display: flex; align-items: center; justify-content: space-between; gap: 40px;">
       <div>
-        <div class="status-badge"><div class="dot"></div> Available for Projects</div>
+        <div class="status-badge"><div class="dot"></div> Available for IT Consultation</div>
         <h1>Digital<br>Precision.</h1>
         <p style="color: var(--text-dim); font-size: 1.2rem; max-width: 500px; margin-bottom: 30px;">
-          I'm John Mark, an IT Specialist crafting high-performance infrastructure and liquid glass interfaces.
+          I'm John Mark, an IT Infrastructure Specialist bridging technical precision with creative digital solutions.
         </p>
-        <button style="padding: 15px 30px; border-radius: 15px; border: none; background: white; color: #064e3b; font-weight: 700; cursor: pointer;">View My Work</button>
+        <a href="#about" class="nav-btn active" style="display: inline-flex; width: auto;">Learn More</a>
       </div>
-      <div style="width: 300px; height: 300px; background: linear-gradient(45deg, var(--glass-bright), transparent); border-radius: 40px; border: 1px solid var(--border);"></div>
+      <div style="width: 300px; height: 300px; background: linear-gradient(45deg, var(--glass-bright), transparent); border-radius: 40px; border: 1px solid var(--border); display: grid; place-items: center;">
+         <i class="fa-solid fa-server" style="font-size: 5rem; opacity: 0.2;"></i>
+      </div>
     </div>
   </section>
 
-  <section id="measure">
+  <section id="about">
     <div class="glass-card">
-      <h2>Measurement & Metrics</h2>
-      <p style="color: var(--text-dim); margin-top: 20px;">Detailed infrastructure audits and creative data tracking.</p>
+      <h2>Professional Profile</h2>
+      <p style="font-size: 1.25rem; line-height: 1.7; color: var(--text);">
+        I am a <strong>self-motivated, results-driven and highly skilled IT professional</strong> with over 2 years experience in IT support, networking and IT service management. 
+      </p>
+      <br>
+      <p style="font-size: 1.1rem; line-height: 1.6; color: var(--text-dim);">
+        I have experience in managing enterprise-level environments, including Active Directory, Microsoft 365, endpoint security solutions, and cloud-based services. Recognized for problem-solving, strong analytical skills, and the ability to deliver innovative IT solutions that enhance productivity.
+      </p>
     </div>
   </section>
+
+  <section id="education">
+    <div class="glass-card">
+      <h2>Education History</h2>
+      
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"><i class="fa-solid fa-university" style="font-size: 0.7rem;"></i></div>
+          <div class="edu-year">2018 — 2021</div>
+          <div class="edu-school">Uganda Christian University</div>
+          <div class="edu-degree">Bachelor of Science in Information Technology</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"><i class="fa-solid fa-book" style="font-size: 0.7rem;"></i></div>
+          <div class="edu-year">2016 — 2017</div>
+          <div class="edu-school">St. Lawrence Schools and Colleges</div>
+          <div class="edu-degree">Uganda Advanced Certificate of Education (UACE)</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"><i class="fa-solid fa-pen-nib" style="font-size: 0.7rem;"></i></div>
+          <div class="edu-year">2012 — 2015</div>
+          <div class="edu-school">Mbarara High School</div>
+          <div class="edu-degree">Uganda Certificate of Education (UCE)</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"><i class="fa-solid fa-pencil" style="font-size: 0.7rem;"></i></div>
+          <div class="edu-year">2005 — 2011</div>
+          <div class="edu-school">Mbarara Preparatory School</div>
+          <div class="edu-degree">Primary Leaving Examination (PLE) Certificate</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="padding: 40px; text-align: center; color: var(--text-dim); font-size: 0.8rem;">
+    © 2026 John Mark Kiritu • Designed with Liquid Glass
+  </footer>
 
   <script>
-    // Theme Toggle
+    // Theme Toggle Logic
     const themeToggle = document.getElementById('theme-toggle');
     themeToggle.addEventListener('click', () => {
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
       document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
     });
 
-    // Scroll Observer: Highlights the nav based on where you are on the page
+    // Scroll Observer: Highlights the nav based on where you are
     const sections = document.querySelectorAll('section');
     const navLinks = document.querySelectorAll('.nav-btn');
 
