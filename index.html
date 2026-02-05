@@ -10,45 +10,40 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
   <style>
-    /* --- CSS VARIABLES & THEME SETUP --- */
     :root {
-      /* Dark Theme (Default) */
       --bg-gradient: radial-gradient(circle at top, #064e3b 0%, #022c22 100%);
-      --glass: rgba(255, 255, 255, 0.05);
-      --glass-bright: rgba(255, 255, 255, 0.1);
+      --glass: rgba(255, 255, 255, 0.08);
+      --glass-bright: rgba(255, 255, 255, 0.15);
       --border: rgba(255, 255, 255, 0.12);
-      --accent-green: #4ade80; /* Bright Green */
       --accent-white: #ffffff;
+      --accent-green: #4ade80;
       --text: #f8fafc;
       --text-dim: #94a3b8;
       --footer-bg: rgba(0, 0, 0, 0.3);
-      --card-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
 
     [data-theme="light"] {
-      /* Light Theme */
       --bg-gradient: radial-gradient(circle at top, #f0fdf4 0%, #dcfce7 100%);
-      --glass: rgba(255, 255, 255, 0.6);
-      --glass-bright: rgba(255, 255, 255, 0.8);
-      --border: rgba(22, 101, 52, 0.1);
-      --accent-green: #166534; /* Darker Green for contrast */
+      --glass: rgba(0, 0, 0, 0.05);
+      --glass-bright: rgba(0, 0, 0, 0.1);
+      --border: rgba(0, 0, 0, 0.1);
       --accent-white: #166534;
+      --accent-green: #15803d;
       --text: #0f172a;
       --text-dim: #475569;
       --footer-bg: rgba(255, 255, 255, 0.3);
-      --card-shadow: 0 10px 30px rgba(0,0,0,0.05);
     }
 
     * { margin:0; padding:0; box-sizing:border-box; scroll-behavior: smooth; }
     
     body {
+      min-height: 200vh;
       font-family: 'Inter', sans-serif;
       background: var(--bg-gradient);
       background-attachment: fixed;
       color: var(--text);
       overflow-x: hidden;
       line-height: 1.6;
-      transition: background 0.5s ease;
     }
 
     /* --- NAVIGATION --- */
@@ -63,15 +58,14 @@
 
     .icon-menu {
       background: var(--glass);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(25px) saturate(150%);
       border: 1px solid var(--border);
       border-radius: 100px;
       padding: 6px;
       display: flex;
       align-items: center;
       gap: 5px;
-      box-shadow: var(--card-shadow);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
 
     .nav-btn {
@@ -84,171 +78,354 @@
       text-decoration: none;
       font-size: 0.85rem;
       font-weight: 600;
-      transition: all 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     }
-
-    .nav-btn:hover { background: var(--glass-bright); }
 
     .nav-btn.active {
       background: var(--accent-white);
-      color: [data-theme="light"] ? #fff : #064e3b; /* Dynamic text color fix in JS or simplified here */
-      color: #064e3b; 
+      color: #064e3b;
     }
-    
-    [data-theme="light"] .nav-btn.active { color: white; }
 
-    /* --- LAYOUT UTILITIES --- */
+    [data-theme="light"] .nav-btn.active {
+      color: white;
+      background: #166534;
+    }
+
+    .nav-btn:hover:not(.active) {
+      background: var(--glass-bright);
+    }
+
+    /* --- SECTION STYLING --- */
     section {
       min-height: 100vh;
-      padding: 120px 8% 80px;
+      padding: 140px 8% 50px;
       display: flex;
-      flex-direction: column;
+      align-items: center;
       justify-content: center;
     }
 
     .glass-card {
       background: var(--glass);
       backdrop-filter: blur(30px);
-      -webkit-backdrop-filter: blur(30px);
       border: 1px solid var(--border);
       border-radius: 40px;
-      padding: 50px;
+      padding: 60px;
       width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      box-shadow: var(--card-shadow);
+      max-width: 1100px;
     }
 
-    h1 { font-size: 3.5rem; font-weight: 900; line-height: 1.1; margin-bottom: 20px; }
-    h2 { font-size: 2.5rem; margin-bottom: 40px; color: var(--accent-green); text-align: center; }
-    p { color: var(--text-dim); }
-
-    /* --- HERO SECTION --- */
     .hero-content { display: flex; align-items: center; justify-content: space-between; gap: 40px; }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--glass-bright); padding: 8px 16px; border-radius: 50px;
-      font-size: 0.8rem; margin-bottom: 20px; border: 1px solid var(--border);
-    }
-    .status-dot { width: 8px; height: 8px; background: #4ade80; border-radius: 50%; box-shadow: 0 0 10px #4ade80; }
-    .hero-visual {
-      width: 300px; height: 300px;
-      background: linear-gradient(45deg, var(--glass-bright), transparent);
-      border-radius: 50%; border: 1px solid var(--border);
-      display: grid; place-items: center;
+    h1 { font-size: 4rem; font-weight: 900; line-height: 1; margin-bottom: 20px; }
+    h2 { font-size: 2.5rem; margin-bottom: 30px; color: var(--accent-green); text-align: center; }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--glass-bright);
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
     }
 
-    /* --- TECH STACK (GRID) --- */
-    .stack-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-    .tech-category h3 {
-      font-size: 1rem; color: var(--accent-green); text-transform: uppercase;
-      letter-spacing: 1px; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 5px;
-    }
-    .tech-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
-    .tag {
-      background: var(--glass-bright); border: 1px solid var(--border);
-      padding: 8px 16px; border-radius: 12px; font-size: 0.85rem;
-      display: flex; align-items: center; gap: 8px; transition: 0.3s; color: var(--text);
-    }
-    .tag:hover { border-color: var(--accent-green); transform: translateY(-3px); }
+    .dot { width: 8px; height: 8px; background: #4ade80; border-radius: 50%; box-shadow: 0 0 10px #4ade80; }
 
-    .cert-card {
-      background: linear-gradient(135deg, var(--glass-bright), transparent);
-      border: 1px solid var(--border); border-radius: 20px; padding: 15px;
-      display: flex; align-items: center; gap: 15px; margin-bottom: 15px;
-    }
-
-    /* --- SERVICES GRID --- */
-    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-    .service-tile {
-      background: var(--glass-bright); border: 1px solid var(--border);
-      border-radius: 25px; padding: 30px; transition: 0.4s;
-    }
-    .service-tile:hover {
-      background: rgba(74, 222, 128, 0.05); border-color: var(--accent-green);
-      transform: translateY(-10px);
-    }
-    .service-icon { font-size: 2rem; color: var(--accent-green); margin-bottom: 20px; }
-
-    /* --- JOURNEY (EXPERIENCE) --- */
-    .job-tile {
-      display: grid; grid-template-columns: 80px 1fr auto; align-items: center; gap: 20px;
-      background: var(--glass-bright); border: 1px solid var(--border);
-      border-radius: 20px; padding: 25px; margin-bottom: 20px; transition: 0.3s;
-    }
-    .job-tile:hover { transform: scale(1.01); border-color: var(--accent-green); }
-    .comp-logo {
-      width: 60px; height: 60px; background: var(--glass);
-      border-radius: 15px; display: grid; place-items: center; font-weight: 900; color: var(--accent-green);
-    }
-    .view-btn {
-      padding: 10px 20px; border-radius: 12px; border: 1px solid var(--accent-green);
-      background: transparent; color: var(--accent-green); cursor: pointer; font-weight: 600;
-      transition: 0.3s;
-    }
-    .view-btn:hover { background: var(--accent-green); color: #022c22; }
-
-    /* --- PROJECTS DASHBOARD --- */
-    .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
-    .project-card {
-      background: var(--glass-bright); border: 1px solid var(--border);
-      border-radius: 25px; overflow: hidden; transition: 0.4s; display: flex; flex-direction: column;
-    }
-    .project-card:hover { transform: translateY(-5px); border-color: var(--accent-green); }
-    .project-img {
-      height: 180px; background-size: cover; background-position: center;
+    /* --- TIMELINE --- */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
       position: relative;
     }
-    .status-pill {
-      position: absolute; bottom: 10px; right: 10px;
-      background: rgba(0,0,0,0.7); backdrop-filter: blur(5px);
-      color: var(--accent-green); padding: 5px 12px; border-radius: 50px;
-      font-size: 0.7rem; font-weight: 800; border: 1px solid var(--accent-green);
-    }
-    .project-content { padding: 25px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
 
-    /* --- CONTACT & FOOTER --- */
-    .contact-container { display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px; }
-    .contact-sidebar { background: var(--glass-bright); padding: 30px; border-radius: 30px; border: 1px solid var(--border); }
-    .form-control {
-      width: 100%; background: var(--glass); border: 1px solid var(--border);
-      padding: 15px; border-radius: 15px; color: var(--text); margin-bottom: 20px;
-    }
-    .submit-btn {
-      width: 100%; background: var(--accent-green); color: #022c22;
-      padding: 15px; border-radius: 15px; border: none; font-weight: 800; cursor: pointer;
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 10px;
+      bottom: 10px;
+      width: 2px;
+      background: var(--border);
     }
 
-    footer {
-      background: var(--footer-bg); backdrop-filter: blur(20px);
-      border-top: 1px solid var(--border); padding: 60px 8% 30px; margin-top: 50px;
+    .timeline-item {
+      padding-left: 50px;
+      position: relative;
     }
-    .footer-bottom {
-      border-top: 1px solid var(--border); padding-top: 20px; margin-top: 40px;
-      display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-dim);
+
+    .timeline-dot {
+      position: absolute;
+      left: 0;
+      top: 5px;
+      width: 32px;
+      height: 32px;
+      background: var(--glass-bright);
+      border: 2px solid var(--accent-green);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      z-index: 1;
     }
+
+    .edu-year { font-weight: 900; color: var(--accent-green); font-size: 0.9rem; }
+    .edu-school { font-size: 1.2rem; font-weight: 600; margin: 4px 0; }
+    .edu-degree { color: var(--text-dim); font-size: 0.95rem; }
+
+    /* --- EXPERIENCE TILES --- */
+    .experience-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .job-tile {
+      display: grid;
+      grid-template-columns: 100px 1fr auto;
+      align-items: center;
+      gap: 25px;
+      background: var(--glass-bright);
+      border: 1px solid var(--border);
+      border-radius: 25px;
+      padding: 25px;
+      transition: transform 0.3s ease;
+    }
+
+    .job-tile:hover {
+      transform: scale(1.01);
+      background: rgba(255,255,255,0.12);
+    }
+
+    .comp-logo {
+      width: 80px;
+      height: 80px;
+      background: var(--glass);
+      border-radius: 15px;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      color: var(--accent-green);
+    }
+
+    .job-info h3 { font-size: 1.4rem; margin-bottom: 5px; }
+    .job-info a { color: var(--accent-green); text-decoration: none; font-size: 1rem; }
+    .job-year { color: var(--text-dim); font-size: 0.85rem; margin-top: 5px; }
+    
+    .skills-preview {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .skill-tag { 
+      background: var(--glass); 
+      padding: 4px 10px; 
+      border-radius: 5px; 
+      border: 1px solid var(--border);
+    }
+
+    .view-btn {
+      padding: 12px 20px;
+      border-radius: 12px;
+      border: 1px solid var(--accent-green);
+      background: transparent;
+      color: var(--accent-green);
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .view-btn:hover {
+      background: var(--accent-green);
+      color: #022c22;
+    }
+
+    /* --- PROJECTS DASHBOARD --- */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .db-widget {
+      background: var(--glass-bright);
+      border: 1px solid var(--border);
+      border-radius: 25px;
+      padding: 25px;
+    }
+
+    .db-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+
+    .db-icon { font-size: 1.5rem; color: var(--accent-green); }
+    .db-status { padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+    .status-done { background: rgba(74, 222, 128, 0.2); color: var(--accent-green); }
+    .status-wait { background: rgba(251, 191, 36, 0.2); color: #fbbf24; display: flex; align-items: center; gap: 5px; }
+    .pulse-dot { width: 6px; height: 6px; background: #fbbf24; border-radius: 50%; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+
+    .db-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 10px; }
+    .db-desc { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 15px; }
+    .progress-track { height: 6px; background: var(--glass); border-radius: 10px; }
+    .progress-fill { height: 100%; border-radius: 10px; transition: width 0.5s ease; }
+
+    /* --- STACK & CERTIFICATIONS --- */
+    .stack-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .tech-category { margin-bottom: 30px; }
+    .tech-category h3 { font-size: 1rem; color: var(--accent-green); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
+    
+    .tech-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+    .tag {
+      background: var(--glass-bright);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.3s;
+    }
+
+    .tag:hover { border-color: var(--accent-green); background: rgba(74, 222, 128, 0.15); }
+
+    .cert-vault { display: flex; flex-direction: column; gap: 15px; }
+    .cert-card {
+      background: linear-gradient(135deg, var(--glass-bright), transparent);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .cert-icon { font-size: 2rem; color: #fbbf24; }
+
+    /* --- SERVICES GRID --- */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .service-tile {
+      background: var(--glass-bright);
+      border: 1px solid var(--border);
+      border-radius: 25px;
+      padding: 30px;
+      transition: 0.4s;
+      text-align: left;
+    }
+
+    .service-tile:hover {
+      background: rgba(74, 222, 128, 0.1);
+      border-color: var(--accent-green);
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+
+    .service-icon {
+      font-size: 2.5rem;
+      color: var(--accent-green);
+      margin-bottom: 20px;
+    }
+
+    .service-tile h3 { font-size: 1.25rem; margin-bottom: 12px; color: var(--accent-white); }
+    .service-tile p { font-size: 0.9rem; color: var(--text-dim); }
+
+    /* --- CONTACT FORM --- */
+    .contact-container { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; align-items: start; }
+    .contact-sidebar { background: var(--glass-bright); border-radius: 30px; padding: 30px; border: 1px solid var(--border); }
+    .contact-item { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; }
+    .contact-item i { width: 45px; height: 45px; background: var(--glass); border-radius: 12px; display: grid; place-items: center; color: var(--accent-green); }
+
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-size: 0.8rem; margin-bottom: 8px; color: var(--text-dim); }
+    .form-control { width: 100%; background: var(--glass); border: 1px solid var(--border); padding: 15px; border-radius: 15px; color: #fff; font-family: inherit; transition: 0.3s; }
+    .form-control:focus { outline: none; border-color: var(--accent-green); background: var(--glass-bright); }
+    .submit-btn { width: 100%; background: var(--accent-green); color: #022c22; padding: 15px; border-radius: 15px; border: none; font-weight: 800; cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; }
+    .submit-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(74, 222, 128, 0.2); }
 
     /* --- MODALS --- */
     .modal {
-      display: none; position: fixed; z-index: 2000; left: 0; top: 0;
-      width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(10px);
     }
-    .modal-content {
-      background: var(--bg-gradient); margin: 5% auto; padding: 40px;
-      border: 1px solid var(--border); width: 90%; max-width: 700px;
-      border-radius: 30px; max-height: 85vh; overflow-y: auto; position: relative;
-    }
-    .roles-list li { margin-bottom: 10px; margin-left: 20px; color: var(--text-dim); }
-    .tech-link { color: var(--accent-green); text-decoration: underline; }
 
-    /* --- RESPONSIVE --- */
-    @media (max-width: 900px) {
-      .hero-content, .stack-grid, .contact-container { flex-direction: column; grid-template-columns: 1fr; text-align: center; }
+    .modal-content {
+      background: var(--bg-gradient);
+      margin: 5% auto;
+      padding: 40px;
+      border: 1px solid var(--border);
+      width: 80%;
+      max-width: 800px;
+      border-radius: 30px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .tech-link { color: var(--accent-green); text-decoration: underline; }
+    .roles-list { margin: 20px 0; line-height: 1.6; }
+    .roles-list li { margin-bottom: 12px; list-style-type: square; }
+    
+    .manager-ref {
+      background: var(--glass-bright);
+      padding: 20px;
+      border-radius: 15px;
+      margin-top: 25px;
+      border-left: 4px solid var(--accent-green);
+    }
+
+    /* --- FOOTER --- */
+    footer { background: var(--footer-bg); backdrop-filter: blur(20px); border-top: 1px solid var(--border); padding: 80px 8% 30px; margin-top: 100px; }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr repeat(4, 1fr); gap: 40px; margin-bottom: 60px; }
+    .footer-col h4 { color: #fff; margin-bottom: 25px; font-size: 1.1rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 12px; }
+    .footer-col ul li a { color: var(--text-dim); text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
+    .footer-col ul li a:hover { color: var(--accent-green); }
+    
+    .social-links { display: flex; gap: 15px; margin-top: 20px; }
+    .social-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--glass); display: grid; place-items: center; color: #fff; text-decoration: none; transition: 0.3s; }
+    .social-btn:hover { background: var(--accent-green); color: #022c22; }
+
+    .footer-bottom { border-top: 1px solid var(--border); padding-top: 30px; display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-dim); }
+
+    @media (max-width: 1024px) {
+      .dashboard-container { grid-template-columns: 1fr; padding-top: 120px; }
+      .nav-btn span { display: none; }
+      .hero-card { flex-direction: column; text-align: center; padding: 30px; }
+      .hero-content { flex-direction: column; text-align: center; }
+      .stack-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: repeat(2, 1fr); }
+      .contact-container { grid-template-columns: 1fr; }
       .job-tile { grid-template-columns: 1fr; text-align: center; }
       .comp-logo { margin: 0 auto; }
-      .nav-btn span { display: none; } /* Hide text, show icons only */
-      .hero-visual { margin: 0 auto; }
+    }
+
+    @media (max-width: 600px) {
+      .footer-grid { grid-template-columns: 1fr; }
       h1 { font-size: 2.5rem; }
+      .glass-card { padding: 30px; }
     }
   </style>
 </head>
@@ -259,127 +436,148 @@
       <a href="#home" class="nav-btn active"><i class="fa-solid fa-house"></i><span>Home</span></a>
       <a href="#about" class="nav-btn"><i class="fa-solid fa-user"></i><span>About</span></a>
       <a href="#stack" class="nav-btn"><i class="fa-solid fa-layer-group"></i><span>Stack</span></a>
+      <a href="#services" class="nav-btn"><i class="fa-solid fa-screwdriver-wrench"></i><span>Services</span></a>
       <a href="#journey" class="nav-btn"><i class="fa-solid fa-briefcase"></i><span>Journey</span></a>
       <a href="#projects" class="nav-btn"><i class="fa-solid fa-chart-pie"></i><span>Projects</span></a>
+      <a href="#education" class="nav-btn"><i class="fa-solid fa-graduation-cap"></i><span>Education</span></a>
       <a href="#contact" class="nav-btn"><i class="fa-solid fa-paper-plane"></i><span>Contact</span></a>
-      <div class="nav-btn" id="theme-toggle" style="cursor: pointer; padding-left: 12px; border-left: 1px solid var(--border); border-radius: 0 100px 100px 0;">
-        <i class="fa-solid fa-circle-half-stroke"></i>
-      </div>
+      <div class="nav-btn" id="theme-toggle" style="cursor:pointer"><i class="fa-solid fa-circle-half-stroke"></i></div>
     </nav>
   </div>
 
   <section id="home">
     <div class="glass-card hero-content">
       <div>
-        <div class="hero-badge"><div class="status-dot"></div> Available for Projects</div>
-        <h1>Digital<br><span style="color: var(--accent-green);">Precision.</span></h1>
-        <p style="font-size: 1.2rem; max-width: 550px; margin-bottom: 30px;">
-          I'm <strong>John Mark Kiritu</strong>, an IT Infrastructure Specialist bridging technical precision with liquid glass digital experiences.
+        <div class="status-badge"><div class="dot"></div> Available for Projects</div>
+        <h1>Digital<br>Precision.</h1>
+        <p style="color: var(--text-dim); font-size: 1.2rem; max-width: 500px; margin-bottom: 30px;">
+          I'm John Mark, an IT Infrastructure Specialist bridging technical precision with creative digital solutions.
         </p>
-        <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
-          <a href="#projects" class="view-btn" style="background: var(--accent-white); color: #064e3b; border:none;">View Work</a>
-          <a href="#contact" class="view-btn">Get In Touch</a>
-        </div>
+        <button style="padding: 15px 30px; border-radius: 15px; border: none; background: var(--accent-white); color: #064e3b; font-weight: 700; cursor: pointer;">View My Work</button>
       </div>
-      <div class="hero-visual">
-         <i class="fa-solid fa-server" style="font-size: 6rem; opacity: 0.2;"></i>
-      </div>
+      <div style="width: 300px; height: 300px; background: linear-gradient(45deg, var(--glass-bright), transparent); border-radius: 40px; border: 1px solid var(--border);"></div>
     </div>
   </section>
 
   <section id="about">
     <div class="glass-card">
       <h2>Professional Profile</h2>
-      <p style="font-size: 1.25rem; margin-bottom: 20px; color: var(--text);">
-        I am a <strong>self-motivated, results-driven IT professional</strong> with over 2 years of experience in IT support, networking, and service management.
+      <p style="font-size: 1.25rem; line-height: 1.7; color: var(--text);">
+        I am a <strong>self-motivated, results-driven and highly skilled IT professional</strong> with over 2 years experience in IT support, networking and IT service management. 
       </p>
-      <p style="font-size: 1.1rem; line-height: 1.8;">
-        My expertise lies in managing enterprise-level environments, including <strong>Active Directory, Microsoft 365, endpoint security, and cloud services</strong>. I am recognized for strong analytical skills and the ability to deliver innovative IT solutions that enhance organizational productivity.
+      <br>
+      <p style="font-size: 1.1rem; line-height: 1.6; color: var(--text-dim);">
+        I have experience in managing enterprise-level environments, including Active Directory, Microsoft 365, endpoint security solutions, and cloud-based services. Recognized for problem-solving, strong analytical skills, and the ability to deliver innovative IT solutions that enhance productivity.
       </p>
     </div>
   </section>
 
   <section id="stack">
     <div class="glass-card">
-      <h2>Technical Arsenal</h2>
+      <h2>Technical Stack & Certifications</h2>
       <div class="stack-grid">
-        
         <div>
           <div class="tech-category">
             <h3>Infrastructure & Cloud</h3>
             <div class="tech-tags">
-              <div class="tag"><i class="fa-brands fa-windows"></i> Active Directory</div>
               <div class="tag"><i class="fa-brands fa-microsoft"></i> Microsoft 365</div>
-              <div class="tag"><i class="fa-solid fa-cloud"></i> Azure Cloud</div>
-              <div class="tag"><i class="fa-solid fa-server"></i> SCCM/MECM</div>
+              <div class="tag"><i class="fa-solid fa-cloud"></i> Azure</div>
+              <div class="tag"><i class="fa-solid fa-server"></i> Active Directory</div>
+              <div class="tag"><i class="fa-solid fa-database"></i> SCCM</div>
             </div>
           </div>
           <div class="tech-category">
             <h3>Networking & Security</h3>
             <div class="tech-tags">
-              <div class="tag"><i class="fa-solid fa-shield-halved"></i> Kaspersky EP</div>
+              <div class="tag"><i class="fa-solid fa-shield-halved"></i> Kaspersky</div>
               <div class="tag"><i class="fa-solid fa-circle-nodes"></i> Cisco Meraki</div>
               <div class="tag"><i class="fa-solid fa-network-wired"></i> LAN/WAN</div>
+              <div class="tag"><i class="fa-solid fa-fire-flame-curved"></i> Firewalls</div>
             </div>
           </div>
           <div class="tech-category">
-            <h3>Dev & Design</h3>
+            <h3>Tools & Automation</h3>
             <div class="tech-tags">
               <div class="tag"><i class="fa-solid fa-bolt"></i> Power Apps</div>
-              <div class="tag"><i class="fa-solid fa-chart-simple"></i> Power BI</div>
-              <div class="tag"><i class="fa-solid fa-pen-nib"></i> UI/UX Design</div>
+              <div class="tag"><i class="fa-solid fa-chart-line"></i> Power BI</div>
+              <div class="tag"><i class="fa-solid fa-code"></i> HTML/CSS/JS</div>
+              <div class="tag"><i class="fa-solid fa-robot"></i> Automation</div>
             </div>
           </div>
         </div>
-
         <div>
-          <h3 style="color: var(--text-dim); margin-bottom: 20px; font-size: 0.9rem;">CERTIFICATIONS</h3>
-          <div class="cert-card">
-            <i class="fa-solid fa-award" style="font-size: 1.5rem; color: #fbbf24;"></i>
-            <div>
-              <div style="font-weight: 700;">Kaspersky Certified Specialist</div>
-              <div style="font-size: 0.8rem; color: var(--text-dim);">Endpoint Security Management</div>
+          <h3>Certifications</h3>
+          <div class="cert-vault">
+            <div class="cert-card">
+              <i class="fa-solid fa-certificate cert-icon"></i>
+              <div>
+                <strong>BSc. Information Technology</strong><br>
+                <span style="color: var(--text-dim);">Uganda Christian University (2018-2021)</span>
+              </div>
             </div>
-          </div>
-          <div class="cert-card">
-            <i class="fa-solid fa-medal" style="font-size: 1.5rem; color: #60a5fa;"></i>
-            <div>
-              <div style="font-weight: 700;">Microsoft 365 Certified</div>
-              <div style="font-size: 0.8rem; color: var(--text-dim);">Enterprise Administrator Expert</div>
+            <div class="cert-card">
+              <i class="fa-solid fa-award cert-icon"></i>
+              <div>
+                <strong>Kaspersky Certified Specialist</strong><br>
+                <span style="color: var(--text-dim);">Endpoint Security</span>
+              </div>
             </div>
-          </div>
-          <div class="cert-card">
-            <i class="fa-solid fa-graduation-cap" style="font-size: 1.5rem; color: var(--accent-green);"></i>
-            <div>
-              <div style="font-weight: 700;">BSc. Information Technology</div>
-              <div style="font-size: 0.8rem; color: var(--text-dim);">Uganda Christian University</div>
+            <div class="cert-card">
+              <i class="fa-solid fa-medal cert-icon"></i>
+              <div>
+                <strong>Microsoft Certified</strong><br>
+                <span style="color: var(--text-dim);">Enterprise Administrator</span>
+              </div>
             </div>
           </div>
         </div>
-
       </div>
+    </div>
+  </section>
 
-      <h3 style="margin-top: 50px; margin-bottom: 20px; text-align: center; color: var(--text);">Services Offered</h3>
+  <section id="services">
+    <div class="glass-card">
+      <h2>Professional Services</h2>
       <div class="services-grid">
         <div class="service-tile">
           <i class="fa-solid fa-headset service-icon"></i>
-          <h4>IT Help Desk</h4>
-          <p style="font-size: 0.9rem; margin-top: 10px;">Tier 1 & 2 technical support with SLA-driven resolution.</p>
+          <h3>IT Help Desk</h3>
+          <p>Tier 1 & 2 technical support for hardware, software, and network-related issues with SLA-driven resolution.</p>
         </div>
         <div class="service-tile">
-          <i class="fa-solid fa-network-wired service-icon"></i>
-          <h4>Networking</h4>
-          <p style="font-size: 0.9rem; margin-top: 10px;">Structured cabling, VLAN config, and Wi-Fi optimization.</p>
+          <i class="fa-solid fa-screwdriver-wrench service-icon"></i>
+          <h3>Maintenance & Repair</h3>
+          <p>Comprehensive repairs for computers, laptops, and mobile phones. Routine system health checks and hardware cleaning.</p>
+        </div>
+        <div class="service-tile">
+          <i class="fa-solid fa-download service-icon"></i>
+          <h3>Installation & Setup</h3>
+          <p>OS deployments (Windows/Linux/macOS), software configurations, and internal peripheral installations.</p>
         </div>
         <div class="service-tile">
           <i class="fa-solid fa-video service-icon"></i>
-          <h4>Surveillance</h4>
-          <p style="font-size: 0.9rem; margin-top: 10px;">IP Camera & NVR installation for enterprise security.</p>
+          <h3>CCTV & Surveillance</h3>
+          <p>Installation and configuration of IP cameras, NVRs, and surveillance monitoring systems for security.</p>
+        </div>
+        <div class="service-tile">
+          <i class="fa-solid fa-network-wired service-icon"></i>
+          <h3>Network Infrastructure</h3>
+          <p>Structured Cat6 cabling, LAN/WAN setup, and configuration of switches, routers, and access points.</p>
+        </div>
+        <div class="service-tile">
+          <i class="fa-solid fa-cart-shopping service-icon"></i>
+          <h3>IT Procurement</h3>
+          <p>Assistance in sourcing high-quality hardware, software licenses, and IT equipment via trusted vendors.</p>
         </div>
         <div class="service-tile">
           <i class="fa-solid fa-compass-drafting service-icon"></i>
-          <h4>UI Design</h4>
-          <p style="font-size: 0.9rem; margin-top: 10px;">Modern, glassmorphic interfaces for web and portfolios.</p>
+          <h3>UI Design</h3>
+          <p>Crafting liquid glass interfaces and user-centric designs for digital systems and professional portfolios.</p>
+        </div>
+        <div class="service-tile">
+          <i class="fa-solid fa-book-open service-icon"></i>
+          <h3>Tech Guides</h3>
+          <p>Creating detailed technical manuals and documentation to empower end-users and streamline support.</p>
         </div>
       </div>
     </div>
@@ -388,84 +586,153 @@
   <section id="journey">
     <div class="glass-card">
       <h2>Professional Journey</h2>
-      
-      <div class="job-tile">
-        <div class="comp-logo">DQ</div>
-        <div>
-          <h3>System Administrator</h3>
-          <a href="#" style="color:var(--accent-green); text-decoration:none;">Double Q (C4 Logistics)</a>
-          <div style="font-size: 0.85rem; color: var(--text-dim);">Sept 2024 – Nov 2024</div>
+      <div class="experience-grid">
+        <div class="job-tile">
+          <div class="comp-logo">DQ</div>
+          <div class="job-info">
+            <h3>System Administrator</h3>
+            <a href="https://doubleq.co.ug" target="_blank">Double Q (C4 Logistics Ltd) <i class="fa-solid fa-link"></i></a>
+            <div class="job-year">September 2024 – November 2024</div>
+            <div class="skills-preview">
+              <span class="skill-tag">Infrastructure Admin</span>
+              <span class="skill-tag">Cybersecurity</span>
+              <span class="skill-tag">TMS Reporting</span>
+            </div>
+          </div>
+          <button class="view-btn" onclick="openModal('modal-dq')">View Roles</button>
         </div>
-        <button class="view-btn" onclick="openModal('modal-dq')">View Roles</button>
-      </div>
-
-      <div class="job-tile">
-        <div class="comp-logo">OX</div>
-        <div>
-          <h3>IT Support Officer</h3>
-          <a href="#" style="color:var(--accent-green); text-decoration:none;">Oxfam In Uganda</a>
-          <div style="font-size: 0.85rem; color: var(--text-dim);">Nov 2022 – May 2024</div>
+        <div class="job-tile">
+          <div class="comp-logo">OX</div>
+          <div class="job-info">
+            <h3>IT Support Officer</h3>
+            <a href="https://uganda.oxfam.org" target="_blank">Oxfam in Uganda <i class="fa-solid fa-link"></i></a>
+            <div class="job-year">Nov 2022 - May 2024</div>
+            <div class="skills-preview">
+              <span class="skill-tag">Network Uptime</span>
+              <span class="skill-tag">ITIL Asset Management</span>
+              <span class="skill-tag">Digital Transformation</span>
+            </div>
+          </div>
+          <button class="view-btn" onclick="openModal('modal-ox-support')">View Roles</button>
         </div>
-        <button class="view-btn" onclick="openModal('modal-ox-support')">View Roles</button>
-      </div>
-
-      <div class="job-tile">
-        <div class="comp-logo">OX</div>
-        <div>
-          <h3>Graduate Trainee</h3>
-          <a href="#" style="color:var(--accent-green); text-decoration:none;">Oxfam In Uganda</a>
-          <div style="font-size: 0.85rem; color: var(--text-dim);">July 2022 – Nov 2022</div>
+        <div class="job-tile">
+          <div class="comp-logo">OX</div>
+          <div class="job-info">
+            <h3>Graduate Trainee</h3>
+            <a href="https://uganda.oxfam.org" target="_blank">Oxfam in Uganda <i class="fa-solid fa-link"></i></a>
+            <div class="job-year">Jul 2022 - Nov 2022</div>
+            <div class="skills-preview">
+              <span class="skill-tag">Helpdesk Ticketing</span>
+              <span class="skill-tag">AV Systems Deployment</span>
+              <span class="skill-tag">End-user Support</span>
+            </div>
+          </div>
+          <button class="view-btn" onclick="openModal('modal-ox-trainee')">View Roles</button>
         </div>
-        <button class="view-btn" onclick="openModal('modal-ox-trainee')">View Roles</button>
+        <div class="job-tile">
+          <div class="comp-logo">OX</div>
+          <div class="job-info">
+            <h3>IT Intern</h3>
+            <a href="https://uganda.oxfam.org" target="_blank">Oxfam in Uganda <i class="fa-solid fa-link"></i></a>
+            <div class="job-year">Feb 2022 - Jul 2022</div>
+            <div class="skills-preview">
+              <span class="skill-tag">Cloud Collaboration</span>
+              <span class="skill-tag">LAN/WAN Configuration</span>
+              <span class="skill-tag">Endpoint Protection</span>
+            </div>
+          </div>
+          <button class="view-btn" onclick="openModal('modal-ox-intern')">View Roles</button>
+        </div>
       </div>
-
     </div>
   </section>
 
   <section id="projects">
     <div class="glass-card">
-      <h2>Project Dashboard</h2>
-      <div class="project-grid">
-        
-        <div class="project-card">
-          <div class="project-img" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), transparent), url('https://images.unsplash.com/photo-1586762522674-594dcd12137d?auto=format&fit=crop&w=600');">
-            <span class="status-pill">COMPLETED</span>
+      <h2>Projects Dashboard</h2>
+      <div class="dashboard-grid">
+        <div class="db-widget">
+          <div class="db-header">
+            <div class="db-icon"><i class="fa-solid fa-truck-fast"></i></div>
+            <span class="db-status status-done">Completed</span>
           </div>
-          <div class="project-content">
-            <div>
-              <h3>Digital Logistics System</h3>
-              <p style="font-size: 0.9rem; margin-top: 10px;">Automated procurement workflow using <strong>Power Apps & SharePoint</strong>. Replaced paper trails with digital approvals.</p>
-            </div>
-            <div style="margin-top: 15px; font-size: 0.8rem; color: var(--accent-green);"><i class="fa-solid fa-code"></i> Power Platform</div>
-          </div>
+          <div class="db-title">Digital Logistics System</div>
+          <div class="db-desc">Automated procurement workflow for Oxfam Uganda using Power Apps & SharePoint. Saved thousands of sheets of paper.</div>
+          <div style="font-size: 0.7rem; margin-bottom: 5px;">DEPLOYMENT SUCCESS</div>
+          <div class="progress-track"><div class="progress-fill" style="width: 100%; background: var(--accent-green);"></div></div>
         </div>
-
-        <div class="project-card">
-          <div class="project-img" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), transparent), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600');">
-            <span class="status-pill">ACTIVE</span>
+        <div class="db-widget">
+          <div class="db-header">
+            <div class="db-icon"><i class="fa-solid fa-shield-virus"></i></div>
+            <span class="db-status status-done">Active</span>
           </div>
-          <div class="project-content">
-            <div>
-              <h3>Kaspersky Security Hub</h3>
-              <p style="font-size: 0.9rem; margin-top: 10px;">Deployed endpoint security for Uganda Micro Foundation. Configured policies for threat remediation.</p>
-            </div>
-            <div style="margin-top: 15px; font-size: 0.8rem; color: var(--accent-green);"><i class="fa-solid fa-shield-virus"></i> Cybersecurity</div>
-          </div>
+          <div class="db-title">Kaspersky Security Hub</div>
+          <div class="db-desc">Implemented central endpoint management for Uganda Micro Foundation. Remediated 100% of detected threats.</div>
+          <div style="font-size: 0.7rem; margin-bottom: 5px;">SECURITY COVERAGE</div>
+          <div class="progress-track"><div class="progress-fill" style="width: 100%; background: var(--accent-green);"></div></div>
         </div>
-
-        <div class="project-card">
-          <div class="project-img" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), transparent), url('https://images.unsplash.com/photo-1558494949-ef010cbdcc48?auto=format&fit=crop&w=600');">
-            <span class="status-pill" style="border-color: #fbbf24; color: #fbbf24;">IN PROGRESS</span>
+        <div class="db-widget">
+          <div class="db-header">
+            <div class="db-icon"><i class="fa-solid fa-network-wired"></i></div>
+            <span class="db-status status-done">Optimized</span>
           </div>
-          <div class="project-content">
-            <div>
-              <h3>Game Store E-Commerce</h3>
-              <p style="font-size: 0.9rem; margin-top: 10px;">A specialized digital marketplace for gamers featuring secure checkout and instant digital delivery.</p>
-            </div>
-            <div style="margin-top: 15px; font-size: 0.8rem; color: var(--accent-green);"><i class="fa-solid fa-gamepad"></i> Web Development</div>
-          </div>
+          <div class="db-title">Network Overhaul</div>
+          <div class="db-desc">Re-cabling and RJ45 port replacement at Kyagalanyi Coffee. Enhanced LAN speed and reliability.</div>
+          <div style="font-size: 0.7rem; margin-bottom: 5px;">LAN PERFORMANCE</div>
+          <div class="progress-track"><div class="progress-fill" style="width: 100%; background: var(--accent-green);"></div></div>
         </div>
+        <div class="db-widget upcoming">
+          <div class="db-header">
+            <div class="db-icon"><i class="fa-solid fa-gamepad"></i></div>
+            <span class="db-status status-wait"><span class="pulse-dot"></span>In Pipeline</span>
+          </div>
+          <div class="db-title">Game Store E-Commerce</div>
+          <div class="db-desc">Upcoming marketplace for digital assets and games. Focusing on secure payment gateways.</div>
+          <div style="font-size: 0.7rem; margin-bottom: 5px;">DEVELOPMENT PROGRESS</div>
+          <div class="progress-track"><div class="progress-fill" style="width: 15%; background: #fbbf24;"></div></div>
+        </div>
+        <div class="db-widget upcoming">
+          <div class="db-header">
+            <div class="db-icon"><i class="fa-solid fa-palette"></i></div>
+            <span class="db-status status-wait"><span class="pulse-dot"></span>Concept</span>
+          </div>
+          <div class="db-title">Dual Portfolio Build</div>
+          <div class="db-desc">Building two high-performance bespoke portfolios for creative clients.</div>
+          <div style="font-size: 0.7rem; margin-bottom: 5px;">PLANNING STAGE</div>
+          <div class="progress-track"><div class="progress-fill" style="width: 5%; background: #fbbf24;"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <section id="education">
+    <div class="glass-card">
+      <h2>Education History</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"><i class="fa-solid fa-university" style="font-size: 0.7rem;"></i></div>
+          <div class="edu-year">2018 — 2021</div>
+          <div class="edu-school">Uganda Christian University</div>
+          <div class="edu-degree">Bachelor of Science in Information Technology</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"><i class="fa-solid fa-book" style="font-size: 0.7rem;"></i></div>
+          <div class="edu-year">2016 — 2017</div>
+          <div class="edu-school">St. Lawrence Schools and Colleges</div>
+          <div class="edu-degree">Uganda Advanced Certificate of Education (UACE)</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"><i class="fa-solid fa-pen-nib" style="font-size: 0.7rem;"></i></div>
+          <div class="edu-year">2012 — 2015</div>
+          <div class="edu-school">Mbarara High School</div>
+          <div class="edu-degree">Uganda Certificate of Education (UCE)</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"><i class="fa-solid fa-pencil" style="font-size: 0.7rem;"></i></div>
+          <div class="edu-year">2005 — 2011</div>
+          <div class="edu-school">Mbarara Preparatory School</div>
+          <div class="edu-degree">Primary Leaving Examination (PLE) Certificate</div>
+        </div>
       </div>
     </div>
   </section>
@@ -475,120 +742,200 @@
       <h2>Get In Touch</h2>
       <div class="contact-container">
         <div class="contact-sidebar">
-          <h3 style="margin-bottom: 20px;">Contact Info</h3>
-          <div style="margin-bottom: 20px; display: flex; gap: 15px; align-items: center;">
-            <i class="fa-solid fa-phone" style="color: var(--accent-green);"></i>
-            <span>+256 700 000 000</span>
+          <div class="contact-item">
+            <i class="fa-solid fa-phone"></i>
+            <div>
+              <div style="font-size: 0.7rem; color: var(--text-dim);">Phone Number</div>
+              <div style="font-weight: 600;">+256 [Your Number]</div>
+            </div>
           </div>
-          <div style="margin-bottom: 30px; display: flex; gap: 15px; align-items: center;">
-            <i class="fa-solid fa-envelope" style="color: var(--accent-green);"></i>
-            <span>johnmark@example.com</span>
+          <div class="contact-item">
+            <i class="fa-solid fa-envelope"></i>
+            <div>
+              <div style="font-size: 0.7rem; color: var(--text-dim);">Email Address</div>
+              <div style="font-weight: 600;">johnmark@example.com</div>
+            </div>
           </div>
-          <div style="display: flex; gap: 15px;">
-             <a href="#" class="view-btn" style="border-radius: 50%; width: 40px; height: 40px; display: grid; place-items: center; padding: 0;"><i class="fa-brands fa-linkedin-in"></i></a>
-             <a href="#" class="view-btn" style="border-radius: 50%; width: 40px; height: 40px; display: grid; place-items: center; padding: 0;"><i class="fa-brands fa-twitter"></i></a>
+          <div class="social-links">
+            <a href="#" class="social-btn"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="social-btn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="#" class="social-btn"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
           </div>
         </div>
 
-        <form>
-          <input type="text" class="form-control" placeholder="Your Name">
-          <input type="email" class="form-control" placeholder="Your Email">
-          <textarea class="form-control" rows="4" placeholder="How can I help you?"></textarea>
+        <form id="contact-form">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" class="form-control" placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" class="form-control" placeholder="Enter your email">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Subject</label>
+            <input type="text" class="form-control" placeholder="Service required">
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea class="form-control" rows="5" placeholder="How can I help you?"></textarea>
+          </div>
           <button type="submit" class="submit-btn">Send Message</button>
         </form>
       </div>
     </div>
   </section>
 
-  <footer>
-    <div style="text-align: center; margin-bottom: 30px;">
-      <h2 style="font-size: 1.5rem; margin-bottom: 10px;">JMK<span style="color:var(--accent-green)">.</span></h2>
-      <p>Building the digital infrastructure of tomorrow.</p>
-    </div>
-    <div class="footer-bottom">
-      <span>&copy; 2026 John Mark Kiritu. All rights reserved.</span>
-      <span>Designed with Liquid Glass UI</span>
-    </div>
-  </footer>
-
+  <!-- Modals for Journey Details -->
   <div id="modal-dq" class="modal">
     <div class="modal-content">
-      <h2 style="margin-bottom: 20px;">System Administrator Roles</h2>
+      <h2>Roles & Technologies</h2>
       <ul class="roles-list">
-        <li>Administer infrastructure including Switches, PABX, and <a class="tech-link" href="#">Microsoft Power Apps</a>.</li>
-        <li>Implement cybersecurity measures using <a class="tech-link" href="#">Kaspersky Endpoint Protection</a>.</li>
-        <li>Provide L2 Technical Support via AnyDesk and TeamViewer.</li>
-        <li>Generate fleet performance reports using TMS tools.</li>
+        <li>Administer infrastructure including <a class="tech-link" href="https://www.microsoft.com/en-us/power-platform/products/power-apps">Microsoft Power Apps</a>, PABX, and surveillance.</li>
+        <li>Cybersecurity enforcement using <a class="tech-link" href="https://www.kaspersky.com/">Kaspersky Endpoint Protection</a> and Firewalls.</li>
+        <li>L2 Technical Support for <a class="tech-link" href="https://www.anydesk.com">AnyDesk</a> and <a class="tech-link" href="https://www.teamviewer.com">TeamViewer</a>.</li>
       </ul>
-      <button class="view-btn" style="margin-top: 20px;" onclick="closeModal()">Close</button>
+      <div class="manager-ref">
+        <strong>Reference: Direct Manager</strong><br>
+        Name: [Name Required] | Position: IT Manager<br>
+        Email: [Email] | Work: [Work Email]
+      </div>
+      <button class="view-btn" onclick="closeModal()">Close</button>
     </div>
   </div>
 
   <div id="modal-ox-support" class="modal">
     <div class="modal-content">
-      <h2 style="margin-bottom: 20px;">IT Support Officer Roles</h2>
+      <h2>Oxfam IT Support Roles</h2>
       <ul class="roles-list">
-        <li>Monitor Network Uptime via <a class="tech-link" href="#">Cisco Meraki</a> and M365 Admin Center.</li>
-        <li>Manage IT Asset Lifecycle using ServiceNow and Jira.</li>
-        <li>Drive Digital Transformation using <a class="tech-link" href="#">Power BI</a> and Box Drive.</li>
+        <li>Proactive monitoring using <a class="tech-link" href="https://meraki.cisco.com/">Cisco Meraki</a> and <a class="tech-link" href="https://www.microsoft.com/en-us/microsoft-365">M365 Admin Center</a>.</li>
+        <li>IT Asset management via <a class="tech-link" href="https://www.atlassian.com/software/jira/service-management">Jira Service Management</a> and <a class="tech-link" href="https://www.servicenow.com/">ServiceNow</a>.</li>
+        <li>Digital transformation with <a class="tech-link" href="https://powerbi.microsoft.com/">Power BI</a> and <a class="tech-link" href="https://www.box.com/">Box Drive</a>.</li>
       </ul>
-      <button class="view-btn" style="margin-top: 20px;" onclick="closeModal()">Close</button>
+      <button class="view-btn" onclick="closeModal()">Close</button>
     </div>
   </div>
 
   <div id="modal-ox-trainee" class="modal">
     <div class="modal-content">
-      <h2 style="margin-bottom: 20px;">Graduate Trainee Roles</h2>
+      <h2>Oxfam Graduate Trainee Roles</h2>
       <ul class="roles-list">
-        <li>Resolved over 80 helpdesk tickets weekly with high satisfaction rates.</li>
-        <li>Deployed Logitech Rally systems and Zoom Rooms for hybrid meetings.</li>
-        <li>Assisted in end-user training for new software rollouts.</li>
+        <li>Handled helpdesk ticketing and user support.</li>
+        <li>Deployed AV systems for conferences.</li>
+        <li>Assisted in end-user training and troubleshooting.</li>
       </ul>
-      <button class="view-btn" style="margin-top: 20px;" onclick="closeModal()">Close</button>
+      <button class="view-btn" onclick="closeModal()">Close</button>
     </div>
   </div>
 
+  <div id="modal-ox-intern" class="modal">
+    <div class="modal-content">
+      <h2>Oxfam IT Intern Roles</h2>
+      <ul class="roles-list">
+        <li>Collaborated on cloud-based projects using Microsoft 365.</li>
+        <li>Configured LAN/WAN networks.</li>
+        <li>Implemented endpoint protection measures.</li>
+      </ul>
+      <button class="view-btn" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4 style="font-size: 1.5rem; font-weight: 900;">JMK<span style="color:var(--accent-green)">.</span></h4>
+        <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 20px;">Delivering enterprise-grade IT infrastructure and bespoke digital solutions for the modern world.</p>
+        <div class="form-group" style="margin-bottom: 10px;">
+          <input type="text" class="form-control" placeholder="Enter your Email" style="padding: 10px;">
+        </div>
+        <button class="submit-btn" style="padding: 10px; font-size: 0.7rem;">Subscribe Now</button>
+      </div>
+
+      <div class="footer-col">
+        <h4>Information</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#journey">Journey</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#education">Education</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Helpful Links</h4>
+        <ul>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#contact">Supports</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Our Services</h4>
+        <ul>
+          <li><a href="#">Help Desk</a></li>
+          <li><a href="#">Networking</a></li>
+          <li><a href="#">Surveillance</a></li>
+          <li><a href="#">UI Design</a></li>
+          <li><a href="#">Procurement</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <div style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 10px;">
+          <i class="fa-solid fa-phone" style="margin-right: 10px;"></i> +256 700 000 000
+        </div>
+        <div style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 20px;">
+          <i class="fa-solid fa-envelope" style="margin-right: 10px;"></i> support@jmk.com
+        </div>
+        <div class="social-links">
+          <a href="#" class="social-btn"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="social-btn"><i class="fa-brands fa-twitter"></i></a>
+          <a href="#" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2026 John Mark Kiritu. All rights reserved.</div>
+      <div style="display: flex; gap: 20px;">
+        <span>FAQ</span>
+        <span>Privacy</span>
+        <span>Terms & Condition</span>
+      </div>
+    </div>
+  </footer>
+
   <script>
-    // --- THEME TOGGLE ---
+    // Theme Toggle
     const themeToggle = document.getElementById('theme-toggle');
     themeToggle.addEventListener('click', () => {
-      const html = document.documentElement;
-      const isDark = html.getAttribute('data-theme') === 'dark';
-      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
-      
-      // Optional: Icon switch
-      const icon = themeToggle.querySelector('i');
-      icon.className = isDark ? 'fa-solid fa-moon' : 'fa-solid fa-circle-half-stroke';
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
     });
 
-    // --- MODAL LOGIC ---
-    function openModal(id) {
-      document.getElementById(id).style.display = "block";
-      document.body.style.overflow = "hidden"; // Prevent background scroll
-    }
-    function closeModal() {
-      document.querySelectorAll('.modal').forEach(m => m.style.display = "none");
-      document.body.style.overflow = "auto";
-    }
-    // Close on click outside
-    window.onclick = (e) => {
-      if (e.target.classList.contains('modal')) closeModal();
-    }
+    // Modal Functions
+    function openModal(id) { document.getElementById(id).style.display = "block"; }
+    function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = "none"); }
+    window.onclick = function(event) { if (event.target.className === 'modal') closeModal(); }
 
-    // --- SCROLL SPY (Highlight Nav) ---
+    // Scroll Observer for Nav Active State
     const sections = document.querySelectorAll('section');
     const navLinks = document.querySelectorAll('.nav-btn');
-
     window.addEventListener('scroll', () => {
-      let current = "";
+      let current = '';
       sections.forEach(section => {
         const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (pageYOffset >= (sectionTop - 200)) {
+        if (pageYOffset >= sectionTop - 150) {
           current = section.getAttribute('id');
         }
       });
-
       navLinks.forEach(link => {
         link.classList.remove('active');
         if (link.getAttribute('href') === `#${current}`) {
@@ -597,6 +944,5 @@
       });
     });
   </script>
-
 </body>
 </html>
