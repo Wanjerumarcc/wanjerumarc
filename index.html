@@ -1,160 +1,210 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>John Mark Kiritu</title>
+  <title>John Mark Kiritu | IT Infrastructure & Cloud Architect</title>
   
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+  <!-- Lenis Smooth Scroll -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.23/dist/lenis.min.js"></script>
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
   <style>
     :root {
-      --bg: #000000;
-      --text: #f5f5f7;
-      --text-secondary: #86868b;
-      --accent: #00d48c;
+      --bg: #0a0a0a;
+      --text: #ffffff;
+      --accent: #00ff9d;
+      --gray: #aaaaaa;
+      --glass: rgba(255,255,255,0.06);
+    }
+    [data-theme="light"] {
+      --bg: #f8f9fa;
+      --text: #111111;
+      --accent: #00b36b;
+      --gray: #555555;
+      --glass: rgba(0,0,0,0.06);
     }
 
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+      font-family: 'Inter', sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.55;
-      font-size: 17px;
+      line-height: 1.1;
       overflow-x: hidden;
     }
 
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: rgba(0,0,0,0.85);
-      backdrop-filter: blur(30px);
-      z-index: 1000;
-      padding: 18px 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-    .logo { font-size: 21px; font-weight: 600; letter-spacing: -0.5px; }
-    .nav-links a {
-      color: var(--text-secondary);
-      margin-left: 38px;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    .nav-links a:hover { color: white; }
+    section { padding: 180px 8% 160px; min-height: 100vh; display: flex; align-items: center; }
+    h1, h2 { font-size: 5.5rem; font-weight: 900; line-height: 0.95; letter-spacing: -4px; }
+    .accent { color: var(--accent); }
 
-    /* HERO */
-    #hero {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 0 20px;
-      background: radial-gradient(circle at 50% 30%, #1c2a24, #000000);
+    .nav {
+      position: fixed; top: 40px; left: 50%; transform: translateX(-50%);
+      z-index: 1000; background: rgba(10,10,10,0.95); backdrop-filter: blur(20px);
+      padding: 14px 50px; border-radius: 60px; border: 1px solid rgba(0,255,157,0.2);
+      font-weight: 600;
     }
-    #hero h1 {
-      font-size: 4.2rem;
-      font-weight: 700;
-      letter-spacing: -2.5px;
-      margin-bottom: 12px;
-    }
-    #hero .role {
-      font-size: 1.85rem;
-      color: var(--accent);
-      font-weight: 500;
-      margin-bottom: 28px;
-    }
-    #hero p {
-      max-width: 620px;
-      font-size: 1.35rem;
-      color: var(--text-secondary);
-      margin-bottom: 50px;
-    }
-
-    .profile {
-      width: 260px;
-      height: 260px;
-      border-radius: 9999px;
-      border: 4px solid var(--accent);
-      margin-bottom: 50px;
-      object-fit: cover;
-      box-shadow: 0 30px 60px rgba(0, 212, 140, 0.25);
-    }
+    [data-theme="light"] .nav { background: rgba(255,255,255,0.95); border-color: rgba(0,179,107,0.3); }
 
     .btn {
-      padding: 16px 42px;
-      font-size: 17px;
-      font-weight: 600;
-      border: 1.5px solid var(--accent);
-      color: white;
-      border-radius: 9999px;
-      text-decoration: none;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 20px 52px; background: transparent; border: 2px solid var(--accent);
+      color: var(--text); font-size: 1.2rem; font-weight: 700; border-radius: 60px;
+      text-decoration: none; transition: all 0.4s;
     }
-    .btn:hover {
-      background: var(--accent);
-      color: #000;
-      transform: scale(1.04);
-    }
+    .btn:hover { background: var(--accent); color: #000; transform: scale(1.05); }
 
-    section { padding: 160px 8% 120px; }
-    h2 {
-      font-size: 2.8rem;
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 90px;
-      letter-spacing: -1.2px;
+    .reveal { opacity: 0; }
+    footer {
+      background: var(--glass); backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(0,255,157,0.2); padding: 80px 8% 60px;
+      text-align: center; color: var(--gray);
     }
-
-    .content {
-      max-width: 980px;
-      margin: 0 auto;
-    }
-
-    .card {
-      background: rgba(255,255,255,0.055);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 22px;
-      padding: 48px;
-      margin-bottom: 40px;
-    }
+    .social-icons a { color: var(--gray); font-size: 1.6rem; margin: 0 15px; transition: 0.3s; }
+    .social-icons a:hover { color: var(--accent); }
   </style>
 </head>
 <body>
 
-  <nav>
-    <div class="logo">John Mark</div>
-    <div class="nav-links">
-      <a href="#about">About</a>
-      <a href="#expertise">Expertise</a>
+  <!-- NAV -->
+  <div class="nav">
+    <a href="#journey" style="color:var(--text); margin:0 20px; text-decoration:none;">Journey</a>
+    <a href="#stack" style="color:var(--text); margin:0 20px; text-decoration:none;">Stack</a>
+    <a href="#projects" style="color:var(--text); margin:0 20px; text-decoration:none;">Projects</a>
+    <a href="#contact" style="color:var(--text); margin:0 20px; text-decoration:none;">Contact</a>
+    <span id="theme-toggle" style="margin-left:20px; cursor:pointer; font-size:1.3rem;">☀️</span>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" style="text-align:center; background: linear-gradient(180deg, #0a0a0a, #111);">
+    <div>
+      <h1 class="reveal">John Mark Kiritu</h1>
+      <h2 class="reveal" style="margin-top:30px; font-size:4.4rem;">IT Infrastructure Specialist</h2>
+      <h2 class="reveal accent" style="margin-top:10px;">Cloud Architect</h2>
+      <p class="reveal" style="font-size:1.7rem; max-width:720px; margin:70px auto 0; color:#ccc;">
+        I design and manage enterprise systems that don’t fail.<br>
+        3+ years turning complex infrastructure into reliable, secure solutions.
+      </p>
+      <a href="KIRITU JOHN MARK 2026.pdf" target="_blank" class="btn reveal">Download My CV →</a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section style="background:#111; text-align:center;">
+    <div style="max-width:960px; margin:auto;">
+      <h2 class="reveal">I make sure your technology works when it matters most.</h2>
+      <p class="reveal" style="font-size:1.6rem; margin-top:60px; color:#aaa;">
+        From Cisco Meraki networks to Oracle Cloud, AWS, and automation — I build infrastructure that scales and stays secure.
+      </p>
+    </div>
+  </section>
+
+  <!-- JOURNEY -->
+  <section id="journey">
+    <div style="max-width:1100px; margin:auto;">
+      <h2 class="reveal">Professional Journey</h2>
+      <div style="margin-top:80px; font-size:2.3rem; line-height:1.6;">
+        <div class="reveal">• Cloud Architect & Freelancer <span style="color:var(--accent);">(Nov 2024 – Present)</span></div>
+        <div class="reveal" style="margin:50px 0;">• System Administrator @ Double Q (Sep – Nov 2024)</div>
+        <div class="reveal">• IT Support Officer @ Oxfam In Uganda (Nov 2022 – May 2024)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section id="stack" style="background:#111;">
+    <div style="max-width:1100px; margin:auto;">
+      <h2 class="reveal">Technical Stack</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(380px,1fr)); gap:50px; margin-top:80px; font-size:1.65rem;">
+        <div class="reveal">Cloud & Virtualization<br><span style="color:var(--gray); font-size:1.35rem;">OCI • AWS • Docker • Tailscale • Microsoft 365</span></div>
+        <div class="reveal">Networking & Security<br><span style="color:var(--gray); font-size:1.35rem;">Cisco Meraki • Ubiquiti • Kaspersky • Sophos • Firewalls</span></div>
+        <div class="reveal">Automation & Development<br><span style="color:var(--gray); font-size:1.35rem;">Power Apps • HTML/CSS/JS • GitHub • Cloudflare • Vibe Coding</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" style="background:#0a0a0a;">
+    <div style="max-width:1100px; margin:auto;">
+      <h2 class="reveal">Key Projects</h2>
+      <div style="margin-top:80px; font-size:1.8rem; line-height:1.5;">
+        <div class="reveal" style="margin-bottom:50px;">Digital Logistics System – Oxfam Uganda</div>
+        <div class="reveal" style="margin-bottom:50px;">Kaspersky Security Centre Deployment</div>
+        <div class="reveal">Networking Upgrade – Kyagalanyi Coffee Factory</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" style="text-align:center; background:#111;">
+    <div>
+      <h2 class="reveal">Let's build something reliable together.</h2>
+      <p class="reveal" style="font-size:2.1rem; margin:60px 0; color:var(--accent);">wanjerumarc@icloud.com</p>
+      <p class="reveal" style="font-size:1.9rem;">+256 707 844 877</p>
+      <a href="KIRITU JOHN MARK 2026.pdf" target="_blank" class="btn reveal" style="margin-top:80px;">Download CV</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="social-icons" style="margin-bottom:40px;">
+      <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="#" target="_blank"><i class="fab fa-x-twitter"></i></a>
+      <a href="mailto:wanjerumarc@icloud.com"><i class="fas fa-envelope"></i></a>
+    </div>
+    <div class="footer-links">
+      <a href="#home">Home</a>
       <a href="#journey">Journey</a>
+      <a href="#stack">Stack</a>
       <a href="#projects">Projects</a>
       <a href="#contact">Contact</a>
     </div>
-  </nav>
-
-  <!-- HERO -->
-  <section id="hero">
-    <img src="profilepic.png" alt="John Mark Kiritu" class="profile">
-    <h1>John Mark Kiritu</h1>
-    <div class="role">IT Infrastructure Specialist & Cloud Architect</div>
-    <p>3+ years building and securing enterprise systems that support 200+ users. Expert in Cisco Meraki, Oracle Cloud, AWS, and automation.</p>
-    <a href="KIRITU JOHN MARK 2026.pdf" target="_blank" class="btn">Download Curriculum Vitae</a>
-  </section>
-
-  <!-- Add the rest of your sections here in the same clean style if you want me to expand it. -->
-
-  <footer style="background:#111; padding:80px 8% 60px; text-align:center; color:#86868b; font-size:15px;">
-    <p>© 2026 John Mark Kiritu • Kampala, Uganda</p>
+    <p style="margin-top:40px; opacity:0.6;">© 2026 John Mark Kiritu. Kampala, Uganda</p>
   </footer>
 
+  <script>
+    // Lenis Smooth Scroll
+    const lenis = new Lenis({
+      duration: 1.4,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      smoothTouch: false,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // GSAP ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.utils.toArray(".reveal").forEach(el => {
+      gsap.fromTo(el, 
+        { opacity: 0, y: 100 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.2,
+          ease: "power3.out",
+          scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" }
+        }
+      );
+    });
+
+    // Theme Toggle
+    const toggle = document.getElementById('theme-toggle');
+    toggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const newTheme = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      toggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+    });
+  </script>
 </body>
 </html>
