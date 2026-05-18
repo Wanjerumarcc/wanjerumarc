@@ -29,7 +29,7 @@
       --text-dim: #475569;
     }
 
-    * { margin:0; padding:0; box-sizing:border-box; }
+    * { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
     body {
       font-family: 'Inter', sans-serif;
       background: var(--bg-gradient);
@@ -62,7 +62,6 @@
 
     h1 { font-size: 3.8rem; font-weight: 900; line-height: 1.1; }
     h2 { font-size: 2.6rem; margin-bottom: 30px; color: var(--accent-green); text-align: center; }
-    h3 { margin: 15px 0 10px; }
 
     .hero-content { display: flex; align-items: center; gap: 60px; flex-wrap: wrap; }
     .profile-img { width: 320px; height: 320px; object-fit: cover; border-radius: 50%; border: 5px solid var(--accent-green); }
@@ -97,42 +96,50 @@
       background: var(--glass-bright); border: 1px solid var(--border);
       border-radius: 20px; padding: 18px; display: flex; align-items: center; gap: 20px;
     }
+
+    .services-grid, .dashboard-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;
+    }
+    .service-tile, .db-widget {
+      background: var(--glass-bright); border: 1px solid var(--border);
+      border-radius: 25px; padding: 30px;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Navigation -->
+  <!-- NAVIGATION -->
   <div class="nav-container">
-    <nav>
-      <a href="#home" class="nav-btn active">Home</a>
-      <a href="#about" class="nav-btn">About</a>
-      <a href="#stack" class="nav-btn">Stack</a>
-      <a href="#journey" class="nav-btn">Journey</a>
-      <a href="#projects" class="nav-btn">Projects</a>
-      <a href="#education" class="nav-btn">Education</a>
-      <a href="#contact" class="nav-btn">Contact</a>
+    <a href="#home" class="nav-logo"><img src="nobklogo.png" alt="JMK Logo"></a>
+    <nav class="icon-menu">
+      <a href="#home" class="nav-btn active"><i class="fa-solid fa-house"></i><span>Home</span></a>
+      <a href="#about" class="nav-btn"><i class="fa-solid fa-user"></i><span>About</span></a>
+      <a href="#stack" class="nav-btn"><i class="fa-solid fa-layer-group"></i><span>Stack</span></a>
+      <a href="#services" class="nav-btn"><i class="fa-solid fa-screwdriver-wrench"></i><span>Services</span></a>
+      <a href="#journey" class="nav-btn"><i class="fa-solid fa-briefcase"></i><span>Journey</span></a>
+      <a href="#projects" class="nav-btn"><i class="fa-solid fa-chart-pie"></i><span>Projects</span></a>
+      <a href="#education" class="nav-btn"><i class="fa-solid fa-graduation-cap"></i><span>Education</span></a>
+      <a href="#contact" class="nav-btn"><i class="fa-solid fa-paper-plane"></i><span>Contact</span></a>
+      <div class="nav-btn" id="theme-toggle" style="cursor:pointer"><i class="fa-solid fa-circle-half-stroke"></i></div>
     </nav>
   </div>
 
   <!-- HERO -->
   <section id="home">
     <div class="glass-card hero-content">
-      <div>
-        <div style="display:inline-flex; align-items:center; gap:10px; background:rgba(74,222,128,0.2); padding:8px 20px; border-radius:50px; margin-bottom:20px;">
-          <span style="width:10px;height:10px;background:#4ade80;border-radius:50%;"></span>
-          Open to Opportunities
-        </div>
+      <div style="max-width:580px">
+        <div class="status-badge"><span class="dot"></span> Open to Opportunities</div>
         <h1>John Mark Kiritu</h1>
-        <h2 style="font-size:2.4rem; color:var(--accent-green);">IT Infrastructure Specialist & Cloud Architect</h2>
-        <p style="font-size:1.2rem; line-height:1.8; max-width:580px; color:var(--text-dim);">
-          IT Professional with over <strong>3 years</strong> of experience managing enterprise infrastructure and network security for 200+ users. 
-          Expert in Cisco Meraki, Microsoft 365, Oracle Cloud (OCI), AWS, and Ubiquiti technologies.
+        <h2 style="font-size:2.4rem;color:var(--accent-green)">IT Infrastructure Specialist & Cloud Architect</h2>
+        <p style="font-size:1.2rem;line-height:1.8;color:var(--text-dim)">
+          IT Professional with <strong>3+ years</strong> managing enterprise infrastructure and network security for 200+ users. 
+          Expert in Cisco Meraki, Microsoft 365, Oracle Cloud (OCI), AWS, and Ubiquiti. Reduced downtime by 30% and automated workflows cutting ticket time by 40%.
         </p>
-        <div style="margin-top:30px;">
+        <div style="margin-top:30px">
           <a href="KIRITU JOHN MARK 2026.pdf" target="_blank" class="btn btn-primary">
             <i class="fa-solid fa-download"></i> Download CV
           </a>
-          <a href="#journey" class="btn btn-outline">View My Journey</a>
+          <a href="#journey" class="btn btn-outline">View Journey</a>
         </div>
       </div>
       <img src="profilepic.png" alt="John Mark Kiritu" class="profile-img">
@@ -142,79 +149,86 @@
   <!-- ABOUT -->
   <section id="about">
     <div class="glass-card">
-      <h2>About Me</h2>
-      <p style="font-size:1.15rem; line-height:1.85;">
-        Proactive IT professional skilled in deploying resilient infrastructure using Cisco Meraki, Microsoft 365, Oracle Cloud Infrastructure, and AWS. 
-        Proven ability to reduce network downtime by 30% and automate workflows via Power Apps, cutting ticket processing time by 40%. 
-        Currently advancing skills in cloud-native solutions and enterprise cybersecurity.
+      <h2>Professional Profile</h2>
+      <p style="font-size:1.18rem;line-height:1.8">
+        IT Professional with over 3 years of experience managing enterprise-grade infrastructure and network security, supporting over 200 end users across multiple locations. 
+        Expert in deploying resilient IT environments using Cisco Meraki, Microsoft 365, Oracle Cloud Infrastructure (OCI), Active Directory, and advancing AWS & cybersecurity skills.
       </p>
     </div>
   </section>
 
-  <!-- TECHNICAL STACK -->
+  <!-- STACK -->
   <section id="stack">
     <div class="glass-card">
       <h2>Technical Stack</h2>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:60px;">
+      <div class="stack-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:50px">
         <div>
-          <h3>Cloud & Virtualization</h3>
-          <div class="tech-tags">
-            <div class="tag">Oracle Cloud Infrastructure (OCI)</div>
-            <div class="tag">AWS EC2 & VPC</div>
-            <div class="tag">Docker + Tailscale</div>
-            <div class="tag">Microsoft 365 Admin</div>
+          <div class="tech-category"><h3>Cloud & Virtualization</h3>
+            <div class="tech-tags">
+              <div class="tag">Oracle Cloud Infrastructure (OCI)</div>
+              <div class="tag">AWS EC2 & VPC</div>
+              <div class="tag">Docker + Tailscale</div>
+              <div class="tag">Microsoft 365 Admin</div>
+            </div>
           </div>
-
-          <h3 style="margin-top:30px;">Networking & Security</h3>
-          <div class="tech-tags">
-            <div class="tag">Cisco Meraki</div>
-            <div class="tag">Ubiquiti</div>
-            <div class="tag">Kaspersky • Sophos • ESET</div>
-            <div class="tag">Firewalls & VPN</div>
-            <div class="tag">Structured Cabling</div>
+          <div class="tech-category"><h3>Networking & Security</h3>
+            <div class="tech-tags">
+              <div class="tag">Cisco Meraki</div>
+              <div class="tag">Ubiquiti</div>
+              <div class="tag">Kaspersky / Sophos / ESET</div>
+              <div class="tag">Firewalls & VPN</div>
+              <div class="tag">Structured Cabling</div>
+            </div>
           </div>
-
-          <h3 style="margin-top:30px;">Dev & Automation</h3>
-          <div class="tech-tags">
-            <div class="tag">HTML5, CSS3, JavaScript</div>
-            <div class="tag">Power Apps Automation</div>
-            <div class="tag">GitHub + Cloudflare</div>
-            <div class="tag">Vibe Coding (AI)</div>
+          <div class="tech-category"><h3>Dev & Automation</h3>
+            <div class="tech-tags">
+              <div class="tag">HTML5, CSS3, JavaScript</div>
+              <div class="tag">Power Apps</div>
+              <div class="tag">GitHub + Cloudflare</div>
+              <div class="tag">Vibe Coding (AI)</div>
+            </div>
           </div>
         </div>
 
         <div>
           <h3>Professional Certifications</h3>
-          <div style="display:flex; flex-direction:column; gap:16px;">
-            <div class="cert-card">
-              <i class="fa-solid fa-certificate" style="font-size:2rem;color:#4ade80"></i>
-              <div><strong>AWS Cloud Practitioner</strong><br><small>In Progress</small></div>
+          <div class="cert-vault" style="display:flex;flex-direction:column;gap:16px">
+            <div class="cert-card"><i class="fa-solid fa-certificate" style="font-size:2.2rem;color:#4ade80"></i>
+              <div><strong>AWS Cloud Practitioner</strong><br><small>In Progress • Refactory Academy</small></div>
             </div>
-            <div class="cert-card">
-              <i class="fa-solid fa-award" style="font-size:2rem"></i>
-              <div><strong>Certified Professional Industrial Cybersecurity</strong><br><small>Kaspersky • Aug 2024</small><br>
-              <a href="https://www.credly.com/badges/6b2c25b0-a7ff-43b1-9913-0b409876a5ef" target="_blank" style="color:#4ade80">Verify on Credly →</a>
+            <div class="cert-card"><i class="fa-solid fa-award" style="font-size:2.2rem"></i>
+              <div><strong>Certified Professional Industrial Cybersecurity</strong><br><small>Kaspersky • August 2024</small><br>
+              <a href="https://www.credly.com/badges/6b2c25b0-a7ff-43b1-9913-0b409876a5ef" target="_blank" style="color:#4ade80">Verify →</a>
             </div>
-            <div class="cert-card">
-              <i class="fa-solid fa-shield-halved" style="font-size:2rem;color:#60a5fa"></i>
-              <div><strong>Certified Professional Endpoint Security & Management</strong><br><small>Kaspersky • Jul 2024</small><br>
-              <a href="https://www.credly.com/badges/9cb31113-d7e5-4fa7-a3f1-6165d89d4aae/public_url" target="_blank" style="color:#4ade80">Verify on Credly →</a>
+            <div class="cert-card"><i class="fa-solid fa-shield-halved" style="font-size:2.2rem;color:#60a5fa"></i>
+              <div><strong>Certified Professional Endpoint Security & Management</strong><br><small>Kaspersky • July 2024</small><br>
+              <a href="https://www.credly.com/badges/9cb31113-d7e5-4fa7-a3f1-6165d89d4aae/public_url" target="_blank" style="color:#4ade80">Verify →</a>
             </div>
-            <div class="cert-card">
-              <i class="fa-solid fa-medal" style="font-size:2rem"></i>
-              <div><strong>Certified Sophos Central Endpoint Engineer</strong><br><small>Sophos • Jul 2024</small><br>
-              <a href="https://www.credly.com/badges/89b1c36d-8db2-432d-a29e-15dc162884c5/public_url" target="_blank" style="color:#4ade80">Verify on Credly →</a>
+            <div class="cert-card"><i class="fa-solid fa-medal" style="font-size:2.2rem"></i>
+              <div><strong>Certified Sophos Central Endpoint Engineer</strong><br><small>Sophos • July 2024</small><br>
+              <a href="https://www.credly.com/badges/89b1c36d-8db2-432d-a29e-15dc162884c5/public_url" target="_blank" style="color:#4ade80">Verify →</a>
             </div>
-            <div class="cert-card">
-              <i class="fa-solid fa-certificate" style="font-size:2rem"></i>
-              <div><strong>CCNA: Routing and Switching</strong><br><small>Cisco • Oct 2019</small></div>
+            <div class="cert-card"><i class="fa-solid fa-certificate" style="font-size:2.2rem"></i>
+              <div><strong>CCNA: Routing and Switching</strong><br><small>Cisco • October 2019</small></div>
             </div>
-            <div class="cert-card">
-              <i class="fa-solid fa-shield-halved" style="font-size:2rem"></i>
-              <div><strong>Cisco Cyberthreat Management</strong><br><small>Cisco • Feb 2025</small></div>
+            <div class="cert-card"><i class="fa-solid fa-shield-halved" style="font-size:2.2rem"></i>
+              <div><strong>Cisco Cyberthreat Management</strong><br><small>Cisco • February 2025</small></div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="glass-card">
+      <h2>My Services</h2>
+      <div class="services-grid">
+        <div class="service-tile"><i class="fa-solid fa-network-wired service-icon"></i><h3>Network Infrastructure</h3><p>Cisco Meraki, Ubiquiti, Structured Cabling, VPN & Firewall Management</p></div>
+        <div class="service-tile"><i class="fa-solid fa-cloud service-icon"></i><h3>Cloud Solutions</h3><p>OCI, AWS, Docker, Microsoft 365 Administration</p></div>
+        <div class="service-tile"><i class="fa-solid fa-shield-halved service-icon"></i><h3>Cybersecurity</h3><p>Endpoint Protection, Kaspersky, Sophos, Threat Management</p></div>
+        <div class="service-tile"><i class="fa-solid fa-code service-icon"></i><h3>Automation & Web Dev</h3><p>Power Apps, Vibe Coding, Portfolio & Internal Tools</p></div>
       </div>
     </div>
   </section>
@@ -224,44 +238,29 @@
     <div class="glass-card">
       <h2>Professional Journey</h2>
       <div class="timeline">
-
         <div class="timeline-item">
           <div class="timeline-date">Nov 2024 – Present</div>
           <h3>Cloud Architect, Web Developer & Freelancer</h3>
-          <p><strong>Independent Projects, Kampala</strong></p>
-          <ul style="margin-left:20px;">
-            <li>Building private cloud on Oracle Cloud Infrastructure (OCI) with Docker & Tailscale</li>
-            <li>Undertaking AWS Cloud Practitioner training</li>
-            <li>Developing modern web solutions using Vibe Coding (AI)</li>
-          </ul>
+          <p><strong>Independent Projects • Kampala</strong></p>
+          <ul style="margin-left:20px"><li>Private cloud on Oracle Cloud Infrastructure (OCI) with Docker & Tailscale</li><li>AWS Cloud Practitioner training</li><li>Modern web development with AI (Vibe Coding)</li></ul>
         </div>
-
         <div class="timeline-item">
           <div class="timeline-date">Sep 2024 – Nov 2024</div>
           <h3>System Administrator</h3>
           <p><strong>Double Q (C4 Logistics Ltd)</strong></p>
-          <ul style="margin-left:20px;">
-            <li>Managed IT infrastructure, Kaspersky Endpoint Protection & firewalls</li>
-            <li>Provided Level 2 technical support</li>
-          </ul>
+          <ul style="margin-left:20px"><li>Full IT infrastructure management</li><li>Kaspersky Endpoint Protection & firewall configuration</li></ul>
         </div>
-
         <div class="timeline-item">
           <div class="timeline-date">Nov 2022 – May 2024</div>
           <h3>IT Support Officer</h3>
           <p><strong>Oxfam In Uganda</strong></p>
-          <ul style="margin-left:20px;">
-            <li>Managed Cisco Meraki network for 200+ users</li>
-            <li>Handled Microsoft 365, Active Directory & asset management</li>
-          </ul>
+          <ul style="margin-left:20px"><li>Cisco Meraki network management for 200+ users</li><li>Microsoft 365, Active Directory & asset management</li></ul>
         </div>
-
         <div class="timeline-item">
           <div class="timeline-date">Jul 2022 – Nov 2022</div>
           <h3>Graduate Trainee – IT</h3>
           <p><strong>Oxfam In Uganda</strong></p>
         </div>
-
         <div class="timeline-item">
           <div class="timeline-date">Feb 2022 – Jul 2022</div>
           <h3>IT Intern</h3>
@@ -271,15 +270,57 @@
     </div>
   </section>
 
-  <!-- PROJECTS, EDUCATION & CONTACT can be added if you want. Let me know if you need them expanded. -->
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="glass-card">
+      <h2>Key Projects</h2>
+      <div class="dashboard-grid">
+        <div class="db-widget">
+          <h3>Digital Logistics & Procurement System – Oxfam Uganda</h3>
+          <p>Automated procurement workflow using Box Drive, Box Sign & Box Relay, significantly reducing paper-based processes.</p>
+        </div>
+        <div class="db-widget">
+          <h3>Kaspersky Security Centre Deployment</h3>
+          <p>Implemented enterprise endpoint security across multiple devices with policy configuration and threat monitoring.</p>
+        </div>
+        <div class="db-widget">
+          <h3>Networking Upgrade – Kyagalanyi Coffee Factory</h3>
+          <p>Cat6 cabling, new network ports, and performance enhancement for office expansion.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="glass-card">
+      <h2>Education</h2>
+      <ul style="line-height:2.2">
+        <li><strong>Bachelor of Information Technology</strong> — Uganda Christian University (2018 – 2021)</li>
+        <li><strong>AWS Cloud Practitioner Foundational</strong> — Refactory Academy (In Progress)</li>
+        <li>Uganda Advanced Certificate of Education — St. Lawrence College (2016 – 2017)</li>
+        <li>Uganda Certificate of Education — Mbarara High School (2012 – 2015)</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="glass-card">
+      <h2>Get In Touch</h2>
+      <p style="text-align:center;font-size:1.2rem">wanjerumarc@icloud.com | +256 707 844 877</p>
+      <p style="text-align:center;margin-top:30px">
+        <a href="https://wanjerumarc.dpdns.org" target="_blank">Portfolio</a> • 
+        <a href="KIRITU JOHN MARK 2026.pdf" target="_blank">Download CV</a>
+      </p>
+    </div>
+  </section>
 
   <script>
-    // Simple theme toggle
-    document.addEventListener('keydown', (e) => {
-      if (e.key === "t" || e.key === "T") {
-        const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', theme);
-      }
+    // Theme Toggle
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      document.documentElement.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
     });
   </script>
 </body>
